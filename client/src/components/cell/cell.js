@@ -7,9 +7,9 @@ class Cell extends Component {
         super(props);
 
         this.state = {
-            title : "-",
-            data : "-",
-            creator : "-"
+            title : "",
+            data : "",
+            creator : ""
             
             
 
