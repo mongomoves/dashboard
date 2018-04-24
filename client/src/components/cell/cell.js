@@ -20,7 +20,7 @@ class Cell extends Component {
 
 
 
-
+// i think we will have the data as its own component 
 
     render() {
         return (
