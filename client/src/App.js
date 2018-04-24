@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Dashboard from "./components/dashboard";
 import Widget from "./components/widget";
 import ValueDisplay from "./components/valuedisplay";
+import Cell from "./components/cell/cell"
 
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
@@ -15,6 +16,8 @@ class App extends Component {
         return (
             <div>
                 <Dashboard>
+
+                    <Cell></Cell>
                     <Widget title={"Widget 1"}>
                         <ValueDisplay title={"Dynamic value"} api={"/api/test"} attribute={"value"}/>
                     </Widget>
