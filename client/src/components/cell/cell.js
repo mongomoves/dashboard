@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './cell.css';
+import GridLayout from 'react-grid-layout';
 
 
 class Cell extends Component {
@@ -41,4 +42,5 @@ class Cell extends Component {
 
 
 export default Cell;
+
 
