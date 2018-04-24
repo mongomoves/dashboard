@@ -7,7 +7,12 @@ class Cell extends Component {
         super(props);
 
         this.state = {
-            title : "change me" 
+            title : "-",
+            data : "-",
+            creator : "-"
+            
+            
+
         }
     }
 
@@ -21,7 +26,9 @@ class Cell extends Component {
         return (
 
             <div className="cell">
-                <div className="title">{this.state.title}</div>
+                <div className="cellTitle">Title: {this.state.title}</div>
+                <div className="cellData">Data: {this.state.data}</div>
+                <div className="cellCreator">Created by: {this.state.creator}</div>
             </div>
         )
 
