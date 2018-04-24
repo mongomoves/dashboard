@@ -3,6 +3,7 @@ import GridLayout from 'react-grid-layout';
 
 
 class MyFirstGrid extends React.Component {
+  
     render() {
         // layout is an array of objects, see the demo for more complete usage
         var layout = [

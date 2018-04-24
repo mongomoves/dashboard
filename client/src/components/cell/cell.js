@@ -64,5 +64,5 @@ class MyFirstGrid extends React.Component {
         )
     }
 }
-
+//can be changed to MyFirstGrid
 export default MyFirstGrid;
