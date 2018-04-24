@@ -2,6 +2,13 @@ import React, { Component } from 'react';
 
 
 class Cell extends Component {
+    constructor(props){
+        super(props);
+
+        this.state = {
+            title : "change me" 
+        }
+    }
 
 
 
@@ -12,7 +19,9 @@ class Cell extends Component {
     render() {
         return (
 
-            <div></div>
+            <div className="cell">
+                <div className="title">{this.state.title}</div>
+            </div>
         )
 
     }
