@@ -1,0 +1,21 @@
+.textField {
+    display: block;
+    margin: 0 auto;
+    width: 400px;
+}
+
+label {
+    align-content: right;
+}
+
+.buttons {
+    margin: 5px;
+}
+
+.createHeader {
+    border-bottom:solid black 1px;
+    width:108%;
+    margin-left:-18px;
+    text-align: center;
+    
+}
