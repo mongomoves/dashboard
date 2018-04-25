@@ -1,3 +1,9 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .textField {
     display: block;
     margin: 0 auto;
@@ -9,7 +15,8 @@ label {
 }
 
 .buttons {
-    margin: 5px;
+    margin: 10px;
+    text-align: center;
 }
 
 .createHeader {

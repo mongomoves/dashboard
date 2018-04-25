@@ -62,8 +62,8 @@ class App extends Component {
                 </Dashboard>
             
                 <Modal show={this.state.modal} modalClosed={this.modalCancelHandler}>
-                    <Button bsStyle="primary" onClick={this.kibanaShowHandler}>Skapa Kibana widget</Button>
-                    <Button bsStyle="primary" onClick={this.grafanaShowHandler}>Skapa Grafana widget</Button>
+                    <Button className="chooseGraf" bsStyle="primary" onClick={this.kibanaShowHandler}>Skapa Kibana widget</Button>
+                    <Button className="chooseGraf" bsStyle="primary" onClick={this.grafanaShowHandler}>Skapa Grafana widget</Button>
                 </Modal>
                 <Button bsStyle="primary" onClick={this.modalShowHandler}>Tryck för modal!</Button>
                 
