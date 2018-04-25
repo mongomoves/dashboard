@@ -19,17 +19,31 @@ const styles = {
 class App extends Component {
 
     state = {
-        modal: false
+        modal: false,
+        grafana: false,
+        kibana: false
       }
     
       modalCancelHandler = () => {
         this.setState({modal: false});
+        this.setState({grafana: false});
+        this.setState({kibana: false});
       }
     
       modalShowHandler = () => {
         this.setState({modal: true});
       }
 
+      kibanaShowHandler = () => {
+          this.setState({kibana: true});
+      }
+
+    
+      grafanaShowHandler = () => {
+        this.setState({grafana: true});
+    }
+
+    
     render() {
         return (
             <div>
@@ -48,7 +62,17 @@ class App extends Component {
                 </Dashboard>
             
                 <Modal show={this.state.modal} modalClosed={this.modalCancelHandler}>
-                    <CreateCell />
+                    
+                    <Button bsStyle="primary" onClick={this.kibanaShowHandler}>Skapa Kibana widget</Button>
+                        <Modal show={this.state.kibana} modalClosed={this.modalCancelHandler}>
+                            <CreateCell widgetType="Kibana" />
+                        </Modal>
+                    
+                    <Button bsStyle="primary" onClick={this.grafanaShowHandler}>Skapa Grafana widget</Button>
+                        <Modal show={this.state.grafana} modalClosed={this.modalCancelHandler}>
+                            <CreateCell widgetType="Grafana" />
+                        </Modal>
+                
                 </Modal>
                 <Button bsStyle="primary" onClick={this.modalShowHandler}>Tryck för modal!</Button>
 
