@@ -53,13 +53,23 @@ class MyFirstGrid extends React.Component {
         var layout = [
             { i: 'a', x: 0, y: 0, w: 1, h: 2 },
             { i: 'b', x: 1, y: 0, w: 3, h: 2 },
-            { i: 'c', x: 4, y: 0, w: 1, h: 2 }
+            { i: 'c', x: 1, y: 0, w: 3, h: 2 },
+            { i: 'd', x: 1, y: 0, w: 3, h: 2 },
+            { i: 'e', x: 1, y: 0, w: 3, h: 2 },
+            { i: 'f', x: 1, y: 0, w: 3, h: 2 },
+            { i: 'g', x: 1, y: 0, w: 3, h: 2 },
+            { i: 'h', x: 4, y: 0, w: 1, h: 2 }
         ];
         return (
             <GridLayout className="layout" layout={layout} cols={12} rowHeight={30} width={1200}>
                 <div className = "rez" key="a">a</div>
                 <div className = "rez" key="b">b</div>
                 <div className = "rez" key="c">c</div>
+                <div className = "rez" key="d">c</div>
+                <div className = "rez" key="e">c</div>
+                <div className = "rez" key="f">c</div>
+                <div className = "rez" key="g">c</div>
+                <div className = "rez" key="h">c</div>
             </GridLayout>
         )
     }
