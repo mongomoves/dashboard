@@ -7,7 +7,7 @@ const dashboardSchema = mongoose.Schema({
     description: String,
     widgets: [
         {
-            type: ObjectId,
+            type: mongoose.Schema.Types.ObjectId,
             ref: "Widget",
             pos: {
                 x: Number,

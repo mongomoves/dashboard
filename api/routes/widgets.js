@@ -39,7 +39,7 @@ router.post('/', function(req, res, next) {
                 description: req.body.description,
                 content: {
                     kind: kind,
-                    type: result._id
+                    item: result._id
                 }
             });
 
@@ -71,9 +71,9 @@ router.post('/', function(req, res, next) {
 });
 
 router.get('/:widgetId', function(req, res, next) {
-    const id = req.params.valueId;
+    const id = req.params.widgetId;
 
-    Value.findById(id)
+    Widget.findById(id)
         .exec()
         .then(doc => {
             console.log("From mongoDB", doc);
