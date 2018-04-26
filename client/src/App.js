@@ -25,9 +25,7 @@ class App extends Component {
       }
     
       modalCancelHandler = () => {
-        this.setState({modal: false});
-        this.setState({grafana: false});
-        this.setState({kibana: false});
+        this.setState({modal: false, grafana: false, kibana: false});
       }
     
       modalShowHandler = () => {
@@ -35,12 +33,12 @@ class App extends Component {
       }
 
       kibanaShowHandler = () => {
-          this.setState({kibana: true});
+          this.setState({kibana: true, modal: false});
       }
 
     
       grafanaShowHandler = () => {
-        this.setState({grafana: true});
+        this.setState({grafana: true, modal: false});
     }
 
     
