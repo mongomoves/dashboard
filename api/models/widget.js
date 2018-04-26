@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const widgetSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     title: String,
-    creator: String,
+    author: String,
     created: {
         type: Date,
         default: Date.now
@@ -12,7 +12,7 @@ const widgetSchema = mongoose.Schema({
     content: {
         kind: String,
         item: {
-            type: ObjectId,
+            type: mongoose.Schema.Types.ObjectId,
             refPath: 'content.kind'
         }
     }
