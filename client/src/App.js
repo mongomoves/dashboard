@@ -15,7 +15,7 @@ const styles = {
 class App extends Component {
     render() {
         return (
-           <Cell title = "A new Widget" creator = "John"></Cell>
+            <Cell title = "A new widget" creator = "John"></Cell>
         );
     }
 }

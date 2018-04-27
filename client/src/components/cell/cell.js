@@ -8,9 +8,9 @@ class Cell extends Component {
         super(props);
 
 
-        //this will be passed to the component as props 
+         
         this.state = {
-            dataURL: "Fetching..",
+            dataURL: "Fetching data...",
             date: new Date().toDateString()
 
         }
@@ -22,7 +22,6 @@ class Cell extends Component {
 
         //here we should get data from URL
 
-
     }
 
 
@@ -33,8 +32,8 @@ class Cell extends Component {
             <div className="cell">
                 <div className="cellTitle">Title: {this.props.title}</div>
                 <div className="cellCreator">Created by: {this.props.creator}</div>
-                <div className="cellData">Data: {this.state.dataURL}</div>
-                <div className="cellTimeOfCreation">Created at: {this.state.date}</div>
+                <div className="cellData">{this.state.dataURL}</div>
+                <div className="cellTimeOfCreation">Created on: {this.state.date}</div>
             </div>
         )
 
