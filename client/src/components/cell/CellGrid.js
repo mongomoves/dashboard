@@ -14,19 +14,19 @@ class MyFirstGrid extends React.Component {
             { i: 'c', x: 1, y: 0, w: 3, h: 2 }
 
             //kanske vi skall ha x y w h i state hos cellen? 
-           
+
         ];
         return (
             <GridLayout className="layout" layout={layout} cols={12} rowHeight={30} width={1200}>
-                <div className = "rez" key="a">a</div>
-                <div className = "rez" key="b">b</div>
-                <div className = "rez" key="c">c</div>
-                
+                <div className="rez" key="a">a</div>
+                <div className="rez" key="b">b</div>
+                <div className="rez" key="c">c</div>
+
             </GridLayout>
         )
     }
 }
-//can be changed to MyFirstGrid
+
 export default MyFirstGrid;
 
 

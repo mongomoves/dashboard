@@ -4,21 +4,21 @@ import './cell.css';
 
 
 class Cell extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {
-            title : "",
-            data : "",
-            creator : ""
-            
+            title: "",
+            data: "",
+            creator: ""
+
 
         }
     }
 
 
 
-// i think we will have the data as its own component 
+    // i think we will have the data as its own component 
 
     render() {
         return (
