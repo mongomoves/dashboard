@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Dashboard from "./components/dashboard";
 import Widget from "./components/widget";
 import ValueDisplay from "./components/valuedisplay";
+import CustomNavbar from "./components/customnavbar";
 
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
@@ -14,6 +15,7 @@ class App extends Component {
     render() {
         return (
             <div>
+                <CustomNavbar></CustomNavbar>
                 <Dashboard>
                     <Widget title={"Widget 1"}>
                         <ValueDisplay title={"Dynamic value"} api={"/api/test"} attribute={"value"}/>
@@ -27,6 +29,7 @@ class App extends Component {
                         <ValueDisplay title={"Static value"} number={8}/>
                     </Widget>
                 </Dashboard>
+
             </div>
         );
     }
