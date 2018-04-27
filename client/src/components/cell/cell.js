@@ -9,8 +9,10 @@ class Cell extends Component {
 
         this.state = {
             title: "",
-            data: "",
-            creator: ""
+            data: {},
+            creator: "",
+            date: new Date().now().toString()
+        
 
 
         }
@@ -18,7 +20,6 @@ class Cell extends Component {
 
 
 
-    // i think we will have the data as its own component 
 
     render() {
         return (
@@ -27,6 +28,7 @@ class Cell extends Component {
                 <div className="cellTitle">Title: {this.state.title}</div>
                 <div className="cellData">Data: {this.state.data}</div>
                 <div className="cellCreator">Created by: {this.state.creator}</div>
+                <div className="cellCreator">Created at: {this.state.date}</div>
             </div>
         )
 
