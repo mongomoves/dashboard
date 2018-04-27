@@ -7,17 +7,18 @@ class Cell extends Component {
     constructor(props) {
         super(props);
 
+
+        //this will be passed to the component as props 
         this.state = {
-            title: "",
-            data: {},
-            creator: "",
-            date: new Date().now().toString()
+            title:null,
+            dataURL: null,
+            creator: null,
+            date: new Date().toDateString()
         
 
 
         }
     }
-
 
 
 

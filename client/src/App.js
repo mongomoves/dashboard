@@ -15,7 +15,7 @@ const styles = {
 class App extends Component {
     render() {
         return (
-           <Dashboard/>
+           <MyFirstGrid></MyFirstGrid>
         );
     }
 }
