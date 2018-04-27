@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Dashboard from "./components/dashboard";
 import Widget from "./components/widget";
 import ValueDisplay from "./components/valuedisplay";
-import CustomNavbar from "./components/customnavbar";
+import CustomNavbar from "./components/customnavbar/customnavbar";
 
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
