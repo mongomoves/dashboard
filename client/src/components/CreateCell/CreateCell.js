@@ -34,6 +34,8 @@ class CreateCell extends Component {
                     <label>Enhet:</label><input className="textField" type="text" name="unit" />
 
                     <label>Skapare:</label><input className="textField" type="text" name="author" />
+
+                    <label>Datum:</label><input className="textField" type="text" name="date-time" />
                     
                 </form>
             </div>
