@@ -10,14 +10,19 @@ class Cell extends Component {
 
         //this will be passed to the component as props 
         this.state = {
-            title:null,
-            dataURL: null,
-            creator: null,
+            dataURL: "Fetching..",
             date: new Date().toDateString()
-        
-
 
         }
+
+    }
+
+
+    componentDidMount() {
+
+        //here we should get data from URL
+
+
     }
 
 
@@ -26,10 +31,10 @@ class Cell extends Component {
         return (
 
             <div className="cell">
-                <div className="cellTitle">Title: {this.state.title}</div>
-                <div className="cellData">Data: {this.state.data}</div>
-                <div className="cellCreator">Created by: {this.state.creator}</div>
-                <div className="cellCreator">Created at: {this.state.date}</div>
+                <div className="cellTitle">Title: {this.props.title}</div>
+                <div className="cellCreator">Created by: {this.props.creator}</div>
+                <div className="cellData">Data: {this.state.dataURL}</div>
+                <div className="cellTimeOfCreation">Created at: {this.state.date}</div>
             </div>
         )
 

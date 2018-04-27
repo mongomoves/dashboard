@@ -18,7 +18,7 @@ class MyFirstGrid extends React.Component {
         ];
         return (
             <GridLayout className="layout" layout={layout} cols={12} rowHeight={30} width={1200}>
-                <div className="rez" key="a">a <Cell></Cell></div>
+                <div className="rez" key="a">a</div>
                 <div className="rez" key="b">b</div>
                 <div className="rez" key="c">c</div>
 

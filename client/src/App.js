@@ -15,7 +15,7 @@ const styles = {
 class App extends Component {
     render() {
         return (
-           <MyFirstGrid></MyFirstGrid>
+           <Cell title = "A new Widget" creator = "John"></Cell>
         );
     }
 }
