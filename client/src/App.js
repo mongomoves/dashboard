@@ -3,7 +3,6 @@ import Dashboard from "./components/dashboard";
 import Widget from "./components/widget";
 import ValueDisplay from "./components/valuedisplay";
 import './App.css';
-import NavBar from './components/NavBar/NavBar';
 
 import Modal from './components/Modal/Modal';
 import CreateCell from './components/CreateCell/CreateCell';
