@@ -12,7 +12,6 @@ class Cell extends Component {
             data : "",
             creator : ""
             
-            
 
         }
     }

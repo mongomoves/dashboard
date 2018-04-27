@@ -5,16 +5,15 @@ import GridLayout from 'react-grid-layout';
 
 
 
-
 class MyFirstGrid extends React.Component {
     render() {
         // layout is an array of objects, see the demo for more complete usage
         var layout = [
             { i: 'a', x: 0, y: 0, w: 1, h: 2 },
             { i: 'b', x: 1, y: 0, w: 3, h: 2 },
-            { i: 'c', x: 1, y: 0, w: 3, h: 2 },
-       
-            
+            { i: 'c', x: 1, y: 0, w: 3, h: 2 }
+
+            //kanske vi skall ha x y w h i state hos cellen? 
            
         ];
         return (
