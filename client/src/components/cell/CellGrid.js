@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Cell from './Cell.js'
+import Cell from './cell.js'
 import './cell.css';
 import GridLayout from 'react-grid-layout';
 
