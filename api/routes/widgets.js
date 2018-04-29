@@ -9,7 +9,7 @@ const Graph = require("../models/graph");
 
 /*
  * Handles GET requests to /api/widgets
- * Returns all widgets
+ * Returns number of widgets and all widgets
  */
 router.get('/', function(req, res, next) {
     Widget.find()
@@ -39,7 +39,7 @@ router.post('/', function(req, res, next) {
     // Create the content model based on the kind (value or graph)
     let content;
 
-    if (kind === 'value') {
+    if (kind === 'Value') {
         content = new Value({
             _id: new mongoose.Types.ObjectId(),
             number: req.body.content.number,
@@ -48,7 +48,7 @@ router.post('/', function(req, res, next) {
             unit: req.body.content.unit
         });
     }
-    else if (kind === 'graph') {
+    else if (kind === 'Graph') {
         content = new Graph({
             _id: new mongoose.Types.ObjectId(),
             url: req.body.content.url
@@ -113,6 +113,41 @@ router.get('/:widgetId', function(req, res, next) {
             });
         })
         .catch(err => {
+            res.status(500).json({
+                error: err
+            });
+        });
+});
+
+/*
+ * Handles DELETE requests to /api/widgets/<id>
+ * Returns a message
+ */
+router.delete('/:widgetId', function(req, res, next) {
+    const widgetId = req.params.widgetId;
+
+    Widget.findOneAndRemove({_id: req.params.widgetId})
+        .exec()
+        .then(result => {
+            const kind = result.content.kind;
+            const id = new mongoose.Types.ObjectId(result.content.item);
+
+            if (kind === 'Value') {
+                Value.remove({_id: id}).catch(err => {
+                    console.log(err);
+                });
+            }
+            else if (kind === 'Graph') {
+                Graph.remove({_id: id}).catch(err => {
+                    console.log(err);
+                });
+            }
+
+            res.status(200).json({
+                message: "Widget deleted"
+            });
+        })
+        .catch(err =>{
             res.status(500).json({
                 error: err
             });
