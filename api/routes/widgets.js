@@ -9,14 +9,22 @@ const Graph = require("../models/graph");
 
 /*
  * Handles GET requests to /api/widgets
- * Returns number of widgets and all widgets
+ * Returns amount of widgets and queried widgets (or all if no query is used)
  */
 router.get('/', function(req, res, next) {
-    Widget.find()
+    const kind = req.query.kind;
+
+    let query = {};
+
+    if (kind) {
+        query['content.kind'] = kind;
+    }
+
+    Widget.find(query)
         .populate('content.item')
         .exec()
         .then(widgets => {
-            res.status(200).json({
+             res.status(200).json({
                 count: widgets.length,
                 widgets: widgets
             });
