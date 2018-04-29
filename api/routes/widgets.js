@@ -52,7 +52,14 @@ router.post('/', function(req, res, next) {
         content = new Graph({
             _id: new mongoose.Types.ObjectId(),
             url: req.body.content.url
-        })
+        });
+    }
+    else {
+        return res.status(500).json({
+            error: {
+                message: "'kind' must be one of the following: Value, Graph"
+            }
+        });
     }
 
     // Save the content first because we need the id when we create the widget model.
