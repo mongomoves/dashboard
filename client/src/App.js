@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Dashboard from "./components/dashboard";
 import Widget from "./components/widget";
-import Cell from './components/cell/Cell';
+import Cell from './components/cell/cell';
 import ValueDisplay from "./components/valuedisplay";
 import MyFirstGrid from './components/cell/CellGrid';
 
