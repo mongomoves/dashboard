@@ -22,7 +22,7 @@ class Cell extends Component {
 
     render() {
         return (
-
+            
             <div className="cell">
                 <div className="cellTitle">Title: {this.props.title}</div>
                 <div className="cellCreator">Created by: {this.props.creator}</div>
