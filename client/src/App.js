@@ -1,33 +1,27 @@
 import React, { Component } from 'react';
 import Dashboard from "./components/dashboard";
-import Widget from "./components/widget";
-import ValueDisplay from "./components/valuedisplay";
 
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
 
-const styles = {
-
-};
+//"Cells" to pass to the dashboard
+const cells = [
+    {i: 'a', x: 0, y: 0, w: 1, h: 2},
+    {i: 'b', x: 1, y: 0, w: 3, h: 2},
+    {i: 'c', x: 4, y: 0, w: 1, h: 2}
+  ];
 
 class App extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            cells: cells
+        }
+    }
+    
     render() {
         return (
-            <div>
-                <Dashboard>
-                    <Widget title={"Widget 1"}>
-                        <ValueDisplay title={"Dynamic value"} api={"/api/test"} attribute={"value"}/>
-                    </Widget>
-
-                    <Widget title={"Widget 2"}>
-                        <ValueDisplay title={"Dynamic value"} api={"/api/test"} attribute={"anotherValue"}/>
-                    </Widget>
-
-                    <Widget title={"Widget 3"}>
-                        <ValueDisplay title={"Static value"} number={8}/>
-                    </Widget>
-                </Dashboard>
-            </div>
+            <Dashboard layout={this.state.cells}/>
         );
     }
 }
