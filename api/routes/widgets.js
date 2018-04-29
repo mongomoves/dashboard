@@ -2,21 +2,44 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 
-const Value = require("../models/value");
+// Models
 const Widget = require("../models/widget");
+const Value = require("../models/value");
+const Graph = require("../models/graph");
 
+/*
+ * Handles GET requests to /api/widgets
+ * Returns all widgets
+ */
 router.get('/', function(req, res, next) {
-    res.status(200).json({
-        message: 'Handling GET requests to /widgets'
-    });
+    Widget.find()
+        .populate('content.item')
+        .exec()
+        .then(widgets => {
+            res.status(200).json({
+                count: widgets.length,
+                widgets: widgets
+            });
+        })
+        .catch(err => {
+            res.status(500).json({
+                error: err
+            });
+        });
 });
 
+/*
+ * Handles POST requests to /api/widgets
+ * Creates a new widget
+ * Returns created widget and associated log entry
+ */
 router.post('/', function(req, res, next) {
     const kind = req.body.content.kind;
 
+    // Create the content model based on the kind (value or graph)
     let content;
 
-    if (kind === 'Value') {
+    if (kind === 'value') {
         content = new Value({
             _id: new mongoose.Types.ObjectId(),
             number: req.body.content.number,
@@ -25,13 +48,16 @@ router.post('/', function(req, res, next) {
             unit: req.body.content.unit
         });
     }
-    // else if (req.body.content.kind === 'Graph') ... do stuff
+    else if (kind === 'graph') {
+        content = new Graph({
+            _id: new mongoose.Types.ObjectId(),
+            url: req.body.content.url
+        })
+    }
 
-    content
-        .save()
+    // Save the content first because we need the id when we create the widget model.
+    content.save()
         .then(result => {
-            console.log(result);
-
             const widget = new Widget({
                 _id: new mongoose.Types.ObjectId(),
                 title: req.body.title,
@@ -46,52 +72,50 @@ router.post('/', function(req, res, next) {
             widget
                 .save()
                 .then(result => {
-                    console.log(result);
-
                     res.status(201).json({
-                        message: 'Handling POST requests to /widgets',
-                        createdEntry: widget
+                        message: 'Widget stored',
+                        widget: widget
                     })
                 })
                 .catch(err => {
-                    console.log(err);
-
                     res.status(500).json({
                         error: err
                     })
                 });
         })
         .catch(err =>  {
-            console.log(err);
-
             res.status(500).json({
                 error: err
             });
         });
 });
 
+/*
+ * Handles GET requests to /api/widgets/<id>
+ * Returns the widget with the given id
+ */
 router.get('/:widgetId', function(req, res, next) {
     const id = req.params.widgetId;
 
     Widget.findById(id)
+        .populate('content.item')
         .exec()
-        .then(doc => {
-            console.log("From mongoDB", doc);
+        .then(widget => {
+            if (!widget) {
+                return res.status(404).json({
+                    message: "Widget not found",
+                    id: id
+                });
+            }
 
-            if (doc) {
-                res.status(200).json(doc);
-            }
-            else {
-                res.status(404).json({
-                    message: "No valid entry found for ID " + id,
-                })
-            }
+            res.status(200).json({
+                widget: widget
+            });
         })
         .catch(err => {
-            console.log(err);
             res.status(500).json({
                 error: err
-            })
+            });
         });
 });
 

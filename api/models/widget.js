@@ -2,15 +2,28 @@ const mongoose = require('mongoose');
 
 const widgetSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    title: String,
-    author: String,
+    title: {
+        type: String,
+        required: true
+    },
+    author: {
+        type: String,
+        required: true
+    },
     created: {
         type: Date,
         default: Date.now
     },
-    description: String,
+    description: {
+        type: String,
+        required: true
+    },
     content: {
-        kind: String,
+        kind: {
+            type: String,
+            required: true,
+            enum: ['value', 'graph'],
+        },
         item: {
             type: mongoose.Schema.Types.ObjectId,
             refPath: 'content.kind'
