@@ -6,7 +6,7 @@ import './App.css';
 
 import Modal from './components/Modal/Modal';
 import CreateCell from './components/CreateCell/CreateCell';
-import { Button, Navbar, Header, Brand, NavItem, NavDropdown, Nav, MenuItem, Toggle, Collapse } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'

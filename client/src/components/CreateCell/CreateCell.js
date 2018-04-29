@@ -36,6 +36,13 @@ class CreateCell extends Component {
                     <label>Skapare:</label><input className="textField" type="text" name="author" placeholder="Ange Namn på Skapare..." />
 
                     <label>Datum:</label><input className="textField" type="text" name="date-time" placeholder="Ange Datum..." />
+                    <label>Välj typ:</label>
+                    <select>
+                        <option value="siffra">Siffra</option>
+                        <option value="text">Text</option>
+                        <option value="graf">Graf</option>
+                        <option value="tabell">Tabell</option>
+                    </select>
 
                     <Button className="buttons" bsStyle={this.state.buttonClass}>Skapa Widget</Button>
                     
