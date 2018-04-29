@@ -76,7 +76,7 @@ router.post('/', function(req, res, next) {
             const widget = new Widget({
                 _id: new mongoose.Types.ObjectId(),
                 title: req.body.title,
-                author: req.body.author,
+                creator: req.body.creator,
                 description: req.body.description,
                 content: {
                     kind: kind,
@@ -84,8 +84,7 @@ router.post('/', function(req, res, next) {
                 }
             });
 
-            widget
-                .save()
+            widget.save()
                 .then(result => {
                     res.status(201).json({
                         message: 'Widget stored',

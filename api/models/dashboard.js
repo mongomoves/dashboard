@@ -2,13 +2,28 @@ const mongoose = require('mongoose');
 
 const dashboardSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    title: String,
-    author: String,
-    description: String,
+    title: {
+        type: String,
+        required: true
+    },
+    creator: {
+        type: String,
+        required: true
+    },
+    created: {
+        type: Date,
+        default: Date.now
+    },
+    description: {
+        type: String,
+        required: true
+    },
     widgets: [
         {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Widget",
+            widget: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Widget"
+            },
             pos: {
                 x: Number,
                 y: Number,

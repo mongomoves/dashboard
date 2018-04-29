@@ -6,7 +6,7 @@ const widgetSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    author: {
+    creator: {
         type: String,
         required: true
     },
