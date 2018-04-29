@@ -8,21 +8,15 @@ class Cell extends Component {
         super(props);
 
 
-         
-        this.state = {
-            dataURL: "Fetching data...",
-            date: new Date().toDateString()
 
+        this.state = {
+            date: new Date().toDateString()
         }
 
     }
 
 
-    componentDidMount() {
-
-        //here we should get data from URL
-
-    }
+    componentDidMount() {}
 
 
 
@@ -32,7 +26,7 @@ class Cell extends Component {
             <div className="cell">
                 <div className="cellTitle">Title: {this.props.title}</div>
                 <div className="cellCreator">Created by: {this.props.creator}</div>
-                <div className="cellData">{this.state.dataURL}</div>
+                <iframe src={this.props.dataURL} width="650" height="300" frameborder="0"></iframe>
                 <div className="cellTimeOfCreation">Created on: {this.state.date}</div>
             </div>
         )
