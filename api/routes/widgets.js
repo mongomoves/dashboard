@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const Widget = require("../models/widget");
 const Value = require("../models/value");
 const Graph = require("../models/graph");
+const LogEntry = require("../models/logentry");
 
 /*
  * Handles GET requests to /api/widgets
@@ -49,7 +50,7 @@ router.get('/', function(req, res, next) {
 /*
  * Handles POST requests to /api/widgets
  * Creates a new widget
- * Returns created widget and associated log entry
+ * Returns a message, created widget and associated log entry
  */
 router.post('/', function(req, res, next) {
     const kind = req.body.content.kind;
@@ -96,15 +97,36 @@ router.post('/', function(req, res, next) {
 
             widget.save()
                 .then(result => {
-                    res.status(201).json({
-                        message: 'Widget stored',
-                        widget: widget
-                    })
+                    const logEntry = new LogEntry({
+                        _id: new mongoose.Types.ObjectId(),
+                        creator: widget.creator,
+                        text: widget.creator + " created a widget titled '" + widget.title + "'.",
+                        kind: 'Widget',
+                        contentId: widget._id,
+                        request: {
+                            type: "GET",
+                            url: process.env.SERVER_URL + "/api/widgets/" + widget._id
+                        }
+                    });
+
+                    logEntry.save()
+                        .then(result => {
+                            res.status(201).json({
+                                message: 'Widget stored',
+                                widget: widget,
+                                logEntry: logEntry
+                            });
+                        })
+                        .catch(err => {
+                            res.status(500).json({
+                                error: err
+                            });
+                        });
                 })
                 .catch(err => {
                     res.status(500).json({
                         error: err
-                    })
+                    });
                 });
         })
         .catch(err =>  {

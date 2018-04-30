@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 // Require routes used by the api
 const widgetsRouter = require('./api/routes/widgets');
 const dashboardsRouter = require('./api/routes/dashboards');
+const logRouter = require('./api/routes/log');
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Handle api routes, see files in api/routes for implementation
 app.use('/api/widgets', widgetsRouter);
 app.use('/api/dashboards', dashboardsRouter);
+app.use('/api/log', logRouter);
 
 // Error handling
 app.use((req, res, next) => {
