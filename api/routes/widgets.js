@@ -30,7 +30,7 @@ router.get('/', function(req, res, next) {
 
     Widget.find(query)
         .populate('content.item') // populate item with associated model
-        .sort({"created": -1}) // sort by date descending (newest first)
+        .sort({'created': -1}) // sort by date descending (newest first)
         .limit(limit ? Number(limit) : 0) // limit the number of returned widgets
         .exec()
         .then(widgets => {

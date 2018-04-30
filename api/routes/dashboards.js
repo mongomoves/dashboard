@@ -10,11 +10,24 @@ const Dashboard = require("../models/dashboard");
  * Returns number of dashboards and all dashboards
  */
 router.get('/', function(req, res, next) {
-    Dashboard.find()
+    const creator = req.query.creator;
+    const limit = req.query.limit;
+
+    let query = {};
+
+    // filter by creator
+    if (creator) {
+        query['creator'] = creator;
+    }
+
+    Dashboard.find(query)
+        // populate widget and nested item with associated model
         .populate({
             path: 'widgets.widget',
             populate: {path: 'content.item'}
         })
+        .sort({'created': -1}) // sort by date descending (newest first)
+        .limit(limit ? Number(limit) : 0) // limit the number of returned widgets
         .exec()
         .then(dashboards => {
             res.status(200).json({
