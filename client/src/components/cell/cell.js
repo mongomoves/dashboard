@@ -7,9 +7,10 @@ class Cell extends Component {
     constructor(props) {
         super(props);
 
-
+        
 
         this.state = {
+            layout : this.props.layout,
             date: new Date().toDateString()
         }
 
