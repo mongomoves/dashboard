@@ -6,8 +6,8 @@ import './cell.css';
 class Cell extends Component {
     constructor(props) {
         super(props);
-        
-        
+
+
 
         this.state = {
             date: new Date().toDateString()
@@ -22,14 +22,16 @@ class Cell extends Component {
 
 
 
+
+
     render() {
         return (
-            
-            <div className="cell" key = {this.props}>
-                <div className="cellTitle">Title: {this.props.title}</div>
-                <div className="cellCreator">Created by: {this.props.creator}</div>
-                <iframe src={this.props.dataURL} width="650" height="300" frameborder="0"></iframe>
-                <div className="cellTimeOfCreation">Created on: {this.state.date}</div>
+
+            <div className="cell">
+                <div className="cellTitle"><b>Title: </b> {this.props.title}</div>
+                <div className="cellCreator"><b>Who made me: </b> {this.props.creator}</div>
+                <iframe className="cellData" src={this.props.dataURL} frameBorder="0"></iframe>
+                <div className="cellTimeOfCreation"><b>Created on:</b> {this.state.date}</div>
             </div>
         )
 
@@ -39,6 +41,8 @@ class Cell extends Component {
 
 
 }
+
+//<iframe src={this.props.dataURL} width="650" height="300" frameBorder="0"></iframe>
 
 
 export default Cell;

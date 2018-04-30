@@ -36,8 +36,7 @@ class Dashboard extends Component {
         return _.map(this.state.layout, function(i) {
             return(
                 <div key = {i.i}>
-                     <Cell key></Cell>
-
+                     <Cell title = "A new fun widget" creator = "Sebastian" dataURL></Cell>
                 </div>
                    
                         
