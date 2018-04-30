@@ -13,15 +13,25 @@ const Graph = require("../models/graph");
  */
 router.get('/', function(req, res, next) {
     const kind = req.query.kind;
+    const creator = req.query.creator;
+    const limit = req.query.limit;
 
     let query = {};
 
+    // filter by kind
     if (kind) {
         query['content.kind'] = kind;
     }
 
+    // filter by creator
+    if (creator) {
+        query['creator'] = creator;
+    }
+
     Widget.find(query)
-        .populate('content.item')
+        .populate('content.item') // populate item with associated model
+        .sort({"created": -1}) // sort by date descending (newest first)
+        .limit(limit ? Number(limit) : 0) // limit the number of returned widgets
         .exec()
         .then(widgets => {
              res.status(200).json({
@@ -146,6 +156,7 @@ router.delete('/:widgetId', function(req, res, next) {
             const kind = result.content.kind;
             const id = new mongoose.Types.ObjectId(result.content.item);
 
+            // Also remove documents for dynamic references
             if (kind === 'Value') {
                 Value.remove({_id: id}).catch(err => {
                     console.log(err);

@@ -5,15 +5,16 @@ const mongoose = require('mongoose');
 // Models
 const Dashboard = require("../models/dashboard");
 
-//TODO: Might be overkill to populate with widget references, think about just using widget ids instead
-
 /*
  * Handles GET requests to /api/dashboards
  * Returns number of dashboards and all dashboards
  */
 router.get('/', function(req, res, next) {
     Dashboard.find()
-        .populate('widgets.widget')
+        .populate({
+            path: 'widgets.widget',
+            populate: {path: 'content.item'}
+        })
         .exec()
         .then(dashboards => {
             res.status(200).json({
