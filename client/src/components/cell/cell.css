@@ -1,10 +1,15 @@
+
+  
+
 .cell {
-        position: relative;
+       /* position: relative;*/
         background-color:whitesmoke;
-        width: 650px;
+        /*width: 650px;
         height: 360px;
+        
         padding-top: 40px;
         margin-top: 40px;
+        */
         box-shadow: 0px 10px 3px #888888;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         font-weight: bold;
@@ -26,8 +31,9 @@
 }
 
 .cellData{
-    position: relative;
+   /* position: relative;*/
     left: 10px;
     right: 10px;
     width: 80%;
 }
+

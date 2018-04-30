@@ -11,17 +11,16 @@ import 'react-resizable/css/styles.css'
 
 //"Cells" to pass to the dashboard
 const cells = [
-    {i: 'a', x: 0, y: 0, w: 1, h: 2, title: 'Hello'},
-    {i: 'b', x: 1, y: 0, w: 3, h: 2, title: 'World'},
-    {i: 'c', x: 4, y: 0, w: 1, h: 2, title: '!!!'}
+    {i: 'a', x: 0, y: 0, w: 20, h: 2},
+    {i: 'b', x: 1, y: 0, w: 3, h: 2},
+    {i: 'c', x: 4, y: 0, w: 1, h: 2}
   ];
 
 class App extends Component {
     render() {
         return (
         <div>
-            <Dashboard>{cells}</Dashboard>
-           
+            <Dashboard layout = {cells}/>
         </div>);
        
     };

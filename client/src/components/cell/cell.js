@@ -6,25 +6,26 @@ import './cell.css';
 class Cell extends Component {
     constructor(props) {
         super(props);
-
+        
         
 
         this.state = {
-            layout : this.props.layout,
             date: new Date().toDateString()
         }
 
     }
 
 
-    componentDidMount() {}
+    componentDidMount() {
+
+    }
 
 
 
     render() {
         return (
             
-            <div className="cell">
+            <div className="cell" key = {this.props}>
                 <div className="cellTitle">Title: {this.props.title}</div>
                 <div className="cellCreator">Created by: {this.props.creator}</div>
                 <iframe src={this.props.dataURL} width="650" height="300" frameborder="0"></iframe>

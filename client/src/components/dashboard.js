@@ -35,11 +35,15 @@ class Dashboard extends Component {
     generateDOM() {
         return _.map(this.state.layout, function(i) {
             return(
-                <div key={i.i}>
-                    <Jumbotron>
-                    <h1>{i.title}</h1>
-                    </Jumbotron>
+                <div key = {i.i}>
+                     <Cell key></Cell>
+
                 </div>
+                   
+                        
+                    
+                   
+                
             )
         });
     }
@@ -71,3 +75,6 @@ class Dashboard extends Component {
 }
 
 export default Dashboard;
+
+
+//<Cell  title = "A new widget" creator = "John" dataURL = "https://snapshot.raintank.io/dashboard-solo/snapshot/y7zwi2bZ7FcoTlB93WN7yWO4aMiz3pZb?from=1493369923321&to=1493377123321&panelId=4"></Cell>
