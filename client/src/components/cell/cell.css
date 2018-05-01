@@ -1,7 +1,7 @@
 
 .cell {
         border:#FFA500;
-        border-style:outset;
+        border-style: solid;
         background-color:whitesmoke;
         width: inherit;
         height: inherit;
@@ -34,3 +34,5 @@
 .cellCreator{
     background-color:white;
 }
+
+

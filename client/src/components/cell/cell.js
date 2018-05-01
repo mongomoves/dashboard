@@ -19,12 +19,15 @@ class Cell extends Component {
     componentDidMount() {
 
     }
-
+   
+ 
 
 
 
 
     render() {
+
+
         return (
 
             <div className="cell">
