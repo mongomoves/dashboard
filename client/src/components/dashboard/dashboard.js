@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {Responsive, WidthProvider} from 'react-grid-layout';
 import _ from 'lodash';
-import {Jumbotron} from 'react-bootstrap';
 
 const ResponsiveGRL = WidthProvider(Responsive);
 
@@ -19,10 +18,11 @@ class Dashboard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            layout: this.props.layout,
+            layout: this.props.data.layout,
+            cells: this.props.data.cells
         };
 
-        this.onLayoutChange = this.onLayoutChange.bind(this);
+       this.onLayoutChange = this.onLayoutChange.bind(this);
     }
 
     /**
@@ -30,12 +30,12 @@ class Dashboard extends Component {
      * TODO: Change to actual Cell components that is to be displayed
      */
     generateDOM() {
-        return _.map(this.state.layout, function(i) {
+        return _.map(this.state.cells, function(i) {
             return(
                 <div key={i.i}>
-                    <Jumbotron>
-                    <h1>{i.i}</h1>
-                    </Jumbotron>
+                    <p>{i.title}</p>
+                    <p>{i.iframe}</p>
+                    <p>{i.desc}</p>
                 </div>
             )
         });
@@ -43,13 +43,15 @@ class Dashboard extends Component {
 
     /**
      * Updates specific state with passed props, unless new props are same as old state.
+     * TODO: Make it so it doesn't break it.
      * @param {*} nextProps 
      * @param {*} prevState 
      */
     static getDerivedStateFromProps(nextProps, prevState) {
         if(nextProps.layout !== prevState.layout) {
             return {
-                layout: nextProps.layout
+                layout: nextProps.layout,
+                cells: nextProps.cells
             }
         }
         return null;
@@ -59,9 +61,13 @@ class Dashboard extends Component {
      * Likely the function fired when layout should be saved to localStorage.
      */
     onLayoutChange(layout) {
-        this.setState(prevstate => ({
-            layout: layout
-        }));
+        console.log('layout: ' + JSON.stringify(layout));
+        if(layout) {
+            this.setState(prevstate => ({
+                layout: layout
+            }));
+            this.props.onLayoutChanged(this.state.layout);
+        }
     }
 
     render() {
