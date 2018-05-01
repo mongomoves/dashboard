@@ -8,7 +8,7 @@ import 'react-resizable/css/styles.css'
 const data = {
     layout: [
         {i: 'a', x: 0, y: 0, w: 1, h: 2},
-        {i: 'b', x: 1, y: 0, w: 3, h: 2},
+        {i: 'b', x: 1, y: 0, w: 1, h: 2},
         {i: 'c', x: 4, y: 0, w: 1, h: 2}
     ],
     cells: [
@@ -24,11 +24,11 @@ class App extends Component {
         super(props);
         this.state = {
             //Placeholder state initialisation
-            // layout: data.layout,
+            layout: data.layout,
             cells: data.cells
         }
-        this.saveToLocalStorage = this.saveToLocalStorage.bind(this);
         this.getFromLocalStorage = this.getFromLocalStorage.bind(this);
+        this.saveToLocalStorage = this.saveToLocalStorage.bind(this);
         this.onLayoutChanged = this.onLayoutChanged.bind(this);
     }
 
@@ -37,22 +37,24 @@ class App extends Component {
      * layouts.
      */
     componentDidMount() {
-        this.setState(prevState => ({
-            layout: (this.getFromLocalStorage() || [])
-        }));
+        // this.setState(prevState => ({
+        //     layout: JSON.parse(getFromLocalStorage())
+        // }));
     }
 
     //Saves all the data to localStorage
     saveToLocalStorage(data) {
+        console.log("data to be stored: " + data);
         if(localStorage) {
-            localStorage.setItem(localStorageKey, JSON.stringify(data));
+           localStorage.setItem(localStorageKey, data);
         }
     }
     //Gets all the data from localStorage
     getFromLocalStorage() {
         if(localStorage) {
-            return JSON.parse(localStorage.getItem(localStorageKey));
+            return localStorage.getItem(localStorageKey);
         }
+        return null;
     }
 
     /**
@@ -61,20 +63,23 @@ class App extends Component {
      * TODO: Save both layout and cells
      */
     onLayoutChanged(changedLayout) {
+        console.log("changedlayout: " + JSON.stringify(changedLayout));
         if(changedLayout) {
-        this.setState(prevState => ({
-            layout: changedLayout
-        }));
-        this.saveToLocalStorage(this.state.layout);
+            this.setState(prevState => ({
+                layout: changedLayout
+            }));
+            this.saveToLocalStorage(JSON.stringify(this.state.layout));
         }
     }
     
     render() {
         return (
-            <Dashboard 
-                onLayoutChanged={this.onLayoutChanged}
-                data={{layout: this.state.layout, cells: this.state.cells}}
-            />
+            <div>
+                <Dashboard 
+                    onLayoutChanged={this.onLayoutChanged}
+                    data={{layout: this.state.layout, cells: this.state.cells}}
+                />
+            </div>
         );
     }
 }
