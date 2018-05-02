@@ -7,30 +7,28 @@ import CustomNavbar from "./components/customnavbar/customnavbar";
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
 
-const styles = {
-
-};
+//"Cells" to pass to the dashboard
+const cells = [
+    {i: 'a', x: 0, y: 0, w: 1, h: 2},
+    {i: 'b', x: 1, y: 0, w: 3, h: 2},
+    {i: 'c', x: 4, y: 0, w: 1, h: 2}
+  ];
 
 class App extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            cells: cells
+        }
+    }
+    
     render() {
         return (
             <div>
                 <CustomNavbar></CustomNavbar>
-                <Dashboard>
-                    <Widget title={"Widget 1"}>
-                        <ValueDisplay title={"Dynamic value"} api={"/api/test"} attribute={"value"}/>
-                    </Widget>
-
-                    <Widget title={"Widget 2"}>
-                        <ValueDisplay title={"Dynamic value"} api={"/api/test"} attribute={"anotherValue"}/>
-                    </Widget>
-
-                    <Widget title={"Widget 3"}>
-                        <ValueDisplay title={"Static value"} number={8}/>
-                    </Widget>
-                </Dashboard>
-
+                <Dashboard layout={this.state.cells}/>
             </div>
+
         );
     }
 }
