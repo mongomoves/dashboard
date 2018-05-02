@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {Responsive, WidthProvider} from 'react-grid-layout';
 import _ from 'lodash';
-import {Jumbotron} from 'react-bootstrap';
 
 const ResponsiveGRL = WidthProvider(Responsive);
 
@@ -19,9 +18,11 @@ class Dashboard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            layout: this.props.layout,
-        };
-
+            layouts: {
+                lg: this.props.data.layout
+            },
+            cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
+        }
         this.onLayoutChange = this.onLayoutChange.bind(this);
     }
 
@@ -30,47 +31,33 @@ class Dashboard extends Component {
      * TODO: Change to actual Cell components that is to be displayed
      */
     generateDOM() {
-        return _.map(this.state.layout, function(i) {
+        return _.map(this.props.data.cells, function(i) {
             return(
                 <div key={i.i}>
-                    <Jumbotron>
-                    <h1>{i.i}</h1>
-                    </Jumbotron>
+                    <p>{i.title}</p>
+                    <p>{i.iframe}</p>
+                    <p>{i.desc}</p>
                 </div>
             )
         });
     }
 
     /**
-     * Updates specific state with passed props, unless new props are same as old state.
-     * @param {*} nextProps 
-     * @param {*} prevState 
-     */
-    static getDerivedStateFromProps(nextProps, prevState) {
-        if(nextProps.layout !== prevState.layout) {
-            return {
-                layout: nextProps.layout
-            }
-        }
-        return null;
-    }
-
-    /**
      * Likely the function fired when layout should be saved to localStorage.
      */
     onLayoutChange(layout) {
-        this.setState(prevstate => ({
-            layout: layout
-        }));
+        this.props.onLayoutChanged(layout);
     }
 
     render() {
         return(
             <ResponsiveGRL
-                className={this.state.className}
-                layout={this.state.layout}
+                className='layout'
+                layouts={this.state.layouts}
                 breakpoints={{lg:1200}}
                 onLayoutChange={this.onLayoutChange}
+                cols={this.state.cols}
+                rowHeight={30}
             >
                 {this.generateDOM()}
             </ResponsiveGRL>
