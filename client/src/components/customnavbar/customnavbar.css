@@ -1,0 +1,8 @@
+.Navbar {
+    background: Grey;
+    color:black; 
+} 
+
+.navbar-inverse .navbar-nav>li>a {
+    color: orange;
+}

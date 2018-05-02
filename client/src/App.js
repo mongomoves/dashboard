@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import Dashboard from "./components/dashboard/dashboard.js";
+import Dashboard from "./components/dashboard/dashboard";
+import Widget from "./components/widget";
+import ValueDisplay from "./components/valuedisplay";
+import CustomNavbar from "./components/customnavbar/customnavbar";
 
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
@@ -44,6 +47,7 @@ class App extends Component {
     render() {
         return (
             <div>
+                <CustomNavbar/>
                 <Dashboard 
                     onLayoutChanged={this.onLayoutChanged}
                     data={{layout: this.state.layout, cells: this.state.cells}}
