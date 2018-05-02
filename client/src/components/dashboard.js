@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Responsive, WidthProvider} from 'react-grid-layout';
 import _ from 'lodash';
-import Cell from './cell/cell.js';
+import Cell from './cell/cell'
 import {Jumbotron} from 'react-bootstrap';
 
 const ResponsiveGRL = WidthProvider(Responsive);
