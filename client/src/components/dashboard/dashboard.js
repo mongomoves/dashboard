@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Responsive, WidthProvider} from 'react-grid-layout';
 import _ from 'lodash';
 import {Jumbotron, Button} from 'react-bootstrap';
+import Cell from '../cell/cell'
 
 
 const ResponsiveGRL = WidthProvider(Responsive);
@@ -38,11 +39,7 @@ class Dashboard extends Component {
         return _.map(this.props.data.cells, function(i) {
             return(
                 <div key={i.i}>
-
-                    <p>{i.title}</p>
-                    <p>{i.iframe}</p>
-                    <p>{i.desc}</p>
-
+                    <Cell title = "A new fun widget" creator = "Sebastian" dataURL= "https://snapshot.raintank.io/dashboard-solo/snapshot/y7zwi2bZ7FcoTlB93WN7yWO4aMiz3pZb?from=1493369923321&to=1493377123321&panelId=4"></Cell>
                 </div>
             )
         });
