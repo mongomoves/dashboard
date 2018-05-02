@@ -1,0 +1,38 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.textField {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 5px;
+    width: 400px;
+}
+
+label {
+    align-content: right;
+    margin-top: 5px;
+}
+
+.buttons {
+    margin: 10px;
+    text-align: center;
+}
+
+.createHeader {
+    border-bottom:solid black 1px;
+    width:108%;
+    margin-left:-18px;
+    text-align: center;
+    
+}
+
+select {
+    display: block;
+    margin: 0 auto;
+    width: 400px;
+    padding: 4px;
+
+}

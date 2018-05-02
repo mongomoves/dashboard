@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import {Responsive, WidthProvider} from 'react-grid-layout';
 import _ from 'lodash';
+import {Jumbotron, Button} from 'react-bootstrap';
+
 
 const ResponsiveGRL = WidthProvider(Responsive);
 
@@ -26,6 +28,8 @@ class Dashboard extends Component {
         this.onLayoutChange = this.onLayoutChange.bind(this);
     }
 
+    
+
     /**
      * Builds and returns elements based on whatever is found in state.layout.
      * TODO: Change to actual Cell components that is to be displayed
@@ -34,9 +38,11 @@ class Dashboard extends Component {
         return _.map(this.props.data.cells, function(i) {
             return(
                 <div key={i.i}>
+
                     <p>{i.title}</p>
                     <p>{i.iframe}</p>
                     <p>{i.desc}</p>
+
                 </div>
             )
         });
@@ -51,6 +57,7 @@ class Dashboard extends Component {
 
     render() {
         return(
+            
             <ResponsiveGRL
                 className='layout'
                 layouts={this.state.layouts}
@@ -60,7 +67,9 @@ class Dashboard extends Component {
                 rowHeight={30}
             >
                 {this.generateDOM()}
+
             </ResponsiveGRL>
+            
         );
     }
 }
