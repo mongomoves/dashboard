@@ -5,6 +5,7 @@ import {Jumbotron, Button} from 'react-bootstrap';
 import Cell from '../cell/cell'
 
 
+
 const ResponsiveGRL = WidthProvider(Responsive);
 
 /*
@@ -33,7 +34,7 @@ class Dashboard extends Component {
 
     /**
      * Builds and returns elements based on whatever is found in state.layout.
-     * TODO: Change to actual Cell components that is to be displayed
+     * 
      */
     generateDOM() {
         return _.map(this.props.data.cells, function(i) {
