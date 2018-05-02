@@ -16,7 +16,7 @@ class Cell extends Component {
     }
 
 
-
+    //renders the cell 
     render() {
         return (
             <div className="cellBody">
