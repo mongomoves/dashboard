@@ -11,7 +11,7 @@ const ResponsiveGRL = WidthProvider(Responsive);
 class Dashboard extends Component {
     static defaultProps = {
         className: 'layout',
-        // rowHeight: 15,
+        rowHeight: 30,
         cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
     };
 
@@ -20,7 +20,8 @@ class Dashboard extends Component {
         this.state = {
             layouts: {
                 lg: this.props.data.layout
-            }
+            },
+            cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
         }
         this.onLayoutChange = this.onLayoutChange.bind(this);
     }
@@ -55,6 +56,8 @@ class Dashboard extends Component {
                 layouts={this.state.layouts}
                 breakpoints={{lg:1200}}
                 onLayoutChange={this.onLayoutChange}
+                cols={this.state.cols}
+                rowHeight={30}
             >
                 {this.generateDOM()}
             </ResponsiveGRL>

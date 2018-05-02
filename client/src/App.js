@@ -27,48 +27,18 @@ class App extends Component {
             layout: data.layout,
             cells: data.cells
         }
-        this.getFromLocalStorage = this.getFromLocalStorage.bind(this);
-        this.saveToLocalStorage = this.saveToLocalStorage.bind(this);
         this.onLayoutChanged = this.onLayoutChanged.bind(this);
-    }
-
-    /**
-     * Lifecycle method. When component is mounted, check for stored
-     * layouts.
-     */
-    componentDidMount() {
-        // this.setState(prevState => ({
-        //     layout: JSON.parse(getFromLocalStorage())
-        // }));
-    }
-
-    //Saves all the data to localStorage
-    saveToLocalStorage(data) {
-        console.log("data to be stored: " + data);
-        if(localStorage) {
-           localStorage.setItem(localStorageKey, data);
-        }
-    }
-    //Gets all the data from localStorage
-    getFromLocalStorage() {
-        if(localStorage) {
-            return localStorage.getItem(localStorageKey);
-        }
-        return null;
     }
 
     /**
      * Callback function. Sets new layout state.
      * @param {*} changedLayout 
-     * TODO: Save both layout and cells
      */
     onLayoutChanged(changedLayout) {
-        console.log("changedlayout: " + JSON.stringify(changedLayout));
-        if(changedLayout) {
-            this.setState(prevState => ({
-                layout: changedLayout
-            }));
-            this.saveToLocalStorage(JSON.stringify(this.state.layout));
+            if(changedLayout) {
+                this.setState(prevState => ({
+                    layout: changedLayout
+                }));
         }
     }
     
