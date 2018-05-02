@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Dashboard from "./components/dashboard";
+import Dashboard from "./components/dashboard/dashboard";
 import Widget from "./components/widget";
 import ValueDisplay from "./components/valuedisplay";
 import CustomNavbar from "./components/customnavbar/customnavbar";
