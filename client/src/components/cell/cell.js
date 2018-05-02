@@ -16,13 +16,6 @@ class Cell extends Component {
     }
 
 
-    componentDidMount() {
-        
-
-    }
-
-
-
 
     render() {
         return (
@@ -40,7 +33,6 @@ class Cell extends Component {
 
 
 }
-
 
 
 

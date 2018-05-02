@@ -3,7 +3,7 @@ import Dashboard from "./components/dashboard";
 import Widget from "./components/widget";
 import Cell from './components/cell/cell';
 import ValueDisplay from "./components/valuedisplay";
-import MyFirstGrid from './components/cell/CellGrid';
+
 
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
