@@ -31,11 +31,11 @@ class CustomNavbar extends Component {
                   <MenuItem eventKey={3.1}>Create widget</MenuItem>
                   <MenuItem eventKey={3.2}>Load widgets</MenuItem>
                   <MenuItem divider />
-                  <MenuItem eventKey={3.1}>Save your Dashboard</MenuItem>
-                  <MenuItem eventKey={3.3}>Edit your Dashboard</MenuItem>
-                  <MenuItem eventKey={3.2}>Load Dashboards</MenuItem>
+                  <MenuItem eventKey={3.3}>Save your Dashboard</MenuItem>
+                  <MenuItem eventKey={3.4}>Edit your Dashboard</MenuItem>
+                  <MenuItem eventKey={3.5}>Load Dashboards</MenuItem>
                   <MenuItem divider />
-                  <MenuItem eventKey={3.3}>Clear your Dashboard</MenuItem>
+                  <MenuItem eventKey={3.6}>Clear your Dashboard</MenuItem>
                 </NavDropdown>
               </Nav>
             </Navbar.Collapse>
