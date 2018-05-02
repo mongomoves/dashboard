@@ -35,28 +35,16 @@ class App extends Component {
         kibana: false,
        
     }
-
+    //Hides all modal windows.
     modalCancelHandler = () => {
         this.setState({ modal: false, grafana: false, kibana: false });
     }
 
+    //Shows the modal window with form.
     modalShowHandler = () => {
         this.setState({ modal: true });
     }
 
-    kibanaShowHandler = () => {
-        this.setState({ kibana: true, modal: false });
-        
-    }
-
-    hideKibanaHandler = () => {
-        this.setState({hideKibana: true, modal: false});
-    }
-
-
-    grafanaShowHandler = () => {
-        this.setState({ grafana: true, modal: false });
-    }
     
     render() {
         return (
