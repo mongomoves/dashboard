@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import './cell.css';
 
-
+/** This component represent a cell, returns a div with title, creator, timeOfCreation and an iframe */
 
 class Cell extends Component {
     constructor(props) {
         super(props);
 
 
-
+        //sets the state to time of instantiation 
         this.state = {
             date: new Date().toDateString()
         }
@@ -18,19 +18,15 @@ class Cell extends Component {
 
     componentDidMount() {
 
+
     }
-   
- 
 
 
 
 
     render() {
-
-
         return (
-
-            <div className="cell">
+            <div className="cellBody">
                 <div className="cellTitle"><b>Title: </b> {this.props.title}</div>
                 <div className="cellCreator"><b>Who made me: </b> {this.props.creator}</div>
                 <iframe className="cellData" src={this.props.dataURL} frameBorder="0"></iframe>
@@ -45,7 +41,7 @@ class Cell extends Component {
 
 }
 
-//<iframe src={this.props.dataURL} width="650" height="300" frameBorder="0"></iframe>
+
 
 
 export default Cell;
