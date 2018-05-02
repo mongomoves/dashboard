@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Dashboard from "./components/dashboard/Dashboard.js";
+import Dashboard from "./components/dashboard/dashboard.js";
 
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
@@ -17,7 +17,6 @@ const data = {
         {i: 'c', title: 'Test3', iframe: 'Iframe3', desc: 'Desc3'},
     ]
 };
-const localStorageKey = 'dashdata';
 
 class App extends Component {
     constructor(props) {
