@@ -17,7 +17,7 @@ class Cell extends Component {
 
 
     componentDidMount() {
-
+        
 
     }
 
