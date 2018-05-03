@@ -16,36 +16,35 @@ class CreateCell extends Component {
     }
 
     
-    // , dataSource: '', descr: '', value: '', unit: '', author: '', dateTime: ''
-
+    //Changes the title state to the input in the "Title" input box.
     handleTitleChange = (e) => {
         this.setState({title: e.target.value})
     }
-
+    //Changes the dataSource state to the input in the "Datakälla/URL" input box.
     handleDataSourceChange = (e) => {
         this.setState({dataSource: e.target.value})
     }
-
+    //Changes the descr state to the input in the "Beskrivning" input box.
     handleDescrChange = (e) => {
         this.setState({descr: e.target.value})
     }
-
+    //Changes the value state to the input in the "Värde" input box.
     handleValueChange = (e) => {
         this.setState({value: e.target.value})
     }
-
+    //Changes the title state to the input in the "Enhet" input box.
     handleUnitChange = (e) => {
         this.setState({unit: e.target.value})
     }
-
+    //Changes the author state to the input in the "Skapare" input box.
     handleAuthorChange = (e) => {
         this.setState({author: e.target.value})
     }
-
+    //Changes the dateTime state to the input in the "Datum" input box.
     handleDateTimeChange = (e) => {
         this.setState({dateTime: e.target.value})
     }
-
+    //Clears the state when the submit button is clicked.
     handleClearState = () => {
         this.setState({
             title: '',
@@ -62,11 +61,6 @@ class CreateCell extends Component {
         return (
             <div>
                 <h3 className="createHeader">Skapa en ny {this.props.widgetType} widget!</h3>
-                <div className="wrapper">
-                {/* <Button onClick={this.changeColorHandler} className="buttons" bsStyle={this.state.buttonClass} >Siffra</Button>
-                <Button className="buttons">Text</Button>
-                <Button className="buttons">Graf</Button><Button className="buttons">Tabell</Button> */}
-                </div>
                 <form>
                     <label>Titel:</label><input className="textField" type="text" name="title" value={this.state.title} onChange={this.handleTitleChange} placeholder="Ange titel på widget..." />
                     
