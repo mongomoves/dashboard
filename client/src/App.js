@@ -38,7 +38,9 @@ class App extends Component {
         this.state = {
             //Placeholder state initialisation
             layout: data.layout,
-            cells: data.cells
+            cells: data.cells,
+            modal: false,
+            
         }
         this.onLayoutChanged = this.onLayoutChanged.bind(this);
     }
@@ -55,12 +57,7 @@ class App extends Component {
         }
     }
 
-    state = {
-        modal: false,
-        grafana: false,
-        kibana: false,
-       
-    }
+    
     //Hides all modal windows.
     modalCancelHandler = () => {
         this.setState({ modal: false, grafana: false, kibana: false });
@@ -76,12 +73,12 @@ class App extends Component {
         return (
             <div>
 
-            <CustomNavbar/>
+            <CustomNavbar show={this.modalShowHandler} />
             <Dashboard  
                   onLayoutChanged={this.onLayoutChanged}
                   data={{layout: this.state.layout, cells: this.state.cells}}
             />
-            <Modal show={this.state.modal} modalClosed={this.modalCancelHandler}>
+                <Modal show={this.state.modal} modalClosed={this.modalCancelHandler}>
                     <CreateCell widgetType="Kibana/Grafana" />
                 </Modal>
                 <Button bsStyle="primary" onClick={this.modalShowHandler}>Skapa ny widget</Button>

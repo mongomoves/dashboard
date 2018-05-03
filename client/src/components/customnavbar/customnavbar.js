@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './customnavbar.css';
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem, Glyphicon } from 'react-bootstrap';
+import Modal from '../Modal/Modal';
+
 
 
 class CustomNavbar extends Component {
@@ -37,9 +39,7 @@ class CustomNavbar extends Component {
               </Nav>
             </Navbar.Collapse>
           </Navbar>
-
         );
-        
     }
 }
 
