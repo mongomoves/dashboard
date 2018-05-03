@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 // Models
 const Dashboard = require("../models/dashboard");
 const LogEntry = require("../models/logentry");
+const Widget = require("../models/widget");
 
 /*
  * Handles GET requests to /api/dashboards
@@ -25,7 +26,7 @@ router.get('/', function(req, res, next) {
         // populate widget and nested item with associated model
         .populate({
             path: 'widgets.widget',
-            populate: {path: 'content.item'}
+            populate: {path: 'content'}
         })
         .sort({'created': -1}) // sort by date descending (newest first)
         .limit(limit ? Number(limit) : 0) // limit the number of returned dashboards
@@ -33,7 +34,38 @@ router.get('/', function(req, res, next) {
         .then(dashboards => {
             res.status(200).json({
                 count: dashboards.length,
-                dashboards: dashboards
+                // Instead of sending back the document we flatten the respone
+                // Makes the api easier to use, but adds a bit more work
+                dashboards: dashboards.map(dashboard => {
+                    return {
+                        _id: dashboard._id,
+                        title: dashboard.title,
+                        creator: dashboard.creator,
+                        created: dashboard.created,
+                        description: dashboard.description,
+                        widgets: dashboard.widgets.map(widget => {
+                            return {
+                                pos: widget.pos,
+                                widget: {
+                                    _id: widget.widget._id,
+                                    title: widget.widget.title,
+                                    creator: widget.widget.creator,
+                                    created: widget.widget.created,
+                                    description: widget.widget.description,
+                                    kind: widget.widget.kind,
+
+                                    number: widget.widget.content.number,
+                                    dataSource: widget.widget.content.dataSource,
+                                    attribute: widget.widget.content.attribute,
+                                    query: widget.widget.content.query,
+                                    unit: widget.widget.content.unit,
+
+                                    graphUrl: widget.widget.content.graphUrl
+                                }
+                            }
+                        })
+                    }
+                })
             });
         })
         .catch(err => {
@@ -49,25 +81,43 @@ router.get('/', function(req, res, next) {
  * Returns a message, created dashboard and associated log entry
  */
 router.post('/', function(req, res, next) {
+    //TODO: validate passed in widget ids to make sure they exist (look into express middleware)
+
+    // Create dashboard model from request body
     const dashboard = new Dashboard({
         _id: new mongoose.Types.ObjectId(),
         title: req.body.title,
         creator: req.body.creator,
         description: req.body.description,
-        widgets: req.body.widgets
+        widgets: req.body.widgets.map(widget => {
+            return {
+                widget: widget.id,
+                pos: {
+                    x: widget.x,
+                    y: widget.y,
+                    w: widget.w,
+                    h: widget.h
+                }
+            }
+        })
     });
 
     dashboard.save()
         .then(result => {
+            const {title, creator, _id, created} = result;
+            const logKind = 'Dashboard';
+
             const logEntry = new LogEntry({
                 _id: new mongoose.Types.ObjectId(),
-                creator: dashboard.creator,
-                text: dashboard.creator + " created a dashboard titled '" + dashboard.title + "'.",
-                kind: 'Dashboard',
-                contentId: dashboard._id,
+                title: title,
+                creator: creator,
+                created: created,
+                kind: logKind,
+                text: creator + " created a " + logKind + " titled '" + title + "'.",
+                contentId: _id,
                 request: {
                     type: "GET",
-                    url: process.env.SERVER_URL + "/api/dashboards/" + dashboard._id
+                    url: process.env.SERVER_URL + "/api/dashboards/" + _id
                 }
             });
 
@@ -76,7 +126,6 @@ router.post('/', function(req, res, next) {
                     res.status(201).json({
                         message: 'Dashboard stored',
                         dashboard: dashboard,
-                        logEntry: logEntry
                     });
                 })
                 .catch(err => {
@@ -103,7 +152,7 @@ router.get('/:dashboardId', function(req, res, next) {
     Dashboard.findById(id)
         .populate({
             path: 'widgets.widget',
-            populate: {path: 'content.item'}
+            populate: {path: 'content'}
         })
         .exec()
         .then(dashboard => {
@@ -115,7 +164,36 @@ router.get('/:dashboardId', function(req, res, next) {
             }
 
             res.status(200).json({
-                dashboard: dashboard
+                // Instead of sending back the document we flatten the respone
+                // Makes the api easier to use, but adds a bit more work
+                dashboard: {
+                    _id: dashboard._id,
+                    title: dashboard.title,
+                    creator: dashboard.creator,
+                    created: dashboard.created,
+                    description: dashboard.description,
+                    widgets: dashboard.widgets.map(widget => {
+                        return {
+                            pos: widget.pos,
+                            widget: {
+                                _id: widget.widget._id,
+                                title: widget.widget.title,
+                                creator: widget.widget.creator,
+                                created: widget.widget.created,
+                                description: widget.widget.description,
+                                kind: widget.widget.kind,
+
+                                number: widget.widget.content.number,
+                                dataSource: widget.widget.content.dataSource,
+                                attribute: widget.widget.content.attribute,
+                                query: widget.widget.content.query,
+                                unit: widget.widget.content.unit,
+
+                                graphUrl: widget.widget.content.graphUrl
+                            }
+                        }
+                    })
+                }
             });
         })
         .catch(err => {
@@ -136,7 +214,8 @@ router.delete('/:dashboardId', function(req, res, next) {
         .exec()
         .then(result => {
             res.status(200).json({
-                message: "Dashboard deleted"
+                message: "Dashboard deleted",
+                id: id
             });
         })
         .catch(err =>{
