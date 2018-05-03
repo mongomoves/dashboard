@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './customnavbar.css';
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem, Glyphicon } from 'react-bootstrap';
+import Modal from '../Modal/Modal';
+
 
 
 class CustomNavbar extends Component {
@@ -28,7 +30,7 @@ class CustomNavbar extends Component {
               </Nav>
               <Nav pullRight>
               <NavDropdown eventKey={3} title={this.state.cog} id="basic-nav-dropdown">
-                  <MenuItem eventKey={3.1}>Save Dashboard</MenuItem>
+                  <MenuItem eventKey={3.1} onClick={this.props.show}>Save Dashboard</MenuItem>
                   <MenuItem eventKey={3.2}>Load Dashboards</MenuItem>
                   <MenuItem eventKey={3.3}>Edit Dashboard</MenuItem>
                   <MenuItem divider />
