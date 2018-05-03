@@ -5,14 +5,17 @@ import './CreateCell.css';
 
 class CreateCell extends Component {
 
-    state = {
-        title: '',
-        dataSource: '',
-        descr: '',
-        value: '',
-        unit: '',
-        author: '',
-        dateTime: ''
+    constructor(props) {
+        super(props);
+        this.state = {
+            title: '',
+            dataSource: '',
+            descr: '',
+            value: '',
+            unit: '',
+            author: '',
+            dateTime: ''
+        }
     }
 
     
