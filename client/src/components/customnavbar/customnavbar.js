@@ -27,7 +27,7 @@ class CustomNavbar extends Component {
               </Nav>
               <Nav pullRight>
               <NavDropdown eventKey={3} title={this.state.cog} id="basic-nav-dropdown">
-                  <MenuItem eventKey={3.1}>Create widget</MenuItem>
+                  <MenuItem eventKey={3.1} onClick={this.props.show}>Create widget</MenuItem>
                   <MenuItem eventKey={3.2}>Load widgets</MenuItem>
                   <MenuItem divider />
                   <MenuItem eventKey={3.3}>Save your Dashboard</MenuItem>
