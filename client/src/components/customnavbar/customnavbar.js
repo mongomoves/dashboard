@@ -24,24 +24,22 @@ class CustomNavbar extends Component {
                 <NavItem eventKey={1} href="#">
                   How to
                 </NavItem>
-                <NavItem eventKey={2} href="#">
-                  Something
-                </NavItem>
               </Nav>
               <Nav pullRight>
               <NavDropdown eventKey={3} title={this.state.cog} id="basic-nav-dropdown">
-                  <MenuItem eventKey={3.1} onClick={this.props.show}>Save Dashboard</MenuItem>
-                  <MenuItem eventKey={3.2}>Load Dashboards</MenuItem>
-                  <MenuItem eventKey={3.3}>Edit Dashboard</MenuItem>
+                  <MenuItem eventKey={3.1}>Create widget</MenuItem>
+                  <MenuItem eventKey={3.2}>Load widgets</MenuItem>
                   <MenuItem divider />
-                  <MenuItem eventKey={3.3}>Delete Dashboard</MenuItem>
+                  <MenuItem eventKey={3.3}>Save your Dashboard</MenuItem>
+                  <MenuItem eventKey={3.4}>Edit your Dashboard</MenuItem>
+                  <MenuItem eventKey={3.5}>Load Dashboards</MenuItem>
+                  <MenuItem divider />
+                  <MenuItem eventKey={3.6}>Clear your Dashboard</MenuItem>
                 </NavDropdown>
               </Nav>
             </Navbar.Collapse>
           </Navbar>
-
         );
-        
     }
 }
 
