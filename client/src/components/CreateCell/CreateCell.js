@@ -88,13 +88,15 @@ class CreateCell extends Component {
                     </select>
 
                     <Button className="buttons" 
-                        disabled={!this.state.title || 
+                        disabled={
+                            !this.state.title || 
                             !this.state.dataSource ||
                             !this.state.descr ||
                             !this.state.value ||
                             !this.state.unit ||
                             !this.state.author ||
-                            !this.state.dateTime} 
+                            !this.state.dateTime
+                        } 
                         bsStyle="success"
                         onClick={this.handleClearState}
                     >Skapa Widget</Button>
