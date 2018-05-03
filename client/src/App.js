@@ -37,7 +37,9 @@ class App extends Component {
         this.state = {
             //Placeholder state initialisation
             layout: data.layout,
-            cells: data.cells
+            cells: data.cells,
+            modal: false,
+            
         }
         this.onLayoutChanged = this.onLayoutChanged.bind(this);
     }
@@ -54,12 +56,7 @@ class App extends Component {
         }
     }
 
-    state = {
-        modal: false,
-        grafana: false,
-        kibana: false,
-       
-    }
+    
     //Hides all modal windows.
     modalCancelHandler = () => {
         this.setState({ modal: false, grafana: false, kibana: false });
