@@ -10,9 +10,15 @@ class Cell extends Component {
 
         //sets the state to time of instantiation 
         this.state = {
-            date: new Date().toDateString()
+            date: new Date().toDateString(),
+            cellSizeCounter: 0
         }
 
+    }
+
+
+    refitContent() {
+        this.setState({ cellSizeCounter: this.state.cellSizeCounter + 1 });
     }
 
 
@@ -22,12 +28,23 @@ class Cell extends Component {
             <div className="cellBody">
                 <div className="cellTitle"><b>Title: </b> {this.props.title}</div>
                 <div className="cellCreator"><b>Who made me: </b> {this.props.creator}</div>
-                <iframe className="cellData" src={this.props.dataURL} frameBorder="0"></iframe>
-                <div className="cellTimeOfCreation"><b>Created on:</b> {this.state.date}</div>
+                <button className="refitContent" onClick={() => { this.refitContent(); }}>Refit content</button>
+                <iframe key={this.state.cellSizeCounter} className="cellData" frameBorder="0" src={this.props.dataURL}></iframe>
+                <div className="cellTimeOfCreation"><b>Created on:</b> {this.state.date} </div>
             </div>
         )
 
     }
+
+
+
+
+
+
+
+
+
+
 
 
 

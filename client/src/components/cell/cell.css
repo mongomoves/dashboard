@@ -22,7 +22,7 @@
 
 
 .cellTimeOfCreation {
-    width: inherit;
+    width: 100%;
     background-color:#FFA500;
     position:absolute;
     bottom:0;
@@ -32,13 +32,27 @@
 
 .cellData {
     width: 100%;
-    height: 80%;
+    height: 70%;
 
 }
 
 
 .cellCreator {
     background-color:white;
+  
 }
 
+
+.refitContent{
+    background-color:#00aad9; 
+    width: 100%;
+    border: none;
+    color: white;
+    text-align: center;
+    font-size: 13px;
+    
+  
+    
+   
+}
 
