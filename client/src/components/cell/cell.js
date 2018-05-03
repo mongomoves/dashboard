@@ -16,7 +16,7 @@ class Cell extends Component {
 
     }
 
-
+    //method for refitting the iframe content 
     refitContent() {
         this.setState({ cellSizeCounter: this.state.cellSizeCounter + 1 });
     }
@@ -27,10 +27,10 @@ class Cell extends Component {
         return (
             <div className="cellBody">
                 <div className="cellTitle"><b>Title: </b> {this.props.title}</div>
-                <div className="cellCreator"><b>Who made me: </b> {this.props.creator}</div>
+                <div className="cellCreator"><b>Who made me: </b> {this.props.creator}</div>     
                 <button className="refitContent" onClick={() => { this.refitContent(); }}>Refit content</button>
                 <iframe key={this.state.cellSizeCounter} className="cellData" frameBorder="0" src={this.props.dataURL}></iframe>
-                <div className="cellTimeOfCreation"><b>Created on:</b> {this.state.date} </div>
+                 <div className="cellTimeOfCreation"><b>Created on:</b> {this.state.date} </div>
             </div>
         )
 
