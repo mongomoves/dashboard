@@ -73,12 +73,12 @@ class App extends Component {
         return (
             <div>
 
-            <CustomNavbar/>
+            <CustomNavbar show={this.modalShowHandler} />
             <Dashboard  
                   onLayoutChanged={this.onLayoutChanged}
                   data={{layout: this.state.layout, cells: this.state.cells}}
             />
-            <Modal show={this.state.modal} modalClosed={this.modalCancelHandler}>
+                <Modal show={this.state.modal} modalClosed={this.modalCancelHandler}>
                     <CreateCell widgetType="Kibana/Grafana" />
                 </Modal>
                 <Button bsStyle="primary" onClick={this.modalShowHandler}>Skapa ny widget</Button>
