@@ -18,3 +18,7 @@
 .dropdown-menu>li>a {
     font-weight: bold;
 }
+
+.container {
+    width: 95%;
+}
