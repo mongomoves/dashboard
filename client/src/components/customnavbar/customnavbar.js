@@ -22,9 +22,6 @@ class CustomNavbar extends Component {
                 <NavItem eventKey={1} href="#">
                   How to
                 </NavItem>
-                <NavItem eventKey={2} href="#">
-                  Something
-                </NavItem>
               </Nav>
               <Nav pullRight>
               <NavDropdown eventKey={3} title={this.state.cog} id="basic-nav-dropdown">
