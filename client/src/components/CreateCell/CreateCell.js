@@ -80,7 +80,7 @@ class CreateCell extends Component {
                     <label>Datum:</label><input className="textField" type="text" name="dateTime" value={this.state.dateTime} onChange={this.handleDateTimeChange} placeholder="Ange Datum..." />
                     <label>Välj typ:</label>
                     <select>
-                        <option selected>Välj typ</option>
+                        <option>Välj typ</option>
                         <option value="siffra">Siffra</option>
                         <option value="text">Text</option>
                         <option value="graf">Graf</option>
