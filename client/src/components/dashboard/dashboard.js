@@ -40,7 +40,7 @@ class Dashboard extends Component {
         return _.map(this.props.data.cells, function(i) {
             return(
                 <div key={i.i}>
-                    <Cell title = {i.title} creator = {i.author} dataURL= {i.dataSource}></Cell>
+                    <Cell title = {i.title} creator = {i.author} dataURL= {i.dataSource} dateTime ={i.dateTime} descr = {i.descr}></Cell>
                 </div>
             )
         });

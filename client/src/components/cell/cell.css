@@ -5,7 +5,7 @@
 .cellBody {
     border:#FFA500;
     border-style: solid;
-    background-color:whitesmoke;
+    background-color:white;
     width: inherit;
     height: inherit;
     box-shadow: 0px 10px 3px #888888;
@@ -16,17 +16,32 @@
 
 
 .cellTitle {
+    margin-top: 11px;
+    height: 40px;
     font-size: 25px;
     background-color:white;
+    
 }
 
 
-.cellTimeOfCreation {
+.creatorAndDate {
     width: 100%;
-    background-color:#FFA500;
-    position:absolute;
-    bottom:0;
+    background-color:white;
+   
     
+    
+}
+
+
+
+.date {
+    float: right;
+  
+}
+
+.creator {
+    float: right;
+  
 }
 
 
@@ -41,10 +56,7 @@
 }
 
 
-.cellCreator {
-    background-color:white;
-  
-}
+
 
 
 .refitContent{
@@ -55,8 +67,20 @@
     text-align: center;
     font-size: 13px;
     
-  
-    
-   
+        
 }
 
+.x{ background-color: whitesmoke;
+    white-space: pre-line;
+    height: 50px;
+    size: 30px;
+    
+}
+
+.extraData {
+    background-color: orange;
+    width: 100%;
+    height: 30px;
+    position: absolute;
+    bottom: 0;
+}

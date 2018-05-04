@@ -114,7 +114,7 @@ class CreateCell extends Component {
     }
     
     getState = () => {
-        return({i : null, title : this.state.title, dataSource : this.state.dataSource, 
+        return({i : null, title : this.state.title, dataSource :"https://snapshot.raintank.io/dashboard-solo/snapshot/y7zwi2bZ7FcoTlB93WN7yWO4aMiz3pZb?from=1493369923321&to=1493377123321&panelId=4", 
                 descr: this.state.descr, value: this.state.value, unit: this.state.unit, author: this.state.author, dateTime: this.state.dateTime});
     }
 
