@@ -51,7 +51,7 @@ class CreateCell extends Component {
     //Clears the state when the submit button is clicked.
     passCell = () => {
 
-        let cellValues = this.passState();
+        let cellValues = this.getState();
         this.props.addCell(cellValues);
         
         this.setState({
@@ -113,7 +113,7 @@ class CreateCell extends Component {
          );
     }
     
-    passState = () => {
+    getState = () => {
         return({i : null, title : this.state.title, dataSource : this.state.dataSource, 
                 descr: this.state.descr, value: this.state.value, unit: this.state.unit, author: this.state.author, dateTime: this.state.dateTime});
     }

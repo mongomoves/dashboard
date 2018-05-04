@@ -24,9 +24,11 @@ class Cell extends Component {
 
     //renders the cell 
     render() {
+
         return (
             <div className="cellBody">
                 <div className="cellTitle"><b>Title: </b> {this.props.title}</div>
+                
                 <div className="cellCreator"><b>Who made me: </b> {this.props.creator}</div>     
                 <button className="refitContent" onClick={() => { this.refitContent(); }}>Refit content</button>
                 <iframe key={this.state.cellSizeCounter} className="cellData" frameBorder="0" src={this.props.dataURL}></iframe>
