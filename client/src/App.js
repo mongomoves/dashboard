@@ -22,7 +22,8 @@ const data = {
     layout: [
         {i: 'a', x: 0, y: 0, w: 6, h: 8},
         {i: 'b', x: 1, y: 0, w: 3, h: 8},
-        {i: 'c', x: 4, y: 0, w: 4, h: 10}
+        {i: 'c', x: 4, y: 0, w: 4, h: 10},
+       
     ],
     cells: [
         {i: 'a', title: 'Test1', iframe: 'Iframe1', desc: 'Desc1'},
@@ -57,6 +58,12 @@ class App extends Component {
         }
     }
 
+
+    addCell = (cell) => {
+        this.setState({cells : cell});
+
+    }
+
     
     //Hides all modal windows.
     modalCancelHandler = () => {
@@ -79,7 +86,7 @@ class App extends Component {
                   data={{layout: this.state.layout, cells: this.state.cells}}
             />
                 <Modal show={this.state.modal} modalClosed={this.modalCancelHandler}>
-                    <CreateCell widgetType="Kibana/Grafana" />
+                    <CreateCell widgetType="Kibana/Grafana" addCell = {this.addCell} />
                 </Modal>
                 <Button bsStyle="primary" onClick={this.modalShowHandler}>Skapa ny widget</Button>
 

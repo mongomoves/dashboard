@@ -49,6 +49,9 @@ class CreateCell extends Component {
     }
     //Clears the state when the submit button is clicked.
     handleClearState = () => {
+
+        this.props.addCell({i: "d", title: "Test4", iframe : "Iframe4", desc: "x"})
+        
         this.setState({
             title: '',
             dataSource: '',
@@ -99,8 +102,9 @@ class CreateCell extends Component {
                         } 
                         bsStyle="success"
                         onClick={this.handleClearState}
-                    >Skapa Widget</Button>
                     
+                    >Skapa Widget</Button>
+
                 </form>
             </div>
          );
