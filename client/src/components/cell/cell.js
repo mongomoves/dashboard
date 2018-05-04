@@ -28,17 +28,13 @@ class Cell extends Component {
         return (
             <div className="cellBody">
                 <div className="cellTitle"><b>Title: </b> {this.props.title}</div>
-                <div className="x"><b>Description: </b>{this.props.descr}</div>
-               
-                <div className="creatorAndDate">
-                    <p className = "date"><b>Created on:</b> {this.props.dateTime}</p>
-                    <p className ="time"> <b>Creator:</b> {this.props.creator}</p>
-                </div>
-                  
+                <div className="cellDescr"><b>Description: </b>{this.props.descr}</div>
+                <div className ="cellCreator"> <b>Creator:</b> {this.props.creator}</div>
                 <button className="refitContent" onClick={() => { this.refitContent(); }}>Refit content</button>
-                <iframe key={this.state.cellSizeCounter} className="cellData" frameBorder="0" src={this.props.dataURL}></iframe>
-                <div className = "extraData"></div>
-
+                <div className ="iframeContainer">
+                    <iframe key={this.state.cellSizeCounter} className="cellData" frameBorder="0" src={this.props.dataURL}></iframe>
+                </div> 
+                <div className = "cellDate"><b>Created on:</b> {this.props.dateTime}</div>
             </div>
         )
 

@@ -8,79 +8,72 @@
     background-color:white;
     width: inherit;
     height: inherit;
+    position: absolute;
     box-shadow: 0px 10px 3px #888888;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 15px;
-      
+    font-size: 14px;
+    
 }
 
 
 .cellTitle {
-    margin-top: 11px;
-    height: 40px;
+    position: relative;
+    margin-top: 2px;
+    margin-bottom: 2px;
     font-size: 25px;
     background-color:white;
     
 }
 
 
-.creatorAndDate {
+.cellDescr { 
+    background-color: whitesmoke;
+    white-space: pre-line;  
+    height: 20px;
+    
+}
+
+
+.cellCreator {
     width: 100%;
     background-color:white;
-   
-    
     
 }
 
 
-
-.date {
-    float: right;
-  
-}
-
-.creator {
-    float: right;
-  
-}
-
-
-.cellData {
-   overflow: hidden;
-    margin-bottom: 10%;
-    width: 100%;
-    height: 72%;
-    
-    
-    
-}
-
-
-
-
-
-.refitContent{
+.refitContent {
     background-color:#00aad9; 
     width: 100%;
     border: none;
     color: white;
     text-align: center;
-    font-size: 13px;
-    
-        
+    font-size: 12px;
+             
 }
 
-.x{ background-color: whitesmoke;
-    white-space: pre-line;
-    height: 50px;
-    size: 30px;
-    
+
+.iframeContainer {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+
 }
 
-.extraData {
+
+.cellData {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding-bottom: 115px;
+               
+}
+
+
+.cellDate {
     background-color: orange;
     width: 100%;
-    height: 30px;
+    height: 17px;
     position: absolute;
     bottom: 0;
 }
+
