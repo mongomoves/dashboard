@@ -20,18 +20,15 @@ import 'react-resizable/css/styles.css'
 //"Cells" to pass to the dashboard TEST DATA
 const data = {
     layout: [
-        {i: 'a', x: 0, y: 0, w: 6, h: 8},
-        {i: 'b', x: 1, y: 0, w: 3, h: 8},
-        {i: 'c', x: 4, y: 0, w: 4, h: 10},
-       
+
+
     ],
     cells: [
-        {i: 'a', title: 'Test1', iframe: 'Iframe1', desc: 'Desc1'},
-        {i: 'b', title: 'Test2', iframe: 'Iframe2', desc: 'Desc2'},
-        {i: 'c', title: 'Test3', iframe: 'Iframe3', desc: 'Desc3'},
+
     ]
 };
 
+var cellCount = 0;
 
 class App extends Component {
     constructor(props) {
@@ -41,7 +38,7 @@ class App extends Component {
             layout: data.layout,
             cells: data.cells,
             modal: false,
-            
+
         }
         this.onLayoutChanged = this.onLayoutChanged.bind(this);
     }
@@ -51,20 +48,30 @@ class App extends Component {
      * @param {*} changedLayout 
      */
     onLayoutChanged(changedLayout) {
-            if(changedLayout) {
-                this.setState(prevState => ({
-                    layout: changedLayout
-                }));
+        if (changedLayout) {
+            this.setState(prevState => ({
+                layout: changedLayout
+            }));
         }
     }
 
-
+    //adds a cell to the layout 
     addCell = (cell) => {
-        this.setState({cells : cell});
+        this.setState(prevState => ({
+            layout: [...prevState.layout, { i: cellCount, x: 4, y: 6, w: 10, h: 10 }]
+        }))
+
+        cell.i = cellCount;
+
+        this.setState(prevState => ({
+            cells: [...prevState.cells, cell]
+        }))
+       
+        cellCount++;
 
     }
 
-    
+
     //Hides all modal windows.
     modalCancelHandler = () => {
         this.setState({ modal: false, grafana: false, kibana: false });
@@ -75,25 +82,25 @@ class App extends Component {
         this.setState({ modal: true });
     }
 
-    
+
     render() {
         return (
             <div>
 
-            <CustomNavbar show={this.modalShowHandler} />
-            <Dashboard  
-                  onLayoutChanged={this.onLayoutChanged}
-                  data={{layout: this.state.layout, cells: this.state.cells}}
-            />
+                <CustomNavbar show={this.modalShowHandler} />
+                <Dashboard
+                    onLayoutChanged={this.onLayoutChanged}
+                    data={{ layout: this.state.layout, cells: this.state.cells }}
+                />
                 <Modal show={this.state.modal} modalClosed={this.modalCancelHandler}>
-                    <CreateCell widgetType="Kibana/Grafana" addCell = {this.addCell} />
+                    <CreateCell widgetType="Kibana/Grafana" addCell={this.addCell} />
                 </Modal>
                 <Button bsStyle="primary" onClick={this.modalShowHandler}>Skapa ny widget</Button>
 
             </div>
         );
-    
-}
+
+    }
 
 };
 

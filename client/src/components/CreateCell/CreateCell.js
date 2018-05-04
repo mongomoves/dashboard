@@ -17,7 +17,8 @@ class CreateCell extends Component {
             dateTime: ''
         }
     }
-
+   
+        
     
     //Changes the title state to the input in the "Title" input box.
     handleTitleChange = (e) => {
@@ -48,9 +49,10 @@ class CreateCell extends Component {
         this.setState({dateTime: e.target.value})
     }
     //Clears the state when the submit button is clicked.
-    handleClearState = () => {
+    passCell = () => {
 
-        this.props.addCell({i: "d", title: "Test4", iframe : "Iframe4", desc: "x"})
+        let cellValues = this.passState();
+        this.props.addCell(cellValues);
         
         this.setState({
             title: '',
@@ -101,7 +103,8 @@ class CreateCell extends Component {
                             !this.state.dateTime
                         } 
                         bsStyle="success"
-                        onClick={this.handleClearState}
+                        onClick={this.passCell}
+                        
                     
                     >Skapa Widget</Button>
 
@@ -110,6 +113,19 @@ class CreateCell extends Component {
          );
     }
     
+    passState = () => {
+        return({i : null, title : this.state.title, dataSource : this.state.dataSource, 
+                descr: this.state.descr, value: this.state.value, unit: this.state.unit, author: this.state.author, dateTime: this.state.dateTime});
+    }
+
+
+
+
 }
+
+
+
+
+
 
 export default CreateCell;
