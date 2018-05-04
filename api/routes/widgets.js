@@ -21,7 +21,7 @@ router.get('/', function(req, res, next) {
 
     // filter by kind
     if (kind) {
-        query['content.kind'] = kind;
+        query['kind'] = kind;
     }
 
     // filter by creator
@@ -30,14 +30,33 @@ router.get('/', function(req, res, next) {
     }
 
     Widget.find(query)
-        .populate('content.item') // populate item with associated model
+        .populate('content')
         .sort({'created': -1}) // sort by date descending (newest first)
         .limit(limit ? Number(limit) : 0) // limit the number of returned widgets
         .exec()
         .then(widgets => {
              res.status(200).json({
-                count: widgets.length,
-                widgets: widgets
+                 count: widgets.length,
+                 // Instead of sending back the document we flatten the response
+                 // Makes the api easier to use, but adds a bit more work
+                 widgets: widgets.map(widget => {
+                    return {
+                        _id: widget._id,
+                        title: widget.title,
+                        creator: widget.creator,
+                        created: widget.created,
+                        description: widget.description,
+                        kind: widget.kind,
+
+                        number: widget.content.number,
+                        dataSource: widget.content.dataSource,
+                        attribute: widget.content.attribute,
+                        query: widget.content.query,
+                        unit: widget.content.unit,
+
+                        graphUrl: widget.content.graphUrl
+                    }
+                })
             });
         })
         .catch(err => {
@@ -50,27 +69,27 @@ router.get('/', function(req, res, next) {
 /*
  * Handles POST requests to /api/widgets
  * Creates a new widget
- * Returns a message, created widget and associated log entry
+ * Returns a message and the created widget
  */
 router.post('/', function(req, res, next) {
-    const kind = req.body.content.kind;
+    const kind = req.body.kind;
 
-    // Create the content model based on the kind (value or graph)
     let content;
 
     if (kind === 'Value') {
         content = new Value({
             _id: new mongoose.Types.ObjectId(),
-            number: req.body.content.number,
-            api: req.body.content.api,
-            attribute: req.body.content.attribute,
-            unit: req.body.content.unit
+            number: req.body.number,
+            dataSource: req.body.dataSource,
+            attribute: req.body.attribute,
+            query: req.body.query,
+            unit: req.body.unit
         });
     }
     else if (kind === 'Graph') {
         content = new Graph({
             _id: new mongoose.Types.ObjectId(),
-            url: req.body.content.url
+            graphUrl: req.body.graphUrl
         });
     }
     else {
@@ -81,7 +100,6 @@ router.post('/', function(req, res, next) {
         });
     }
 
-    // Save the content first because we need the id when we create the widget model.
     content.save()
         .then(result => {
             const widget = new Widget({
@@ -89,51 +107,53 @@ router.post('/', function(req, res, next) {
                 title: req.body.title,
                 creator: req.body.creator,
                 description: req.body.description,
-                content: {
-                    kind: kind,
-                    item: result._id
-                }
+                kind: kind,
+                content: result._id
             });
 
             widget.save()
                 .then(result => {
+                    const {title, creator, _id, created} = result;
+                    const logKind = 'Widget';
+
                     const logEntry = new LogEntry({
                         _id: new mongoose.Types.ObjectId(),
-                        creator: widget.creator,
-                        text: widget.creator + " created a widget titled '" + widget.title + "'.",
-                        kind: 'Widget',
-                        contentId: widget._id,
+                        title: title,
+                        creator: creator,
+                        created: created,
+                        kind: logKind,
+                        text: creator + " created a " + logKind + " titled '" + title + "'.",
+                        contentId: _id,
                         request: {
                             type: "GET",
-                            url: process.env.SERVER_URL + "/api/widgets/" + widget._id
+                            url: process.env.SERVER_URL + "/api/widgets/" + _id
                         }
                     });
 
                     logEntry.save()
-                        .then(result => {
-                            res.status(201).json({
-                                message: 'Widget stored',
-                                widget: widget,
-                                logEntry: logEntry
-                            });
-                        })
                         .catch(err => {
-                            res.status(500).json({
-                                error: err
-                            });
+                            console.log(err);
                         });
+
+                    res.status(201).json({
+                        message: 'Widget stored',
+                        widget: widget,
+                    });
+
                 })
-                .catch(err => {
+                .catch(err =>  {
                     res.status(500).json({
                         error: err
                     });
                 });
         })
-        .catch(err =>  {
+        .catch(err => {
             res.status(500).json({
                 error: err
             });
         });
+
+
 });
 
 /*
@@ -144,7 +164,7 @@ router.get('/:widgetId', function(req, res, next) {
     const id = req.params.widgetId;
 
     Widget.findById(id)
-        .populate('content.item')
+        .populate('content')
         .exec()
         .then(widget => {
             if (!widget) {
@@ -154,8 +174,25 @@ router.get('/:widgetId', function(req, res, next) {
                 });
             }
 
+            // Instead of sending back the document we flatten the response
+            // Makes the api easier to use, but adds a bit more work
             res.status(200).json({
-                widget: widget
+                widget: {
+                    _id: widget._id,
+                    title: widget.title,
+                    creator: widget.creator,
+                    created: widget.created,
+                    description: widget.description,
+                    kind: widget.kind,
+
+                    number: widget.content.number,
+                    dataSource: widget.content.dataSource,
+                    attribute: widget.content.attribute,
+                    query: widget.content.query,
+                    unit: widget.content.unit,
+
+                    graphUrl: widget.content.graphUrl
+                }
             });
         })
         .catch(err => {
@@ -175,8 +212,8 @@ router.delete('/:widgetId', function(req, res, next) {
     Widget.findOneAndRemove({_id: req.params.widgetId})
         .exec()
         .then(result => {
-            const kind = result.content.kind;
-            const id = new mongoose.Types.ObjectId(result.content.item);
+            const kind = result.kind;
+            const id = new mongoose.Types.ObjectId(result.content);
 
             // Also remove documents for dynamic references
             if (kind === 'Value') {
@@ -191,7 +228,8 @@ router.delete('/:widgetId', function(req, res, next) {
             }
 
             res.status(200).json({
-                message: "Widget deleted"
+                message: "Widget deleted",
+                id: widgetId
             });
         })
         .catch(err =>{
