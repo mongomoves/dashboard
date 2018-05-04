@@ -8,27 +8,22 @@ import ValueDisplay from "./components/valuedisplay";
 import { Button } from 'react-bootstrap';
 import './App.css';
 import CustomNavbar from "./components/customnavbar/customnavbar";
-
-
-
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
 
 
 
 
+//current number of cells in the layout
+var numberOfCells = 0;
+
 //"Cells" to pass to the dashboard TEST DATA
 const data = {
-    layout: [
-
-
-    ],
-    cells: [
-
-    ]
+    layout: [],
+    cells: []
 };
 
-var cellCount = 0;
+
 
 class App extends Component {
     constructor(props) {
@@ -55,19 +50,21 @@ class App extends Component {
         }
     }
 
+
+
     //adds a cell to the layout 
     addCell = (cell) => {
         this.setState(prevState => ({
-            layout: [...prevState.layout, { i: cellCount, x: 4, y: 6, w: 10, h: 10 }]
+            layout: [...prevState.layout, { i: numberOfCells, x: 4, y: 6, w: 10, h: 10 }]
         }))
-
-        cell.i = cellCount;
+        //gives cell the key of current number of cells 
+        cell.i = numberOfCells;
 
         this.setState(prevState => ({
             cells: [...prevState.cells, cell]
         }))
-       
-        cellCount++;
+        //increases variable by one to make the key unique for the next cell
+        numberOfCells++;
 
     }
 

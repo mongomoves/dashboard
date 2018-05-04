@@ -29,12 +29,12 @@ class Cell extends Component {
             <div className="cellBody">
                 <div className="cellTitle">[Title] {this.props.title}</div>
                 <div className="cellDescr">[Description] {this.props.descr}</div>
-                <div className ="cellCreator"> [Creator] {this.props.creator}</div>
+                <div className="cellCreator"> [Creator] {this.props.creator}</div>
                 <button className="refitContent" onClick={() => { this.refitContent(); }}>Refit content</button>
-                <div className ="iframeContainer">
+                <div className="iframeContainer">
                     <iframe key={this.state.cellSizeCounter} className="cellData" frameBorder="0" src={this.props.dataURL}></iframe>
-                </div> 
-                <div className = "cellDate">[Created on] {this.props.dateTime}</div>
+                </div>
+                <div className="cellDate">[Created on] {this.props.dateTime}</div>
             </div>
         )
 
