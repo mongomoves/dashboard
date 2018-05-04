@@ -36,10 +36,10 @@ router.get('/', function(req, res, next) {
         .exec()
         .then(widgets => {
              res.status(200).json({
-                count: widgets.length,
-                 // Instead of sending back the document we flatten the respone
+                 count: widgets.length,
+                 // Instead of sending back the document we flatten the response
                  // Makes the api easier to use, but adds a bit more work
-                widgets: widgets.map(widget => {
+                 widgets: widgets.map(widget => {
                     return {
                         _id: widget._id,
                         title: widget.title,
@@ -69,7 +69,7 @@ router.get('/', function(req, res, next) {
 /*
  * Handles POST requests to /api/widgets
  * Creates a new widget
- * Returns a message and created widget
+ * Returns a message and the created widget
  */
 router.post('/', function(req, res, next) {
     const kind = req.body.kind;
@@ -174,7 +174,7 @@ router.get('/:widgetId', function(req, res, next) {
                 });
             }
 
-            // Instead of sending back the document we flatten the respone
+            // Instead of sending back the document we flatten the response
             // Makes the api easier to use, but adds a bit more work
             res.status(200).json({
                 widget: {
