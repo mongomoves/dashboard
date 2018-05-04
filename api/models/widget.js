@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 
+/**
+ * Represents a widget in mongoDB
+ */
 const widgetSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     title: {
@@ -18,16 +21,15 @@ const widgetSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    kind: {
+        type: String,
+        required: true,
+        enum: ['Value', 'Graph']
+    },
     content: {
-        kind: {
-            type: String,
-            required: true,
-            enum: ['Value', 'Graph'],
-        },
-        item: {
-            type: mongoose.Schema.Types.ObjectId,
-            refPath: 'content.kind'
-        }
+        type: mongoose.Schema.Types.ObjectId,
+        refPath: 'kind',
+        required: true
     }
 });
 

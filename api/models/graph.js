@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const graphSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    url: {
+    graphUrl: {
         type: String,
         required: true
     }
