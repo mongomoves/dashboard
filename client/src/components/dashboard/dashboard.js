@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import {Responsive, WidthProvider} from 'react-grid-layout';
+import { Responsive, WidthProvider } from 'react-grid-layout';
 import _ from 'lodash';
-import {Jumbotron, Button} from 'react-bootstrap';
+import { Jumbotron, Button } from 'react-bootstrap';
 import Cell from '../cell/cell'
 
 
@@ -30,17 +30,17 @@ class Dashboard extends Component {
         this.onLayoutChange = this.onLayoutChange.bind(this);
     }
 
-    
+
 
     /**
      * Builds and returns elements based on whatever is found in state.layout.
      * 
      */
     generateDOM() {
-        return _.map(this.props.data.cells, function(i) {
-            return(
+        return _.map(this.props.data.cells, function (i) {
+            return (
                 <div key={i.i}>
-                    <Cell title = "A new fun widget" creator = "Sebastian" dataURL= "https://snapshot.raintank.io/dashboard-solo/snapshot/y7zwi2bZ7FcoTlB93WN7yWO4aMiz3pZb?from=1493369923321&to=1493377123321&panelId=4"></Cell>
+                    <Cell title={i.title} creator={i.author} dataURL={i.dataSource} dateTime={i.dateTime} descr={i.descr}></Cell>
                 </div>
             )
         });
@@ -54,12 +54,12 @@ class Dashboard extends Component {
     }
 
     render() {
-        return(
-            
+        return (
+
             <ResponsiveGRL
                 className='layout'
                 layouts={this.state.layouts}
-                breakpoints={{lg:1200}}
+                breakpoints={{ lg: 1200 }}
                 onLayoutChange={this.onLayoutChange}
                 cols={this.state.cols}
                 rowHeight={30}
@@ -67,9 +67,13 @@ class Dashboard extends Component {
                 {this.generateDOM()}
 
             </ResponsiveGRL>
-            
+
         );
     }
 }
 
 export default Dashboard;
+
+
+
+

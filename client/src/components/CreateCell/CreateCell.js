@@ -17,7 +17,8 @@ class CreateCell extends Component {
             dateTime: ''
         }
     }
-
+   
+        
     
     //Changes the title state to the input in the "Title" input box.
     handleTitleChange = (e) => {
@@ -48,7 +49,11 @@ class CreateCell extends Component {
         this.setState({dateTime: e.target.value})
     }
     //Clears the state when the submit button is clicked.
-    handleClearState = () => {
+    passCell = () => {
+
+        let cellValues = this.getState();
+        this.props.addCell(cellValues);
+        
         this.setState({
             title: '',
             dataSource: '',
@@ -98,14 +103,29 @@ class CreateCell extends Component {
                             !this.state.dateTime
                         } 
                         bsStyle="success"
-                        onClick={this.handleClearState}
-                    >Skapa Widget</Button>
+                        onClick={this.passCell}
+                        
                     
+                    >Skapa Widget</Button>
+
                 </form>
             </div>
          );
     }
     
+    getState = () => {
+        return({i : null, title : this.state.title, dataSource :"https://snapshot.raintank.io/dashboard-solo/snapshot/y7zwi2bZ7FcoTlB93WN7yWO4aMiz3pZb?from=1493369923321&to=1493377123321&panelId=4", 
+                descr: this.state.descr, value: this.state.value, unit: this.state.unit, author: this.state.author, dateTime: this.state.dateTime});
+    }
+
+
+
+
 }
+
+
+
+
+
 
 export default CreateCell;
