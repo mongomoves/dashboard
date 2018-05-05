@@ -1,16 +1,19 @@
 import React, {Component} from 'react';
 
+const regexSize = /(&width=)(\d+)(&height=)(\d+)/g;
 class ImageHolder extends Component {
 
     render() {
-        console.log(this.props.width + " & " + this.props.height);
-        let str = this.props.image;
-        let newStr = str.replace;
-        //width=^[0-9]*$
+        if(this.props.height <= 0 || this.props.width <= 0) {
+            return null;
+        }
+        const replaceStr = `&width=${this.props.width}&height=${this.props.height}`;
+        const adaptedImageSrc = this.props.image.replace(regexSize, replaceStr);
+        console.log("img: " + adaptedImageSrc);
         return(
             <img
-                className="cellData"
-                src={this.props.image}>
+                alt='something collected'
+                src={adaptedImageSrc}>
             </img>
         );
     }

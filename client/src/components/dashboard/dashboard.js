@@ -24,15 +24,11 @@ class Dashboard extends Component {
             layouts: {
                 lg: this.props.layout
             },
-            cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 },
-            cellSize: {
-                
-            }
+            cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
         }
         this.onLayoutChange = this.onLayoutChange.bind(this);
+        this.onResizeStop = this.onResizeStop.bind(this);
     }
-
-    
 
     /**
      * Builds and returns elements based on whatever is found in state.layout.
@@ -55,6 +51,10 @@ class Dashboard extends Component {
         this.props.onLayoutChanged(layout);
     }
 
+    onResizeStop(item) {
+        console.log(item);
+    }
+
     render() {
         return(
             <ResponsiveGRL
@@ -62,6 +62,7 @@ class Dashboard extends Component {
                 layouts={this.state.layouts}
                 breakpoints={{lg:1200}}
                 onLayoutChange={this.onLayoutChange}
+                onResizeStop={this.onResizeStop}
                 cols={this.state.cols}
                 rowHeight={30}
                 compactType={null}
