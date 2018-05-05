@@ -22,9 +22,12 @@ class Dashboard extends Component {
         super(props);
         this.state = {
             layouts: {
-                lg: this.props.data.layout
+                lg: this.props.layout
             },
-            cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
+            cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 },
+            cellSize: {
+                
+            }
         }
         this.onLayoutChange = this.onLayoutChange.bind(this);
     }
@@ -36,7 +39,7 @@ class Dashboard extends Component {
      * 
      */
     generateDOM() {
-        return _.map(this.props.data.cells, function(i) {
+        return _.map(this.props.cells, function(i) {
             return(
                 <div key={i.i}>
                     <Cell content={i}/>

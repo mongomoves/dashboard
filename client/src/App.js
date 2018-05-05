@@ -18,13 +18,13 @@ import 'react-resizable/css/styles.css'
 const data = {
     layout: [
         {i: 'a', x: 0, y: 0, w: 2, h: 8},
-        {i: 'b', x: 1, y: 0, w: 4, h: 8},
+        {i: 'b', x: 0, y: 0, w: 4, h: 8},
         {i: 'c', x: 4, y: 0, w: 8, h: 6}
     ],
     cells: [
-        {i: 'a', title: 'Test1', iframe: 'https://snapshot.raintank.io/dashboard-solo/snapshot/y7zwi2bZ7FcoTlB93WN7yWO4aMiz3pZb?from=1493369923321&to=1493377123321&panelId=4', desc: 'Desc1'},
-        {i: 'b', title: 'Test2', iframe: 'https://snapshot.raintank.io/dashboard-solo/snapshot/y7zwi2bZ7FcoTlB93WN7yWO4aMiz3pZb?from=1493369923321&to=1493377123321&panelId=4', desc: 'Desc2'},
-        {i: 'c', title: 'Test3', iframe: 'https://snapshot.raintank.io/dashboard-solo/snapshot/y7zwi2bZ7FcoTlB93WN7yWO4aMiz3pZb?from=1493369923321&to=1493377123321&panelId=4', desc: 'Desc3'},
+        {i: 'a', title: 'Test1', img:'http://play.grafana.org/render/dashboard-solo/db/grafana-play-home?orgId=1&panelId=4&from=1499272191563&to=1499279391563&width=1000&height=500&tz=UTC%2B02%3A00&timeout=5000', desc: 'Desc1'},
+        {i: 'b', title: 'Test2', img:'http://play.grafana.org/render/dashboard-solo/db/grafana-play-home?orgId=1&panelId=4&from=1499272191563&to=1499279391563&width=1000&height=500&tz=UTC%2B02%3A00&timeout=5000', desc: 'Desc2'},
+        {i: 'c', title: 'Test3', img:'http://play.grafana.org/render/dashboard-solo/db/grafana-play-home?orgId=1&panelId=4&from=1499272191563&to=1499279391563&width=1000&height=500&tz=UTC%2B02%3A00&timeout=5000', desc: 'Desc3'},
     ]
 };
 
@@ -73,7 +73,8 @@ class App extends Component {
             <CustomNavbar show={this.modalShowHandler} />
             <Dashboard  
                   onLayoutChanged={this.onLayoutChanged}
-                  data={{layout: this.state.layout, cells: this.state.cells}}
+                  layout={this.state.layout}
+                  cells={this.state.cells}
             />
                 <Modal show={this.state.modal} modalClosed={this.modalCancelHandler}>
                     <CreateCell widgetType="Kibana/Grafana" />
