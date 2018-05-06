@@ -16,11 +16,14 @@ import './cell.css';
             i: this.props.content.i
         }
 
-        this.frameSize = React.createRef();    
+        this.frameSize = React.createRef();
+        this.remeasure = this.remeasure.bind(this);  
     }
-    
 
-
+    /**
+     * Lifecycle function. Must set the height and width so it is
+     * not 0.
+     */
     componentDidMount() {
         this.setState({
             width: this.frameSize.current.offsetWidth,
@@ -28,9 +31,33 @@ import './cell.css';
         });
     }
 
+    /**
+     * Updates the state with the current size.
+     * Useful for updating a child ImageHolder onClick after Cell resize.
+     */
+    remeasure() {
+        this.setState({
+            width: this.frameSize.current.offsetWidth,
+            height: this.frameSize.current.offsetHeight
+        });
+    }
+
+    /**
+     * Generates the DOM with the correct components depending
+     * on the content of the prop.
+     */
+    generateDOM() {
+        let dom = [];
+        if(this.props.content.kind === 'Graph') {
+            dom.push(<div><ImageHolder refit={this.remeasure} width={this.state.width - 10}
+                height={this.state.height - 40} image={this.props.content.graphUrl}/></div>)
+        } else if(this.props.content.kind === 'Value') {
+
+        }
+        return dom;
+    }
+
     render() {
-        console.log("width: " + this.state.width);
-        console.log("height: " + this.state.height);
         return (
             <div 
                 ref={this.frameSize} 
@@ -39,12 +66,7 @@ import './cell.css';
                 <div className="cellTitle">
                     {this.props.content.title}
                 </div>
-                <div>
-                    <ImageHolder 
-                        width={this.state.width}
-                        height={(this.state.height - 40)}
-                        image={this.props.content.img}/>
-                </div>
+                {this.generateDOM()}
             </div>
         )
     }

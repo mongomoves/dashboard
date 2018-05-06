@@ -1,6 +1,11 @@
 import React, {Component} from 'react';
 
 const regexSize = /(&width=)(\d+)(&height=)(\d+)/g;
+
+/**
+ * Component simply holding an <img> tag, but with the ability
+ * to scale based on the parent container's size.
+ */
 class ImageHolder extends Component {
 
     render() {
@@ -9,9 +14,9 @@ class ImageHolder extends Component {
         }
         const replaceStr = `&width=${this.props.width}&height=${this.props.height}`;
         const adaptedImageSrc = this.props.image.replace(regexSize, replaceStr);
-        console.log("img: " + adaptedImageSrc);
         return(
             <img
+                onClick={this.props.refit}
                 alt='something collected'
                 src={adaptedImageSrc}>
             </img>

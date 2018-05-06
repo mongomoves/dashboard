@@ -13,7 +13,6 @@ import 'react-resizable/css/styles.css'
 
 
 
-
 //"Cells" to pass to the dashboard TEST DATA
 const data = {
     layout: [
@@ -22,9 +21,9 @@ const data = {
         {i: 'c', x: 4, y: 0, w: 8, h: 6}
     ],
     cells: [
-        {i: 'a', title: 'Test1', height: 0, width: 0, img:'http://play.grafana.org/render/dashboard-solo/db/grafana-play-home?orgId=1&panelId=4&from=1499272191563&to=1499279391563&width=1000&height=500&tz=UTC%2B02%3A00&timeout=5000', desc: 'Desc1'},
-        {i: 'b', title: 'Test2', height: 0, width: 0, img:'http://play.grafana.org/render/dashboard-solo/db/grafana-play-home?orgId=1&panelId=4&from=1499272191563&to=1499279391563&width=1000&height=500&tz=UTC%2B02%3A00&timeout=5000', desc: 'Desc2'},
-        {i: 'c', title: 'Test3', height: 0, width: 0, img:'http://play.grafana.org/render/dashboard-solo/db/grafana-play-home?orgId=1&panelId=4&from=1499272191563&to=1499279391563&width=1000&height=500&tz=UTC%2B02%3A00&timeout=5000', desc: 'Desc3'},
+        {i: 'a', title: 'Test1', kind: 'Graph', graphUrl:'http://play.grafana.org/render/dashboard-solo/db/grafana-play-home?orgId=1&panelId=4&from=1499272191563&to=1499279391563&width=1000&height=500&tz=UTC%2B02%3A00&timeout=5000', desc: 'Desc1'},
+        {i: 'b', title: 'Test2', kind: 'Graph', graphUrl:'http://play.grafana.org/render/dashboard-solo/db/grafana-play-home?orgId=1&panelId=4&from=1499272191563&to=1499279391563&width=1000&height=500&tz=UTC%2B02%3A00&timeout=5000', desc: 'Desc2'},
+        {i: 'c', title: 'Test3', kind: 'Value', graphUrl:'http://play.grafana.org/render/dashboard-solo/db/grafana-play-home?orgId=1&panelId=4&from=1499272191563&to=1499279391563&width=1000&height=500&tz=UTC%2B02%3A00&timeout=5000', desc: 'Desc3'},
     ]
 };
 
@@ -78,9 +77,7 @@ class App extends Component {
             />
                 {/* <Modal show={this.state.modal} modalClosed={this.modalCancelHandler}>
                     <CreateCell widgetType="Kibana/Grafana" />
-                </Modal>
-                <Button bsStyle="primary" onClick={this.modalShowHandler}>Skapa ny widget</Button> */}
-
+                </Modal> */}
             </div>
         );
     }
