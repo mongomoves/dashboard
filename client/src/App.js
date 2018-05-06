@@ -3,7 +3,7 @@ import Dashboard from "./components/dashboard";
 import Widget from "./components/widget";
 import ValueDisplay from "./components/valuedisplay";
 import Cell from './components/cell/cell';
-import Footer from './components/footer'
+import Footer from './components/footer/footer'
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
 
