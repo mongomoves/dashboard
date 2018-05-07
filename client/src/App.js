@@ -15,12 +15,12 @@ const originalLayouts = loadFromLocalStorage("layouts") || {};
 // Test data
 const testWidgets = [
     {
-        layout: {i: 0, x: 0, y: Infinity, w: 1, h: 2, minW: 1, minH: 2},
+        layout: {i: 0, x: 0, y: Infinity, w: 2, h: 2, minW: 1, minH: 2},
         content: {kind: 'Value', title: 'Employees', number: 22, unit: 'people'}
     },
 
     {
-        layout: {i: 1, x: 1, y: Infinity, w: 1, h: 2, minW: 1, minH: 2},
+        layout: {i: 1, x: 1, y: Infinity, w: 2, h: 2, minW: 1, minH: 2},
         content: {kind: 'Value', title: 'Disk usage', number: 108, unit: 'gb'}
     },
 
@@ -49,9 +49,9 @@ class App extends Component {
     addCell = (cell) => {
         let w, h, minH, minW;
         if (cell.kind === 'Value') {
-            w = 1;
+            w = 2;
             h = 2;
-            minW = 1;
+            minW = 2;
             minH = 2;
         }
         else if (cell.kind === 'Graph' ) {
@@ -83,7 +83,8 @@ class App extends Component {
     };
 
     removeCell = (i) => {
-        this.setState({cells: _.reject(this.state.cells, {i: i})})
+        this.setState({
+            cells: _.reject(this.state.cells, {layout: {i: i}})})
     };
 
     clearDashboardLayout = () => {
@@ -95,7 +96,7 @@ class App extends Component {
      * @param {*} layout
      */
     onLayoutChange = (layout, layouts) => {
-        console.log(`onLayoutChange:layout=${JSON.stringify(layout)}:layouts=${JSON.stringify(layouts)}`);
+        // console.log(`onLayoutChange:layout=${JSON.stringify(layout)}:layouts=${JSON.stringify(layouts)}`);
         saveToLocalStorage("layouts", layouts);
         // TODO: also save cells here...
         this.setState({
@@ -106,7 +107,7 @@ class App extends Component {
 
     // We're using the cols coming back from this to calculate where to add new items.
     onBreakpointChange = (breakpoint, cols) => {
-        console.log(`onBreakpointChange:bp=${breakpoint}:cols=${cols}`);
+        // console.log(`onBreakpointChange:bp=${breakpoint}:cols=${cols}`);
         this.setState({
             breakpoint: breakpoint,
             cols: cols
@@ -134,6 +135,7 @@ class App extends Component {
             <div>
                 <CustomNavbar showCreateCell={this.handleShowCreateCell} showExistingCell={this.handleShowExistingCell} />
                 <Dashboard
+                    removeCell={this.removeCell}
                     cells={this.state.cells}
                     onLayoutChange={this.onLayoutChange}
                     onBreakpointChane={this.onBreakpointChange}
@@ -156,7 +158,7 @@ class App extends Component {
 
 function saveToLocalStorage(key, value) {
     if (global.localStorage) {
-        console.log(`toLS:key=${JSON.stringify(key)}:val=${JSON.stringify(value)}`);
+        // console.log(`toLS:key=${JSON.stringify(key)}:val=${JSON.stringify(value)}`);
 
         global.localStorage.setItem(
             "dashboard",
@@ -177,7 +179,7 @@ function loadFromLocalStorage(key) {
         }
     }
 
-    console.log(`fromLS:key=${JSON.stringify(key)}:val=${JSON.stringify(localStorageItem[key])}`);
+    // console.log(`fromLS:key=${JSON.stringify(key)}:val=${JSON.stringify(localStorageItem[key])}`);
     return localStorageItem[key];
 }
 

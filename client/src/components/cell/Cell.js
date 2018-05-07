@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Panel } from 'react-bootstrap';
+import { Panel, Row, Col, MenuItem, DropdownButton, Glyphicon } from 'react-bootstrap';
 import ImageHolder from "./ImageHolder";
 import ReactResizeDetector from 'react-resize-detector';
 import './Cell.css';
@@ -17,6 +17,7 @@ class Cell extends Component {
         };
 
         this.frameSize = React.createRef();
+        this.onRemove = this.onRemove.bind(this);
     }
 
     /**
@@ -34,6 +35,11 @@ class Cell extends Component {
         console.log(`onResize:w=${width}:h=${height}`);
         this.setState({width: width, height: height});
     };
+
+    onRemove() {
+        console.log("Remove in Cell");
+        this.props.removeCell(this.props.id);
+    }
 
     render() {
         const {title, kind} = this.props.content;
@@ -54,23 +60,37 @@ class Cell extends Component {
         else if (kind === 'Graph') {
             const { graphUrl } = this.props.content;
             content = (
-                //<img src={graphUrl} style={{width: '100%', height: '100%'}}/>
                 <ImageHolder
-                             width={this.state.width - 10}
-                             height={this.state.height - 40}
-                             image={graphUrl}/>
+                  width={this.state.width - 10}
+                  height={this.state.height - 40}
+                  image={graphUrl}/>
             )
         }
-
-        const renderTitle = kind !== 'Graph'; //use this to not render titles for graph?
 
         return (
             <div ref={this.frameSize} style={{width: '100%', height: '100%'}}>
                 <Panel style={{width: 'inherit', height: 'inherit'}}>
+                    <Panel.Heading>
+                        <Row>
+                            <Col lg={10}>
+                                <span>{title}</span>
+                            </Col>
+                            <Col lg={2} style={{padding: 0}}>
+                                <DropdownButton
+                                    id="dropdown-no-caret"
+                                    noCaret
+                                    pullRight 
+                                    bsSize="xsmall"
+                                    title={<Glyphicon glyph="cog" />}>
+                                        <MenuItem eventKey={1}>Redigera</MenuItem>
+                                        <MenuItem divider/>
+                                        <MenuItem eventKey={2} onClick={this.onRemove}>Ta bort</MenuItem>
+                                </DropdownButton>
+                            </Col>
+                        </Row>
+                    </Panel.Heading>
                     <Panel.Body>
-
-                        <span>{title}</span>
-
+                            
                         <div style={{display: 'flex', justifyContent: 'center'}}>
                              {content}
                         </div>
