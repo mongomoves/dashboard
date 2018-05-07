@@ -37,12 +37,12 @@ class Dashboard extends Component {
      * Builds and returns elements based on whatever is found in state.cells.
      */
     generateElement() {
+        const remove = this.props.removeCell;
         return _.map(this.props.cells, function (cell) {
             const {i, x, y, w, h, minW, minH} = cell.layout;
-
             return (
                 <div key={i} data-grid={{x, y, w, h, minW, minH}}>
-                    <Cell content={cell.content}/>
+                    <Cell content={cell.content} id={i} removeCell={remove}/>
                 </div>
             );
         });
