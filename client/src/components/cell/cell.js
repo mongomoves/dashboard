@@ -11,8 +11,8 @@ class Cell extends Component {
             title : "",
             data : "",
             creator : ""
-            
-            
+
+
 
         }
     }
@@ -21,7 +21,7 @@ class Cell extends Component {
 
 
 
-// i think we will have the data as its own component 
+// i think we will have the data as its own component
 
     render() {
         return (
