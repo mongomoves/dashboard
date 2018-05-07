@@ -4,6 +4,7 @@ import Dashboard from "./components/dashboard/Dashboard";
 import CreateCellForm from "./components/CreateCell/CreateCellForm";
 import BootstrapModal from './components/Modal/BootstrapModal';
 import _ from 'lodash';
+
 import './App.css';
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
@@ -37,7 +38,7 @@ class App extends Component {
             modals: {
                 createCell: false
             },
-            idCounter: testWidgets.length - 1
+            idCounter: testWidgets.length
         };
     }
 
@@ -81,8 +82,9 @@ class App extends Component {
     onLayoutChange = (layout, layouts) => {
         console.log(`onLayoutChange:layout=${JSON.stringify(layout)}:layouts=${JSON.stringify(layouts)}`);
         saveToLocalStorage("layouts", layouts);
+        // TODO: also save cells here...
         this.setState({
-            layout: layout,
+            layout: layout, // not sure we need to keep track of layout
             layouts: layouts
         });
     };
