@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Panel, Row, Col, MenuItem, DropdownButton, Glyphicon } from 'react-bootstrap';
 import ImageHolder from "./ImageHolder";
+import ReactResizeDetector from 'react-resize-detector';
 import './Cell.css';
 
 /**
@@ -30,15 +31,9 @@ class Cell extends Component {
         });
     }
 
-    /**
-     * Updates the state with the current size.
-     * Useful for updating a child ImageHolder onClick after Cell resize.
-     */
-    remeasure = () => {
-        this.setState({
-            width: this.frameSize.current.offsetWidth,
-            height: this.frameSize.current.offsetHeight
-        });
+    onResize = (width, height) => {
+        console.log(`onResize:w=${width}:h=${height}`);
+        this.setState({width: width, height: height});
     };
 
     onRemove() {
@@ -65,10 +60,10 @@ class Cell extends Component {
         else if (kind === 'Graph') {
             const { graphUrl } = this.props.content;
             content = (
-                <ImageHolder refit={this.remeasure}
-                             width={this.state.width - 10}
-                             height={this.state.height - 40}
-                             image={graphUrl}/>
+                <ImageHolder
+                  width={this.state.width - 10}
+                  height={this.state.height - 40}
+                  image={graphUrl}/>
             )
         }
 
@@ -102,6 +97,7 @@ class Cell extends Component {
 
                     </Panel.Body>
                 </Panel>
+                <ReactResizeDetector handleWidth handleHeight refreshMode='throttle' refreshRate={1000} onResize={this.onResize} />
             </div>
         )
     }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import CustomNavbar from "./components/customnavbar/CustomNavbar";
 import Dashboard from "./components/dashboard/Dashboard";
 import CreateCellForm from "./components/CreateCell/CreateCellForm";
+import SelectExistingCell from './components/existingCell/SelectExistingCell';
 import BootstrapModal from './components/Modal/BootstrapModal';
 import _ from 'lodash';
 
@@ -36,7 +37,8 @@ class App extends Component {
             layouts: JSON.parse(JSON.stringify(originalLayouts)),
             cells: testWidgets,
             modals: {
-                createCell: false
+                createCell: false,
+                existingCell: false
             },
             idCounter: testWidgets.length
         };
@@ -120,20 +122,34 @@ class App extends Component {
         this.setState({modals: {createCell: false}})
     };
 
+    handleShowExistingCell = () => {
+        this.setState({modals: {existingCell: true}})
+    };
+
+    handleCloseExistingCell = () => {
+        this.setState({modals: {existingCell: false}})
+    };
+
     render() {
         return (
             <div>
-                <CustomNavbar showCreateCell={this.handleShowCreateCell} />
+                <CustomNavbar showCreateCell={this.handleShowCreateCell} showExistingCell={this.handleShowExistingCell} />
                 <Dashboard
                     removeCell={this.removeCell}
                     cells={this.state.cells}
                     onLayoutChange={this.onLayoutChange}
-                    onBreakpointChane={this.onBreakpointChange} />
+                    onBreakpointChane={this.onBreakpointChange}
+                    onResizeStop={this.onResizeStop}/>
                 <BootstrapModal
                     title="Create widget"
                     show={this.state.modals.createCell}
                     close={this.handleCloseCreateCell}>
                     <CreateCellForm addCell={this.addCell} done={this.handleCloseCreateCell} />
+                </BootstrapModal>
+                <BootstrapModal
+                  show={this.state.modals.existingCell}
+                  close={this.handleCloseExistingCell}>
+                  <SelectExistingCell done={this.handleCloseExistingCell} />
                 </BootstrapModal>
             </div>
         );
@@ -168,4 +184,3 @@ function loadFromLocalStorage(key) {
 }
 
 export default App;
-
