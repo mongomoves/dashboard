@@ -92,7 +92,7 @@ class App extends Component {
                 <Modal show={this.state.modal} modalClosed={this.modalCancelHandler}>
                     <CreateCell widgetType="Kibana/Grafana" addCell={this.addCell} />
                 </Modal>
-                <Button bsStyle="primary" onClick={this.modalShowHandler}>Skapa ny widget</Button>
+                
 
             </div>
         );
