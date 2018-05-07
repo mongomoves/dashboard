@@ -65,6 +65,14 @@ class CreateCell extends Component {
             <div>
                 <h3 className="createHeader">Skapa en ny {this.props.widgetType} widget!</h3>
                 <form>
+                    <select>
+                        <option>Välj kategori av widget</option>
+                        <option value="siffra">Siffra</option>
+                        <option value="text">Text</option>
+                        <option value="graf">Graf</option>
+                        <option value="tabell">Tabell</option>
+                    </select>
+
                     <label>Titel:</label><input className="textField" type="text" name="title" value={this.state.title} onChange={this.handleTitleChange} placeholder="Ange titel på widget..." />
                     
                     <label>Datakälla/URL:</label><input className="textField" type="url" name="dataSource" value={this.state.dataSource} onChange={this.handleDataSourceChange} placeholder="Ange datakälla/URL..." />
@@ -79,13 +87,7 @@ class CreateCell extends Component {
 
                     <label>Datum:</label><input className="textField" type="text" name="dateTime" value={this.state.dateTime} onChange={this.handleDateTimeChange} placeholder="Ange Datum..." />
                     <label>Välj typ:</label>
-                    <select>
-                        <option>Välj typ</option>
-                        <option value="siffra">Siffra</option>
-                        <option value="text">Text</option>
-                        <option value="graf">Graf</option>
-                        <option value="tabell">Tabell</option>
-                    </select>
+                    
 
                     <Button className="buttons" 
                         disabled={
