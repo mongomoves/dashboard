@@ -16,7 +16,6 @@ class ImageHolder extends Component {
         const adaptedImageSrc = this.props.image.replace(regexSize, replaceStr);
         return(
             <img
-                onClick={this.props.refit}
                 alt='something collected'
                 src={adaptedImageSrc}>
             </img>
