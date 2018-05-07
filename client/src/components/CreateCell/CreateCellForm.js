@@ -16,12 +16,8 @@ class CreateCellForm extends Component {
         this.setState({kind: e.target.value});
     };
 
-    handleNumberChange = (e) => {
-        this.setState({number: e.target.value});
-    };
-
-    handleGraphUrlChange = (e) => {
-        this.setState({graphUrl: e.target.value});
+    handleTitleChange = (e) => {
+        this.setState({title: e.target.value});
     };
 
     handleCreatorChange = (e) => {
@@ -30,6 +26,14 @@ class CreateCellForm extends Component {
 
     handleDescriptionChange = (e) => {
         this.setState({description: e.target.value});
+    };
+
+    handleNumberChange = (e) => {
+        this.setState({number: e.target.value});
+    };
+
+    handleGraphUrlChange = (e) => {
+        this.setState({graphUrl: e.target.value});
     };
 
     handleDataSourceChange = (e) => {
@@ -77,10 +81,14 @@ class CreateCellForm extends Component {
             }
         }
 
-        console.log(JSON.stringify(widget));
+        console.log(`handleCreateWidget:widget=${JSON.stringify(widget)}`);
 
         this.props.addCell(widget);
-        this.props.done();
+
+        if (this.props.done) {
+            this.props.done();
+        }
+
         //TODO: If publish is true, send to database
     };
 
@@ -144,7 +152,7 @@ class CreateCellForm extends Component {
                     <ControlLabel>Title</ControlLabel>
                     <FormControl
                         type='text'
-                        onChange={this.handleGraphUrlChange}/>
+                        onChange={this.handleTitleChange}/>
                 </FormGroup>
 
                 {formContent}

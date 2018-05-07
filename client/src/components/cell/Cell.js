@@ -21,11 +21,11 @@ class Cell extends Component {
     }
 
     render() {
-        const {title, kind, unit, value} = this.props;
+        const {title, kind, unit, number} = this.props;
 
         const content = (
             <div style={{display: 'flex', justifyContent: 'center'}}>
-                <p><span style={{fontSize: "xx-large"}}>{value}</span> <span>{unit}</span></p>
+                <p><span style={{fontSize: "xx-large"}}>{number}</span> <span>{unit}</span></p>
             </div>
         );
 
