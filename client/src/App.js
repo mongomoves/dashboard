@@ -20,6 +20,11 @@ const testWidgets = [
     {
         layout: {i: 1, x: 1, y: Infinity, w: 1, h: 2, minW: 1, minH: 2},
         content: {kind: 'Value', title: 'Disk usage', number: 108, unit: 'gb'}
+    },
+
+    {
+        layout: {i: 2, x: 2, y: Infinity, w: 1, h: 2, minW: 1, minH: 2},
+        content: {kind: 'Graph', title: 'Grafana graph', graphUrl: 'http://play.grafana.org/render/dashboard-solo/db/grafana-play-home?orgId=1&panelId=4&from=1499272191563&to=1499279391563&width=1000&height=500&tz=UTC%2B02%3A00&timeout=5000'}
     }
 ];
 
@@ -36,7 +41,8 @@ class App extends Component {
         };
     }
 
-    //adds a cell to the layout 
+    //adds a cell to the layout
+    // TODO: if it's a graph, inital size and minimum size should be different
     addCell = (cell) => {
         const newCell = {
             layout: {

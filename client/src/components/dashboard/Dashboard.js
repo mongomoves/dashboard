@@ -42,16 +42,7 @@ class Dashboard extends Component {
 
             return (
                 <div key={i} data-grid={{x, y, w, h, minW, minH}}>
-                    <Cell
-                        kind={cell.content.kind}
-                        title={cell.content.title}
-                        creator={cell.content.author}
-                        description={cell.content.description}
-                        unit={cell.content.unit}
-                        number={cell.content.number}
-                        dataSource={cell.content.dataSource}
-                        attribute={cell.content.attribute}
-                        graphUrl={cell.content.graphUrl}/>
+                    <Cell content={cell.content}/>
                 </div>
             );
         });
