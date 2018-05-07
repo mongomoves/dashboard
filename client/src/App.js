@@ -136,7 +136,8 @@ class App extends Component {
                 <Dashboard
                     cells={this.state.cells}
                     onLayoutChange={this.onLayoutChange}
-                    onBreakpointChane={this.onBreakpointChange} />
+                    onBreakpointChane={this.onBreakpointChange}
+                    onResizeStop={this.onResizeStop}/>
                 <BootstrapModal
                     title="Create widget"
                     show={this.state.modals.createCell}
