@@ -12,7 +12,7 @@ class CustomNavbar extends Component {
         };
     }
 
-    render() { 
+    render() {
         return (
             <Navbar inverse collapseOnSelect>
             <Navbar.Header>
@@ -30,7 +30,7 @@ class CustomNavbar extends Component {
               <Nav pullRight>
               <NavDropdown eventKey={3} title={this.state.cog} id="basic-nav-dropdown">
                   <MenuItem eventKey={3.1} onClick={this.props.showCreateCell}>Create widget</MenuItem>
-                  <MenuItem eventKey={3.2}>Load widgets</MenuItem>
+                  <MenuItem eventKey={3.2} onClick={this.props.showExistingCell}>Load widgets</MenuItem>
                   <MenuItem divider />
                   <MenuItem eventKey={3.3}>Save your Dashboard</MenuItem>
                   <MenuItem eventKey={3.4}>Edit your Dashboard</MenuItem>
