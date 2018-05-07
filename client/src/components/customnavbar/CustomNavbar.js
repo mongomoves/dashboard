@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
-import './customnavbar.css';
+import './CustomNavbar.css';
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem, Glyphicon } from 'react-bootstrap';
-import Modal from '../Modal/Modal';
-
-
 
 class CustomNavbar extends Component {
 
-    state = {
-        cog: <Glyphicon glyph="cog" />
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            cog: <Glyphicon glyph="cog" />
+        };
     }
+
     render() { 
         return (
             <Navbar inverse collapseOnSelect>
@@ -27,7 +29,7 @@ class CustomNavbar extends Component {
               </Nav>
               <Nav pullRight>
               <NavDropdown eventKey={3} title={this.state.cog} id="basic-nav-dropdown">
-                  <MenuItem eventKey={3.1} onClick={this.props.show}>Create widget</MenuItem>
+                  <MenuItem eventKey={3.1} onClick={this.props.showCreateCell}>Create widget</MenuItem>
                   <MenuItem eventKey={3.2}>Load widgets</MenuItem>
                   <MenuItem divider />
                   <MenuItem eventKey={3.3}>Save your Dashboard</MenuItem>
