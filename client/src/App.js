@@ -24,7 +24,7 @@ const testWidgets = [
     },
 
     {
-        layout: {i: 2, x: 2, y: Infinity, w: 1, h: 2, minW: 1, minH: 2},
+        layout: {i: 2, x: 2, y: Infinity, w: 3, h: 4, minW: 3, minH: 4},
         content: {kind: 'Graph', title: 'Grafana graph', graphUrl: 'http://play.grafana.org/render/dashboard-solo/db/grafana-play-home?orgId=1&panelId=4&from=1499272191563&to=1499279391563&width=1000&height=500&tz=UTC%2B02%3A00&timeout=5000'}
     }
 ];
@@ -42,18 +42,31 @@ class App extends Component {
         };
     }
 
-    //adds a cell to the layout
-    // TODO: if it's a graph, inital size and minimum size should be different
+    // adds a cell to the layout
+    // depending on widget type the inital w/h and minw/minh are different
     addCell = (cell) => {
+        let w, h, minH, minW;
+        if (cell.kind === 'Value') {
+            w = 1;
+            h = 2;
+            minW = 1;
+            minH = 2;
+        }
+        else if (cell.kind === 'Graph' ) {
+            w = 3;
+            h = 4;
+            minW = 3;
+            minH = 4;
+        }
         const newCell = {
             layout: {
                 i: this.state.idCounter,
                 x: (this.state.cells.length) % (this.state.cols || 12),
                 y: Infinity,
-                w: 1,
-                h: 2,
-                minW: 1,
-                minH: 2
+                w: w,
+                h: h,
+                minW: minW,
+                minH: minH
             },
             content: cell
         };

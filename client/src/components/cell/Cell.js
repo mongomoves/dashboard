@@ -59,19 +59,30 @@ class Cell extends Component {
         else if (kind === 'Graph') {
             const { graphUrl } = this.props.content;
             content = (
-                <img src={graphUrl} style={{width: '100%', height: '100%'}}/>
+                //<img src={graphUrl} style={{width: '100%', height: '100%'}}/>
+                <ImageHolder refit={this.remeasure}
+                             width={this.state.width - 10}
+                             height={this.state.height - 40}
+                             image={graphUrl}/>
             )
         }
 
+        const renderTitle = kind !== 'Graph'; //use this to not render titles for graph?
+
         return (
-            <Panel style={{width: 'inherit', height: 'inherit'}}>
-                <Panel.Body>
-                    {title}
-                    <div ref={this.frameSize} style={{display: 'flex', justifyContent: 'center'}}>
-                         {content}
-                    </div>
-                </Panel.Body>
-            </Panel>
+            <div ref={this.frameSize} style={{width: '100%', height: '100%'}}>
+                <Panel style={{width: 'inherit', height: 'inherit'}}>
+                    <Panel.Body>
+
+                        <span>{title}</span>
+
+                        <div style={{display: 'flex', justifyContent: 'center'}}>
+                             {content}
+                        </div>
+
+                    </Panel.Body>
+                </Panel>
+            </div>
         )
     }
 }
