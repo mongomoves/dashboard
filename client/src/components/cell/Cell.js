@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Panel } from 'react-bootstrap';
 import ImageHolder from "./ImageHolder";
 import './Cell.css';
+import ValueComponent from '../ValueComponent/ValueComponent';
 
 /**
  * This component represents a cell
@@ -50,10 +51,7 @@ class Cell extends Component {
             const {unit, number} = this.props.content;
 
             content = (
-                <p>
-                    <span style={{fontSize: "xx-large"}}>{number}</span>
-                    <span>{unit}</span>
-                </p>
+                <ValueComponent number={number} unit={unit} />
             );
         }
         else if (kind === 'Graph') {
