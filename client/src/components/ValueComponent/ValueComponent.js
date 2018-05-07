@@ -2,22 +2,17 @@ import React, { Component } from 'react';
 import './ValueComponent.css';
 
 class ValueComponent extends Component {
-
-    constructor(props) {
-        super(props);
-
-    }
     render() { 
         return (
             <div>
-                <div style={divStyleNumber}>{this.props.number}</div>
-                <div style={divStyleUnit}>{this.props.unit}</div>
+                <span style={spanStyleNumber}>{this.props.number}</span>
+                <span style={spanStyleUnit}>{this.props.unit}</span>
             </div>
         );
     }
 }
 
-const divStyleNumber = {
+const spanStyleNumber = {
     fontSize: "300%",
     fontWeight: "bold",
     display: "inlineBlock",
@@ -25,7 +20,7 @@ const divStyleNumber = {
     color: "orange"
 }
 
-const divStyleUnit = {
+const spanStyleUnit = {
     fontSize: "150%",
     fontWeight: "bold"
 }

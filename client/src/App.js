@@ -4,7 +4,6 @@ import Dashboard from "./components/dashboard/Dashboard";
 import CreateCellForm from "./components/CreateCell/CreateCellForm";
 import SelectExistingCell from './components/existingCell/SelectExistingCell';
 import BootstrapModal from './components/Modal/BootstrapModal';
-import ValueComponent from "./components/ValueComponent/ValueComponent";
 import _ from 'lodash';
 
 import './App.css';
