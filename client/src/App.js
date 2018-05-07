@@ -81,7 +81,7 @@ class App extends Component {
     };
 
     removeCell = (i) => {
-        this.setState({cells: _.reject(this.props.cells, {i: i})})
+        this.setState({cells: _.reject(this.state.cells, {i: i})})
     };
 
     clearDashboardLayout = () => {
