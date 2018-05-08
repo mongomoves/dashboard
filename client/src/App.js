@@ -3,6 +3,7 @@ import CustomNavbar from "./components/customnavbar/CustomNavbar";
 import Dashboard from "./components/dashboard/Dashboard";
 import CreateCellForm from "./components/CreateCell/CreateCellForm";
 import SelectExistingCell from './components/existingCell/SelectExistingCell';
+import CellInfo from './components/cell/CellInfo';
 import BootstrapModal from './components/Modal/BootstrapModal';
 import _ from 'lodash';
 
@@ -38,7 +39,8 @@ class App extends Component {
             cells: testWidgets,
             modals: {
                 createCell: false,
-                existingCell: false
+                existingCell: false,
+                showInfo: false
             },
             idCounter: testWidgets.length
         };
@@ -130,12 +132,23 @@ class App extends Component {
         this.setState({modals: {existingCell: false}})
     };
 
+    handleShowCellInfo = () => {
+        this.setState({modals: {showInfo: true}})
+    };
+
+    handleCloseCellInfo = () => {
+        this.setState({modals: {showInfo: false}})
+    };
+
     render() {
         return (
             <div>
-                <CustomNavbar showCreateCell={this.handleShowCreateCell} showExistingCell={this.handleShowExistingCell} />
+                <CustomNavbar 
+                    showCreateCell={this.handleShowCreateCell} 
+                    showExistingCell={this.handleShowExistingCell} />
                 <Dashboard
                     removeCell={this.removeCell}
+                    showInfo={this.handleShowCellInfo}
                     cells={this.state.cells}
                     onLayoutChange={this.onLayoutChange}
                     onBreakpointChane={this.onBreakpointChange}
@@ -147,9 +160,15 @@ class App extends Component {
                     <CreateCellForm addCell={this.addCell} done={this.handleCloseCreateCell} />
                 </BootstrapModal>
                 <BootstrapModal
-                  show={this.state.modals.existingCell}
-                  close={this.handleCloseExistingCell}>
-                  <SelectExistingCell done={this.handleCloseExistingCell} />
+                    show={this.state.modals.existingCell}
+                    close={this.handleCloseExistingCell}>
+                    <SelectExistingCell done={this.handleCloseExistingCell} />
+                </BootstrapModal>
+                <BootstrapModal
+                    title="Cell title"
+                    show={this.state.modals.showInfo}
+                    close={this.handleCloseCellInfo}>
+                    <CellInfo/>
                 </BootstrapModal>
             </div>
         );

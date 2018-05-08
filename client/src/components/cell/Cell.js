@@ -17,7 +17,6 @@ class Cell extends Component {
         };
 
         this.frameSize = React.createRef();
-        this.onRemove = this.onRemove.bind(this);
     }
 
     /**
@@ -36,7 +35,7 @@ class Cell extends Component {
         this.setState({width: width, height: height});
     };
 
-    onRemove() {
+    onRemove = () => {
         console.log("Remove in Cell");
         this.props.removeCell(this.props.id);
     }
@@ -82,9 +81,9 @@ class Cell extends Component {
                                     pullRight 
                                     bsSize="xsmall"
                                     title={<Glyphicon glyph="cog" />}>
-                                        <MenuItem eventKey={1}>Redigera</MenuItem>
-                                        <MenuItem divider/>
-                                        <MenuItem eventKey={2} onClick={this.onRemove}>Ta bort</MenuItem>
+                                        <MenuItem eventKey={1} onClick={this.props.showInfo}>Info</MenuItem>
+                                        <MenuItem eventKey={2}>Redigera</MenuItem>
+                                        <MenuItem eventKey={3} onClick={this.onRemove}>Ta bort</MenuItem>
                                 </DropdownButton>
                             </Col>
                         </Row>
