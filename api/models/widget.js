@@ -32,5 +32,6 @@ const widgetSchema = mongoose.Schema({
         required: true
     }
 });
+widgetSchema.index({title: 'text', description: 'text', creator: 'text'});
 
 module.exports = mongoose.model('Widget', widgetSchema);
