@@ -134,7 +134,7 @@ class App extends Component {
     render() {
         return (
             <div>
-                
+
                 <CustomNavbar showCreateCell={this.handleShowCreateCell} showExistingCell={this.handleShowExistingCell} />
                 <Dashboard
                     removeCell={this.removeCell}
@@ -153,6 +153,7 @@ class App extends Component {
                   close={this.handleCloseExistingCell}>
                   <SelectExistingCell done={this.handleCloseExistingCell} />
                 </BootstrapModal>
+                <Footer/>
             </div>
         );
     }
