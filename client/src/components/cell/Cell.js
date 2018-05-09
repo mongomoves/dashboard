@@ -40,6 +40,10 @@ class Cell extends Component {
         this.props.removeCell(this.props.id);
     }
 
+    onShowInfo = () => {
+        this.props.showInfo(this.props.id);
+    }
+
     render() {
         const {title, kind} = this.props.content;
 
@@ -81,7 +85,7 @@ class Cell extends Component {
                                     pullRight 
                                     bsSize="xsmall"
                                     title={<Glyphicon glyph="cog" />}>
-                                        <MenuItem eventKey={1} onClick={this.props.showInfo}>Info</MenuItem>
+                                        <MenuItem eventKey={1} onClick={this.onShowInfo}>Info</MenuItem>
                                         <MenuItem eventKey={2}>Redigera</MenuItem>
                                         <MenuItem eventKey={3} onClick={this.onRemove}>Ta bort</MenuItem>
                                 </DropdownButton>

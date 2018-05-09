@@ -22,7 +22,7 @@ const testWidgets = [
 
     {
         layout: {i: 1, x: 1, y: Infinity, w: 2, h: 2, minW: 1, minH: 2},
-        content: {kind: 'Value', title: 'Disk usage', number: 108, unit: 'gb'}
+        content: {creator: 'Bob', created: '2018/5/9', description: 'En beskrivning av denna widget', kind: 'Value', title: 'Disk usage', number: 108, unit: 'gb'}
     },
 
     {
@@ -30,6 +30,9 @@ const testWidgets = [
         content: {kind: 'Graph', title: 'Grafana graph', graphUrl: 'http://play.grafana.org/render/dashboard-solo/db/grafana-play-home?orgId=1&panelId=4&from=1499272191563&to=1499279391563&width=1000&height=500&tz=UTC%2B02%3A00&timeout=5000'}
     }
 ];
+
+//Used to show info about Cell
+let cellInfoData = {};
 
 class App extends Component {
     constructor(props) {
@@ -86,7 +89,8 @@ class App extends Component {
 
     removeCell = (i) => {
         this.setState({
-            cells: _.reject(this.state.cells, {layout: {i: i}})})
+            cells: _.reject(this.state.cells, {layout: {i: i}})
+        })
     };
 
     clearDashboardLayout = () => {
@@ -132,8 +136,20 @@ class App extends Component {
         this.setState({modals: {existingCell: false}})
     };
 
-    handleShowCellInfo = () => {
+    handleShowCellInfo = (i) => {
         this.setState({modals: {showInfo: true}})
+        this.state.cells.some(function(e) {
+            if(e.layout.i === i) {
+                cellInfoData = {
+                    title: e.content.title,
+                    creator: e.content.creator,
+                    created: e.content.created,
+                    description: e.content.description
+                };
+                return true;
+            }
+            return false;
+        });
     };
 
     handleCloseCellInfo = () => {
@@ -165,10 +181,10 @@ class App extends Component {
                     <SelectExistingCell done={this.handleCloseExistingCell} />
                 </BootstrapModal>
                 <BootstrapModal
-                    title="Cell title"
+                    title={cellInfoData.title}
                     show={this.state.modals.showInfo}
                     close={this.handleCloseCellInfo}>
-                    <CellInfo/>
+                    <CellInfo cell={cellInfoData}/>
                 </BootstrapModal>
             </div>
         );
