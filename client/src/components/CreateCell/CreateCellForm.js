@@ -8,16 +8,27 @@ class CreateCellForm extends Component {
         this.state = {
             buttonText: 'Create widget',
             kind: 'Value',
-            publish: false
+            publish: false,
+            buttonDisabled: false,
+            title: '',
+            creator: '',
+            description: '',
+            number: '',
+            graphUrl: '',
+            dataSource: '',
+            attribute: '',
+            unit: '',
+           
         };
     }
 
     handleKindChange = (e) => {
         this.setState({kind: e.target.value});
+        
     };
 
     handleTitleChange = (e) => {
-        this.setState({title: e.target.value});
+        this.setState({title: e.target.value, titleError: true});
     };
 
     handleCreatorChange = (e) => {
@@ -60,9 +71,11 @@ class CreateCellForm extends Component {
         }
     };
 
+    
+
     handleCreateWidget = () => {
         let widget;
-
+        
         if (this.state.kind === 'Value') {
             widget = {
                 kind: this.state.kind,
@@ -72,6 +85,9 @@ class CreateCellForm extends Component {
                 attribute: this.state.attribute,
                 unit: this.state.unit
             }
+           
+           
+            
         }
         else if (this.state.kind === 'Graph') {
             widget = {
@@ -95,7 +111,7 @@ class CreateCellForm extends Component {
     render() {
         //TODO: Handle validation and add help text to fields
         let formContent;
-
+        let buttonKind;
         // Form fields depends on type of widget
         if (this.state.kind === 'Value') {
             formContent = (
@@ -126,6 +142,11 @@ class CreateCellForm extends Component {
                     </FormGroup>
                 </div>
             );
+            buttonKind = (
+                <Button
+                        disabled={!this.state.title || !this.state.number || !this.state.dataSource || !this.state.attribute || !this.state.unit} 
+                        bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+            );
         }
         else if (this.state.kind === 'Graph') {
             formContent = (
@@ -135,6 +156,13 @@ class CreateCellForm extends Component {
                         type='text'
                         onChange={this.handleGraphUrlChange}/>
                 </FormGroup>
+            );
+            
+            
+            buttonKind = (
+                <Button
+                        disabled={!this.state.graphUrl || !this.state.title} 
+                        bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
             );
         }
 
@@ -182,7 +210,7 @@ class CreateCellForm extends Component {
                 }
 
                 <ButtonToolbar>
-                    <Button bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                    {buttonKind}
                 </ButtonToolbar>
             </form>
         )
