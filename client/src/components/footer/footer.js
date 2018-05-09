@@ -32,9 +32,9 @@ class Footer extends Component {
                   title="Activity Log"
                   show={this.state.modals.showBootStrapModal}
                   close={this.handleCloseBootStrapModal}>
-                Datum: 180515<br />
-                Tid: 15.17<br />
-                Sven har lagt till cellen "Projekt"
+                  Datum: 180515<br />
+                  Tid: 15.17<br />
+                  Sven har lagt till cellen "Projekt"
               </BootstrapModal>
                 <div  className="footerText">
                 <p><a onClick={this.handleShowBootStrapModal}>
