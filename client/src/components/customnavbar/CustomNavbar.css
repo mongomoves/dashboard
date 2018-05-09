@@ -18,11 +18,19 @@
 }
 
 .dropdown-menu {
-    background-color: rgb(241, 185, 112);
+    background-color: #323232;
 }
 
 .dropdown-menu>li>a {
-    font-weight: bold;
+    color: white;
+}
+
+.dropdown-menu>li>a:hover{
+    color: orange;
+}
+
+.dropdown-menu>li:hover{
+    background-color: grey;
 }
 
 .container {
