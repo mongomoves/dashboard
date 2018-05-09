@@ -39,6 +39,7 @@ class Dashboard extends Component {
     generateElement() {
         const remove = this.props.removeCell;
         const show = this.props.showInfo;
+        const edit = this.props.editCell;
         return _.map(this.props.cells, function (cell) {
             const {i, x, y, w, h, minW, minH} = cell.layout;
             return (
@@ -47,7 +48,8 @@ class Dashboard extends Component {
                         content={cell.content}
                         id={i} 
                         removeCell={remove}
-                        showInfo={show}/>
+                        showInfo={show}
+                        editCell={edit}/>
                 </div>
             );
         });

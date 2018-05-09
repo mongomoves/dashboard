@@ -35,13 +35,28 @@ class Cell extends Component {
         this.setState({width: width, height: height});
     };
 
+    /**
+     * Callback to App.js when Remove button is clicked in cell menu.
+     * Id (or i in original data) must be passed along.
+     */
     onRemove = () => {
-        console.log("Remove in Cell");
         this.props.removeCell(this.props.id);
     }
 
+    /**
+     * Callback to App.js when Show info button is clicked.
+     * Id (or i in original data) must be passed along.
+     */
     onShowInfo = () => {
         this.props.showInfo(this.props.id);
+    }
+
+    /**
+     * Callback to App.js when Edit button is clicked.
+     * Id (or i in original data) must be passed along.
+     */
+    onEdit = () => {
+        this.props.editCell(this.props.id);
     }
 
     render() {
@@ -86,7 +101,7 @@ class Cell extends Component {
                                     bsSize="xsmall"
                                     title={<Glyphicon glyph="cog" />}>
                                         <MenuItem eventKey={1} onClick={this.onShowInfo}>Info</MenuItem>
-                                        <MenuItem eventKey={2}>Redigera</MenuItem>
+                                        <MenuItem eventKey={2} onClick={this.onEdit}>Redigera</MenuItem>
                                         <MenuItem eventKey={3} onClick={this.onRemove}>Ta bort</MenuItem>
                                 </DropdownButton>
                             </Col>

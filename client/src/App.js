@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import CustomNavbar from "./components/customnavbar/CustomNavbar";
 import Dashboard from "./components/dashboard/Dashboard";
 import CreateCellForm from "./components/CreateCell/CreateCellForm";
+import EditCellForm from "./components/CreateCell/EditCellForm";
 import SelectExistingCell from './components/existingCell/SelectExistingCell';
 import CellInfo from './components/cell/CellInfo';
 import BootstrapModal from './components/Modal/BootstrapModal';
@@ -33,6 +34,8 @@ const testWidgets = [
 
 //Used to show info about Cell
 let cellInfoData = {};
+//Used to show values when editing Cell
+let editValues = {};
 
 class App extends Component {
     constructor(props) {
@@ -42,6 +45,7 @@ class App extends Component {
             cells: testWidgets,
             modals: {
                 createCell: false,
+                editCell: false,
                 existingCell: false,
                 showInfo: false
             },
@@ -156,6 +160,38 @@ class App extends Component {
         this.setState({modals: {showInfo: false}})
     };
 
+    handleShowEditCell = (i) => {
+        this.setState({modals: {editCell: true}})
+        this.state.cells.some(function(e) {
+            if(e.layout.i === i) {
+                if(e.content.kind === 'Value') {
+                    editValues = {
+                        creator: e.content.creator,
+                        kind: 'Value',
+                        title: e.content.title,
+                        number: e.content.number,
+                        unit: e.content.unit,
+                        dataSource: e.content.dataSource,
+                        attribute: e.content.attribute
+                    }
+                } else if (e.content.kind === 'Graph') {
+                    editValues = {
+                        creator: e.content.creator,
+                        kind: 'Graph',
+                        title: e.content.title,
+                        graphUrl: e.content.graphUrl
+                    }
+                }
+                return true;
+            }
+            return false;
+        })
+    };
+
+    handleCloseEditCell = () => {
+        this.setState({modals: {editCell: false}})
+    };
+
     render() {
         return (
             <div>
@@ -165,6 +201,7 @@ class App extends Component {
                 <Dashboard
                     removeCell={this.removeCell}
                     showInfo={this.handleShowCellInfo}
+                    editCell={this.handleShowEditCell}
                     cells={this.state.cells}
                     onLayoutChange={this.onLayoutChange}
                     onBreakpointChane={this.onBreakpointChange}
@@ -185,6 +222,15 @@ class App extends Component {
                     show={this.state.modals.showInfo}
                     close={this.handleCloseCellInfo}>
                     <CellInfo cell={cellInfoData}/>
+                </BootstrapModal>
+                <BootstrapModal
+                    title='Redigera widget'
+                    show={this.state.modals.editCell}
+                    close={this.handleCloseEditCell}>
+                    <EditCellForm 
+                        values={editValues} 
+                        addCell={this.addCell}
+                        done={this.handleCloseEditCell}/>
                 </BootstrapModal>
             </div>
         );
