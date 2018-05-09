@@ -11,11 +11,7 @@ const logRouter = require('./api/routes/log');
 const app = express();
 
 // Connect to MongoDB Atlas
-mongoose.connect(
-    'mongodb+srv://axis-admin:'
-    + process.env.MONGODB_ATLAS_PASSWORD
-    + '@axis-dashboard-xxb8y.mongodb.net/test'
-);
+mongoose.connect("mongodb://database:27017/test");
 
 app.use(morgan('dev'));
 
