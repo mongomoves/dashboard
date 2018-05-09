@@ -118,25 +118,31 @@ class CreateCellForm extends Component {
                 <div>
                     <FormGroup>
                     <ControlLabel>Number</ControlLabel>
+                    <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-number">Ange Antal som ska visas i widget t.ex. antal anställda.</Tooltip>}>
                     <FormControl
                         type='number'
                         onChange={this.handleNumberChange}/>
+                    </OverlayTrigger>
                     </FormGroup>
                     <FormGroup>
                         <ControlLabel>Data source</ControlLabel>
+                        <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-dataSource">Ange den datakälla som widgeten ska presentera data ifrån.</Tooltip>}>
                         <FormControl
                             type='text'
                             onChange={this.handleDataSourceChange}/>
+                        </OverlayTrigger>
                     </FormGroup>
                     <FormGroup>
                         <ControlLabel>Data source attribute</ControlLabel>
+                        <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-attribute">Ange specifikt attribut från API</Tooltip>}>
                         <FormControl
                             type='text'
                             onChange={this.handleAttributeChange}/>
+                        </OverlayTrigger>
                     </FormGroup>
                     <FormGroup>
                         <ControlLabel>Unit</ControlLabel>
-                        <OverlayTrigger placement="top" overlay={<Tooltip>Ange enhet som ska visas i widget</Tooltip>}>
+                        <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-unit">Ange enhet som ska visas i widget</Tooltip>}>
                         <FormControl
                             type='text'
                             onChange={this.handleUnitChange}/>
@@ -154,9 +160,11 @@ class CreateCellForm extends Component {
             formContent = (
                 <FormGroup>
                     <ControlLabel>Graph URL</ControlLabel>
+                    <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-graphUrl">Ange URL för att visa den önskade grafen</Tooltip>}>
                     <FormControl
                         type='text'
                         onChange={this.handleGraphUrlChange}/>
+                    </OverlayTrigger>
                 </FormGroup>
             );
             
@@ -180,9 +188,11 @@ class CreateCellForm extends Component {
 
                 <FormGroup>
                     <ControlLabel>Title</ControlLabel>
+                    <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-title">Ange titel som widgeten ska ha.</Tooltip>}>
                     <FormControl
                         type='text'
                         onChange={this.handleTitleChange}/>
+                    </OverlayTrigger>
                 </FormGroup>
 
                 {formContent}
@@ -197,16 +207,20 @@ class CreateCellForm extends Component {
                 <div>
                     <FormGroup>
                         <ControlLabel>Creator</ControlLabel>
+                        <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-creator">Ange namn på den som skapat widgeten.</Tooltip>}>
                         <FormControl
                             type='text'
                             onChange={this.handleCreatorChange}/>
+                        </OverlayTrigger>
                     </FormGroup>
 
                     <FormGroup>
                     <ControlLabel>Description</ControlLabel>
+                        <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-desc">Ange en beskrivning om vad widgeten visualiserar.</Tooltip>}>
                         <FormControl
                         type='text'
                         onChange={this.handleDescriptionChange}/>
+                        </OverlayTrigger>
                     </FormGroup>
                 </div>
                 }
