@@ -10,23 +10,24 @@ class CellInfo extends Component {
         const {creator, created, description} = this.props.cell;
         let dom;
         if(!creator && !created && !description) {
-            dom = <p>Cellen är inte publicerad och saknar information</p>;
-            return dom;
+            return (
+                <p>Cellen är inte publicerad och saknar information</p>
+            );
         } else {
-            dom = (
-            <div>
-                <p>{description}</p>
-                <Row>
-                    <Col lg={6}>
-                        <h3>Skapad av {creator}</h3>
-                    </Col>
-                    <Col lg={6}>
-                        <h3>{created}</h3>
-                    </Col>
-                </Row>
-            </div>);
+            return (
+                <div>
+                    <p>{description}</p>
+                    <Row>
+                        <Col lg={6}>
+                            <h3>Skapad av {creator}</h3>
+                        </Col>
+                        <Col lg={6}>
+                            <h3>{created}</h3>
+                        </Col>
+                    </Row>
+                </div>
+            );
         }
-        return dom;
     }
 
     render() {

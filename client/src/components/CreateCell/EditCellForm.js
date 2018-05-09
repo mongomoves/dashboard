@@ -4,9 +4,11 @@ import {Button, ButtonToolbar, Checkbox, ControlLabel, FormControl, FormGroup} f
 class EditCellForm extends Component {
     constructor(props) {
         super(props);
-        const {kind, title, number, graphUrl, dataSource, attribute, unit} = this.props.values;
+        const {creator, kind, title, number, graphUrl, dataSource, attribute, unit} = this.props.values;
+
         this.state = {
             buttonText: 'Edit widget',
+            creator: creator,
             kind: kind,
             publish: false,
             title: title,
@@ -97,17 +99,16 @@ class EditCellForm extends Component {
     render() {
         //TODO: Handle validation and add help text to fields
         let formContent;
-
         // Form fields depends on type of widget
         if (this.state.kind === 'Value') {
             formContent = (
                 <div>
                     <FormGroup>
-                    <ControlLabel>Number</ControlLabel>
-                    <FormControl
-                        type='number'
-                        placeholder={this.state.number}
-                        onChange={this.handleNumberChange}/>
+                        <ControlLabel>Number</ControlLabel>
+                        <FormControl
+                            type='number'
+                            placeholder={this.state.number}
+                            onChange={this.handleNumberChange}/>
                     </FormGroup>
                     <FormGroup>
                         <ControlLabel>Data source</ControlLabel>
@@ -160,7 +161,7 @@ class EditCellForm extends Component {
 
                 <FormGroup>
                     <Checkbox onChange={this.handlePublishChange}>
-                        Publish widget
+                        Publicera widget
                     </Checkbox>
                 </FormGroup>
 
@@ -176,8 +177,8 @@ class EditCellForm extends Component {
                     <FormGroup>
                     <ControlLabel>Description</ControlLabel>
                         <FormControl
-                        type='text'
-                        onChange={this.handleDescriptionChange}/>
+                            type='text'
+                            onChange={this.handleDescriptionChange}/>
                     </FormGroup>
                 </div>
                 }
