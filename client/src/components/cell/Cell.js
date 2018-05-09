@@ -3,6 +3,7 @@ import { Panel, Row, Col, MenuItem, DropdownButton, Glyphicon } from 'react-boot
 import ImageHolder from "./ImageHolder";
 import ReactResizeDetector from 'react-resize-detector';
 import './Cell.css';
+import ValueComponent from '../ValueComponent/ValueComponent';
 
 /**
  * This component represents a cell
@@ -51,10 +52,7 @@ class Cell extends Component {
             const {unit, number} = this.props.content;
 
             content = (
-                <p>
-                    <span style={{fontSize: "xx-large"}}>{number}</span>
-                    <span>{unit}</span>
-                </p>
+                <ValueComponent number={number} unit={unit} />
             );
         }
         else if (kind === 'Graph') {

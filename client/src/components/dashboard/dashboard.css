@@ -1,0 +1,11 @@
+html {
+    background-color: lightgray;
+}
+
+.react-grid-layout {
+    position: relative;
+    -webkit-transition: height 200ms ease;
+    -o-transition: height 200ms ease;
+    transition: height 200ms ease;
+    background-color: lightgrey;
+}

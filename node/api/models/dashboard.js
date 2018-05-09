@@ -33,5 +33,6 @@ const dashboardSchema = mongoose.Schema({
         }
     ]
 });
+dashboardSchema.index({title: 'text', description: 'text', creator: 'text'});
 
 module.exports = mongoose.model('Dashboard', dashboardSchema);
