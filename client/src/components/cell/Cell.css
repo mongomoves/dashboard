@@ -31,10 +31,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7d7e7d', end
 
 }
 
-.panel-heading {
+.panel-default>.panel-heading {
     padding: 5px 5px;
     background-color: red;
 }
+
 .cellDescr { 
     background-color: whitesmoke;
     white-space: pre-line;  
