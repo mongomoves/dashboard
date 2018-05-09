@@ -19,12 +19,15 @@
 
 .footerText a{
 color: orange;
-font-weight: bold;
 position: absolute;
-animation-duration: 20s;
+animation-duration: 15s;
 animation-timing-function: ease-in-out;
 animation-iteration-count: infinite;
 animation-name: anim-1;
+}
+
+.footerText a:hover{
+color: white;
 }
 
 
