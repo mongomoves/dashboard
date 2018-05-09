@@ -11,6 +11,10 @@
     -moz-border-radius: 0 !important;      
 }
 
+.dropdown-menu .divider{
+background-color: orange;
+}
+
 .navbar-inverse .navbar-nav>li>a {
     color: orange;
 }
