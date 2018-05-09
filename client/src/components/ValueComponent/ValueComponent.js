@@ -2,7 +2,36 @@ import React, { Component } from 'react';
 import './ValueComponent.css';
 
 class ValueComponent extends Component {
+    
+    
+    
+    
+    
+    
+    //getData()
+    
+    
+    
+    
+    
+    
     render() { 
+        
+        //here we check if a datasource is stated, and if so fetch this data.
+        if(this.props.dataSource){
+
+            //getData();
+
+            return(
+                <div>
+                    <span style={spanStyleNumber}>data from API</span>
+                    <span style={spanStyleUnit}>{this.props.unit}</span>
+                </div>
+
+
+            )
+
+        }
         return (
             <div>
                 <span style={spanStyleNumber}>{this.props.number}</span>
