@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Button, ButtonToolbar, Checkbox, ControlLabel, FormControl, FormGroup} from "react-bootstrap";
+import {Button, ButtonToolbar, Checkbox, ControlLabel, FormControl, FormGroup, Tooltip, OverlayTrigger} from "react-bootstrap";
 
 class CreateCellForm extends Component {
     constructor(props) {
@@ -136,9 +136,11 @@ class CreateCellForm extends Component {
                     </FormGroup>
                     <FormGroup>
                         <ControlLabel>Unit</ControlLabel>
+                        <OverlayTrigger placement="top" overlay={<Tooltip>Ange enhet som ska visas i widget</Tooltip>}>
                         <FormControl
                             type='text'
                             onChange={this.handleUnitChange}/>
+                        </OverlayTrigger>
                     </FormGroup>
                 </div>
             );
