@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Responsive, WidthProvider } from 'react-grid-layout';
 import Cell from '../cell/Cell'
+import './dashboard.css';
 import _ from 'lodash';
 
 const ResponsiveGRL = WidthProvider(Responsive);

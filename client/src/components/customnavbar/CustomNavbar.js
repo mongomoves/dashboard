@@ -17,7 +17,7 @@ class CustomNavbar extends Component {
             <Navbar inverse collapseOnSelect>
             <Navbar.Header>
               <Navbar.Brand>
-                <a href="#brand">Axis Dasboard</a>
+                <a href="#brand">Axis Dashboard</a>
               </Navbar.Brand>
               <Navbar.Toggle />
             </Navbar.Header>
