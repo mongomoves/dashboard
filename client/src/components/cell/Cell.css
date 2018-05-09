@@ -33,7 +33,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7d7e7d', end
 
 .panel-default>.panel-heading {
     padding: 5px 5px;
-    background-color: red;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    background-color: black;
+    background-image: none;
+    border-color: orange;
 }
 
 .cellDescr { 
