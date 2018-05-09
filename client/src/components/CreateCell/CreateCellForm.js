@@ -13,7 +13,7 @@ class CreateCellForm extends Component {
             title: '',
             creator: '',
             description: '',
-            number: '',
+            number: 0,
             graphUrl: '',
             dataSource: '',
             attribute: '',
