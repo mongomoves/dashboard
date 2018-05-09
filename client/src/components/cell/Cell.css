@@ -38,7 +38,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7d7e7d', end
     text-align: center;
     background-color: black;
     background-image: none;
-    border-color: none;
+    border-color: orange;
 }
 
 .cellDescr { 
