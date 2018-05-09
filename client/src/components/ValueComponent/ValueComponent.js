@@ -2,33 +2,36 @@ import React, { Component } from 'react';
 import './ValueComponent.css';
 
 class ValueComponent extends Component {
-        
-    
-    
-    
 
 
-     //this method fetches data from the API
-    getData(){
-        let dataURL = "" + attribute;
-        fetch(dataURL).then(res => res.json()).then((out)=>{
+
+
+
+
+    //fetch data from the API
+    getData = () => {
+
+        let dataURL = "" + this.props.attribute;
+        fetch(dataURL).then(res => res.json()).then((out) => {
             console.log("fetched data");
-        } )
+        })
 
     }
-    
-    
-    
-    
+
+
+
+
     //render the component 
-    render() { 
-        
+    render() {
+
         //here we check if a datasource is stated, and if so fetch this data.
-        if(this.props.dataSource && this.props.dataAttribute){
+        if (this.props.dataSource && this.props.dataAttribute) {
 
-            getData();
+            this.getData();
 
-            return(
+
+
+            return (
                 <div>
                     <span style={spanStyleNumber}>data from API</span>
                 </div>
