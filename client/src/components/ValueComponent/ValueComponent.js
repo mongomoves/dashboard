@@ -22,6 +22,7 @@ const spanStyleNumber = {
 
 const spanStyleUnit = {
     fontSize: "150%",
-    fontWeight: "bold"
+    fontWeight: "bold",
+    color: "white"
 }
 export default ValueComponent;
