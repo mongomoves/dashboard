@@ -3,6 +3,12 @@
     color:black; 
 } 
 
+.navbar-inverse {
+    margin-bottom: 0px;
+    /*Removes bootstraps rounded corners in the navbar*/
+    border-radius: 0 !important;
+    -moz-border-radius: 0 !important;      
+}
 .navbar-inverse .navbar-nav>li>a {
     color: orange;
 }
