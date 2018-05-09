@@ -8,20 +8,33 @@ class BootstrapModal extends Component {
 
         return (
             <Modal show={show} onHide={close}>
-                <Modal.Header closeButton>
+                <Modal.Header closeButton style={modalHeader}>
                     <Modal.Title>
                         {title}
                     </Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body style={modalBody}>
                     {children}
                 </Modal.Body>
-                <Modal.Footer>
+                <Modal.Footer style={modalFooter}>
                     <Button onClick={close}>Close</Button>
                 </Modal.Footer>
             </Modal>
         )
     }
+}
+
+const modalBody = {
+    backgroundColor: "gainsboro"
+}
+
+const modalHeader = {
+    backgroundColor: "#353535",
+    color: "orange" 
+}
+
+const modalFooter = {
+    backgroundColor: "#353535"
 }
 
 export default BootstrapModal;
