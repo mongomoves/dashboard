@@ -16,6 +16,7 @@ router.get('/', function(req, res, next) {
     const kind = req.query.kind;
     const creator = req.query.creator;
     const limit = req.query.limit;
+    const search = req.query.search;
 
     let query = {};
 
@@ -27,6 +28,10 @@ router.get('/', function(req, res, next) {
     // filter by creator
     if (creator) {
         query['creator'] = creator;
+    }
+
+    if (search) {
+        query['$text'] = {$search: search};
     }
 
     Widget.find(query)
