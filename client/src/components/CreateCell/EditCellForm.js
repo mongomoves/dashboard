@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Button, ButtonToolbar, Checkbox, ControlLabel, FormControl, FormGroup} from "react-bootstrap";
 
+
 class EditCellForm extends Component {
     constructor(props) {
         super(props);
@@ -86,8 +87,11 @@ class EditCellForm extends Component {
         }
 
         console.log(`handleCreateWidget:widget=${JSON.stringify(widget)}`);
-
-        this.props.addCell(widget);
+        if(this.state.creator) {
+            this.props.addCell(widget);
+        } else {
+            this.props.editCell(widget, this.props.values.index);
+        }
 
         if (this.props.done) {
             this.props.done();
@@ -107,41 +111,40 @@ class EditCellForm extends Component {
                         <ControlLabel>Number</ControlLabel>
                         <FormControl
                             type='number'
-                            placeholder={this.state.number}
+                            defaultValue={this.props.values.number}
                             onChange={this.handleNumberChange}/>
                     </FormGroup>
                     <FormGroup>
                         <ControlLabel>Data source</ControlLabel>
                         <FormControl
                             type='text'
-                            placeholder={this.state.dataSource}
+                            defaultValue={this.props.values.dataSource}
                             onChange={this.handleDataSourceChange}/>
                     </FormGroup>
                     <FormGroup>
                         <ControlLabel>Data source attribute</ControlLabel>
                         <FormControl
                             type='text'
-                            placeholder={this.state.attribute}
+                            defaultValue={this.props.values.attribute}
                             onChange={this.handleAttributeChange}/>
                     </FormGroup>
                     <FormGroup>
                         <ControlLabel>Unit</ControlLabel>
                         <FormControl
                             type='text'
-                            placeholder={this.state.unit}
+                            defaultValue={this.props.values.unit}
                             onChange={this.handleUnitChange}/>
                     </FormGroup>
                 </div>
             );
         }
         else if (this.state.kind === 'Graph') {
-            const {graphUrl} = this.props.values;
             formContent = (
                 <FormGroup>
                     <ControlLabel>Graph URL</ControlLabel>
                     <FormControl
                         type='text'
-                        placeholder={this.state.graphUrl}
+                        defaultValue={this.props.values.graphUrl}
                         onChange={this.handleGraphUrlChange}/>
                 </FormGroup>
             );
@@ -153,17 +156,17 @@ class EditCellForm extends Component {
                     <ControlLabel>Title</ControlLabel>
                     <FormControl
                         type='text'
-                        placeholder={this.state.title}
+                        defaultValue={this.props.values.title}
                         onChange={this.handleTitleChange}/>
                 </FormGroup>
 
                 {formContent}
-
+                {!this.state.creator &&
                 <FormGroup>
                     <Checkbox onChange={this.handlePublishChange}>
                         Publicera widget
                     </Checkbox>
-                </FormGroup>
+                </FormGroup>}
 
                 {this.state.publish &&
                 <div>

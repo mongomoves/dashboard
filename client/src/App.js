@@ -91,6 +91,12 @@ class App extends Component {
         return newCell;
     };
 
+    editCell = (cell, index) => {
+        let edited = Object.assign({}, this.state.cells);
+        edited[index].content = cell;
+        this.setState(edited);
+    }
+
     removeCell = (i) => {
         this.setState({
             cells: _.reject(this.state.cells, {layout: {i: i}})
@@ -162,10 +168,11 @@ class App extends Component {
 
     handleShowEditCell = (i) => {
         this.setState({modals: {editCell: true}})
-        this.state.cells.some(function(e) {
+        this.state.cells.some(function(e, index) {
             if(e.layout.i === i) {
                 if(e.content.kind === 'Value') {
                     editValues = {
+                        index: index,
                         creator: e.content.creator,
                         kind: 'Value',
                         title: e.content.title,
@@ -176,6 +183,7 @@ class App extends Component {
                     }
                 } else if (e.content.kind === 'Graph') {
                     editValues = {
+                        index: index,
                         creator: e.content.creator,
                         kind: 'Graph',
                         title: e.content.title,
@@ -230,6 +238,7 @@ class App extends Component {
                     <EditCellForm 
                         values={editValues} 
                         addCell={this.addCell}
+                        editCell={this.editCell}
                         done={this.handleCloseEditCell}/>
                 </BootstrapModal>
             </div>
