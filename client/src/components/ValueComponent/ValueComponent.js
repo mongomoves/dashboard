@@ -6,54 +6,60 @@ class ValueComponent extends Component {
         super(props);
 
         this.state = {
-            fetchResult: ''
+            fetchResult: null,
+            externalData: false
+
+
         }
 
+    }
+
+    //checking if external data is specified, and if true fetches it 
+    componentDidMount() {
+        if (this.props.dataSource && this.props.attribute) {
+            this.getData();
+        }
     }
 
 
 
 
-
-
-
-    //fetch data from the API
+    //fetching external data 
     getData = () => {
         let dataURL = this.props.dataSource;
         let attribute = this.props.attribute;
 
-        fetch(dataURL).then(res => res.json()).then((out) => {
-            this.setState({ FetchResult: out[attribute] })
 
-        }).catch(err => { throw err });
+
+        fetch(dataURL)
+            .then(res => res.json())
+            .then((out) => {
+                this.setState({ fetchResult: out[attribute], externalData : true });
+
+
+            })
+            .catch(err => { throw err });
+
 
     }
 
 
 
 
-    //render the component 
+
     render() {
-        console.log("dataSource: " + this.props.dataSource + " attribute: " + this.props.attribute);
-        
 
-        //here we check if a datasource is stated, and if so fetch this data.
-        if (this.props.dataSource && this.props.attribute) {
-           
-            console.log("Ready to fetch data")
-            this.getData();
-
-
-
+        //if external data is used, it is rendered 
+        if (this.state.externalData) {
             return (
                 <div>
                     <span style={spanStyleNumber}>{this.state.fetchResult}</span>
+                    <span style={spanStyleNumber}>{this.props.unit}</span>
                 </div>
-
-
             )
 
         }
+        //if no external data, props for number and unit is rendered
         return (
             <div>
                 <span style={spanStyleNumber}>{this.props.number}</span>
@@ -62,6 +68,9 @@ class ValueComponent extends Component {
         );
     }
 }
+
+
+
 
 const spanStyleNumber = {
     fontSize: "300%",
@@ -76,10 +85,6 @@ const spanStyleUnit = {
     fontWeight: "bold",
     color: "white"
 }
-
-
-
-
 
 
 
