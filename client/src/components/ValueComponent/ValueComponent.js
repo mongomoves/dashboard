@@ -7,7 +7,9 @@ class ValueComponent extends Component {
 
         this.state = {
             fetchResult: null,
-            externalData: false
+            externalData: false,
+            fetchSuccess: true
+
 
 
         }
@@ -34,11 +36,14 @@ class ValueComponent extends Component {
         fetch(dataURL)
             .then(res => res.json())
             .then((out) => {
-                this.setState({ fetchResult: out[attribute], externalData : true });
+                this.setState({ fetchResult: out[attribute], externalData: true });
 
 
             })
-            .catch(err => { throw err });
+            .catch(err => {
+                this.setState({ fetchSuccess: false })
+
+            });
 
 
     }
