@@ -2,18 +2,27 @@ import React, { Component } from 'react';
 import './ValueComponent.css';
 
 class ValueComponent extends Component {
+        constructor(props){
+            super(props);
 
+            this.state = {
+                    fetchResult : ''
+            }
 
+        }
+    
+    
+       
 
 
 
 
     //fetch data from the API
     getData = () => {
-
         let dataURL = "" + this.props.attribute;
         fetch(dataURL).then(res => res.json()).then((out) => {
-            console.log("fetched data");
+            this.setState({ FetchResult : out})
+            
         })
 
     }
@@ -27,13 +36,13 @@ class ValueComponent extends Component {
         //here we check if a datasource is stated, and if so fetch this data.
         if (this.props.dataSource && this.props.dataAttribute) {
 
-            this.getData();
+          this.getData();
 
-
+            
 
             return (
                 <div>
-                    <span style={spanStyleNumber}>data from API</span>
+                    <span style={spanStyleNumber}>{this.state.fetchResult}</span>
                 </div>
 
 
@@ -62,6 +71,15 @@ const spanStyleUnit = {
     fontWeight: "bold",
     color: "white"
 }
+
+
+
+
+
+
+
+
+
 
 
 
