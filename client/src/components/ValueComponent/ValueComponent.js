@@ -12,11 +12,12 @@ class ValueComponent extends Component {
 
 
         }
+    
 
     }
 
     //checking if external data is specified, and if true fetches it 
-    componentDidMount() {
+    componentWillMount() {
         if (this.props.dataSource && this.props.attribute) {
             this.setState({ externalData: true })
             this.getData();
@@ -34,7 +35,8 @@ class ValueComponent extends Component {
         fetch(dataURL)
             .then(res => res.json())
             .then((out) => {
-
+               
+                //TODO:maybe we need a function that maps and finds the attribute nestled inside
                 if (out[attribute]) {
                     this.setState({ fetchContainer: out[attribute], fetchSuccess: true });
                 }
@@ -60,6 +62,7 @@ class ValueComponent extends Component {
 
         }
         
+
         //if invalid URL or attribute 
         if (this.state.externalData && !this.state.fetchSuccess) {
             return (
