@@ -83,12 +83,14 @@ class App extends Component {
     };
 
     removeCell = (i) => {
-        this.setState({
-            cells: _.reject(this.state.cells, {layout: {i: i}})})
+        this.setState({cells: _.reject(this.state.cells, {layout: {i: i}})});
     };
 
     clearDashboardLayout = () => {
-        this.setState({layouts: {} });
+        this.setState({
+            layouts: {},
+            cells: [],
+        });
     };
 
     /**
@@ -133,7 +135,10 @@ class App extends Component {
     render() {
         return (
             <div>
-                <CustomNavbar showCreateCell={this.handleShowCreateCell} showExistingCell={this.handleShowExistingCell} />
+                <CustomNavbar
+                    showCreateCell={this.handleShowCreateCell}
+                    showExistingCell={this.handleShowExistingCell} 
+                    clearDashboard={this.clearDashboardLayout}/>
                 <Dashboard
                     removeCell={this.removeCell}
                     cells={this.state.cells}
