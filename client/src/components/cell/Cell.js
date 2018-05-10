@@ -49,10 +49,10 @@ class Cell extends Component {
 
         //TODO: Value and Graph should be separate components, styles should not be inlined
         if (kind === 'Value') {
-            const {unit, number, dataSource} = this.props.content;
+            const {unit, number, dataSource, attribute} = this.props.content;
 
             content = (
-                <ValueComponent number={number} unit={unit} />
+                <ValueComponent number={number} unit={unit} dataSource ={dataSource} attribute ={attribute} />
             );
         }
         else if (kind === 'Graph') {
