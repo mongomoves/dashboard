@@ -8,7 +8,7 @@ class ValueComponent extends Component {
         this.state = {
             externalData: false,
             fetchSuccess: false,
-            fetchResult: null
+            fetchContainer: null
 
 
         }
@@ -36,7 +36,7 @@ class ValueComponent extends Component {
             .then((out) => {
 
                 if (out[attribute]) {
-                    this.setState({ fetchResult: out[attribute], fetchSuccess: true });
+                    this.setState({ fetchContainer: out[attribute], fetchSuccess: true });
                 }
 
             })
@@ -49,18 +49,18 @@ class ValueComponent extends Component {
 
     render() {
 
-        //if external data is used, it is rendered 
+        //if external data is specified and valid   
         if (this.state.fetchSuccess) {
             return (
                 <div>
-                    <span style={spanStyleNumber}>{this.state.fetchResult}</span>
+                    <span style={spanStyleNumber}>{this.state.fetchContainer}</span>
                     <span style={spanStyleNumber}>{this.props.unit}</span>
                 </div>
             )
 
         }
         
-        //if something went wrong with external data
+        //if invalid URL or attribute 
         if (this.state.externalData && !this.state.fetchSuccess) {
             return (
                 <div>
@@ -70,7 +70,7 @@ class ValueComponent extends Component {
         }
 
 
-        //if no external data, props for number and unit is rendered
+        //if user entered data 
         return (
             <div>
                 <span style={spanStyleNumber}>{this.props.number}</span>
