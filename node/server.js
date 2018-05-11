@@ -11,16 +11,26 @@ const logRouter = require('./api/routes/log');
 const app = express();
 
 // Connect to MongoDB Atlas
-mongoose.connect(
-    'mongodb+srv://axis-admin:'
-    + process.env.MONGODB_ATLAS_PASSWORD
-    + '@axis-dashboard-xxb8y.mongodb.net/test'
-);
+mongoose.connect("mongodb://database:27017/test");
 
 app.use(morgan('dev'));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// CORS support
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header(
+        'Access-Control-Allow-Headers',
+        'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+    if (req.method === 'OPTIONS') {
+        res.header('Access-Control-Allow-Methods',
+            'PUT, POST, PATCH, DELETE, GET');
+        return res.status(200).json({});
+    }
+    next();
+});
 
 // Handle api routes, see files in api/routes for implementation
 app.use('/api/widgets', widgetsRouter);

@@ -18,7 +18,6 @@ class Cell extends Component {
         };
 
         this.frameSize = React.createRef();
-        this.onRemove = this.onRemove.bind(this);
     }
 
     /**
@@ -37,9 +36,28 @@ class Cell extends Component {
         this.setState({width: width, height: height});
     };
 
-    onRemove() {
-        console.log("Remove in Cell");
+    /**
+     * Callback to App.js when Remove button is clicked in cell menu.
+     * Id (or i in original data) must be passed along.
+     */
+    onRemove = () => {
         this.props.removeCell(this.props.id);
+    }
+
+    /**
+     * Callback to App.js when Show info button is clicked.
+     * Id (or i in original data) must be passed along.
+     */
+    onShowInfo = () => {
+        this.props.showInfo(this.props.id);
+    }
+
+    /**
+     * Callback to App.js when Edit button is clicked.
+     * Id (or i in original data) must be passed along.
+     */
+    onEdit = () => {
+        this.props.editCell(this.props.id);
     }
 
     render() {
@@ -52,7 +70,11 @@ class Cell extends Component {
             const {unit, number, dataSource, attribute} = this.props.content;
 
             content = (
+<<<<<<< HEAD
                 <ValueComponent number={number} unit={unit} dataSource ={dataSource} attribute ={attribute} />
+=======
+                <ValueComponent number={number} unit={unit} width={this.state.width} />
+>>>>>>> master
             );
         }
         else if (kind === 'Graph') {
@@ -80,18 +102,18 @@ class Cell extends Component {
                                     pullRight 
                                     bsSize="xsmall"
                                     title={<Glyphicon glyph="cog" />}>
-                                        <MenuItem eventKey={1}>Redigera</MenuItem>
-                                        <MenuItem divider/>
-                                        <MenuItem eventKey={2} onClick={this.onRemove}>Ta bort</MenuItem>
+                                        <MenuItem eventKey={1} onClick={this.onShowInfo}>Info</MenuItem>
+                                        <MenuItem eventKey={2} onClick={this.onEdit}>Redigera</MenuItem>
+                                        <MenuItem eventKey={3} onClick={this.onRemove}>Ta bort</MenuItem>
                                 </DropdownButton>
                             </Col>
                         </Row>
                     </Panel.Heading>
                     <Panel.Body>
                             
-                        <div style={{display: 'flex', justifyContent: 'center'}}>
+                        
                              {content}
-                        </div>
+                        
 
                     </Panel.Body>
                 </Panel>

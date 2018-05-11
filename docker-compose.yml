@@ -1,0 +1,23 @@
+version: '3.3'
+# Define the services/containers to be run
+services:
+  database:
+    image: mongo # specify image to build container from
+    ports:
+      - "27017:27017"
+      
+  backend:
+    build: ./node # specify the directory of the Dockerfile
+    ports:
+      - "3001:3001" #specify ports forwarding
+    links:
+      - "database:database" # link this service to the database service
+    depends_on:
+      - database
+      
+  frontend:
+    build: ./client # specify the directory of the Dockerfile
+    ports:
+      - "3000:3000" #specify ports forwarding
+    depends_on:
+      - backend
