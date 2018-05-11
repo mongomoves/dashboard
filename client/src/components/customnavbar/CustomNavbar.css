@@ -1,7 +1,8 @@
-.Navbar {
-    background: Grey;
-    color:black; 
-} 
+.container{
+    /* Navbar width and margin*/
+    width: 100%;
+    margin-left: 0px;
+}
 
 .navbar-inverse {
     margin-bottom: 0px;
@@ -9,22 +10,72 @@
     border-radius: 0 !important;
     -moz-border-radius: 0 !important;      
 }
+
 .navbar-inverse .navbar-nav>li>a {
     color: orange;
 }
+
 .navbar-inverse .navbar-brand {
     color: orange;
     font-weight: bold;
 }
 
 .dropdown-menu {
-    background-color: rgb(241, 185, 112);
+    background-color: #323232;
 }
 
 .dropdown-menu>li>a {
-    font-weight: bold;
+    color: white;
 }
 
-.container {
-    width: 95%;
+.dropdown-menu>li>a:hover{
+    color: orange;
 }
+
+.dropdown-menu>li:hover{
+    background-color: grey;
+}
+
+.dropdown-menu>li>a {
+    /* Style for the dropdown links under the cogwheel http://devgrow.com/dark-button-navigation-using-css3/ */
+    outline: 0;
+    padding: 5px 12px;
+    display: block;
+    color: #c0c4c9;
+    font-weight: bold;
+    text-shadow: 1px 1px #323638;
+    border: 1px solid #1c252b;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    background: #232B30; /* old browsers */
+    background: -moz-linear-gradient(top, #3D4850 3%, #313d45 4%, #232B30 100%); /* firefox */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(3%,#3D4850), color-stop(4%,#313d45), color-stop(100%,#232B30)); /* webkit */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3D4850', endColorstr='#232B30',GradientType=0 ); /* ie */
+    box-shadow: 1px 1px 1px rgba(0,0,0,0.2); /* CSS3 */
+    -moz-box-shadow: 1px 1px 1px rgba(0,0,0,0.2); /* Firefox */
+    -webkit-box-shadow: 1px 1px 1px rgba(0,0,0,0.2); /* Safari, Chrome */  
+}
+.dropdown-menu>li>a:hover {
+    /* Style for the dropdown links under the cogwheel*/
+    color: orange;
+    background: #4C5A64; /* old browsers */
+    background: -moz-linear-gradient(top, #4C5A64 3%, #404F5A 4%, #2E3940 100%); /* firefox */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(3%,#4C5A64), color-stop(4%,#404F5A), color-stop(100%,#2E3940)); /* webkit */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4C5A64', endColorstr='#2E3940',GradientType=0 ); /* ie */
+}
+
+.dropdown-menu>li>a:active {
+    /* Style for the dropdown links under the cogwheel*/
+    background: #474747;
+    background: -webkit-gradient(linear, 0 0, 0 bottom, from(#474747), to(#444));
+    background: -moz-linear-gradient(#474747, #444);
+    background: linear-gradient(#474747, #444);
+    border: solid 1px #2f2f2f;
+    box-shadow: inset 0 10px 15px 0 #3e3e3e; }
+
+.dropdown-menu .divider{
+    /* Changes the color of the divider in dropdown menu*/
+    background-color: orange;
+    }
+        
