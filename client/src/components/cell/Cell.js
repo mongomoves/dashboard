@@ -71,7 +71,7 @@ class Cell extends Component {
             const {unit, number} = this.props.content;
 
             content = (
-                <ValueComponent number={number} unit={unit} />
+                <ValueComponent number={number} unit={unit} width={this.state.width} />
             );
         }
         else if (kind === 'Graph') {
@@ -113,9 +113,9 @@ class Cell extends Component {
                     </Panel.Heading>
                     <Panel.Body>
                             
-                        <div style={{display: 'flex', justifyContent: 'center'}}>
+                        
                              {content}
-                        </div>
+                        
 
                     </Panel.Body>
                 </Panel>

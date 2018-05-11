@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
-import './ValueComponent.css';
+
 
 class ValueComponent extends Component {
-    render() { 
+
+    render() {
+        console.log(this.props.width)
         return (
             <div>
-                <span style={spanStyleNumber}>{this.props.number}</span>
-                <span style={spanStyleUnit}>{this.props.unit}</span>
+                <span style={{...spanStyleNumber, fontSize: `${this.props.width / 5}px`}}>{this.props.number}</span>
+                <span style={{...spanStyleUnit, fontSize: `${this.props.width / 9}px`}}>{this.props.unit}</span>
             </div>
         );
     }
 }
 
 const spanStyleNumber = {
-    fontSize: "300%",
     fontWeight: "bold",
     display: "inlineBlock",
     paddingRight: "5%",
@@ -21,7 +22,6 @@ const spanStyleNumber = {
 }
 
 const spanStyleUnit = {
-    fontSize: "150%",
     fontWeight: "bold",
     color: "white"
 }

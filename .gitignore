@@ -4,8 +4,9 @@
 .idea/
 
 # dependencies
-/node_modules
+node/node_modules
 client/node_modules
+node_modules
 
 # testing
 /coverage
@@ -26,6 +27,7 @@ client/.env.local
 client/.env.development.local
 client/.env.test.local
 client/.env.production.local
+package-lock.json
 
 npm-debug.log*
 yarn-debug.log*

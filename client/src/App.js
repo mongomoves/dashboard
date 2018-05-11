@@ -104,7 +104,10 @@ class App extends Component {
     };
 
     clearDashboardLayout = () => {
-        this.setState({layouts: {} });
+        this.setState({
+            layouts: {},
+            cells: [],
+        });
     };
 
     /**
@@ -203,9 +206,10 @@ class App extends Component {
     render() {
         return (
             <div>
-                <CustomNavbar 
-                    showCreateCell={this.handleShowCreateCell} 
-                    showExistingCell={this.handleShowExistingCell} />
+                <CustomNavbar
+                    showCreateCell={this.handleShowCreateCell}
+                    showExistingCell={this.handleShowExistingCell} 
+                    clearDashboard={this.clearDashboardLayout}/>
                 <Dashboard
                     removeCell={this.removeCell}
                     showInfo={this.handleShowCellInfo}
