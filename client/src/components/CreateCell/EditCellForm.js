@@ -103,6 +103,7 @@ class EditCellForm extends Component {
     render() {
         //TODO: Handle validation and add help text to fields
         let formContent;
+        let buttonKind;
         // Form fields depends on type of widget
         if (this.state.kind === 'Value') {
             formContent = (
@@ -145,6 +146,41 @@ class EditCellForm extends Component {
                     </FormGroup>
                 </div>
             );
+
+            buttonKind = (
+                <Button 
+                    disabled={!this.state.title || !this.state.numer || !this.state.dataSource || !this.state.attribute || !this.state.unit}
+                    bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+            );
+            
+            if (this.state.number) {
+                buttonKind = (
+                    <Button 
+                    disabled={!this.state.title || !this.state.number}
+                    bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                );
+                if (this.state.publish) {
+                    buttonKind = (
+                        <Button 
+                        disabled={!this.state.title || !this.state.number || !this.state.creator}
+                        bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                    );
+                }
+            }
+            if (this.state.dataSource || this.state.attribute) {
+                buttonKind = (
+                    <Button 
+                    disabled={!this.state.title || !this.state.dataSource || !this.state.attribute}
+                    bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                );
+                if (this.state.publish) {
+                    buttonKind = (
+                        <Button 
+                        disabled={!this.state.title || !this.state.dataSource || !this.state.attribute || !this.state.creator}
+                        bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                    );
+                }
+            }
         }
         else if (this.state.kind === 'Graph') {
             formContent = (
@@ -158,6 +194,19 @@ class EditCellForm extends Component {
                     </OverlayTrigger>
                 </FormGroup>
             );
+            buttonKind = (
+                <Button 
+                    disabled={!this.state.title || !this.state.graphUrl}
+                    bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+            );
+            if (this.state.publish) {
+                buttonKind = (
+                    <Button 
+                    disabled={!this.state.title || !this.state.graphUrl || !this.state.creator}
+                    bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                );
+            }
+
         }
 
         return (
@@ -203,7 +252,7 @@ class EditCellForm extends Component {
                 }
 
                 <ButtonToolbar>
-                    <Button bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                   {buttonKind}
                 </ButtonToolbar>
             </form>
         )
