@@ -35,16 +35,45 @@ class ValueComponent extends Component {
         fetch(dataURL)
             .then(res => res.json())
             .then((out) => {
-               
-                //TODO:maybe we need a function that maps and finds the attribute nestled inside
-                if (out[attribute]) {
-                    this.setState({ fetchContainer: out[attribute], fetchSuccess: true });
+              let value =  this.getValueByKey(out, attribute);
+                
+                    if(value) {
+                    this.setState({ fetchContainer: value, fetchSuccess: true });
                 }
 
             })
 
     }
 
+    //function finds attribute in json object 
+     getValueByKey = (object, key) => {
+
+        // simulate recursion by stacking
+        var stack = [object];
+        var current, index, value;
+      
+        // keep iterating until the stack is empty
+        while (stack.length) {
+          // take the head of the stack
+          current = stack.pop();
+          // iterate over the current object
+          for (index in current) {
+            // get value of the iterated object
+            value = current[index];
+            // is it a match?
+            if (key === index) {
+              return value; // return the matched value
+            } 
+            // value must be an object and not a null value
+            // to be subject for the next stack iteration
+            else if (value !== null && typeof value === 'object') {
+              // add this value in the stack
+              stack.unshift(value);
+            }
+          }
+        }
+      
+      }
 
 
 
