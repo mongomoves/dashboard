@@ -70,7 +70,7 @@ class Cell extends Component {
             const {unit, number, dataSource, attribute} = this.props.content;
 
             content = (
-                <ValueComponent number={number} unit={unit} dataSource ={dataSource} attribute ={attribute} />
+                <ValueComponent number={number} unit={unit} width={this.state.width} dataSource ={dataSource} attribute ={attribute} />
             );
         }
         else if (kind === 'Graph') {
