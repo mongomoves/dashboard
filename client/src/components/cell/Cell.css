@@ -15,6 +15,11 @@
     margin-bottom: 5px !important;
 }
 .panel-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    height: 100%;
     padding: 10px;
     /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#7d7e7d+0,0e0e0e+100;Black+3D */
     background: rgb(125,126,125); /* Old browsers */
@@ -23,6 +28,11 @@
     background: radial-gradient(ellipse at center, rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7d7e7d', endColorstr='#0e0e0e',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */}
 
+.panel-body img {
+    object-fit: contain;
+    height: 100%;
+    width: 90%;
+}
 .cellTitle {
     margin-top: 2px;
     margin-bottom: 2px;
