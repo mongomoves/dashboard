@@ -110,7 +110,7 @@ class CreateCellForm extends Component {
     };
 
     render() {
-        //TODO: Handle validation and add help text to fields
+        
         let formContent;
         let buttonKind;
         // Form fields depends on type of widget
@@ -151,18 +151,20 @@ class CreateCellForm extends Component {
                     </FormGroup>
                 </div>
             );
+            //Default button for widget kind value.
             buttonKind = (
                 <Button
                         disabled={!this.state.title || !this.state.number || !this.state.dataSource || !this.state.attribute || !this.state.unit} 
                         bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
             );
-
+            //Button of the kind number.
             if (this.state.number) {
                 buttonKind = (
                     <Button
                             disabled={!this.state.title || !this.state.number} 
                             bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
                 );
+                //Button for publishing number widget.
                 if (this.state.publish) {
                     buttonKind = (
                         <Button
@@ -172,12 +174,14 @@ class CreateCellForm extends Component {
                 }
             
             }
+            //Button for data source widget, disabled if dataSource and data attribute is empty.
             if (this.state.dataSource || this.state.attribute) {
                 buttonKind = (
                     <Button
                             disabled={!this.state.title || !this.state.dataSource || !this.state.attribute} 
                             bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
                 );
+                //Button for data source widget when published, disabled if creator and description is empty.
                 if (this.state.publish) {
                     buttonKind = (
                         <Button
@@ -189,6 +193,7 @@ class CreateCellForm extends Component {
             }
            
         }
+        
         else if (this.state.kind === 'Graph') {
             formContent = (
                 <FormGroup>
@@ -201,12 +206,13 @@ class CreateCellForm extends Component {
                 </FormGroup>
             );
             
-            
+            //Button for graph widget, disabled when graphUrl and title is empty.
             buttonKind = (
                 <Button
                         disabled={!this.state.graphUrl || !this.state.title} 
                         bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
             );
+            //Button for publishing graph widget, disabled when creator and description is empty.
             if (this.state.publish) {
                 buttonKind = (
                     <Button
