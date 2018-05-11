@@ -47,7 +47,7 @@ class ValueComponent extends Component {
 
     }
 
-    //function iterates the object to find the attribute 
+    //function iterates the fetched object to find the specified attribute 
     getValueByKey = (object, key) => {
 
         var stack = [object];
