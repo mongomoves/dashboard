@@ -12,7 +12,7 @@ class ValueComponent extends Component {
 
 
         }
-    
+
 
     }
 
@@ -27,53 +27,52 @@ class ValueComponent extends Component {
 
 
 
-    //fetching external data 
+    //fetching external data and sets it to state 
     getData = () => {
         let dataURL = this.props.dataSource;
         let attribute = this.props.attribute;
+        let result = false;
 
         fetch(dataURL)
             .then(res => res.json())
             .then((out) => {
-              let value =  this.getValueByKey(out, attribute);
-                
-                    if(value) {
-                    this.setState({ fetchContainer: value, fetchSuccess: true });
+                result = this.getValueByKey(out, attribute);
+
+                //Makes sure it is a string and not an object 
+                if (typeof result === 'string' || result instanceof String) {
+                    this.setState({ fetchContainer: result, fetchSuccess: true });
                 }
 
             })
 
     }
 
-    //function finds attribute in json object 
-     getValueByKey = (object, key) => {
+    //function iterates the object to find the attribute 
+    getValueByKey = (object, key) => {
 
-        // simulate recursion by stacking
         var stack = [object];
         var current, index, value;
-      
+
         // keep iterating until the stack is empty
         while (stack.length) {
-          // take the head of the stack
-          current = stack.pop();
-          // iterate over the current object
-          for (index in current) {
-            // get value of the iterated object
-            value = current[index];
-            // is it a match?
-            if (key === index) {
-              return value; // return the matched value
-            } 
-            // value must be an object and not a null value
-            // to be subject for the next stack iteration
-            else if (value !== null && typeof value === 'object') {
-              // add this value in the stack
-              stack.unshift(value);
+            current = stack.pop();
+            // iterate over the current object
+            for (index in current) {
+
+                value = current[index];
+                // if it is a match it is returned
+                if (key === index) {
+                    return value;
+                }
+
+                else if (value !== null && typeof value === 'object') {
+                    // add this value in the stack
+                    stack.unshift(value);
+                }
             }
-          }
         }
-      
-      }
+
+    }
 
 
 
@@ -90,7 +89,7 @@ class ValueComponent extends Component {
             )
 
         }
-        
+
 
         //if invalid URL or attribute 
         if (this.state.externalData && !this.state.fetchSuccess) {
@@ -98,7 +97,7 @@ class ValueComponent extends Component {
                 <div>
                     <span style={spanStyleError}><b>Sorry!</b><br /> The entered URL or attribute was invalid.</span>
                 </div>
-             )
+            )
         }
 
 
