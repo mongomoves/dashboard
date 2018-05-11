@@ -155,6 +155,23 @@ class CreateCellForm extends Component {
                         disabled={!this.state.title || !this.state.number || !this.state.dataSource || !this.state.attribute || !this.state.unit} 
                         bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
             );
+
+            if (this.state.number) {
+                buttonKind = (
+                    <Button
+                            disabled={!this.state.title || !this.state.number} 
+                            bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                );
+            
+            }
+            else if (this.state.dataSource || this.state.attribute) {
+                buttonKind = (
+                    <Button
+                            disabled={!this.state.title || !this.state.dataSource || !this.state.attribute} 
+                            bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                ); 
+            }
+           
         }
         else if (this.state.kind === 'Graph') {
             formContent = (
