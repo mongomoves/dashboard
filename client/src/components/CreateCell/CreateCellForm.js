@@ -18,6 +18,8 @@ class CreateCellForm extends Component {
             dataSource: '',
             attribute: '',
             unit: '',
+            creator: '',
+            description: ''
            
         };
     }
@@ -162,14 +164,29 @@ class CreateCellForm extends Component {
                             disabled={!this.state.title || !this.state.number} 
                             bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
                 );
+                if (this.state.publish) {
+                    buttonKind = (
+                        <Button
+                            disabled={!this.state.title || !this.state.number || !this.state.creator || !this.state.description} 
+                            bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                    );
+                }
             
             }
-            else if (this.state.dataSource || this.state.attribute) {
+            if (this.state.dataSource || this.state.attribute) {
                 buttonKind = (
                     <Button
                             disabled={!this.state.title || !this.state.dataSource || !this.state.attribute} 
                             bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
-                ); 
+                );
+                if (this.state.publish) {
+                    buttonKind = (
+                        <Button
+                            disabled={!this.state.title || !this.state.dataSource || !this.state.attribute || !this.state.creator || !this.state.description} 
+                            bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                    );
+                }
+                 
             }
            
         }
@@ -191,6 +208,13 @@ class CreateCellForm extends Component {
                         disabled={!this.state.graphUrl || !this.state.title} 
                         bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
             );
+            if (this.state.publish) {
+                buttonKind = (
+                    <Button
+                            disabled={!this.state.graphUrl || !this.state.title || !this.state.creator || !this.state.description} 
+                            bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                );
+            }
         }
 
         return (
