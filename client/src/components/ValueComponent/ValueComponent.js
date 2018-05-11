@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-
+//Component represent a Value cell that shows either external- or user entered data
 class ValueComponent extends Component {
     constructor(props) {
         super(props);
