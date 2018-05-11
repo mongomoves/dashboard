@@ -4,6 +4,7 @@ import ImageHolder from "./ImageHolder";
 import ReactResizeDetector from 'react-resize-detector';
 import './Cell.css';
 import ValueComponent from '../ValueComponent/ValueComponent';
+import IframeHolder from './IframeHolder';
 
 /**
  * This component represents a cell
@@ -75,11 +76,16 @@ class Cell extends Component {
         }
         else if (kind === 'Graph') {
             const { graphUrl } = this.props.content;
+            const urll = "https://play.grafana.org/d-solo/000000012/grafana-play-home?orgId=1&panelId=2&from=1526023352580&to=1526030552580";
             content = (
-                <ImageHolder
+                <IframeHolder
+                    width={this.state.width- 20}
+                    height={this.state.height - 50}
+                    url={urll}/>
+                /* <ImageHolder
                   width={this.state.width - 10}
                   height={this.state.height - 40}
-                  image={graphUrl}/>
+                  image={graphUrl}/> */
             )
         }
 
