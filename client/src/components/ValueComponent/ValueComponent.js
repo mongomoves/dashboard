@@ -1,6 +1,5 @@
-<<<<<<< HEAD
 import React, { Component } from "react";
-import "./ValueComponent.css";
+
 
 class ValueComponent extends Component {
     constructor(props) {
@@ -103,15 +102,6 @@ class ValueComponent extends Component {
 
 
         //if user entered data 
-=======
-import React, { Component } from 'react';
-
-
-class ValueComponent extends Component {
-
-    render() {
-        console.log(this.props.width)
->>>>>>> master
         return (
             <div>
                 <span style={{...spanStyleNumber, fontSize: `${this.props.width / 5}px`}}>{this.props.number}</span>
