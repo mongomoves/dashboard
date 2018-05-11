@@ -222,12 +222,12 @@ class EditCellForm extends Component {
                 </FormGroup>
 
                 {formContent}
-                {!this.state.creator &&
+                
                 <FormGroup>
                     <Checkbox onChange={this.handlePublishChange}>
                         Publicera widget
                     </Checkbox>
-                </FormGroup>}
+                </FormGroup>
 
                 {this.state.publish &&
                 <div>
