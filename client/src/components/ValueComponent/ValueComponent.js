@@ -83,8 +83,8 @@ class ValueComponent extends Component {
         if (this.state.fetchSuccess) {
             return (
                 <div>
-                    <span style={{...spanStyleNumber, fontSize: `${this.props.width / 5}px`}}>{this.state.fetchContainer}</span>
-                    <span style={{...spanStyleUnit, fontSize: `${this.props.width / 9}px`}}>{this.props.unit}</span>
+                    <span style={{...spanStyleNumber, fontSize: `${this.props.width / 9}px`}}>{this.state.fetchContainer}</span>
+                    <span style={{...spanStyleUnit, fontSize: `${this.props.width / 10}px`}}>{this.props.unit}</span>
                 </div>
             )
 
