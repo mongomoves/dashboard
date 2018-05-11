@@ -51,7 +51,7 @@ class ValueComponent extends Component {
 
     render() {
 
-        //if external data is specified and valid   
+        //if external data is specified and is valid   
         if (this.state.fetchSuccess) {
             return (
                 <div>
