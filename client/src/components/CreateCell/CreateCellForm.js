@@ -18,8 +18,7 @@ class CreateCellForm extends Component {
             dataSource: '',
             attribute: '',
             unit: '',
-            creator: '',
-            description: ''
+            
            
         };
     }
