@@ -36,7 +36,7 @@ class CustomNavbar extends Component {
                   <MenuItem eventKey={3.4}>Edit your Dashboard</MenuItem>
                   <MenuItem eventKey={3.5}>Load Dashboards</MenuItem>
                   <MenuItem divider />
-                  <MenuItem eventKey={3.6}>Clear your Dashboard</MenuItem>
+                  <MenuItem eventKey={3.6} onClick={this.props.clearDashboard}>Clear your Dashboard</MenuItem>
                 </NavDropdown>
               </Nav>
             </Navbar.Collapse>
