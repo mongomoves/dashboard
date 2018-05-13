@@ -9,11 +9,7 @@ class ValueComponent extends Component {
             externalData: false,
             fetchSuccess: false,
             fetchContainer: null
-
-
         }
-
-
     }
 
     //checking if external data is specified, and if true fetches it 
@@ -23,9 +19,6 @@ class ValueComponent extends Component {
             this.getData();
         }
     }
-
-
-
 
     //fetching external data and sets it to state 
     getData = () => {
@@ -42,43 +35,32 @@ class ValueComponent extends Component {
                 if (typeof result === 'string' || result instanceof String) {
                     this.setState({ fetchContainer: result, fetchSuccess: true });
                 }
-
             })
-
     }
 
     //function iterates the fetched object to find the specified attribute 
     getValueByKey = (object, key) => {
-
         var stack = [object];
         var current, index, value;
-
         // keep iterating until the stack is empty
         while (stack.length) {
             current = stack.pop();
             // iterate over the current object
             for (index in current) {
-
                 value = current[index];
                 // if it is a match it is returned
                 if (key === index) {
                     return value;
                 }
-
                 else if (value !== null && typeof value === 'object') {
                     // add this value in the stack
                     stack.unshift(value);
                 }
             }
         }
-
     }
 
-
-
-
     render() {
-
         //if external data is specified and is valid   
         if (this.state.fetchSuccess) {
             return (
@@ -87,9 +69,7 @@ class ValueComponent extends Component {
                     <span style={{...spanStyleUnit, fontSize: `${this.props.width / 10}px`}}>{this.props.unit}</span>
                 </div>
             )
-
         }
-
 
         //if invalid URL or attribute 
         if (this.state.externalData && !this.state.fetchSuccess) {
@@ -100,7 +80,6 @@ class ValueComponent extends Component {
             )
         }
 
-
         //if user entered data 
         return (
             <div>
@@ -110,9 +89,6 @@ class ValueComponent extends Component {
         );
     }
 }
-
-
-
 
 const spanStyleNumber = {
     fontWeight: "bold",
@@ -130,12 +106,5 @@ const spanStyleError = {
     fontSize: "100%",
     color: "white"
 }
-
-
-
-
-
-
-
 
 export default ValueComponent;
