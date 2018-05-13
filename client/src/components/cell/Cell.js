@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Panel, Row, Col, MenuItem, DropdownButton, Glyphicon } from 'react-bootstrap';
+import { Panel, Grid, Row, Col, MenuItem, DropdownButton, Glyphicon } from 'react-bootstrap';
 import ImageHolder from "./ImageHolder";
 import ReactResizeDetector from 'react-resize-detector';
 import './Cell.css';
@@ -71,52 +71,57 @@ class Cell extends Component {
             const {unit, number} = this.props.content;
 
             content = (
-                <ValueComponent number={number} unit={unit} width={this.state.width} />
+                <ValueComponent
+                    number={number}
+                    unit={unit} 
+                    width={this.state.width} />
             );
         }
         else if (kind === 'Graph') {
-            const { graphUrl } = this.props.content;
-            const urll = "https://play.grafana.org/d-solo/000000012/grafana-play-home?orgId=1&panelId=2&from=1526023352580&to=1526030552580";
-            content = (
-                <IframeHolder
-                    width={this.state.width- 20}
-                    height={this.state.height - 50}
-                    url={urll}/>
-                /* <ImageHolder
-                  width={this.state.width - 10}
-                  height={this.state.height - 40}
-                  image={graphUrl}/> */
-            )
+            const {type, graphUrl } = this.props.content;
+            if(type === 'Iframe') {
+                content = (
+                    <IframeHolder
+                        width={this.state.width}
+                        height={this.state.height}
+                        url={graphUrl}/>
+                )
+            } else if (type === 'Img') {
+                content = (
+                    <ImageHolder
+                        width={this.state.width}
+                        height={this.state.height}
+                        image={graphUrl}/>
+                )
+            }
         }
 
         return (
-            <div ref={this.frameSize} style={{width: '100%', height: '100%'}}>
-                <Panel style={{width: 'inherit', height: 'inherit'}}>
+            <div ref={this.frameSize} style={{width: 'inherit', height: 'inherit'}}>
+                <Panel /*style={{width: 'inherit', height: 'inherit'}}*/>
                     <Panel.Heading>
-                        <Row>
-                            <Col lg={10}>
-                                <span>{title}</span>
-                            </Col>
-                            <Col lg={2} style={{padding: 0}}>
-                                <DropdownButton
-                                    id="dropdown-no-caret"
-                                    noCaret
-                                    pullRight 
-                                    bsSize="xsmall"
-                                    title={<Glyphicon glyph="cog" />}>
-                                        <MenuItem eventKey={1} onClick={this.onShowInfo}>Info</MenuItem>
-                                        <MenuItem eventKey={2} onClick={this.onEdit}>Redigera</MenuItem>
-                                        <MenuItem eventKey={3} onClick={this.onRemove}>Ta bort</MenuItem>
-                                </DropdownButton>
-                            </Col>
-                        </Row>
+                        <Grid>
+                            <Row className='show-grid'>
+                                <Col lg={10}>
+                                    <span>{title}</span>
+                                </Col>
+                                <Col lg={2} style={{padding: 0}}>
+                                    <DropdownButton
+                                        id="dropdown-no-caret"
+                                        noCaret
+                                        pullRight 
+                                        bsSize="xsmall"
+                                        title={<Glyphicon glyph="cog" />}>
+                                            <MenuItem eventKey={1} onClick={this.onShowInfo}>Info</MenuItem>
+                                            <MenuItem eventKey={2} onClick={this.onEdit}>Redigera</MenuItem>
+                                            <MenuItem eventKey={3} onClick={this.onRemove}>Ta bort</MenuItem>
+                                    </DropdownButton>
+                                </Col>
+                            </Row>
+                        </Grid>
                     </Panel.Heading>
-                    <Panel.Body>
-                            
-                        
+                    <Panel.Body style={{height: this.state.height - 33}}>
                              {content}
-                        
-
                     </Panel.Body>
                 </Panel>
                 <ReactResizeDetector handleWidth handleHeight refreshMode='throttle' refreshRate={1000} onResize={this.onResize} />

@@ -9,8 +9,9 @@ class IframeHolder extends Component {
         return (
             <iframe
                 title="Iframe"
-                width={this.props.width}
-                height={this.props.height}
+                style={{border: '0', height: '100%', width: '100%'}}
+                //width={this.props.width}
+                //height={this.props.height}
                 src={this.props.url}>
             </iframe>
         );

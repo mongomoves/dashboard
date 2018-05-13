@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 class ValueComponent extends Component {
 
     render() {
-        console.log(this.props.width)
+        // console.log(this.props.width)
         return (
             <div>
                 <span style={{...spanStyleNumber, fontSize: `${this.props.width / 5}px`}}>{this.props.number}</span>

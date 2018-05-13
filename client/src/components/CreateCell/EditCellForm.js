@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import {Button, ButtonToolbar, Checkbox, ControlLabel, FormControl, FormGroup, Tooltip, OverlayTrigger} from "react-bootstrap";
+import {Button, ButtonToolbar, ToggleButtonGroup, ToggleButton, Checkbox, ControlLabel, FormControl, FormGroup, Tooltip, OverlayTrigger} from "react-bootstrap";
 
 
 class EditCellForm extends Component {
     constructor(props) {
         super(props);
-        const {creator, kind, title, number, graphUrl, dataSource, attribute, unit} = this.props.values;
+        const {creator, kind, displayType, title, number, graphUrl, dataSource, attribute, unit} = this.props.values;
 
         this.state = {
             buttonText: 'Edit widget',
@@ -17,7 +17,8 @@ class EditCellForm extends Component {
             graphUrl: graphUrl,
             dataSource: dataSource,
             attribute: attribute,
-            unit: unit
+            unit: unit,
+            displayType: displayType
         };
     }
 
@@ -64,6 +65,10 @@ class EditCellForm extends Component {
             this.setState({buttonText: 'Edit widget'});
         }
     };
+
+    handleDisplayTypeChange = (e) => {
+        this.setState({displayType: e})
+    }
 
     handleCreateWidget = () => {
         let widget;
@@ -184,15 +189,31 @@ class EditCellForm extends Component {
         }
         else if (this.state.kind === 'Graph') {
             formContent = (
-                <FormGroup>
-                    <ControlLabel>Graph URL</ControlLabel>
-                    <OverlayTrigger placement="top" overlay={<Tooltip id="edit-graph">Ange den URL till den graf som ska visas.</Tooltip>}>
-                    <FormControl
-                        type='text'
-                        defaultValue={this.props.values.graphUrl}
-                        onChange={this.handleGraphUrlChange}/>
-                    </OverlayTrigger>
-                </FormGroup>
+                <div>
+                    <FormGroup>
+                        <ControlLabel>Visningstyp</ControlLabel>
+                       <ButtonToolbar>
+                           <ToggleButtonGroup 
+                                type='radio'
+                                name='displayType'
+                                defaultValue={this.state.displayType} 
+                                value={this.state.displayType}
+                                onChange={this.handleDisplayTypeChange}>
+                               <ToggleButton value={'Iframe'}>Iframe</ToggleButton> 
+                               <ToggleButton value={'Img'}>Img</ToggleButton>
+                            </ToggleButtonGroup>
+                        </ButtonToolbar>
+                    </FormGroup>
+                    <FormGroup>
+                        <ControlLabel>Graph URL</ControlLabel>
+                        <OverlayTrigger placement="top" overlay={<Tooltip id="edit-graph">Ange den URL till den graf som ska visas.</Tooltip>}>
+                        <FormControl
+                            type='text'
+                            defaultValue={this.props.values.graphUrl}
+                            onChange={this.handleGraphUrlChange}/>
+                        </OverlayTrigger>
+                    </FormGroup>
+                </div>
             );
             buttonKind = (
                 <Button 

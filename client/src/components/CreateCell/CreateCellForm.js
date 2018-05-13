@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Button, ButtonToolbar, Checkbox, ControlLabel, FormControl, FormGroup, Tooltip, OverlayTrigger} from "react-bootstrap";
+import {Button, ButtonToolbar, ToggleButtonGroup, ToggleButton, Checkbox, ControlLabel, FormControl, FormGroup, Tooltip, OverlayTrigger} from "react-bootstrap";
 
 class CreateCellForm extends Component {
     constructor(props) {
@@ -18,8 +18,7 @@ class CreateCellForm extends Component {
             dataSource: '',
             attribute: '',
             unit: '',
-            
-           
+            displayType: 'Iframe'
         };
     }
 
@@ -72,6 +71,10 @@ class CreateCellForm extends Component {
         }
     };
 
+    handleDisplayTypeChange = (e) => {
+        this.setState({displayType: e})
+    }
+
     
 
     handleCreateWidget = () => {
@@ -93,6 +96,7 @@ class CreateCellForm extends Component {
         else if (this.state.kind === 'Graph') {
             widget = {
                 kind: this.state.kind,
+                type: this.state.displayType,
                 title: this.state.title,
                 graphUrl: this.state.graphUrl
             }
@@ -196,14 +200,30 @@ class CreateCellForm extends Component {
         
         else if (this.state.kind === 'Graph') {
             formContent = (
-                <FormGroup>
-                    <ControlLabel>Graph URL</ControlLabel>
-                    <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-graphUrl">Ange URL för att visa den önskade grafen</Tooltip>}>
-                    <FormControl
-                        type='text'
-                        onChange={this.handleGraphUrlChange}/>
-                    </OverlayTrigger>
-                </FormGroup>
+                <div>
+                    <FormGroup>
+                        <ControlLabel>Visningstyp</ControlLabel>
+                       <ButtonToolbar>
+                           <ToggleButtonGroup 
+                                type='radio'
+                                name='displayType' 
+                                defaultValue={'Iframe'}
+                                value={this.state.displayType}
+                                onChange={this.handleDisplayTypeChange}>
+                               <ToggleButton value={'Iframe'}>Iframe</ToggleButton> 
+                               <ToggleButton value={'Img'}>Img</ToggleButton>
+                            </ToggleButtonGroup>
+                        </ButtonToolbar>
+                    </FormGroup>
+                    <FormGroup>
+                        <ControlLabel>Graph URL</ControlLabel>
+                        <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-graphUrl">Ange URL för att visa den önskade grafen</Tooltip>}>
+                        <FormControl
+                            type='text'
+                            onChange={this.handleGraphUrlChange}/>
+                        </OverlayTrigger>
+                    </FormGroup>
+                </div>
             );
             
             //Button for graph widget, disabled when graphUrl and title is empty.
