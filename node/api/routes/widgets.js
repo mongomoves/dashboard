@@ -59,6 +59,7 @@ router.get('/', function(req, res, next) {
                         query: widget.content.query,
                         unit: widget.content.unit,
 
+                        displayType: widget.content.displayType,
                         graphUrl: widget.content.graphUrl
                     }
                 })
@@ -94,6 +95,7 @@ router.post('/', function(req, res, next) {
     else if (kind === 'Graph') {
         content = new Graph({
             _id: new mongoose.Types.ObjectId(),
+            displayType: req.body.displayType,
             graphUrl: req.body.graphUrl
         });
     }
@@ -196,6 +198,7 @@ router.get('/:widgetId', function(req, res, next) {
                     query: widget.content.query,
                     unit: widget.content.unit,
 
+                    displayType: widget.content.displayType,
                     graphUrl: widget.content.graphUrl
                 }
             });
