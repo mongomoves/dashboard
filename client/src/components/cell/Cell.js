@@ -75,13 +75,15 @@ class Cell extends Component {
             );
         }
         else if (kind === 'Graph') {
-            const {type, graphUrl } = this.props.content;
-            if(type === 'Iframe') {
+            const {displayType, graphUrl } = this.props.content;
+            if(displayType === 'Iframe') {
                 content = (
                     <IframeHolder
-                        url={graphUrl}/>
+                        url={graphUrl}
+                        width={this.state.width}
+                        height={this.state.height}/>
                 )
-            } else if (type === 'Img') {
+            } else if (displayType === 'Img') {
                 content = (
                     <ImageHolder
                         width={this.state.width}
@@ -93,7 +95,7 @@ class Cell extends Component {
 
         return (
             <div ref={this.frameSize} style={{width: 'inherit', height: 'inherit'}}>
-                <Panel /*style={{width: 'inherit', height: 'inherit'}}*/>
+                <Panel>
                     <Panel.Heading>
                         <Grid>
                             <Row className='show-grid'>
