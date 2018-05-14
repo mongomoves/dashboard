@@ -14,7 +14,7 @@ class Dashboard extends Component {
     static defaultProps = {
         className: 'layout',
         cols: { lg: 12, md: 10, sm: 8, xs: 2, xxs: 1 },
-        rowHeight: 50
+        rowHeight: 50  
     };
 
     constructor(props) {

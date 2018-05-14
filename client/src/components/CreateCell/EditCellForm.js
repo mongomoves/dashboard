@@ -244,7 +244,7 @@ class EditCellForm extends Component {
 
                 {formContent}
                 
-                {this.state.creator && 
+                {!this.state.creator && 
                 <FormGroup>
                     <Checkbox onChange={this.handlePublishChange}>
                         Publicera widget
