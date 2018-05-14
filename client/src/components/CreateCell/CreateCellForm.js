@@ -86,10 +86,7 @@ class CreateCellForm extends Component {
                 dataSource: this.state.dataSource,
                 attribute: this.state.attribute,
                 unit: this.state.unit
-            }
-           
-           
-            
+            }   
         }
         else if (this.state.kind === 'Graph') {
             widget = {
@@ -112,7 +109,6 @@ class CreateCellForm extends Component {
     };
 
     render() {
-        
         let formContent;
         let buttonKind;
         // Form fields depends on type of widget
