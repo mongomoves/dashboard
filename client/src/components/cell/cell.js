@@ -106,15 +106,12 @@ class Cell extends Component {
                         </Row>
                     </Panel.Heading>
                     <Panel.Body>
-<<<<<<< HEAD
 
-                        <div style={{display: 'flex', justifyContent: 'center'}}>
-=======
-                            
-                        
->>>>>>> master
+
+
+
                              {content}
-                        
+
 
                     </Panel.Body>
                 </Panel>
