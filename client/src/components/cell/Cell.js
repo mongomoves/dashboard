@@ -79,8 +79,6 @@ class Cell extends Component {
             if(type === 'Iframe') {
                 content = (
                     <IframeHolder
-                        width={this.state.width}
-                        height={this.state.height}
                         url={graphUrl}/>
                 )
             } else if (type === 'Img') {

@@ -75,8 +75,6 @@ class CreateCellForm extends Component {
         this.setState({displayType: e})
     }
 
-    
-
     handleCreateWidget = () => {
         let widget;
         
@@ -96,8 +94,8 @@ class CreateCellForm extends Component {
         else if (this.state.kind === 'Graph') {
             widget = {
                 kind: this.state.kind,
-                type: this.state.displayType,
                 title: this.state.title,
+                displayType: this.state.displayType,
                 graphUrl: this.state.graphUrl
             }
         }

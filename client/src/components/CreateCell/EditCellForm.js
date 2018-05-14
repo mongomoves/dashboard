@@ -87,6 +87,7 @@ class EditCellForm extends Component {
             widget = {
                 kind: this.state.kind,
                 title: this.state.title,
+                displayType: this.state.displayType,
                 graphUrl: this.state.graphUrl
             }
         }
@@ -196,7 +197,7 @@ class EditCellForm extends Component {
                            <ToggleButtonGroup 
                                 type='radio'
                                 name='displayType'
-                                defaultValue={this.state.displayType} 
+                                defaultValue={'Iframe'} 
                                 value={this.state.displayType}
                                 onChange={this.handleDisplayTypeChange}>
                                <ToggleButton value={'Iframe'}>Iframe</ToggleButton> 
@@ -244,11 +245,12 @@ class EditCellForm extends Component {
 
                 {formContent}
                 
+                {this.state.creator && 
                 <FormGroup>
                     <Checkbox onChange={this.handlePublishChange}>
                         Publicera widget
                     </Checkbox>
-                </FormGroup>
+                </FormGroup>}
 
                 {this.state.publish &&
                 <div>
