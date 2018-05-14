@@ -220,7 +220,7 @@ class App extends Component {
                     onBreakpointChane={this.onBreakpointChange}
                     onResizeStop={this.onResizeStop}/>
                 <BootstrapModal
-                    title="Create widget"
+                    title="Skapa widget"
                     show={this.state.modals.createCell}
                     close={this.handleCloseCreateCell}>
                     <CreateCellForm addCell={this.addCell} done={this.handleCloseCreateCell} />
