@@ -95,7 +95,7 @@ class Cell extends Component {
                                 <DropdownButton
                                     id="dropdown-no-caret"
                                     noCaret
-                                    pullRight
+                                    pullRight 
                                     bsSize="xsmall"
                                     title={<Glyphicon glyph="cog" />}>
                                         <MenuItem eventKey={1} onClick={this.onShowInfo}>Info</MenuItem>
@@ -106,12 +106,10 @@ class Cell extends Component {
                         </Row>
                     </Panel.Heading>
                     <Panel.Body>
-
-
-
-
+                            
+                        
                              {content}
-
+                        
 
                     </Panel.Body>
                 </Panel>

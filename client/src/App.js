@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import CustomNavbar from "./components/customnavbar/CustomNavbar";
 import Dashboard from "./components/dashboard/Dashboard";
-import Footer from "./components/footer/footer";
 import CreateCellForm from "./components/CreateCell/CreateCellForm";
 import EditCellForm from "./components/CreateCell/EditCellForm";
 import SelectExistingCell from './components/existingCell/SelectExistingCell';
@@ -207,12 +206,10 @@ class App extends Component {
     render() {
         return (
             <div>
-
                 <CustomNavbar
                     showCreateCell={this.handleShowCreateCell}
-                    showExistingCell={this.handleShowExistingCell}
+                    showExistingCell={this.handleShowExistingCell} 
                     clearDashboard={this.clearDashboardLayout}/>
-
                 <Dashboard
                     removeCell={this.removeCell}
                     showInfo={this.handleShowCellInfo}
@@ -242,13 +239,12 @@ class App extends Component {
                     title='Redigera widget'
                     show={this.state.modals.editCell}
                     close={this.handleCloseEditCell}>
-                    <EditCellForm
-                        values={editValues}
+                    <EditCellForm 
+                        values={editValues} 
                         addCell={this.addCell}
                         editCell={this.editCell}
                         done={this.handleCloseEditCell}/>
                 </BootstrapModal>
-                <Footer/>
             </div>
         );
     }
