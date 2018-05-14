@@ -11,6 +11,7 @@ import _ from 'lodash';
 import './App.css';
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
+import SaveDashboard from "./components/saveToBackend/SaveDashboard";
 
 const originalLayouts = loadFromLocalStorage("layouts") || {};
 
@@ -47,7 +48,8 @@ class App extends Component {
                 createCell: false,
                 editCell: false,
                 existingCell: false,
-                showInfo: false
+                showInfo: false,
+                saveDashboard: false,
             },
             idCounter: testWidgets.length
         };
@@ -103,9 +105,17 @@ class App extends Component {
         })
     };
 
+    removeAllCells = (i) => {
+        this.setState({
+            cells: new Array()
+        })
+    };
+
     clearDashboardLayout = () => {
         this.setState({layouts: {} });
-    };
+
+    };y
+
 
     /**
      * Callback function. Sets new layout state.
@@ -200,12 +210,25 @@ class App extends Component {
         this.setState({modals: {editCell: false}})
     };
 
+
+    handleShowSaveDashboard = () => {
+        this.setState({modals: {saveDashboard: true}})
+        console.log(`open save dashboard`);
+    };
+
+    handleCloseSaveDashboard = () => {
+        this.setState({modals: {saveDashboard: false}})
+    };
+
     render() {
         return (
             <div>
                 <CustomNavbar 
                     showCreateCell={this.handleShowCreateCell} 
-                    showExistingCell={this.handleShowExistingCell} />
+                    showExistingCell={this.handleShowExistingCell}
+                    showSaveDashboard={this.handleShowSaveDashboard}
+                    clearAllWidgets={this.removeAllCells} />
+
                 <Dashboard
                     removeCell={this.removeCell}
                     showInfo={this.handleShowCellInfo}
@@ -240,6 +263,12 @@ class App extends Component {
                         addCell={this.addCell}
                         editCell={this.editCell}
                         done={this.handleCloseEditCell}/>
+                </BootstrapModal>
+                <BootstrapModal
+                    title='Save Dashboard'
+                    show={this.state.modals.saveDashboard}
+                    close={this.handleCloseSaveDashboard}>
+                    <SaveDashboard />
                 </BootstrapModal>
             </div>
         );

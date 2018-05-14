@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import fetch from 'isomorphic-fetch';
 import {Button, ButtonToolbar, Checkbox, ControlLabel, FormControl, FormGroup, Tooltip, OverlayTrigger} from "react-bootstrap";
 
 class CreateCellForm extends Component {
@@ -75,7 +76,7 @@ class CreateCellForm extends Component {
 
     handleCreateWidget = () => {
         let widget;
-        
+        console.log('shit');
         if (this.state.kind === 'Value') {
             widget = {
                 kind: this.state.kind,
@@ -97,6 +98,7 @@ class CreateCellForm extends Component {
             }
         }
 
+
         console.log(`handleCreateWidget:widget=${JSON.stringify(widget)}`);
 
         this.props.addCell(widget);
@@ -106,7 +108,28 @@ class CreateCellForm extends Component {
         }
 
         //TODO: If publish is true, send to database
+        if (this.state.publish===true){
+            widget.creator=this.state.creator;
+            widget.description=this.state.description;
+            console.log(JSON.stringify(widget));
+            this.handlePost(widget);
+        }
+
     };
+
+
+    handlePost = (widget) => {
+        fetch('http://192.168.99.100:3001/api/widgets', {
+            method: 'POST',
+            headers: {
+                // 'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(widget),
+        }).then(res => {
+            return res;
+        }).catch(err => err);
+    }
 
     render() {
         //TODO: Handle validation and add help text to fields

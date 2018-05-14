@@ -32,11 +32,11 @@ class CustomNavbar extends Component {
                   <MenuItem eventKey={3.1} onClick={this.props.showCreateCell}>Create widget</MenuItem>
                   <MenuItem eventKey={3.2} onClick={this.props.showExistingCell}>Load widgets</MenuItem>
                   <MenuItem divider />
-                  <MenuItem eventKey={3.3}>Save your Dashboard</MenuItem>
+                  <MenuItem eventKey={3.3} onClick={this.props.showSaveDashboard}>Save your Dashboard</MenuItem>
                   <MenuItem eventKey={3.4}>Edit your Dashboard</MenuItem>
                   <MenuItem eventKey={3.5}>Load Dashboards</MenuItem>
                   <MenuItem divider />
-                  <MenuItem eventKey={3.6}>Clear your Dashboard</MenuItem>
+                  <MenuItem eventKey={3.6} onClick={this.props.clearAllWidgets}>Clear your Dashboard </MenuItem>
                 </NavDropdown>
               </Nav>
             </Navbar.Collapse>
