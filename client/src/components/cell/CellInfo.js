@@ -8,7 +8,6 @@ import {Row, Col} from 'react-bootstrap';
 class CellInfo extends Component {
     generateElements() {
         const {creator, created, description} = this.props.cell;
-        let dom;
         if(!creator && !created && !description) {
             return (
                 <p>Cellen är inte publicerad och saknar information</p>

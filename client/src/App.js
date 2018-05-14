@@ -29,7 +29,8 @@ const testWidgets = [
 
     {
         layout: {i: 2, x: 2, y: Infinity, w: 3, h: 4, minW: 3, minH: 4},
-        content: {kind: 'Graph', title: 'Grafana graph', graphUrl: 'http://play.grafana.org/render/dashboard-solo/db/grafana-play-home?orgId=1&panelId=4&from=1499272191563&to=1499279391563&width=1000&height=500&tz=UTC%2B02%3A00&timeout=5000'}
+        content: {kind: 'Graph', type: 'Iframe', title: 'Grafana graph', graphUrl: 'https://play.grafana.org/d-solo/000000012/grafana-play-home?orgId=1&panelId=2&from=1526023352580&to=1526030552580'}
+        //'http://play.grafana.org/render/dashboard-solo/db/grafana-play-home?orgId=1&panelId=4&from=1499272191563&to=1499279391563&width=1000&height=500&tz=UTC%2B02%3A00&timeout=5000'
     }
 ];
 
@@ -112,9 +113,11 @@ class App extends Component {
     };
 
     clearDashboardLayout = () => {
-        this.setState({layouts: {} });
-
-    };y
+        this.setState({
+            layouts: {},
+            cells: [],
+        });
+    };
 
 
     /**
@@ -223,12 +226,11 @@ class App extends Component {
     render() {
         return (
             <div>
-                <CustomNavbar 
-                    showCreateCell={this.handleShowCreateCell} 
-                    showExistingCell={this.handleShowExistingCell}
-                    showSaveDashboard={this.handleShowSaveDashboard}
-                    clearAllWidgets={this.removeAllCells} />
 
+                <CustomNavbar
+                    showCreateCell={this.handleShowCreateCell}
+                    showExistingCell={this.handleShowExistingCell} 
+                    clearDashboard={this.clearDashboardLayout}/>
                 <Dashboard
                     removeCell={this.removeCell}
                     showInfo={this.handleShowCellInfo}

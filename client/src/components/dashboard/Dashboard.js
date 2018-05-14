@@ -60,9 +60,7 @@ class Dashboard extends Component {
         return (
             <ResponsiveGRL
                 {...this.props}>
-
                 {this.generateElement()}
-
             </ResponsiveGRL>
         );
     }

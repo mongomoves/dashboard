@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+
 import fetch from 'isomorphic-fetch';
-import {Button, ButtonToolbar, Checkbox, ControlLabel, FormControl, FormGroup, Tooltip, OverlayTrigger} from "react-bootstrap";
+import {Button, ButtonToolbar, ToggleButtonGroup, ToggleButton, Checkbox, ControlLabel, FormControl, FormGroup, Tooltip, OverlayTrigger} from "react-bootstrap";
+
 
 class CreateCellForm extends Component {
     constructor(props) {
@@ -19,7 +21,7 @@ class CreateCellForm extends Component {
             dataSource: '',
             attribute: '',
             unit: '',
-           
+            displayType: 'Iframe'
         };
     }
 
@@ -72,7 +74,9 @@ class CreateCellForm extends Component {
         }
     };
 
-    
+    handleDisplayTypeChange = (e) => {
+        this.setState({displayType: e})
+    }
 
     handleCreateWidget = () => {
         let widget;
@@ -94,6 +98,7 @@ class CreateCellForm extends Component {
             widget = {
                 kind: this.state.kind,
                 title: this.state.title,
+                displayType: this.state.displayType,
                 graphUrl: this.state.graphUrl
             }
         }
@@ -132,7 +137,7 @@ class CreateCellForm extends Component {
     }
 
     render() {
-        //TODO: Handle validation and add help text to fields
+        
         let formContent;
         let buttonKind;
         // Form fields depends on type of widget
@@ -173,30 +178,91 @@ class CreateCellForm extends Component {
                     </FormGroup>
                 </div>
             );
+            //Default button for widget kind value.
             buttonKind = (
                 <Button
                         disabled={!this.state.title || !this.state.number || !this.state.dataSource || !this.state.attribute || !this.state.unit} 
                         bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
             );
+            //Button of the kind number.
+            if (this.state.number) {
+                buttonKind = (
+                    <Button
+                            disabled={!this.state.title || !this.state.number} 
+                            bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                );
+                //Button for publishing number widget.
+                if (this.state.publish) {
+                    buttonKind = (
+                        <Button
+                            disabled={!this.state.title || !this.state.number || !this.state.creator || !this.state.description} 
+                            bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                    );
+                }
+            
+            }
+            //Button for data source widget, disabled if dataSource and data attribute is empty.
+            if (this.state.dataSource || this.state.attribute) {
+                buttonKind = (
+                    <Button
+                            disabled={!this.state.title || !this.state.dataSource || !this.state.attribute} 
+                            bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                );
+                //Button for data source widget when published, disabled if creator and description is empty.
+                if (this.state.publish) {
+                    buttonKind = (
+                        <Button
+                            disabled={!this.state.title || !this.state.dataSource || !this.state.attribute || !this.state.creator || !this.state.description} 
+                            bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                    );
+                }
+                 
+            }
+           
         }
+        
         else if (this.state.kind === 'Graph') {
             formContent = (
-                <FormGroup>
-                    <ControlLabel>Graph URL</ControlLabel>
-                    <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-graphUrl">Ange URL för att visa den önskade grafen</Tooltip>}>
-                    <FormControl
-                        type='text'
-                        onChange={this.handleGraphUrlChange}/>
-                    </OverlayTrigger>
-                </FormGroup>
+                <div>
+                    <FormGroup>
+                        <ControlLabel>Visningstyp</ControlLabel>
+                       <ButtonToolbar>
+                           <ToggleButtonGroup 
+                                type='radio'
+                                name='displayType' 
+                                defaultValue={'Iframe'}
+                                value={this.state.displayType}
+                                onChange={this.handleDisplayTypeChange}>
+                               <ToggleButton value={'Iframe'}>Iframe</ToggleButton> 
+                               <ToggleButton value={'Img'}>Img</ToggleButton>
+                            </ToggleButtonGroup>
+                        </ButtonToolbar>
+                    </FormGroup>
+                    <FormGroup>
+                        <ControlLabel>Graph URL</ControlLabel>
+                        <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-graphUrl">Ange URL för att visa den önskade grafen</Tooltip>}>
+                        <FormControl
+                            type='text'
+                            onChange={this.handleGraphUrlChange}/>
+                        </OverlayTrigger>
+                    </FormGroup>
+                </div>
             );
             
-            
+            //Button for graph widget, disabled when graphUrl and title is empty.
             buttonKind = (
                 <Button
                         disabled={!this.state.graphUrl || !this.state.title} 
                         bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
             );
+            //Button for publishing graph widget, disabled when creator and description is empty.
+            if (this.state.publish) {
+                buttonKind = (
+                    <Button
+                            disabled={!this.state.graphUrl || !this.state.title || !this.state.creator || !this.state.description} 
+                            bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                );
+            }
         }
 
         return (

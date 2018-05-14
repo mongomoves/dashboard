@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Panel, Row, Col, MenuItem, DropdownButton, Glyphicon } from 'react-bootstrap';
+import { Panel, Grid, Row, Col, MenuItem, DropdownButton, Glyphicon } from 'react-bootstrap';
 import ImageHolder from "./ImageHolder";
 import ReactResizeDetector from 'react-resize-detector';
 import './Cell.css';
 import ValueComponent from '../ValueComponent/ValueComponent';
+import IframeHolder from './IframeHolder';
 
 /**
  * This component represents a cell
@@ -67,50 +68,55 @@ class Cell extends Component {
 
         //TODO: Value and Graph should be separate components, styles should not be inlined
         if (kind === 'Value') {
-            const {unit, number} = this.props.content;
+            const {unit, number, dataSource, attribute} = this.props.content;
 
             content = (
-                <ValueComponent number={number} unit={unit} />
+                <ValueComponent number={number} unit={unit} width={this.state.width} dataSource ={dataSource} attribute ={attribute} />
             );
         }
         else if (kind === 'Graph') {
-            const { graphUrl } = this.props.content;
-            content = (
-                <ImageHolder
-                  width={this.state.width - 10}
-                  height={this.state.height - 40}
-                  image={graphUrl}/>
-            )
+            const {type, graphUrl } = this.props.content;
+            if(type === 'Iframe') {
+                content = (
+                    <IframeHolder
+                        url={graphUrl}/>
+                )
+            } else if (type === 'Img') {
+                content = (
+                    <ImageHolder
+                        width={this.state.width}
+                        height={this.state.height}
+                        image={graphUrl}/>
+                )
+            }
         }
 
         return (
-            <div ref={this.frameSize} style={{width: '100%', height: '100%'}}>
-                <Panel style={{width: 'inherit', height: 'inherit'}}>
+            <div ref={this.frameSize} style={{width: 'inherit', height: 'inherit'}}>
+                <Panel /*style={{width: 'inherit', height: 'inherit'}}*/>
                     <Panel.Heading>
-                        <Row>
-                            <Col lg={10}>
-                                <span>{title}</span>
-                            </Col>
-                            <Col lg={2} style={{padding: 0}}>
-                                <DropdownButton
-                                    id="dropdown-no-caret"
-                                    noCaret
-                                    pullRight 
-                                    bsSize="xsmall"
-                                    title={<Glyphicon glyph="cog" />}>
-                                        <MenuItem eventKey={1} onClick={this.onShowInfo}>Info</MenuItem>
-                                        <MenuItem eventKey={2} onClick={this.onEdit}>Redigera</MenuItem>
-                                        <MenuItem eventKey={3} onClick={this.onRemove}>Ta bort</MenuItem>
-                                </DropdownButton>
-                            </Col>
-                        </Row>
+                        <Grid>
+                            <Row className='show-grid'>
+                                <Col lg={10}>
+                                    <span>{title}</span>
+                                </Col>
+                                <Col lg={2} style={{padding: 0}}>
+                                    <DropdownButton
+                                        id="dropdown-no-caret"
+                                        noCaret
+                                        pullRight 
+                                        bsSize="xsmall"
+                                        title={<Glyphicon glyph="cog" />}>
+                                            <MenuItem eventKey={1} onClick={this.onShowInfo}>Info</MenuItem>
+                                            <MenuItem eventKey={2} onClick={this.onEdit}>Redigera</MenuItem>
+                                            <MenuItem eventKey={3} onClick={this.onRemove}>Ta bort</MenuItem>
+                                    </DropdownButton>
+                                </Col>
+                            </Row>
+                        </Grid>
                     </Panel.Heading>
-                    <Panel.Body>
-                            
-                        <div style={{display: 'flex', justifyContent: 'center'}}>
+                    <Panel.Body style={{height: this.state.height - 33}}>
                              {content}
-                        </div>
-
                     </Panel.Body>
                 </Panel>
                 <ReactResizeDetector handleWidth handleHeight refreshMode='throttle' refreshRate={1000} onResize={this.onResize} />

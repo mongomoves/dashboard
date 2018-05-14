@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
-const regexSize = /(&width=)(\d+)(&height=)(\d+)/g;
+const regexWidth = /(&width=)(\d+)/g;
+const regexHeight = /(&height=)(\d+)/g;
 
 /**
  * Component simply holding an <img> tag, but with the ability
@@ -12,8 +13,10 @@ class ImageHolder extends Component {
         if(this.props.height <= 0 || this.props.width <= 0) {
             return null;
         }
-        const replaceStr = `&width=${this.props.width}&height=${this.props.height}`;
-        const adaptedImageSrc = this.props.image.replace(regexSize, replaceStr);
+        let replaceStr = `&width=${this.props.width}`;
+        let adaptedImageSrc = this.props.image.replace(regexWidth, replaceStr);
+        replaceStr = `&height=${this.props.height}`;
+        adaptedImageSrc = adaptedImageSrc.replace(regexHeight, replaceStr);
         return(
             <img
                 alt='something collected'
