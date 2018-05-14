@@ -13,7 +13,7 @@ const ResponsiveGRL = WidthProvider(Responsive);
 class Dashboard extends Component {
     static defaultProps = {
         className: 'layout',
-        cols: { lg: 12, md: 10, sm: 8, xs: 2, xxs: 1 },
+        cols: { lg: 12, md: 10, sm: 8, xs: 2, xxs: 2 },
         rowHeight: 50
     };
 
@@ -40,10 +40,9 @@ class Dashboard extends Component {
     generateElement() {
         const remove = this.props.removeCell;
         return _.map(this.props.cells, function (cell) {
-            const {i, x, y, w, h, minW, minH} = cell.layout;
             return (
-                <div key={i} data-grid={{x, y, w, h, minW, minH}}>
-                    <Cell content={cell.content} id={i} removeCell={remove}/>
+                <div key={cell.layoutId}>
+                    <Cell content={cell.content} id={cell.layoutId} removeCell={remove}/>
                 </div>
             );
         });

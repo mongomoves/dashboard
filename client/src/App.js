@@ -10,44 +10,27 @@ import './App.css';
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
 
-const originalLayouts = loadFromLocalStorage("layouts") || {};
-
-// Test data
-const testWidgets = [
-    {
-        layout: {i: 0, x: 0, y: Infinity, w: 2, h: 2, minW: 1, minH: 2},
-        content: {kind: 'Value', title: 'Employees', number: 22, unit: 'people'}
-    },
-
-    {
-        layout: {i: 1, x: 1, y: Infinity, w: 2, h: 2, minW: 1, minH: 2},
-        content: {kind: 'Value', title: 'Disk usage', number: 108, unit: 'gb'}
-    },
-
-    {
-        layout: {i: 2, x: 2, y: Infinity, w: 3, h: 4, minW: 3, minH: 4},
-        content: {kind: 'Graph', title: 'Grafana graph', graphUrl: 'http://play.grafana.org/render/dashboard-solo/db/grafana-play-home?orgId=1&panelId=4&from=1499272191563&to=1499279391563&width=1000&height=500&tz=UTC%2B02%3A00&timeout=5000'}
-    }
-];
+const localStorageLayouts = loadFromLocalStorage("layouts") || {};
+const localStorageCells = loadFromLocalStorage("cells") || [];
 
 class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            layouts: JSON.parse(JSON.stringify(originalLayouts)),
-            cells: testWidgets,
+            layouts: JSON.parse(JSON.stringify(localStorageLayouts)),
+            cells: JSON.parse(JSON.stringify(localStorageCells)),
             modals: {
                 createCell: false,
                 existingCell: false
             },
-            idCounter: testWidgets.length
+            idCounter: localStorageCells.length
         };
     }
 
     // adds a cell to the layout
     // depending on widget type the inital w/h and minw/minh are different
     addCell = (cell) => {
-        let w, h, minH, minW;
+        let w, h, minW, minH;
         if (cell.kind === 'Value') {
             w = 2;
             h = 2;
@@ -60,31 +43,36 @@ class App extends Component {
             minW = 3;
             minH = 4;
         }
+
+        const layout = {
+            i: this.state.idCounter,
+            x: (this.state.cells.length) % (this.state.cols || 12),
+            y: Infinity,
+            w: w,
+            h: h,
+            minW: minW,
+            minH: minH
+        };
+
         const newCell = {
-            layout: {
-                i: this.state.idCounter,
-                x: (this.state.cells.length) % (this.state.cols || 12),
-                y: Infinity,
-                w: w,
-                h: h,
-                minW: minW,
-                minH: minH
-            },
+            layoutId: layout.i,
             content: cell
         };
 
         this.setState({
+            layout: this.state.layout.concat(layout),
             cells: this.state.cells.concat(newCell),
             idCounter: this.state.idCounter + 1
         });
 
-        console.log(`addCell:cell=${JSON.stringify(newCell)}`);
+        console.log(`addCell:cell=${JSON.stringify(newCell)}:layout=${JSON.stringify(layout)}`);
         return newCell;
     };
 
-    removeCell = (i) => {
+    removeCell = (layoutId) => {
         this.setState({
-            cells: _.reject(this.state.cells, {layout: {i: i}})})
+            cells: _.reject(this.state.cells, {layoutId: layoutId})
+        });
     };
 
     clearDashboardLayout = () => {
@@ -96,11 +84,13 @@ class App extends Component {
      * @param {*} layout
      */
     onLayoutChange = (layout, layouts) => {
-        // console.log(`onLayoutChange:layout=${JSON.stringify(layout)}:layouts=${JSON.stringify(layouts)}`);
-        saveToLocalStorage("layouts", layouts);
-        // TODO: also save cells here...
+        console.log(`onLayoutChange:layout=${JSON.stringify(layout)}:layouts=${JSON.stringify(layouts)}`);
+
+        saveToLocalStorage('layouts', layouts);
+        saveToLocalStorage('cells', this.state.cells);
+
         this.setState({
-            layout: layout, // not sure we need to keep track of layout
+            layout: layout,
             layouts: layouts
         });
     };
@@ -158,14 +148,9 @@ class App extends Component {
 
 function saveToLocalStorage(key, value) {
     if (global.localStorage) {
-        // console.log(`toLS:key=${JSON.stringify(key)}:val=${JSON.stringify(value)}`);
+        console.log(`toLS:key=${JSON.stringify(key)}:val=${JSON.stringify(value)}`);
 
-        global.localStorage.setItem(
-            "dashboard",
-            JSON.stringify({
-                [key]: value
-            })
-        );
+        global.localStorage.setItem(key, JSON.stringify(value));
     }
 }
 
@@ -173,14 +158,14 @@ function loadFromLocalStorage(key) {
     let localStorageItem = {};
     if (global.localStorage) {
         try {
-            localStorageItem = JSON.parse(global.localStorage.getItem("dashboard")) || {};
+            localStorageItem = JSON.parse(global.localStorage.getItem(key));
         } catch (e) {
             console.log(e);
         }
     }
 
-    // console.log(`fromLS:key=${JSON.stringify(key)}:val=${JSON.stringify(localStorageItem[key])}`);
-    return localStorageItem[key];
+    console.log(`fromLS:key=${JSON.stringify(key)}:val=${JSON.stringify(localStorageItem)}`);
+    return localStorageItem;
 }
 
 export default App;
