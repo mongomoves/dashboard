@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Grid, Row, Col} from 'react-bootstrap';
 
 /**
  * Component capable of holding textual information.
@@ -13,6 +12,10 @@ class TextHolder extends Component {
     }
 
     componentDidMount() {
+        this.fetchText();
+    }
+
+    fetchText = () => {
         if(this.props.values.dataSource) {
             fetch(this.props.values.dataSource)
             .then(res => res.json())
@@ -23,7 +26,7 @@ class TextHolder extends Component {
                 } else if (Array.isArray(apiText)) {
                     this.setState({isArray: true, text: apiText});
                 } else {
-                    this.setState({text: 'Incorrect attribute provided'});
+                    this.setState({text: 'Felaktigt attribut, ingen data hämtad'});
                 }
             });
         } else if (this.props.values.textInput) {
@@ -51,16 +54,21 @@ class TextHolder extends Component {
     printArray = (array) => {
         let newArray = array.map(el => {
           return (
-                <Row className='show-grid'>
-                    <Col lg={12}>
-                        <span style={{...spanStyleText, fontSize: `${this.props.width / 10}px`}}>
+                        <span style={{...spanStyleText, fontSize: `${this.calcFont()}%`}}>
                             {JSON.stringify(el)}
                         </span>
-                    </Col>
-                </Row>
-          )
+            )
         });
         return newArray;
+    }
+
+    calcFont = () => {
+        // let size = 0.5 * (this.props.width + 16);
+        let size = this.props.width / 2;
+        if(size < 200) {
+            return 200;
+        }
+        return size;
     }
 
     render() {
@@ -69,17 +77,14 @@ class TextHolder extends Component {
             content = this.printArray(this.state.text);
         } else {
             content = (
-                <Row className="show-grid">
-                    <Col lg={12}>
-                    <span style={{...spanStyleText, fontSize: `${this.props.width / 10}px`}}>{this.state.text}</span>
-                    </Col>
-                </Row>
+                //<span style={{...spanStyleText, fontSize: `${this.props.width / 2}%`}}>{this.state.text}</span>
+                <span style={{...spanStyleText, fontSize: `${this.calcFont()}%`}}>{this.props.values.textInput}</span>
             )
         }
         return (
-            <Grid>
+            <div style={{...divStyle, height: this.props.height - 33, width: this.props.width}}>
                 {content}
-            </Grid>
+            </div>
         )
     }
 }
@@ -91,4 +96,12 @@ const spanStyleText = {
     display: "inlineBlock",
     paddingRight: "5%",
     color: "orange"
-}
+};
+
+const divStyle={
+    overflowX: 'hidden',
+    textOverflow: 'ellipsis',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+};

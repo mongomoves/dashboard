@@ -34,7 +34,7 @@ const testWidgets = [
 
     {
         layout: {i: 3, x: 7, y: Infinity, w: 2, h: 2, minW: 2, minH: 2},
-        content: {kind: 'Text', title: 'Påminnelse', dataSource: 'https://randomuser.me/api/', attribute: 'results'}
+        content: {kind: 'Text', title: 'Påminnelse', dataSource: 'https://randomuser.me/api/', attribute: 'state'}
     }
 ];
 
@@ -104,6 +104,7 @@ class App extends Component {
     };
 
     editCell = (cell, index) => {
+        console.log("cell: " + JSON.stringify(cell) + " index: " +  index);
         let edited = Object.assign({}, this.state.cells);
         edited[index].content = cell;
         this.setState(edited);
