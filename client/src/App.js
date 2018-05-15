@@ -12,7 +12,7 @@ import './App.css';
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
 
-const localStorageLayouts = loadFromLocalStorage("layouts") || {};
+const localStorageLayout = loadFromLocalStorage("layout") || {};
 const localStorageCells = loadFromLocalStorage("cells") || [];
 
 // Test data
@@ -43,7 +43,7 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            layouts: JSON.parse(JSON.stringify(localStorageLayouts)),
+            layout: JSON.parse(JSON.stringify(localStorageLayout)),
             cells: JSON.parse(JSON.stringify(localStorageCells)),
             modals: {
                 createCell: false,
@@ -119,13 +119,13 @@ class App extends Component {
      * Callback function. Sets new layout state.
      * @param {*} layout
      */
-    onLayoutChange = (layout, layouts) => {
+    onLayoutChange = (layout) => {
         //console.log(`onLayoutChange:layout=${JSON.stringify(layout)}:layouts=${JSON.stringify(layouts)}`);
 
-        saveToLocalStorage('layouts', layouts);
+        saveToLocalStorage('layout', layout);
         saveToLocalStorage('cells', this.state.cells);
 
-        this.setState({ layouts });
+        this.setState({ layout });
     };
 
     // We're using the cols coming back from this to calculate where to add new items.
@@ -219,9 +219,8 @@ class App extends Component {
                     showInfo={this.handleShowCellInfo}
                     editCell={this.handleShowEditCell}
                     cells={this.state.cells}
-                    layouts={this.state.layouts}
-                    onLayoutChange={this.onLayoutChange}
-                    onBreakpointChange={this.onBreakpointChange}/>
+                    layout={this.state.layout}
+                    onLayoutChange={this.onLayoutChange}/>
                 <BootstrapModal
                     title="Skapa widget"
                     show={this.state.modals.createCell}
