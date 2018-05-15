@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Panel, Row, Col, MenuItem, DropdownButton, Glyphicon } from 'react-bootstrap';
+import { Panel, Grid, Row, Col, MenuItem, DropdownButton, Glyphicon } from 'react-bootstrap';
 import ImageHolder from "./ImageHolder";
 import ReactResizeDetector from 'react-resize-detector';
 import './Cell.css';
 import ValueComponent from '../ValueComponent/ValueComponent';
+import IframeHolder from './IframeHolder';
 
 /**
  * This component represents a cell
@@ -18,7 +19,6 @@ class Cell extends Component {
         };
 
         this.frameSize = React.createRef();
-        this.onRemove = this.onRemove.bind(this);
     }
 
     /**
@@ -37,9 +37,28 @@ class Cell extends Component {
         this.setState({width: width, height: height});
     };
 
-    onRemove() {
-        console.log("Remove in Cell");
+    /**
+     * Callback to App.js when Remove button is clicked in cell menu.
+     * Id (or i in original data) must be passed along.
+     */
+    onRemove = () => {
         this.props.removeCell(this.props.id);
+    }
+
+    /**
+     * Callback to App.js when Show info button is clicked.
+     * Id (or i in original data) must be passed along.
+     */
+    onShowInfo = () => {
+        this.props.showInfo(this.props.id);
+    }
+
+    /**
+     * Callback to App.js when Edit button is clicked.
+     * Id (or i in original data) must be passed along.
+     */
+    onEdit = () => {
+        this.props.editCell(this.props.id);
     }
 
     render() {
@@ -49,50 +68,57 @@ class Cell extends Component {
 
         //TODO: Value and Graph should be separate components, styles should not be inlined
         if (kind === 'Value') {
-            const {unit, number} = this.props.content;
+            const {unit, number, dataSource, attribute} = this.props.content;
 
             content = (
-                <ValueComponent number={number} unit={unit} />
+                <ValueComponent number={number} unit={unit} width={this.state.width} dataSource ={dataSource} attribute ={attribute} />
             );
         }
         else if (kind === 'Graph') {
-            const { graphUrl } = this.props.content;
-            content = (
-                <ImageHolder
-                  width={this.state.width - 10}
-                  height={this.state.height - 40}
-                  image={graphUrl}/>
-            )
+            const {displayType, graphUrl } = this.props.content;
+            if(displayType === 'Iframe') {
+                content = (
+                    <IframeHolder
+                        url={graphUrl}
+                        width={this.state.width}
+                        height={this.state.height}/>
+                )
+            } else if (displayType === 'Img') {
+                content = (
+                    <ImageHolder
+                        width={this.state.width}
+                        height={this.state.height}
+                        image={graphUrl}/>
+                )
+            }
         }
 
         return (
-            <div ref={this.frameSize} style={{width: '100%', height: '100%'}}>
-                <Panel style={{width: 'inherit', height: 'inherit'}}>
+            <div ref={this.frameSize} style={{width: 'inherit', height: 'inherit'}}>
+                <Panel>
                     <Panel.Heading>
-                        <Row>
-                            <Col lg={10}>
-                                <span>{title}</span>
-                            </Col>
-                            <Col lg={2} style={{padding: 0}}>
-                                <DropdownButton
-                                    id="dropdown-no-caret"
-                                    noCaret
-                                    pullRight 
-                                    bsSize="xsmall"
-                                    title={<Glyphicon glyph="cog" />}>
-                                        <MenuItem eventKey={1}>Redigera</MenuItem>
-                                        <MenuItem divider/>
-                                        <MenuItem eventKey={2} onClick={this.onRemove}>Ta bort</MenuItem>
-                                </DropdownButton>
-                            </Col>
-                        </Row>
+                        <Grid>
+                            <Row className='show-grid'>
+                                <Col lg={10}>
+                                    <span>{title}</span>
+                                </Col>
+                                <Col lg={2} style={{padding: 0}}>
+                                    <DropdownButton
+                                        id="dropdown-no-caret"
+                                        noCaret
+                                        pullRight 
+                                        bsSize="xsmall"
+                                        title={<Glyphicon glyph="cog" />}>
+                                            <MenuItem eventKey={1} onClick={this.onShowInfo}>Info</MenuItem>
+                                            <MenuItem eventKey={2} onClick={this.onEdit}>Redigera</MenuItem>
+                                            <MenuItem eventKey={3} onClick={this.onRemove}>Ta bort</MenuItem>
+                                    </DropdownButton>
+                                </Col>
+                            </Row>
+                        </Grid>
                     </Panel.Heading>
-                    <Panel.Body>
-                            
-                        <div style={{display: 'flex', justifyContent: 'center'}}>
+                    <Panel.Body style={{height: this.state.height - 33}}>
                              {content}
-                        </div>
-
                     </Panel.Body>
                 </Panel>
                 <ReactResizeDetector handleWidth handleHeight refreshMode='throttle' refreshRate={1000} onResize={this.onResize} />
