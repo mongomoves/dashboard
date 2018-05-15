@@ -42,9 +42,6 @@ class ValueComponent extends Component {
 
                 }
 
-
-
-
             })
     }
 
