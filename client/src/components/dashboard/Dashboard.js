@@ -13,35 +13,24 @@ const ResponsiveGRL = WidthProvider(Responsive);
 class Dashboard extends Component {
     static defaultProps = {
         className: 'layout',
-        cols: { lg: 12, md: 10, sm: 8, xs: 2, xxs: 1 },
+        cols: { lg: 12, md: 12, sm: 12, xs: 12, xxs: 12 },
         rowHeight: 50
     };
 
     constructor(props) {
         super(props);
-
-        this.state = {
-
-        };
     }
-
-    onLayoutChange = (layout, layouts) => {
-        this.props.onLayoutChange(layout, layouts);
-    };
-
-    // We're using the cols coming back from this to calculate where to add new items.
-    onBreakpointChange = (breakpoint, cols) => {
-        this.props.onBreakpointChange(breakpoint, cols);
-    };
 
     /**
      * Builds and returns elements based on whatever is found in state.cells.
      */
-    generateElement() {
+    createCells() {
         const remove = this.props.removeCell;
         const show = this.props.showInfo;
         const edit = this.props.editCell;
+
         return _.map(this.props.cells, function (cell) {
+            const {i, x, y, w, h, minW, minH} = cell.layout;
             return (
                 <div key={i} data-grid={{x, y, w, h, minW, minH}}>
                     <Cell 
@@ -58,8 +47,13 @@ class Dashboard extends Component {
     render() {
         return (
             <ResponsiveGRL
-                {...this.props}>
-                {this.generateElement()}
+                className={this.props.className}
+                cols={this.props.cols}
+                rowHeight={this.props.rowHeight}
+                layouts={this.props.layouts}
+                onLayoutChange={(layout, layouts) => this.props.onLayoutChange(layout, layouts)}
+                onBreakpointChange={(breakpoint, cols) => this.props.onBreakpointChange(breakpoint, cols)}>
+                {this.createCells()}
             </ResponsiveGRL>
         );
     }

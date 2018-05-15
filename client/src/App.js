@@ -33,7 +33,6 @@ const testWidgets = [
         //'http://play.grafana.org/render/dashboard-solo/db/grafana-play-home?orgId=1&panelId=4&from=1499272191563&to=1499279391563&width=1000&height=500&tz=UTC%2B02%3A00&timeout=5000'
     }
 ];
->>>>>>> master
 
 //Used to show info about Cell
 let cellInfoData = {};
@@ -84,12 +83,11 @@ class App extends Component {
         };
 
         const newCell = {
-            layoutId: layout.i,
+            layout: layout,
             content: cell
         };
 
         this.setState({
-            layout: this.state.layout.concat(layout),
             cells: this.state.cells.concat(newCell),
             idCounter: this.state.idCounter + 1
         });
@@ -102,7 +100,7 @@ class App extends Component {
         let edited = Object.assign({}, this.state.cells);
         edited[index].content = cell;
         this.setState(edited);
-    }
+    };
 
     removeCell = (i) => {
         this.setState({
@@ -122,15 +120,12 @@ class App extends Component {
      * @param {*} layout
      */
     onLayoutChange = (layout, layouts) => {
-        console.log(`onLayoutChange:layout=${JSON.stringify(layout)}:layouts=${JSON.stringify(layouts)}`);
+        //console.log(`onLayoutChange:layout=${JSON.stringify(layout)}:layouts=${JSON.stringify(layouts)}`);
 
         saveToLocalStorage('layouts', layouts);
         saveToLocalStorage('cells', this.state.cells);
 
-        this.setState({
-            layout: layout,
-            layouts: layouts
-        });
+        this.setState({ layouts });
     };
 
     // We're using the cols coming back from this to calculate where to add new items.
@@ -159,7 +154,7 @@ class App extends Component {
     };
 
     handleShowCellInfo = (i) => {
-        this.setState({modals: {showInfo: true}})
+        this.setState({modals: {showInfo: true}});
         this.state.cells.some(function(e) {
             if(e.layout.i === i) {
                 cellInfoData = {
@@ -224,9 +219,9 @@ class App extends Component {
                     showInfo={this.handleShowCellInfo}
                     editCell={this.handleShowEditCell}
                     cells={this.state.cells}
+                    layouts={this.state.layouts}
                     onLayoutChange={this.onLayoutChange}
-                    onBreakpointChane={this.onBreakpointChange}
-                    onResizeStop={this.onResizeStop}/>
+                    onBreakpointChange={this.onBreakpointChange}/>
                 <BootstrapModal
                     title="Skapa widget"
                     show={this.state.modals.createCell}
@@ -261,7 +256,7 @@ class App extends Component {
 
 function saveToLocalStorage(key, value) {
     if (global.localStorage) {
-        console.log(`toLS:key=${JSON.stringify(key)}:val=${JSON.stringify(value)}`);
+        //console.log(`toLS:key=${JSON.stringify(key)}:val=${JSON.stringify(value)}`);
 
         global.localStorage.setItem(key, JSON.stringify(value));
     }
@@ -277,7 +272,7 @@ function loadFromLocalStorage(key) {
         }
     }
 
-    console.log(`fromLS:key=${JSON.stringify(key)}:val=${JSON.stringify(localStorageItem)}`);
+    //console.log(`fromLS:key=${JSON.stringify(key)}:val=${JSON.stringify(localStorageItem)}`);
     return localStorageItem;
 }
 
