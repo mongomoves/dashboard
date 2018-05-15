@@ -30,8 +30,10 @@ class ValueComponent extends Component {
             .then(res => res.json())
             .then((out) => {
                 result = this.getValueByKey(out, attribute);
-
+                
+                //checks so result does not exceed length limit 
                 if (result.length < 6) {
+                   
                     //Makes sure it is a string and not an object 
                     if (typeof result === 'string' || result instanceof String) {
                         this.setState({ fetchContainer: result, fetchSuccess: true });
