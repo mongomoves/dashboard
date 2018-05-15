@@ -51,7 +51,7 @@ class Dashboard extends Component {
                 cols={this.props.cols}
                 rowHeight={this.props.rowHeight}
                 layout={this.props.layout}
-                onLayoutChange={(layout) => this.props.onLayoutChange(layout)}>
+                onLayoutChange={this.props.onLayoutChange}>
                 {this.createCells()}
             </ReactGridLayout>
         );
