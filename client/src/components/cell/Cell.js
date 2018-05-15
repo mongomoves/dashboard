@@ -33,7 +33,6 @@ class Cell extends Component {
     }
 
     onResize = (width, height) => {
-        console.log(`onResize:w=${width}:h=${height}`);
         this.setState({width: width, height: height});
     };
 

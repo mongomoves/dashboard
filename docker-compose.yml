@@ -14,7 +14,7 @@ services:
       - "database:database" # link this service to the database service
     depends_on:
       - database
-      
+
   frontend:
     build: ./client # specify the directory of the Dockerfile
     ports:
