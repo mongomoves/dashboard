@@ -31,9 +31,14 @@ class ValueComponent extends Component {
             .then((out) => {
                 result = this.getValueByKey(out, attribute);
 
-                //Makes sure it is a string and not an object 
-                if (typeof result === 'string' || result instanceof String) {
-                    this.setState({ fetchContainer: result, fetchSuccess: true });
+                if (result.length < 6) {
+                    //Makes sure it is a string and not an object 
+                    if (typeof result === 'string' || result instanceof String) {
+                        this.setState({ fetchContainer: result, fetchSuccess: true });
+                    }
+
+
+
                 }
             })
     }
@@ -65,8 +70,8 @@ class ValueComponent extends Component {
         if (this.state.fetchSuccess) {
             return (
                 <div>
-                    <span style={{...spanStyleNumber, fontSize: `${this.props.width / 9}px`}}>{this.state.fetchContainer}</span>
-                    <span style={{...spanStyleUnit, fontSize: `${this.props.width / 10}px`}}>{this.props.unit}</span>
+                    <span style={{ ...spanStyleNumber, fontSize: `${this.props.width / 5}px` }}>{this.state.fetchContainer}</span>
+                    <span style={{ ...spanStyleUnit, fontSize: `${this.props.width / 9}px` }}>{this.props.unit}</span>
                 </div>
             )
         }
@@ -75,7 +80,7 @@ class ValueComponent extends Component {
         if (this.state.externalData && !this.state.fetchSuccess) {
             return (
                 <div>
-                    <span style={spanStyleError}><b>Sorry!</b><br /> The entered URL or attribute was invalid.</span>
+                    <span style={spanStyleError}><b>Sorry!</b><br /> The entered URL/attribute was invalid, or value length was exceeded.</span>
                 </div>
             )
         }
@@ -83,8 +88,8 @@ class ValueComponent extends Component {
         //if user entered data 
         return (
             <div>
-                <span style={{...spanStyleNumber, fontSize: `${this.props.width / 5}px`}}>{this.props.number}</span>
-                <span style={{...spanStyleUnit, fontSize: `${this.props.width / 9}px`}}>{this.props.unit}</span>
+                <span style={{ ...spanStyleNumber, fontSize: `${this.props.width / 5}px` }}>{this.props.number}</span>
+                <span style={{ ...spanStyleUnit, fontSize: `${this.props.width / 9}px` }}>{this.props.unit}</span>
             </div>
         );
     }
