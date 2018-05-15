@@ -70,6 +70,12 @@ class App extends Component {
             minW = 3;
             minH = 4;
         }
+        else if (cell.kind === 'Text') {
+            w = 2;
+            h = 4;
+            minW = 2;
+            minH = 2;
+        }
         const newCell = {
             layout: {
                 i: this.state.idCounter,
@@ -192,6 +198,16 @@ class App extends Component {
                         kind: 'Graph',
                         title: e.content.title,
                         graphUrl: e.content.graphUrl
+                    }
+                } else if (e.content.kind === 'Text') {
+                    editValues = {
+                        index: index,
+                        creator: e.content.creator,
+                        kind: 'Text',
+                        title: e.content.title,
+                        textInput: e.content.textInput,
+                        dataSource: e.content.dataSource,
+                        attribute: e.content.attribute
                     }
                 }
                 return true;
