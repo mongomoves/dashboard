@@ -25,23 +25,26 @@ class ValueComponent extends Component {
         let dataURL = this.props.dataSource;
         let attribute = this.props.attribute;
         let result = false;
+        let maxLength = 6;
 
         fetch(dataURL)
             .then(res => res.json())
             .then((out) => {
                 result = this.getValueByKey(out, attribute);
-                
-                //checks so result does not exceed length limit 
-                if (result.length < 6) {
-                   
+
                     //Makes sure it is a string and not an object 
                     if (typeof result === 'string' || result instanceof String) {
-                        this.setState({ fetchContainer: result, fetchSuccess: true });
+                        
+                        //checks so result does not exceed length limit 
+                        if(result.length <= maxLength){
+                            this.setState({ fetchContainer: result, fetchSuccess: true });
+                        }
+                       
                     }
 
 
 
-                }
+               
             })
     }
 
