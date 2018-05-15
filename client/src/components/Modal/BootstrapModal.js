@@ -17,7 +17,7 @@ class BootstrapModal extends Component {
                     {children}
                 </Modal.Body>
                 <Modal.Footer style={modalFooter}>
-                    <Button onClick={close}>Close</Button>
+                    <Button onClick={close}>Stäng</Button>
                 </Modal.Footer>
             </Modal>
         )
