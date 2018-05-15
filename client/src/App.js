@@ -22,14 +22,19 @@ const testWidgets = [
     },
 
     {
-        layout: {i: 1, x: 1, y: Infinity, w: 2, h: 2, minW: 1, minH: 2},
+        layout: {i: 1, x: 2, y: Infinity, w: 2, h: 2, minW: 1, minH: 2},
         content: {creator: 'Bob', created: '2018/5/9', description: 'En beskrivning av denna widget', kind: 'Value', title: 'Disk usage', number: 108, unit: 'gb'}
     },
 
     {
-        layout: {i: 2, x: 2, y: Infinity, w: 3, h: 4, minW: 3, minH: 4},
+        layout: {i: 2, x: 4, y: Infinity, w: 3, h: 4, minW: 3, minH: 4},
         content: {kind: 'Graph', displayType: 'Iframe', title: 'Grafana graph', graphUrl: 'https://play.grafana.org/d-solo/000000012/grafana-play-home?orgId=1&panelId=2&from=1526023352580&to=1526030552580'}
         //'http://play.grafana.org/render/dashboard-solo/db/grafana-play-home?orgId=1&panelId=4&from=1499272191563&to=1499279391563&width=1000&height=500&tz=UTC%2B02%3A00&timeout=5000'
+    },
+
+    {
+        layout: {i: 3, x: 7, y: Infinity, w: 2, h: 2, minW: 2, minH: 2},
+        content: {kind: 'Text', title: 'Påminnelse', dataSource: 'https://randomuser.me/api/', attribute: 'results'}
     }
 ];
 

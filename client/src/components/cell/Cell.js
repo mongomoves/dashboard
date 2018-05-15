@@ -5,6 +5,7 @@ import ReactResizeDetector from 'react-resize-detector';
 import './Cell.css';
 import ValueComponent from '../ValueComponent/ValueComponent';
 import IframeHolder from './IframeHolder';
+import TextHolder from './TextHolder';
 
 /**
  * This component represents a cell
@@ -91,6 +92,14 @@ class Cell extends Component {
                         image={graphUrl}/>
                 )
             }
+        }
+        else if (kind === 'Text') {
+            content = (
+                <TextHolder 
+                    values={this.props.content}
+                    width={this.state.width}
+                    height={this.state.height}/>
+            )
         }
 
         return (
