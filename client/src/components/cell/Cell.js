@@ -5,6 +5,7 @@ import ReactResizeDetector from 'react-resize-detector';
 import './Cell.css';
 import ValueComponent from '../ValueComponent/ValueComponent';
 import IframeHolder from './IframeHolder';
+import TextHolder from './TextHolder';
 
 /**
  * This component represents a cell
@@ -33,7 +34,6 @@ class Cell extends Component {
     }
 
     onResize = (width, height) => {
-        console.log(`onResize:w=${width}:h=${height}`);
         this.setState({width: width, height: height});
     };
 
@@ -75,13 +75,15 @@ class Cell extends Component {
             );
         }
         else if (kind === 'Graph') {
-            const {type, graphUrl } = this.props.content;
-            if(type === 'Iframe') {
+            const {displayType, graphUrl } = this.props.content;
+            if(displayType === 'Iframe') {
                 content = (
                     <IframeHolder
-                        url={graphUrl}/>
+                        url={graphUrl}
+                        width={this.state.width}
+                        height={this.state.height}/>
                 )
-            } else if (type === 'Img') {
+            } else if (displayType === 'Img') {
                 content = (
                     <ImageHolder
                         width={this.state.width}
@@ -90,10 +92,18 @@ class Cell extends Component {
                 )
             }
         }
+        else if (kind === 'Text') {
+            content = (
+                <TextHolder 
+                    values={this.props.content}
+                    width={this.state.width}
+                    height={this.state.height}/>
+            )
+        }
 
         return (
             <div ref={this.frameSize} style={{width: 'inherit', height: 'inherit'}}>
-                <Panel /*style={{width: 'inherit', height: 'inherit'}}*/>
+                <Panel>
                     <Panel.Heading>
                         <Grid>
                             <Row className='show-grid'>

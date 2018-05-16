@@ -25,6 +25,7 @@ class ValueComponent extends Component {
         let dataURL = this.props.dataSource;
         let attribute = this.props.attribute;
         let result = false;
+        let maxLength = 6;
 
         fetch(dataURL)
             .then(res => res.json())
@@ -33,8 +34,14 @@ class ValueComponent extends Component {
 
                 //Makes sure it is a string and not an object 
                 if (typeof result === 'string' || result instanceof String) {
-                    this.setState({ fetchContainer: result, fetchSuccess: true });
+
+                    //checks so result does not exceed length limit 
+                    if (result.length <= maxLength) {
+                        this.setState({ fetchContainer: result, fetchSuccess: true });
+                    }
+
                 }
+
             })
     }
 
@@ -65,8 +72,8 @@ class ValueComponent extends Component {
         if (this.state.fetchSuccess) {
             return (
                 <div>
-                    <span style={{...spanStyleNumber, fontSize: `${this.props.width / 9}px`}}>{this.state.fetchContainer}</span>
-                    <span style={{...spanStyleUnit, fontSize: `${this.props.width / 10}px`}}>{this.props.unit}</span>
+                    <span style={{ ...spanStyleNumber, fontSize: `${this.props.width / 5}px` }}>{this.state.fetchContainer}</span>
+                    <span style={{ ...spanStyleUnit, fontSize: `${this.props.width / 9}px` }}>{this.props.unit}</span>
                 </div>
             )
         }
@@ -75,7 +82,7 @@ class ValueComponent extends Component {
         if (this.state.externalData && !this.state.fetchSuccess) {
             return (
                 <div>
-                    <span style={spanStyleError}><b>Sorry!</b><br /> The entered URL or attribute was invalid.</span>
+                    <span style={spanStyleError}><b>Fel vid hämtning</b><br />Antingen är URL/attribut ogiltig, eller så överskred resultatet tillåten längd(max=6)</span>
                 </div>
             )
         }
@@ -83,8 +90,8 @@ class ValueComponent extends Component {
         //if user entered data 
         return (
             <div>
-                <span style={{...spanStyleNumber, fontSize: `${this.props.width / 5}px`}}>{this.props.number}</span>
-                <span style={{...spanStyleUnit, fontSize: `${this.props.width / 9}px`}}>{this.props.unit}</span>
+                <span style={{ ...spanStyleNumber, fontSize: `${this.props.width / 5}px` }}>{this.props.number}</span>
+                <span style={{ ...spanStyleUnit, fontSize: `${this.props.width / 9}px` }}>{this.props.unit}</span>
             </div>
         );
     }

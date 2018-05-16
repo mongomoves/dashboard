@@ -20,15 +20,39 @@ const dashboardSchema = mongoose.Schema({
     },
     widgets: [
         {
-            widget: {
+            content: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "Widget"
             },
-            pos: {
-                x: Number,
-                y: Number,
-                w: Number,
-                h: Number
+            layout: {
+                i: {
+                    type: Number,
+                    required: true
+                },
+                x: {
+                    type: Number,
+                    required: true
+                },
+                y: {
+                    type: Number,
+                    required: true
+                },
+                w: {
+                    type: Number,
+                    required: true
+                },
+                h: {
+                    type: Number,
+                    required: true
+                },
+                minW: {
+                    type: Number,
+                    required: true
+                },
+                minH: {
+                    type: Number,
+                    required: true
+                }
             }
         }
     ]

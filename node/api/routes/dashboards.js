@@ -30,7 +30,7 @@ router.get('/', function(req, res, next) {
     Dashboard.find(query)
         // populate widget and nested item with associated model
         .populate({
-            path: 'widgets.widget',
+            path: 'widgets.content',
             populate: {path: 'content'}
         })
         .sort({'created': -1}) // sort by date descending (newest first)
@@ -50,22 +50,24 @@ router.get('/', function(req, res, next) {
                         description: dashboard.description,
                         widgets: dashboard.widgets.map(widget => {
                             return {
-                                pos: widget.pos,
-                                widget: {
-                                    _id: widget.widget._id,
-                                    title: widget.widget.title,
-                                    creator: widget.widget.creator,
-                                    created: widget.widget.created,
-                                    description: widget.widget.description,
-                                    kind: widget.widget.kind,
+                                layout: widget.layout,
+                                content: {
+                                    _id: widget.content._id,
+                                    title: widget.content.title,
+                                    creator: widget.content.creator,
+                                    created: widget.content.created,
+                                    description: widget.content.description,
+                                    kind: widget.content.kind,
 
-                                    number: widget.widget.content.number,
-                                    dataSource: widget.widget.content.dataSource,
-                                    attribute: widget.widget.content.attribute,
-                                    query: widget.widget.content.query,
-                                    unit: widget.widget.content.unit,
+                                    number: widget.content.content.number,
+                                    text: widget.content.content.text,
+                                    dataSource: widget.content.content.dataSource,
+                                    attribute: widget.content.content.attribute,
+                                    query: widget.content.content.query,
+                                    unit: widget.content.content.unit,
 
-                                    graphUrl: widget.widget.content.graphUrl
+                                    graphUrl: widget.content.content.graphUrl,
+                                    displayType: widget.content.content.displayType
                                 }
                             }
                         })
@@ -117,12 +119,15 @@ router.post('/', function(req, res, next) {
                 description: req.body.description,
                 widgets: req.body.widgets.map(widget => {
                     return {
-                        widget: widget.id,
-                        pos: {
+                        content: widget.id,
+                        layout: {
+                            i: widget.i,
                             x: widget.x,
                             y: widget.y,
                             w: widget.w,
-                            h: widget.h
+                            h: widget.h,
+                            minW: widget.minW,
+                            minH: widget.minH
                         }
                     }
                 })
@@ -139,7 +144,7 @@ router.post('/', function(req, res, next) {
                         creator: creator,
                         created: created,
                         kind: logKind,
-                        text: creator + " created a " + logKind + " titled '" + title + "'.",
+                        text: creator + " skapade en " + logKind + " med titel '" + title + "'.",
                         contentId: _id,
                         request: {
                             type: "GET",
@@ -179,7 +184,7 @@ router.get('/:dashboardId', function(req, res, next) {
 
     Dashboard.findById(id)
         .populate({
-            path: 'widgets.widget',
+            path: 'widgets.content',
             populate: {path: 'content'}
         })
         .exec()
@@ -202,22 +207,24 @@ router.get('/:dashboardId', function(req, res, next) {
                     description: dashboard.description,
                     widgets: dashboard.widgets.map(widget => {
                         return {
-                            pos: widget.pos,
-                            widget: {
-                                _id: widget.widget._id,
-                                title: widget.widget.title,
-                                creator: widget.widget.creator,
-                                created: widget.widget.created,
-                                description: widget.widget.description,
-                                kind: widget.widget.kind,
+                            layout: widget.layout,
+                            content: {
+                                _id: widget.content._id,
+                                title: widget.content.title,
+                                creator: widget.content.creator,
+                                created: widget.content.created,
+                                description: widget.content.description,
+                                kind: widget.content.kind,
 
-                                number: widget.widget.content.number,
-                                dataSource: widget.widget.content.dataSource,
-                                attribute: widget.widget.content.attribute,
-                                query: widget.widget.content.query,
-                                unit: widget.widget.content.unit,
+                                number: widget.content.content.number,
+                                text: widget.content.content.text,
+                                dataSource: widget.content.content.dataSource,
+                                attribute: widget.content.content.attribute,
+                                query: widget.content.content.query,
+                                unit: widget.content.content.unit,
 
-                                graphUrl: widget.widget.content.graphUrl
+                                graphUrl: widget.content.content.graphUrl,
+                                displayType: widget.content.content.displayType
                             }
                         }
                     })

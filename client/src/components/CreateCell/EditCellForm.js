@@ -5,15 +5,17 @@ import {Button, ButtonToolbar, ToggleButtonGroup, ToggleButton, Checkbox, Contro
 class EditCellForm extends Component {
     constructor(props) {
         super(props);
-        const {creator, kind, displayType, title, number, graphUrl, dataSource, attribute, unit} = this.props.values;
+        const {creator, kind, displayType, title, textInput, number, graphUrl, dataSource, attribute, unit} = this.props.values;
 
         this.state = {
-            buttonText: 'Edit widget',
+            buttonText: 'Ändra widget',
             creator: creator,
             kind: kind,
             publish: false,
+            published: creator ? true : false,
             title: title,
             number: number,
+            textInput: textInput,
             graphUrl: graphUrl,
             dataSource: dataSource,
             attribute: attribute,
@@ -54,6 +56,10 @@ class EditCellForm extends Component {
         this.setState({unit: e.target.value});
     };
 
+    handleTextInputChange = (e) => {
+        this.setState({textInput: e.target.value});
+    };
+
     handlePublishChange = (e) => {
         const checked = e.target.checked;
         this.setState({publish: checked});
@@ -91,6 +97,15 @@ class EditCellForm extends Component {
                 graphUrl: this.state.graphUrl
             }
         }
+        else if (this.state.kind === 'Text') {
+            widget = {
+                kind: this.state.kind,
+                title: this.state.title,
+                textInput: this.state.textInput,
+                dataSource: this.state.dataSource,
+                attribute: this.state.attribute
+            }
+        }
 
         console.log(`handleCreateWidget:widget=${JSON.stringify(widget)}`);
         if(this.state.creator) {
@@ -107,7 +122,6 @@ class EditCellForm extends Component {
     };
 
     render() {
-        //TODO: Handle validation and add help text to fields
         let formContent;
         let buttonKind;
         // Form fields depends on type of widget
@@ -115,7 +129,7 @@ class EditCellForm extends Component {
             formContent = (
                 <div>
                     <FormGroup>
-                        <ControlLabel>Number</ControlLabel>
+                        <ControlLabel>Värde</ControlLabel>
                         <OverlayTrigger placement="top" overlay={<Tooltip id="edit-number">Ange det värde som ska visas i widgeten.</Tooltip>}>
                         <FormControl
                             type='number'
@@ -124,7 +138,7 @@ class EditCellForm extends Component {
                         </OverlayTrigger>
                     </FormGroup>
                     <FormGroup>
-                        <ControlLabel>Data source</ControlLabel>
+                        <ControlLabel>Datakälla</ControlLabel>
                         <OverlayTrigger placement="top" overlay={<Tooltip id="edit-dataSource">Ange den datakälla som ska användas i widgeten.</Tooltip>}>
                         <FormControl
                             type='text'
@@ -133,7 +147,7 @@ class EditCellForm extends Component {
                         </OverlayTrigger>
                     </FormGroup>
                     <FormGroup>
-                        <ControlLabel>Data source attribute</ControlLabel>
+                        <ControlLabel>Data-attribut</ControlLabel>
                         <OverlayTrigger placement="top" overlay={<Tooltip id="edit-attribute">Ange de API attribut som ska användas.</Tooltip>}>
                         <FormControl
                             type='text'
@@ -142,7 +156,7 @@ class EditCellForm extends Component {
                         </OverlayTrigger>
                     </FormGroup>
                     <FormGroup>
-                        <ControlLabel>Unit</ControlLabel>
+                        <ControlLabel>Enhet</ControlLabel>
                         <OverlayTrigger placement="top" overlay={<Tooltip id="edit-unit">Ange enhet som ska visas i widgeten.</Tooltip>}>
                         <FormControl
                             type='text'
@@ -168,7 +182,7 @@ class EditCellForm extends Component {
                 if (this.state.publish) {
                     buttonKind = (
                         <Button 
-                        disabled={!this.state.title || !this.state.number || !this.state.creator}
+                        disabled={!this.state.title || !this.state.number || (!this.state.creator || !this.state.description)}
                         bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
                     );
                 }
@@ -182,7 +196,7 @@ class EditCellForm extends Component {
                 if (this.state.publish) {
                     buttonKind = (
                         <Button 
-                        disabled={!this.state.title || !this.state.dataSource || !this.state.attribute || !this.state.creator}
+                        disabled={!this.state.title || !this.state.dataSource || !this.state.attribute || (!this.state.creator || !this.state.description)}
                         bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
                     );
                 }
@@ -193,7 +207,7 @@ class EditCellForm extends Component {
                 <div>
                     <FormGroup>
                         <ControlLabel>Visningstyp</ControlLabel>
-                       <ButtonToolbar>
+                        <ButtonToolbar>
                            <ToggleButtonGroup 
                                 type='radio'
                                 name='displayType'
@@ -206,7 +220,7 @@ class EditCellForm extends Component {
                         </ButtonToolbar>
                     </FormGroup>
                     <FormGroup>
-                        <ControlLabel>Graph URL</ControlLabel>
+                        <ControlLabel>Diagram-URL</ControlLabel>
                         <OverlayTrigger placement="top" overlay={<Tooltip id="edit-graph">Ange den URL till den graf som ska visas.</Tooltip>}>
                         <FormControl
                             type='text'
@@ -224,17 +238,84 @@ class EditCellForm extends Component {
             if (this.state.publish) {
                 buttonKind = (
                     <Button 
-                    disabled={!this.state.title || !this.state.graphUrl || !this.state.creator}
+                    disabled={!this.state.title || !this.state.graphUrl || (!this.state.creator || !this.state.description)}
                     bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
                 );
             }
-
+        }
+        else if(this.state.kind === 'Text') {
+            formContent = (
+                <div>
+                    <FormGroup>
+                        <ControlLabel>Fritext</ControlLabel>
+                        <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-textinput">Ange den text som cellen ska visa.</Tooltip>}>
+                            <FormControl 
+                                componentClass="textarea"
+                                placeholder="Ditt innehåll"
+                                defaultValue={this.props.values.textInput}
+                                onChange={this.handleTextInputChange}/>
+                        </OverlayTrigger>
+                    </FormGroup>
+                    <FormGroup>
+                        <ControlLabel>Datakälla</ControlLabel>
+                        <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-dataSource">Ange den datakälla som widgeten ska presentera data ifrån.</Tooltip>}>
+                            <FormControl
+                                type='text'
+                                defaultValue={this.props.values.dataSource}
+                                onChange={this.handleDataSourceChange}/>
+                        </OverlayTrigger>
+                    </FormGroup>
+                    <FormGroup>
+                        <ControlLabel>Data-attribute</ControlLabel>
+                        <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-attribute">Ange specifikt attribut från API</Tooltip>}>
+                            <FormControl
+                                type='text'
+                                defaultValue={this.props.values.attribute}
+                                onChange={this.handleAttributeChange}/>
+                        </OverlayTrigger>
+                    </FormGroup>
+                </div>
+            );
+            //Validation on Edit button
+            buttonKind = (
+                <Button
+                        disabled={!this.state.title || !this.state.textInput || !this.state.dataSource || !this.state.attribute} 
+                        bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+            );
+            if(this.state.textInput) {
+                buttonKind = (
+                    <Button
+                        disabled={!this.state.title || (this.state.dataSource || this.state.attribute)}
+                        bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                );
+                if (this.state.publish) {
+                    buttonKind = (
+                        <Button
+                            disabled={!this.state.title || !this.state.textInput || (!this.state.creator || !this.state.description)} 
+                            bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                    );
+                }
+            }
+            if (this.state.dataSource || this.state.attribute) {
+                buttonKind = (
+                    <Button
+                            disabled={!this.state.title || !this.state.dataSource || !this.state.attribute || this.state.textInput} 
+                            bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                );
+                if (this.state.publish) {
+                    buttonKind = (
+                        <Button
+                            disabled={!this.state.title || !this.state.dataSource || !this.state.attribute || (!this.state.creator || !this.state.description)} 
+                            bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                    );
+                }         
+            }
         }
 
         return (
             <form>
                 <FormGroup>
-                    <ControlLabel>Title</ControlLabel>
+                    <ControlLabel>Titel</ControlLabel>
                     <OverlayTrigger placement="top" overlay={<Tooltip id="edit-title">Ange den title som widgeten ska ha.</Tooltip>}>
                     <FormControl
                         type='text'
@@ -245,7 +326,7 @@ class EditCellForm extends Component {
 
                 {formContent}
                 
-                {this.state.creator && 
+                {!this.state.published && 
                 <FormGroup>
                     <Checkbox onChange={this.handlePublishChange}>
                         Publicera widget
@@ -255,7 +336,7 @@ class EditCellForm extends Component {
                 {this.state.publish &&
                 <div>
                     <FormGroup>
-                        <ControlLabel>Creator</ControlLabel>
+                        <ControlLabel>Skapare</ControlLabel>
                         <OverlayTrigger placement="top" overlay={<Tooltip id="edit-creator">Ange skapare av widget.</Tooltip>}>
                         <FormControl
                             type='text'
@@ -264,7 +345,7 @@ class EditCellForm extends Component {
                     </FormGroup>
 
                     <FormGroup>
-                    <ControlLabel>Description</ControlLabel>
+                    <ControlLabel>Beskrivning</ControlLabel>
                         <OverlayTrigger placement="top" overlay={<Tooltip id="edit-desc">Ange beskrivning av widget.</Tooltip>}>
                         <FormControl
                             type='text'

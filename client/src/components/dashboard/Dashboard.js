@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Responsive, WidthProvider } from 'react-grid-layout';
+import RGL, { WidthProvider } from "react-grid-layout";
 import Cell from '../cell/Cell'
 import './dashboard.css';
 import _ from 'lodash';
 
-const ResponsiveGRL = WidthProvider(Responsive);
+const ReactGridLayout = WidthProvider(RGL);
 
 /*
 * Dashboard component, basically a react-grid-layout with dynamic ability to add
@@ -13,34 +13,22 @@ const ResponsiveGRL = WidthProvider(Responsive);
 class Dashboard extends Component {
     static defaultProps = {
         className: 'layout',
-        cols: { lg: 12, md: 10, sm: 8, xs: 2, xxs: 1 },
+        cols: 12,
         rowHeight: 50
     };
 
     constructor(props) {
         super(props);
-
-        this.state = {
-
-        };
     }
-
-    onLayoutChange = (layout, layouts) => {
-        this.props.onLayoutChange(layout, layouts);
-    };
-
-    // We're using the cols coming back from this to calculate where to add new items.
-    onBreakpointChange = (breakpoint, cols) => {
-        this.props.onBreakpointChange(breakpoint, cols);
-    };
 
     /**
      * Builds and returns elements based on whatever is found in state.cells.
      */
-    generateElement() {
+    createCells() {
         const remove = this.props.removeCell;
         const show = this.props.showInfo;
         const edit = this.props.editCell;
+
         return _.map(this.props.cells, function (cell) {
             const {i, x, y, w, h, minW, minH} = cell.layout;
             return (
@@ -58,10 +46,14 @@ class Dashboard extends Component {
 
     render() {
         return (
-            <ResponsiveGRL
-                {...this.props}>
-                {this.generateElement()}
-            </ResponsiveGRL>
+            <ReactGridLayout
+                className={this.props.className}
+                cols={this.props.cols}
+                rowHeight={this.props.rowHeight}
+                layout={this.props.layout}
+                onLayoutChange={this.props.onLayoutChange}>
+                {this.createCells()}
+            </ReactGridLayout>
         );
     }
 }
