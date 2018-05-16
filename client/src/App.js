@@ -12,7 +12,6 @@ import './App.css';
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
 
-const localStorageLayout = loadFromLocalStorage("layout") || [];
 const localStorageCells = loadFromLocalStorage("cells") || [];
 
 //Used to show info about Cell
@@ -24,7 +23,6 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            layout: JSON.parse(JSON.stringify(localStorageLayout)),
             cells: JSON.parse(JSON.stringify(localStorageCells))
                 .sort(function (a, b) {
                 return a.layout.i - b.layout.i;
@@ -58,11 +56,6 @@ class App extends Component {
             minH = 4;
         }
 
-        // This layout data is only used for the start position of a new cell.
-        // See createCells() in Dashboard.js for its usage.
-        // The updated layout data will always be in this.state.layout instead.
-        // We actually don't need this at all after the cell has been created.
-        // We should consider not saving it to local storage.
         const layout = {
             i: this.state.idCounter,
             x: (this.state.cells.length) % 12, // TODO: better way to calculate X
@@ -87,10 +80,11 @@ class App extends Component {
     };
 
     editCell = (cell, index) => {
-        console.log("cell: " + JSON.stringify(cell) + " index: " +  index);
-        let edited = Object.assign({}, this.state.cells);
+        let edited = Object.assign([], this.state.cells);
         edited[index].content = cell;
-        this.setState(edited);
+        this.setState({cells: edited});
+
+        saveToLocalStorage("cells", edited);
     };
 
     removeCell = (i) => {
@@ -111,11 +105,18 @@ class App extends Component {
      * @param {*} layout
      */
     onLayoutChange = (layout) => {
-        //console.log(`onLayoutChange:layout=${JSON.stringify(layout)}:layouts=${JSON.stringify(layouts)}`);
-        saveToLocalStorage('layout', layout);
-        saveToLocalStorage('cells', this.state.cells);
+        const sortedLayout = layout.sort(function (a ,b) {
+            return a.i - b.i;
+        });
 
-        this.setState({ layout });
+        // Update layout data in cells
+        for (let i = 0; i < this.state.cells.length && i < sortedLayout.length; i++) {
+            let cells = Object.assign([], this.state.cells);
+            cells[i].layout = sortedLayout[i];
+            this.setState({cells: cells});
+        }
+
+        saveToLocalStorage('cells', this.state.cells);
     };
 
     handleShowCreateCell = () => {
@@ -210,7 +211,6 @@ class App extends Component {
                     showInfo={this.handleShowCellInfo}
                     editCell={this.handleShowEditCell}
                     cells={this.state.cells}
-                    layout={this.state.layout}
                     onLayoutChange={this.onLayoutChange}/>
                 <BootstrapModal
                     title="Skapa widget"
