@@ -139,7 +139,7 @@ router.post('/', function(req, res, next) {
                         creator: creator,
                         created: created,
                         kind: logKind,
-                        text: creator + " created a " + logKind + " titled '" + title + "'.",
+                        text: creator + " skapade en " + logKind + " med titel '" + title + "'.",
                         contentId: _id,
                         request: {
                             type: "GET",
