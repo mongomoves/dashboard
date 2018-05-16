@@ -24,7 +24,7 @@ const widgetSchema = mongoose.Schema({
     kind: {
         type: String,
         required: true,
-        enum: ['Value', 'Graph']
+        enum: ['Value', 'Graph', 'Text']
     },
     content: {
         type: mongoose.Schema.Types.ObjectId,

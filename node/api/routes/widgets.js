@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const Widget = require("../models/widget");
 const Value = require("../models/value");
 const Graph = require("../models/graph");
+const Text = require("../models/text");
 const LogEntry = require("../models/logentry");
 
 /*
@@ -54,6 +55,7 @@ router.get('/', function(req, res, next) {
                         kind: widget.kind,
 
                         number: widget.content.number,
+                        text: widget.content.text,
                         dataSource: widget.content.dataSource,
                         attribute: widget.content.attribute,
                         query: widget.content.query,
@@ -99,6 +101,15 @@ router.post('/', function(req, res, next) {
             graphUrl: req.body.graphUrl
         });
     }
+    else if (kind === 'Text') {
+        content = new Text({
+            _id: new mongoose.Types.ObjectId(),
+            text: req.body.text,
+            dataSource: req.body.dataSource,
+            attribute: req.body.attribute,
+            query: req.body.query
+        });
+    }
     else {
         return res.status(500).json({
             error: {
@@ -129,7 +140,7 @@ router.post('/', function(req, res, next) {
                         creator: creator,
                         created: created,
                         kind: logKind,
-                        text: creator + " created a " + logKind + " titled '" + title + "'.",
+                        text: creator + " skapade en " + logKind + " med titel '" + title + "'.",
                         contentId: _id,
                         request: {
                             type: "GET",
@@ -193,6 +204,7 @@ router.get('/:widgetId', function(req, res, next) {
                     kind: widget.kind,
 
                     number: widget.content.number,
+                    text: widget.content.text,
                     dataSource: widget.content.dataSource,
                     attribute: widget.content.attribute,
                     query: widget.content.query,
@@ -231,6 +243,11 @@ router.delete('/:widgetId', function(req, res, next) {
             }
             else if (kind === 'Graph') {
                 Graph.remove({_id: id}).catch(err => {
+                    console.log(err);
+                });
+            }
+            else if (kind === 'Text') {
+                Text.remove({_id: id}).catch(err => {
                     console.log(err);
                 });
             }
