@@ -5,6 +5,7 @@ import CreateCellForm from "./components/CreateCell/CreateCellForm";
 import EditCellForm from "./components/CreateCell/EditCellForm";
 import SelectExistingCell from './components/existingCell/SelectExistingCell';
 import CellInfo from './components/cell/CellInfo';
+import Footer from "./components/footer/footer";
 import BootstrapModal from './components/Modal/BootstrapModal';
 import _ from 'lodash';
 
@@ -204,7 +205,7 @@ class App extends Component {
             <div>
                 <CustomNavbar
                     showCreateCell={this.handleShowCreateCell}
-                    showExistingCell={this.handleShowExistingCell} 
+                    showExistingCell={this.handleShowExistingCell}
                     clearDashboard={this.clearDashboardLayout}/>
                 <Dashboard
                     removeCell={this.removeCell}
@@ -233,12 +234,13 @@ class App extends Component {
                     title='Redigera widget'
                     show={this.state.modals.editCell}
                     close={this.handleCloseEditCell}>
-                    <EditCellForm 
-                        values={editValues} 
+                    <EditCellForm
+                        values={editValues}
                         addCell={this.addCell}
                         editCell={this.editCell}
                         done={this.handleCloseEditCell}/>
                 </BootstrapModal>
+                 <Footer/>
             </div>
         );
     }
