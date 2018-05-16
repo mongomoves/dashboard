@@ -43,7 +43,7 @@ class App extends Component {
     // depending on widget type the initial w/h and minw/minh are different
     addCell = (cell) => {
         let w, h, minW, minH;
-        if (cell.kind === 'Value') {
+        if (cell.kind === 'Value' || cell.kind === 'Text') {
             w = 2;
             h = 2;
             minW = 2;
@@ -177,6 +177,16 @@ class App extends Component {
                         kind: 'Graph',
                         title: e.content.title,
                         graphUrl: e.content.graphUrl
+                    }
+                } else if (e.content.kind === 'Text') {
+                    editValues = {
+                        index: index,
+                        creator: e.content.creator,
+                        kind: 'Text',
+                        title: e.content.title,
+                        textInput: e.content.textInput,
+                        dataSource: e.content.dataSource,
+                        attribute: e.content.attribute
                     }
                 }
                 return true;

@@ -5,15 +5,17 @@ import {Button, ButtonToolbar, ToggleButtonGroup, ToggleButton, Checkbox, Contro
 class EditCellForm extends Component {
     constructor(props) {
         super(props);
-        const {creator, kind, displayType, title, number, graphUrl, dataSource, attribute, unit} = this.props.values;
+        const {creator, kind, displayType, title, textInput, number, graphUrl, dataSource, attribute, unit} = this.props.values;
 
         this.state = {
             buttonText: 'Ändra widget',
             creator: creator,
             kind: kind,
             publish: false,
+            published: creator ? true : false,
             title: title,
             number: number,
+            textInput: textInput,
             graphUrl: graphUrl,
             dataSource: dataSource,
             attribute: attribute,
@@ -54,6 +56,10 @@ class EditCellForm extends Component {
         this.setState({unit: e.target.value});
     };
 
+    handleTextInputChange = (e) => {
+        this.setState({textInput: e.target.value});
+    };
+
     handlePublishChange = (e) => {
         const checked = e.target.checked;
         this.setState({publish: checked});
@@ -89,6 +95,15 @@ class EditCellForm extends Component {
                 title: this.state.title,
                 displayType: this.state.displayType,
                 graphUrl: this.state.graphUrl
+            }
+        }
+        else if (this.state.kind === 'Text') {
+            widget = {
+                kind: this.state.kind,
+                title: this.state.title,
+                textInput: this.state.textInput,
+                dataSource: this.state.dataSource,
+                attribute: this.state.attribute
             }
         }
 
@@ -167,7 +182,7 @@ class EditCellForm extends Component {
                 if (this.state.publish) {
                     buttonKind = (
                         <Button 
-                        disabled={!this.state.title || !this.state.number || !this.state.creator}
+                        disabled={!this.state.title || !this.state.number || (!this.state.creator || !this.state.description)}
                         bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
                     );
                 }
@@ -181,7 +196,7 @@ class EditCellForm extends Component {
                 if (this.state.publish) {
                     buttonKind = (
                         <Button 
-                        disabled={!this.state.title || !this.state.dataSource || !this.state.attribute || !this.state.creator}
+                        disabled={!this.state.title || !this.state.dataSource || !this.state.attribute || (!this.state.creator || !this.state.description)}
                         bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
                     );
                 }
@@ -192,7 +207,7 @@ class EditCellForm extends Component {
                 <div>
                     <FormGroup>
                         <ControlLabel>Visningstyp</ControlLabel>
-                       <ButtonToolbar>
+                        <ButtonToolbar>
                            <ToggleButtonGroup 
                                 type='radio'
                                 name='displayType'
@@ -223,11 +238,78 @@ class EditCellForm extends Component {
             if (this.state.publish) {
                 buttonKind = (
                     <Button 
-                    disabled={!this.state.title || !this.state.graphUrl || !this.state.creator}
+                    disabled={!this.state.title || !this.state.graphUrl || (!this.state.creator || !this.state.description)}
                     bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
                 );
             }
-
+        }
+        else if(this.state.kind === 'Text') {
+            formContent = (
+                <div>
+                    <FormGroup>
+                        <ControlLabel>Fritext</ControlLabel>
+                        <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-textinput">Ange den text som cellen ska visa.</Tooltip>}>
+                            <FormControl 
+                                componentClass="textarea"
+                                placeholder="Ditt innehåll"
+                                defaultValue={this.props.values.textInput}
+                                onChange={this.handleTextInputChange}/>
+                        </OverlayTrigger>
+                    </FormGroup>
+                    <FormGroup>
+                        <ControlLabel>Datakälla</ControlLabel>
+                        <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-dataSource">Ange den datakälla som widgeten ska presentera data ifrån.</Tooltip>}>
+                            <FormControl
+                                type='text'
+                                defaultValue={this.props.values.dataSource}
+                                onChange={this.handleDataSourceChange}/>
+                        </OverlayTrigger>
+                    </FormGroup>
+                    <FormGroup>
+                        <ControlLabel>Data-attribute</ControlLabel>
+                        <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-attribute">Ange specifikt attribut från API</Tooltip>}>
+                            <FormControl
+                                type='text'
+                                defaultValue={this.props.values.attribute}
+                                onChange={this.handleAttributeChange}/>
+                        </OverlayTrigger>
+                    </FormGroup>
+                </div>
+            );
+            //Validation on Edit button
+            buttonKind = (
+                <Button
+                        disabled={!this.state.title || !this.state.textInput || !this.state.dataSource || !this.state.attribute} 
+                        bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+            );
+            if(this.state.textInput) {
+                buttonKind = (
+                    <Button
+                        disabled={!this.state.title || (this.state.dataSource || this.state.attribute)}
+                        bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                );
+                if (this.state.publish) {
+                    buttonKind = (
+                        <Button
+                            disabled={!this.state.title || !this.state.textInput || (!this.state.creator || !this.state.description)} 
+                            bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                    );
+                }
+            }
+            if (this.state.dataSource || this.state.attribute) {
+                buttonKind = (
+                    <Button
+                            disabled={!this.state.title || !this.state.dataSource || !this.state.attribute || this.state.textInput} 
+                            bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                );
+                if (this.state.publish) {
+                    buttonKind = (
+                        <Button
+                            disabled={!this.state.title || !this.state.dataSource || !this.state.attribute || (!this.state.creator || !this.state.description)} 
+                            bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                    );
+                }         
+            }
         }
 
         return (
@@ -244,7 +326,7 @@ class EditCellForm extends Component {
 
                 {formContent}
                 
-                {!this.state.creator && 
+                {!this.state.published && 
                 <FormGroup>
                     <Checkbox onChange={this.handlePublishChange}>
                         Publicera widget
