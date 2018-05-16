@@ -8,7 +8,7 @@ class EditCellForm extends Component {
         const {creator, kind, displayType, title, textInput, number, graphUrl, dataSource, attribute, unit} = this.props.values;
 
         this.state = {
-            buttonText: 'Edit widget',
+            buttonText: 'Ändra widget',
             creator: creator,
             kind: kind,
             publish: false,
@@ -122,7 +122,6 @@ class EditCellForm extends Component {
     };
 
     render() {
-        //TODO: Handle validation and add help text to fields
         let formContent;
         let buttonKind;
         // Form fields depends on type of widget
@@ -130,7 +129,7 @@ class EditCellForm extends Component {
             formContent = (
                 <div>
                     <FormGroup>
-                        <ControlLabel>Number</ControlLabel>
+                        <ControlLabel>Värde</ControlLabel>
                         <OverlayTrigger placement="top" overlay={<Tooltip id="edit-number">Ange det värde som ska visas i widgeten.</Tooltip>}>
                         <FormControl
                             type='number'
@@ -139,7 +138,7 @@ class EditCellForm extends Component {
                         </OverlayTrigger>
                     </FormGroup>
                     <FormGroup>
-                        <ControlLabel>Data source</ControlLabel>
+                        <ControlLabel>Datakälla</ControlLabel>
                         <OverlayTrigger placement="top" overlay={<Tooltip id="edit-dataSource">Ange den datakälla som ska användas i widgeten.</Tooltip>}>
                         <FormControl
                             type='text'
@@ -148,7 +147,7 @@ class EditCellForm extends Component {
                         </OverlayTrigger>
                     </FormGroup>
                     <FormGroup>
-                        <ControlLabel>Data source attribute</ControlLabel>
+                        <ControlLabel>Data-attribut</ControlLabel>
                         <OverlayTrigger placement="top" overlay={<Tooltip id="edit-attribute">Ange de API attribut som ska användas.</Tooltip>}>
                         <FormControl
                             type='text'
@@ -157,7 +156,7 @@ class EditCellForm extends Component {
                         </OverlayTrigger>
                     </FormGroup>
                     <FormGroup>
-                        <ControlLabel>Unit</ControlLabel>
+                        <ControlLabel>Enhet</ControlLabel>
                         <OverlayTrigger placement="top" overlay={<Tooltip id="edit-unit">Ange enhet som ska visas i widgeten.</Tooltip>}>
                         <FormControl
                             type='text'
@@ -221,7 +220,7 @@ class EditCellForm extends Component {
                         </ButtonToolbar>
                     </FormGroup>
                     <FormGroup>
-                        <ControlLabel>Graph URL</ControlLabel>
+                        <ControlLabel>Diagram-URL</ControlLabel>
                         <OverlayTrigger placement="top" overlay={<Tooltip id="edit-graph">Ange den URL till den graf som ska visas.</Tooltip>}>
                         <FormControl
                             type='text'
@@ -316,7 +315,7 @@ class EditCellForm extends Component {
         return (
             <form>
                 <FormGroup>
-                    <ControlLabel>Title</ControlLabel>
+                    <ControlLabel>Titel</ControlLabel>
                     <OverlayTrigger placement="top" overlay={<Tooltip id="edit-title">Ange den title som widgeten ska ha.</Tooltip>}>
                     <FormControl
                         type='text'
@@ -337,7 +336,7 @@ class EditCellForm extends Component {
                 {this.state.publish &&
                 <div>
                     <FormGroup>
-                        <ControlLabel>Creator</ControlLabel>
+                        <ControlLabel>Skapare</ControlLabel>
                         <OverlayTrigger placement="top" overlay={<Tooltip id="edit-creator">Ange skapare av widget.</Tooltip>}>
                         <FormControl
                             type='text'
@@ -346,7 +345,7 @@ class EditCellForm extends Component {
                     </FormGroup>
 
                     <FormGroup>
-                    <ControlLabel>Description</ControlLabel>
+                    <ControlLabel>Beskrivning</ControlLabel>
                         <OverlayTrigger placement="top" overlay={<Tooltip id="edit-desc">Ange beskrivning av widget.</Tooltip>}>
                         <FormControl
                             type='text'

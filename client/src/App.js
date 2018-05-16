@@ -12,31 +12,8 @@ import './App.css';
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
 
-const originalLayouts = loadFromLocalStorage("layouts") || {};
-
-// Test data
-const testWidgets = [
-    {
-        layout: {i: 0, x: 0, y: Infinity, w: 2, h: 2, minW: 1, minH: 2},
-        content: {kind: 'Value', title: 'Employees', number: 22, unit: 'people'}
-    },
-
-    {
-        layout: {i: 1, x: 2, y: Infinity, w: 2, h: 2, minW: 1, minH: 2},
-        content: {creator: 'Bob', created: '2018/5/9', description: 'En beskrivning av denna widget', kind: 'Value', title: 'Disk usage', number: 108, unit: 'gb'}
-    },
-
-    {
-        layout: {i: 2, x: 4, y: Infinity, w: 3, h: 4, minW: 3, minH: 4},
-        content: {kind: 'Graph', displayType: 'Iframe', title: 'Grafana graph', graphUrl: 'https://play.grafana.org/d-solo/000000012/grafana-play-home?orgId=1&panelId=2&from=1526023352580&to=1526030552580'}
-        //'http://play.grafana.org/render/dashboard-solo/db/grafana-play-home?orgId=1&panelId=4&from=1499272191563&to=1499279391563&width=1000&height=500&tz=UTC%2B02%3A00&timeout=5000'
-    },
-
-    {
-        layout: {i: 3, x: 7, y: Infinity, w: 2, h: 2, minW: 2, minH: 2},
-        content: {kind: 'Text', title: 'Påminnelse', dataSource: 'https://randomuser.me/api/', attribute: 'state'}
-    }
-];
+const localStorageLayout = loadFromLocalStorage("layout") || [];
+const localStorageCells = loadFromLocalStorage("cells") || [];
 
 //Used to show info about Cell
 let cellInfoData = {};
@@ -47,23 +24,28 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            layouts: JSON.parse(JSON.stringify(originalLayouts)),
-            cells: testWidgets,
+            layout: JSON.parse(JSON.stringify(localStorageLayout)),
+            cells: JSON.parse(JSON.stringify(localStorageCells))
+                .sort(function (a, b) {
+                return a.layout.i - b.layout.i;
+            }),
             modals: {
                 createCell: false,
                 editCell: false,
                 existingCell: false,
                 showInfo: false
             },
-            idCounter: testWidgets.length
+            idCounter: localStorageCells.length > 0 // if we loaded cells from local storage
+                ? localStorageCells[localStorageCells.length - 1].layout.i + 1 // set start id to highest id + 1
+                : 0
         };
     }
 
     // adds a cell to the layout
-    // depending on widget type the inital w/h and minw/minh are different
+    // depending on widget type the initial w/h and minw/minh are different
     addCell = (cell) => {
-        let w, h, minH, minW;
-        if (cell.kind === 'Value') {
+        let w, h, minW, minH;
+        if (cell.kind === 'Value' || cell.kind === 'Text') {
             w = 2;
             h = 2;
             minW = 2;
@@ -75,22 +57,24 @@ class App extends Component {
             minW = 3;
             minH = 4;
         }
-        else if (cell.kind === 'Text') {
-            w = 2;
-            h = 4;
-            minW = 2;
-            minH = 2;
-        }
+
+        // This layout data is only used for the start position of a new cell.
+        // See createCells() in Dashboard.js for its usage.
+        // The updated layout data will always be in this.state.layout instead.
+        // We actually don't need this at all after the cell has been created.
+        // We should consider not saving it to local storage.
+        const layout = {
+            i: this.state.idCounter,
+            x: (this.state.cells.length) % 12, // TODO: better way to calculate X
+            y: Infinity,
+            w: w,
+            h: h,
+            minW: minW,
+            minH: minH
+        };
+
         const newCell = {
-            layout: {
-                i: this.state.idCounter,
-                x: (this.state.cells.length) % (this.state.cols || 12),
-                y: Infinity,
-                w: w,
-                h: h,
-                minW: minW,
-                minH: minH
-            },
+            layout: layout,
             content: cell
         };
 
@@ -99,7 +83,6 @@ class App extends Component {
             idCounter: this.state.idCounter + 1
         });
 
-        console.log(`addCell:cell=${JSON.stringify(newCell)}`);
         return newCell;
     };
 
@@ -108,7 +91,7 @@ class App extends Component {
         let edited = Object.assign({}, this.state.cells);
         edited[index].content = cell;
         this.setState(edited);
-    }
+    };
 
     removeCell = (i) => {
         this.setState({
@@ -127,23 +110,12 @@ class App extends Component {
      * Callback function. Sets new layout state.
      * @param {*} layout
      */
-    onLayoutChange = (layout, layouts) => {
-        // console.log(`onLayoutChange:layout=${JSON.stringify(layout)}:layouts=${JSON.stringify(layouts)}`);
-        saveToLocalStorage("layouts", layouts);
-        // TODO: also save cells here...
-        this.setState({
-            layout: layout, // not sure we need to keep track of layout
-            layouts: layouts
-        });
-    };
+    onLayoutChange = (layout) => {
+        //console.log(`onLayoutChange:layout=${JSON.stringify(layout)}:layouts=${JSON.stringify(layouts)}`);
+        saveToLocalStorage('layout', layout);
+        saveToLocalStorage('cells', this.state.cells);
 
-    // We're using the cols coming back from this to calculate where to add new items.
-    onBreakpointChange = (breakpoint, cols) => {
-        // console.log(`onBreakpointChange:bp=${breakpoint}:cols=${cols}`);
-        this.setState({
-            breakpoint: breakpoint,
-            cols: cols
-        });
+        this.setState({ layout });
     };
 
     handleShowCreateCell = () => {
@@ -163,7 +135,7 @@ class App extends Component {
     };
 
     handleShowCellInfo = (i) => {
-        this.setState({modals: {showInfo: true}})
+        this.setState({modals: {showInfo: true}});
         this.state.cells.some(function(e) {
             if(e.layout.i === i) {
                 cellInfoData = {
@@ -238,11 +210,10 @@ class App extends Component {
                     showInfo={this.handleShowCellInfo}
                     editCell={this.handleShowEditCell}
                     cells={this.state.cells}
-                    onLayoutChange={this.onLayoutChange}
-                    onBreakpointChane={this.onBreakpointChange}
-                    onResizeStop={this.onResizeStop}/>
+                    layout={this.state.layout}
+                    onLayoutChange={this.onLayoutChange}/>
                 <BootstrapModal
-                    title="Create widget"
+                    title="Skapa widget"
                     show={this.state.modals.createCell}
                     close={this.handleCloseCreateCell}>
                     <CreateCellForm addCell={this.addCell} done={this.handleCloseCreateCell} />
@@ -275,14 +246,9 @@ class App extends Component {
 
 function saveToLocalStorage(key, value) {
     if (global.localStorage) {
-        // console.log(`toLS:key=${JSON.stringify(key)}:val=${JSON.stringify(value)}`);
+        //console.log(`toLS:key=${JSON.stringify(key)}:val=${JSON.stringify(value)}`);
 
-        global.localStorage.setItem(
-            "dashboard",
-            JSON.stringify({
-                [key]: value
-            })
-        );
+        global.localStorage.setItem(key, JSON.stringify(value));
     }
 }
 
@@ -290,14 +256,14 @@ function loadFromLocalStorage(key) {
     let localStorageItem = {};
     if (global.localStorage) {
         try {
-            localStorageItem = JSON.parse(global.localStorage.getItem("dashboard")) || {};
+            localStorageItem = JSON.parse(global.localStorage.getItem(key));
         } catch (e) {
             console.log(e);
         }
     }
 
-    // console.log(`fromLS:key=${JSON.stringify(key)}:val=${JSON.stringify(localStorageItem[key])}`);
-    return localStorageItem[key];
+    //console.log(`fromLS:key=${JSON.stringify(key)}:val=${JSON.stringify(localStorageItem)}`);
+    return localStorageItem;
 }
 
 export default App;
