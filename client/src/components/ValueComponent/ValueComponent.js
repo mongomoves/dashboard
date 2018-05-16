@@ -82,7 +82,7 @@ class ValueComponent extends Component {
         if (this.state.externalData && !this.state.fetchSuccess) {
             return (
                 <div>
-                    <span style={spanStyleError}><b>Sorry!</b><br /> The entered URL/attribute was invalid, or value length was exceeded.</span>
+                    <span style={spanStyleError}><b>Fel vid hämtning</b><br />Antingen är URL/attribut ogiltig, eller så överskred resultatet tillåten längd(max=6)</span>
                 </div>
             )
         }
