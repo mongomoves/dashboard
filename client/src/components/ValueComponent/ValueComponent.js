@@ -4,26 +4,34 @@ import React, { Component } from "react";
 class ValueComponent extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
             externalData: false,
             fetchSuccess: false,
-            fetchContainer: null
         }
     }
 
     //checking if external data is specified, and if true fetches it 
-    componentWillMount() {
-        if (this.props.dataSource && this.props.attribute) {
-            this.setState({ externalData: true })
-            this.getData();
+    componentDidMount() {
+        if (this.props.values.dataSource && this.props.values.attribute) {
+            this.getData(this.props.values.dataSource, this.props.values.attribute);
+        } else {
+            this.setState({number: this.props.values.number});
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(this.props.values.update && this.state.externalData) {
+            this.getData(this.props.values.dataSource, this.props.values.attribute);
+        } else if (this.props.values.number && (prevState.number !== this.props.values.number)) {
+            this.setState({externalData: false, number: this.props.values.number});
+        } else if (this.props.values.dataSource !== prevProps.values.dataSource ||
+                    this.props.values.attribute !== prevProps.values.attribute) {
+            this.getData(this.props.values.dataSource, this.props.values.attribute);
         }
     }
 
     //fetching external data and sets it to state 
-    getData = () => {
-        let dataURL = this.props.dataSource;
-        let attribute = this.props.attribute;
+    getData = (dataURL, attribute) => {
         let result = false;
 
         fetch(dataURL)
@@ -32,8 +40,10 @@ class ValueComponent extends Component {
                 result = this.getValueByKey(out, attribute);
 
                 //Makes sure it is a string and not an object 
-                if (typeof result === 'string' || result instanceof String) {
-                    this.setState({ fetchContainer: result, fetchSuccess: true });
+                if (typeof result === 'number' || result instanceof Number) {
+                    this.setState({externalData: true, number: result, fetchSuccess: true });
+                } else {
+                    this.setState({externalData: false, fetchSuccess: false });
                 }
             })
     }
@@ -62,11 +72,11 @@ class ValueComponent extends Component {
 
     render() {
         //if external data is specified and is valid   
-        if (this.state.fetchSuccess) {
+        if (this.state.externalData && this.state.fetchSuccess) {
             return (
                 <div>
-                    <span style={{...spanStyleNumber, fontSize: `${this.props.width / 9}px`}}>{this.state.fetchContainer}</span>
-                    <span style={{...spanStyleUnit, fontSize: `${this.props.width / 10}px`}}>{this.props.unit}</span>
+                    <span style={{...spanStyleNumber, fontSize: `${this.props.width / 9}px`}}>{this.state.number}</span>
+                    <span style={{...spanStyleUnit, fontSize: `${this.props.width / 10}px`}}>{this.props.values.unit}</span>
                 </div>
             )
         }
@@ -83,8 +93,8 @@ class ValueComponent extends Component {
         //if user entered data 
         return (
             <div>
-                <span style={{...spanStyleNumber, fontSize: `${this.props.width / 5}px`}}>{this.props.number}</span>
-                <span style={{...spanStyleUnit, fontSize: `${this.props.width / 9}px`}}>{this.props.unit}</span>
+                <span style={{...spanStyleNumber, fontSize: `${this.props.width / 5}px`}}>{this.state.number}</span>
+                <span style={{...spanStyleUnit, fontSize: `${this.props.width / 9}px`}}>{this.props.values.unit}</span>
             </div>
         );
     }

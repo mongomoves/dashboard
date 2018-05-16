@@ -41,6 +41,15 @@ class App extends Component {
         };
     }
 
+    componentDidMount() {
+        let intervalId = setInterval(this.updateComponents, 1000 * 10);
+        this.setState({interval: intervalId});
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.state.interval);
+    }
+
     // adds a cell to the layout
     // depending on widget type the initial w/h and minw/minh are different
     addCell = (cell) => {
@@ -105,6 +114,20 @@ class App extends Component {
             cells: [],
         });
     };
+
+    updateComponents = () => {
+        let cells = [...this.state.cells];
+        for (let i in cells) {
+            cells[i].content['update'] = true;
+        }
+        this.setState({cells: cells});
+        setTimeout(() => {
+            for (let i in cells) {
+                cells[i].content['update'] = false;
+            }
+            this.setState({cells: cells});   
+        }, 10);
+    }
 
     /**
      * Callback function. Sets new layout state.

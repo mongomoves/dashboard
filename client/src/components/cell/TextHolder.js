@@ -28,11 +28,13 @@ class TextHolder extends Component {
      */
     componentDidUpdate(prevProps, prevState, snapshot) {
         if(this.props.values.textInput && (prevState.text !== this.props.values.textInput)) {
-            this.setState({text: this.props.values.textInput, isArray: false});
+            this.setState({text: this.props.values.textInput, isArray: false, externalData: false});
         } else if(prevProps.values.dataSource !== this.props.values.dataSource || 
-            prevProps.values.attribute !== this.props.values.attribute) {
-                this.fetchText(this.props.values.dataSource, this.props.values.attribute);
-            }
+                    prevProps.values.attribute !== this.props.values.attribute) {
+            this.fetchText(this.props.values.dataSource, this.props.values.attribute);
+        } else if(this.props.values.update && this.state.externalData) {
+            this.fetchText(this.props.values.dataSource, this.props.values.attribute)
+        }
     }
 
     /**
@@ -45,12 +47,12 @@ class TextHolder extends Component {
         .then(res => res.json())
         .then((out) => {
             const apiText = this.getValueByKey(out, attribute);
-            if(typeof apiText === 'string' || apiText instanceof String) {
-                this.setState({text: apiText, isArray: false});
+            if(typeof apiText !== 'object' || !(apiText instanceof Object)) {
+                this.setState({text: apiText, isArray: false, externalData: true});
             } else if (Array.isArray(apiText)) {
-                this.setState({isArray: true, text: apiText});
+                this.setState({isArray: true, text: apiText, externalData: true});
             } else {
-                this.setState({text: 'Felaktigt attribut, ingen data hämtad'});
+                this.setState({text: 'Felaktigt attribut, ingen data hämtad', externalData: false});
             }
         });
     }
