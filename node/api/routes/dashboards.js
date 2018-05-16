@@ -60,12 +60,14 @@ router.get('/', function(req, res, next) {
                                     kind: widget.widget.kind,
 
                                     number: widget.widget.content.number,
+                                    text: widget.widget.content.text,
                                     dataSource: widget.widget.content.dataSource,
                                     attribute: widget.widget.content.attribute,
                                     query: widget.widget.content.query,
                                     unit: widget.widget.content.unit,
 
-                                    graphUrl: widget.widget.content.graphUrl
+                                    graphUrl: widget.widget.content.graphUrl,
+                                    displayType: widget.widget.content.displayType
                                 }
                             }
                         })
@@ -212,12 +214,14 @@ router.get('/:dashboardId', function(req, res, next) {
                                 kind: widget.widget.kind,
 
                                 number: widget.widget.content.number,
+                                text: widget.widget.content.text,
                                 dataSource: widget.widget.content.dataSource,
                                 attribute: widget.widget.content.attribute,
                                 query: widget.widget.content.query,
                                 unit: widget.widget.content.unit,
 
-                                graphUrl: widget.widget.content.graphUrl
+                                graphUrl: widget.widget.content.graphUrl,
+                                displayType: widget.widget.content.displayType
                             }
                         }
                     })
