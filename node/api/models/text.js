@@ -12,7 +12,7 @@ const textSchema = mongoose.Schema({
     dataSource: {
         type: String,
         required: [
-            function() {return this.number == null},
+            function() {return this.text == null},
             'text or dataSource is required'
         ]
     },
@@ -26,4 +26,4 @@ const textSchema = mongoose.Schema({
     query: String,
 });
 
-module.exports = mongoose.model('Text', valueSchema);
+module.exports = mongoose.model('Text', textSchema);
