@@ -176,7 +176,8 @@ class App extends Component {
                         creator: e.content.creator,
                         kind: 'Graph',
                         title: e.content.title,
-                        graphUrl: e.content.graphUrl
+                        graphUrl: e.content.graphUrl,
+                        refreshRate: e.content.refreshRate
                     }
                 } else if (e.content.kind === 'Text') {
                     editValues = {

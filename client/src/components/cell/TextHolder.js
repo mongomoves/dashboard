@@ -77,6 +77,9 @@ class TextHolder extends Component {
                 this.setState({isArray: true, text: apiText, externalData: true});
             } else {
                 this.setState({text: 'Felaktigt attribut, ingen data hämtad', externalData: false});
+                if(this.state.interval) {
+                    clearInterval(this.state.interval);
+                }
             }
         });
     }

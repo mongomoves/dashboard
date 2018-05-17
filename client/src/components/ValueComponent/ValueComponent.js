@@ -64,6 +64,9 @@ class ValueComponent extends Component {
                     this.setState({externalData: true, number: result, fetchSuccess: true });
                 } else {
                     this.setState({externalData: false, fetchSuccess: false });
+                    if(this.state.interval) {
+                        clearInterval(this.state.interval);
+                    }
                 }
             })
     }

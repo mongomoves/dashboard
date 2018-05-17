@@ -15,28 +15,39 @@ class IframeHolder extends Component {
         if(this.props.values.graphUrl) {
             this.setState({frameURL: this.props.values.graphUrl});
         }
+        if(this.props.values.refreshRate && this.props.values.refreshRate > 0) {
+            let intervalID = setInterval(this.updateContent, 1000 * 60 * this.props.values.refreshRate);
+            this.setState({interval: intervalID});
+        } 
+    }
+
+    componentWillUnmount() {
+        if(this.state.interval) {
+            clearInterval(this.state.interval);
+        } 
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if(this.props.values.update && !prevProps.values.update) {
-            this.forceUpdate();
-            // console.log("UPDATE");
-            // let tempURL = this.state.frameURL;
-            // this.setState({frameURL: null});
-            // setTimeout(() => {
-            //     this.setState({frameURL: tempURL});
-            // }, 10);
-        } else {
-            console.log("ELSE");
-            return;
+        if(this.props.values.refreshRate !== prevProps.values.refreshRate) {
+            if(this.state.interval) {
+                clearInterval(this.state.interval);
+            }
+            if(this.props.values.refreshRate > 0) {
+                let intervalID = setInterval(this.updateContent, 1000 * 60 * this.props.values.refreshRate);
+                this.setState({interval: intervalID});
+            }
         }
+    }
+
+    updateContent = () => {
+        this.setState({frameURL: null});
+        this.setState({frameURL: this.props.values.graphUrl});
     }
 
     render() {
         if(this.props.height <= 0 || this.props.width <= 0) {
             return null;
         }
-        
         return (
             <iframe
                 title="Iframe"

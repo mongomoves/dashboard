@@ -103,7 +103,8 @@ class CreateCellForm extends Component {
                 kind: this.state.kind,
                 title: this.state.title,
                 displayType: this.state.displayType,
-                graphUrl: this.state.graphUrl
+                graphUrl: this.state.graphUrl,
+                refreshRate: this.state.refreshRate
             }
         } 
         else if (this.state.kind === 'Text') {
@@ -228,20 +229,36 @@ class CreateCellForm extends Component {
         else if (this.state.kind === 'Graph') {
             formContent = (
                 <div>
-                    <FormGroup>
-                        <ControlLabel>Visningstyp</ControlLabel>
-                        <ButtonToolbar>
-                           <ToggleButtonGroup 
-                                type='radio'
-                                name='displayType' 
-                                defaultValue={'Iframe'}
-                                value={this.state.displayType}
-                                onChange={this.handleDisplayTypeChange}>
-                               <ToggleButton value={'Iframe'}>Iframe</ToggleButton> 
-                               <ToggleButton value={'Img'}>Img</ToggleButton>
-                            </ToggleButtonGroup>
-                        </ButtonToolbar>
-                    </FormGroup>
+                    <Grid>
+                        <Row>
+                            <Col xs={8}>
+                                <FormGroup>
+                                    <ControlLabel>Visningstyp</ControlLabel>
+                                    <ButtonToolbar>
+                                    <ToggleButtonGroup 
+                                            type='radio'
+                                            name='displayType' 
+                                            defaultValue={'Iframe'}
+                                            value={this.state.displayType}
+                                            onChange={this.handleDisplayTypeChange}>
+                                        <ToggleButton value={'Iframe'}>Iframe</ToggleButton> 
+                                        <ToggleButton value={'Img'}>Img</ToggleButton>
+                                        </ToggleButtonGroup>
+                                    </ButtonToolbar>
+                                </FormGroup>
+                            </Col>
+                            <Col xs={4}>
+                                <FormGroup>
+                                    <ControlLabel>Uppdateringsfrekvens</ControlLabel>
+                                    <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-refresh">I minuter hur ofta data ska uppdateras. 0 eller blankt för ingen uppdatering.</Tooltip>}>
+                                        <FormControl
+                                            type='number'
+                                            onChange={this.handleRefreshChange}/>
+                                    </OverlayTrigger>
+                                </FormGroup>
+                            </Col>
+                        </Row>
+                    </Grid>
                     <FormGroup>
                         <ControlLabel>Diagram-URL</ControlLabel>
                         <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-graphUrl">Ange URL för att visa önskat diagram.</Tooltip>}>
