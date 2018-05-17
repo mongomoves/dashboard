@@ -41,15 +41,6 @@ class App extends Component {
         };
     }
 
-    componentDidMount() {
-        let intervalId = setInterval(this.updateComponents, 1000 * 10);
-        this.setState({interval: intervalId});
-    }
-
-    componentWillUnmount() {
-        clearInterval(this.state.interval);
-    }
-
     // adds a cell to the layout
     // depending on widget type the initial w/h and minw/minh are different
     addCell = (cell) => {
@@ -115,20 +106,6 @@ class App extends Component {
         });
     };
 
-    updateComponents = () => {
-        let cells = [...this.state.cells];
-        for (let i in cells) {
-            cells[i].content['update'] = true;
-        }
-        this.setState({cells: cells});
-        setTimeout(() => {
-            for (let i in cells) {
-                cells[i].content['update'] = false;
-            }
-            this.setState({cells: cells});   
-        }, 10);
-    }
-
     /**
      * Callback function. Sets new layout state.
      * @param {*} layout
@@ -190,7 +167,8 @@ class App extends Component {
                         number: e.content.number,
                         unit: e.content.unit,
                         dataSource: e.content.dataSource,
-                        attribute: e.content.attribute
+                        attribute: e.content.attribute,
+                        refreshRate: e.content.refreshRate
                     }
                 } else if (e.content.kind === 'Graph') {
                     editValues = {
@@ -208,7 +186,8 @@ class App extends Component {
                         title: e.content.title,
                         textInput: e.content.textInput,
                         dataSource: e.content.dataSource,
-                        attribute: e.content.attribute
+                        attribute: e.content.attribute,
+                        refreshRate: e.content.refreshRate
                     }
                 }
                 return true;

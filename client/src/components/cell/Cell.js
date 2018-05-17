@@ -70,11 +70,11 @@ class Cell extends Component {
             );
         }
         else if (kind === 'Graph') {
-            const {displayType, graphUrl } = this.props.content;
+            const {displayType} = this.props.content;
             if(displayType === 'Iframe') {
                 content = (
                     <IframeHolder
-                        url={graphUrl}
+                        values={this.props.content}
                         width={this.state.width}
                         height={this.state.height}/>
                 )
@@ -83,7 +83,7 @@ class Cell extends Component {
                     <ImageHolder
                         width={this.state.width}
                         height={this.state.height}
-                        image={graphUrl}/>
+                        values={this.props.content}/>
                 )
             }
         }

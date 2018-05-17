@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Button, ButtonToolbar, ToggleButtonGroup, ToggleButton, Checkbox, ControlLabel, FormControl, FormGroup, Tooltip, OverlayTrigger} from "react-bootstrap";
+import {Button, Grid, Row, Col, ButtonToolbar, ToggleButtonGroup, ToggleButton, Checkbox, ControlLabel, FormControl, FormGroup, Tooltip, OverlayTrigger} from "react-bootstrap";
 
 class CreateCellForm extends Component {
     constructor(props) {
@@ -18,7 +18,8 @@ class CreateCellForm extends Component {
             dataSource: '',
             attribute: '',
             unit: '',
-            displayType: 'Iframe'
+            displayType: 'Iframe',
+            refreshRate: 0
         };
     }
 
@@ -76,7 +77,11 @@ class CreateCellForm extends Component {
     };
 
     handleDisplayTypeChange = (e) => {
-        this.setState({displayType: e})
+        this.setState({displayType: e});
+    }
+
+    handleRefreshChange = (e) => {
+        this.setState({refreshRate: e.target.value});
     }
 
     handleCreateWidget = () => {
@@ -89,6 +94,7 @@ class CreateCellForm extends Component {
                 number: this.state.number,
                 dataSource: this.state.dataSource,
                 attribute: this.state.attribute,
+                refreshRate: this.state.refreshRate,
                 unit: this.state.unit
             }   
         }
@@ -106,7 +112,8 @@ class CreateCellForm extends Component {
                 title: this.state.title,
                 textInput: this.state.textInput,
                 dataSource: this.state.dataSource,
-                attribute: this.state.attribute
+                attribute: this.state.attribute,
+                refreshRate: this.state.refreshRate
             }
         }
 
@@ -144,14 +151,30 @@ class CreateCellForm extends Component {
                                 onChange={this.handleDataSourceChange}/>
                         </OverlayTrigger>
                     </FormGroup>
-                    <FormGroup>
-                        <ControlLabel>Data-attribut</ControlLabel>
-                        <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-attribute">Ange specifikt attribut från API.</Tooltip>}>
-                        <FormControl
-                            type='text'
-                            onChange={this.handleAttributeChange}/>
-                        </OverlayTrigger>
-                    </FormGroup>
+                    <Grid>
+                        <Row className='show-grid'>
+                            <Col xs={8}>
+                                <FormGroup>
+                                    <ControlLabel>Data-attribute</ControlLabel>
+                                    <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-attribute">Ange specifikt attribut från API</Tooltip>}>
+                                        <FormControl
+                                            type='text'
+                                            onChange={this.handleAttributeChange}/>
+                                    </OverlayTrigger>
+                                </FormGroup>
+                            </Col>
+                            <Col xs={4}>
+                                <FormGroup>
+                                    <ControlLabel>Uppdateringsfrekvens</ControlLabel>
+                                    <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-refresh">I minuter hur ofta data ska uppdateras. 0 eller blankt för ingen uppdatering.</Tooltip>}>
+                                        <FormControl
+                                            type='number'
+                                            onChange={this.handleRefreshChange}/>
+                                    </OverlayTrigger>
+                                </FormGroup>
+                            </Col>
+                        </Row>
+                    </Grid>
                     <FormGroup>
                         <ControlLabel>Enhet</ControlLabel>
                         <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-unit">Ange enhet som ska visas i widget.</Tooltip>}>
@@ -199,12 +222,9 @@ class CreateCellForm extends Component {
                             disabled={!this.state.title || !this.state.dataSource || !this.state.attribute || (!this.state.creator || !this.state.description)} 
                             bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
                     );
-                }
-                 
+                }      
             }
-           
         }
-        
         else if (this.state.kind === 'Graph') {
             formContent = (
                 <div>
@@ -268,14 +288,30 @@ class CreateCellForm extends Component {
                                 onChange={this.handleDataSourceChange}/>
                         </OverlayTrigger>
                     </FormGroup>
-                    <FormGroup>
-                        <ControlLabel>Data-attribute</ControlLabel>
-                        <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-attribute">Ange specifikt attribut från API</Tooltip>}>
-                            <FormControl
-                                type='text'
-                                onChange={this.handleAttributeChange}/>
-                        </OverlayTrigger>
-                    </FormGroup>
+                    <Grid>
+                        <Row className='show-grid'>
+                            <Col xs={8}>
+                                <FormGroup>
+                                    <ControlLabel>Data-attribute</ControlLabel>
+                                    <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-attribute">Ange specifikt attribut från API</Tooltip>}>
+                                        <FormControl
+                                            type='text'
+                                            onChange={this.handleAttributeChange}/>
+                                    </OverlayTrigger>
+                                </FormGroup>
+                            </Col>
+                            <Col xs={4}>
+                                <FormGroup>
+                                    <ControlLabel>Uppdateringsfrekvens</ControlLabel>
+                                    <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-refresh">I minuter hur ofta data ska uppdateras. 0 eller blankt för ingen uppdatering.</Tooltip>}>
+                                        <FormControl
+                                            type='number'
+                                            onChange={this.handleRefreshChange}/>
+                                    </OverlayTrigger>
+                                </FormGroup>
+                            </Col>
+                        </Row>
+                    </Grid>
                 </div>
             );
             //Default button for widget kind value.
@@ -313,7 +349,6 @@ class CreateCellForm extends Component {
                             bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
                     );
                 }
-                 
             }
         }
 
