@@ -11,16 +11,13 @@ class TextHolder extends Component {
         }
     }
 
-    updateContent = () => {
-        this.fetchText(this.props.values.dataSource, this.props.values.attribute);
-    }
-
     /**
      * Lifecycle method. Fetches if necessary or simple sets text from props.
      */
     componentDidMount() {
         if(this.props.values.dataSource && this.props.values.attribute) {
             if(this.props.values.refreshRate && this.props.values.refreshRate > 0) {
+                this.fetchText(this.props.values.dataSource, this.props.values.attribute);
                 let intervalID = setInterval(this.updateContent, 1000 * 60 * this.props.values.refreshRate);
                 this.setState({interval: intervalID});
             } else {
@@ -44,24 +41,24 @@ class TextHolder extends Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         if(this.props.values.textInput && (prevState.text !== this.props.values.textInput)) {
             this.setState({text: this.props.values.textInput, isArray: false, externalData: false});
-            console.log("Setting custom text");
         } 
         else if(prevProps.values.dataSource !== this.props.values.dataSource || 
                 prevProps.values.attribute !== this.props.values.attribute) {
             this.fetchText(this.props.values.dataSource, this.props.values.attribute);
-            console.log("Fetching new text source or attribute");
         }
         else if ((this.props.values.refreshRate !== prevProps.values.refreshRate) && this.state.externalData) {
             if(this.state.interval) {
                 clearInterval(this.state.interval);
-                console.log("Interval cleared");
             }
             if(this.props.values.refreshRate > 0) {
-                console.log("Setting new interval, refreshRate: " + this.props.values.refreshRate);
                 let intervalID = setInterval(this.updateContent, 1000 * 60 * this.props.values.refreshRate);
                 this.setState({interval: intervalID});
             }
         }
+    }
+
+    updateContent = () => {
+        this.fetchText(this.props.values.dataSource, this.props.values.attribute);
     }
 
     /**

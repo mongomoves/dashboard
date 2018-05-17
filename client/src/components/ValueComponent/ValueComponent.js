@@ -10,36 +10,56 @@ class ValueComponent extends Component {
         }
     }
 
-    //checking if external data is specified, and if true fetches it 
     componentDidMount() {
         if (this.props.values.dataSource && this.props.values.attribute) {
-            this.getData(this.props.values.dataSource, this.props.values.attribute);
+            if(this.props.values.refreshRate && this.props.values.refreshRate > 0) {
+                this.getData(this.props.values.dataSource, this.props.values.attribute);
+                let intervalID = setInterval(this.updateContent, 1000 * 60 * this.props.values.refreshRate);
+                this.setState({interval: intervalID});
+            } else {
+                this.getData(this.props.values.dataSource, this.props.values.attribute);
+            }
         } else {
             this.setState({number: this.props.values.number});
         }
     }
 
+    componentWillUnmount() {
+        if(this.state.interval) {
+            clearInterval(this.state.interval);
+        }
+    }
+
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if(this.props.values.update && this.state.externalData) {
-            this.getData(this.props.values.dataSource, this.props.values.attribute);
-        } else if (this.props.values.number && (prevState.number !== this.props.values.number)) {
+        if(this.props.values.number && (prevState.number != this.props.values.number)) {
             this.setState({externalData: false, number: this.props.values.number});
-        } else if (this.props.values.dataSource !== prevProps.values.dataSource ||
-                    this.props.values.attribute !== prevProps.values.attribute) {
+        }
+        else if(this.props.values.dataSource !== prevProps.values.dataSource ||
+            this.props.values.attribute !== prevProps.values.attribute) {
             this.getData(this.props.values.dataSource, this.props.values.attribute);
         }
+        else if ((this.props.values.refreshRate !== prevProps.values.refreshRate) && this.state.externalData) {
+            if(this.state.interval) {
+                clearInterval(this.state.interval);
+            }
+            if(this.props.values.refreshRate > 0) {
+                let intervalID = setInterval(this.updateContent, 1000 * 60 * this.props.values.refreshRate);
+                this.setState({interval: intervalID});
+            }
+        }
+    }
+    
+    updateContent = () => {
+        this.getData(this.props.values.dataSource, this.props.values.attribute);
     }
 
     //fetching external data and sets it to state 
     getData = (dataURL, attribute) => {
         let result = false;
-
         fetch(dataURL)
             .then(res => res.json())
             .then((out) => {
-                result = this.getValueByKey(out, attribute);
-
-                //Makes sure it is a string and not an object 
+                result = this.getValueByKey(out, attribute); 
                 if (typeof result === 'number' || result instanceof Number) {
                     this.setState({externalData: true, number: result, fetchSuccess: true });
                 } else {
