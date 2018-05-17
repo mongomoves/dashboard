@@ -29,7 +29,7 @@ class Footer extends Component {
 
               <div className="footer">
               <BootstrapModal
-                  title="Activity Log"
+                  title="Aktivitetslogg"
                   show={this.state.modals.showBootStrapModal}
                   close={this.handleCloseBootStrapModal}>
                   Datum: 180515<br />
