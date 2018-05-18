@@ -27,7 +27,7 @@ Alla widgets placering och storlek kan ändras av användaren.
 De olika delar som utgör en widget är en rubrikkomponent som innehåller en titel som användare angivit vid skapandet samt en config knapp. Config knappen låter användaren redigera information, visa information om widgeten, t.ex. om vem som skapat den och slutligen ta bort en widget. 
 Widgeten har också en body där innehållet för varje widget visas.  
 
-Det finns just nu tre olika typer av widgets: <u>Diagram</u>, <u>värde</u> och <u>text</u>. Samtliga av dessa har en möjlighet att få individuellt anpassade <u>uppdateringsfrekvenser</u>.</p>
+Det finns just nu tre olika typer av widgets: <u>Diagram</u>, <u>värde</u> och <u>text</u>. Samtliga av dessa har en möjlighet att få individuellt anpassade uppdateringsfrekvenser.</p>
                     <li className="liBold">3. Steg för steg</li>
                     <p>Här ges ett exempel på hur man skapar en widget med typen "Värde".</p>
                     <img src="https://i.imgur.com/tbtPqDK.png" alt="Create Widget"/>
@@ -36,8 +36,8 @@ Det finns just nu tre olika typer av widgets: <u>Diagram</u>, <u>värde</u> och 
                             <li>3.2 Ange titel (Titeln är även parametern som anges när man vill ladda widgets)</li>
                             <li>3.3 Värde (Antingen detta eller Datakälla)</li>
                             <li>3.4 Datakälla (Antingen detta eller Värde)</li>
-                            <li>3.5 Data-attribut</li>
-                            <li>3.6 Följade steg är att ange <u>Uppdateringsfrekvens</u> i antal minuter. Detta innebär att datan hämtas om på nytt vid varje angivet tidsintervall.</li>
+                            <li>3.5 Den data man vill hämta ut från datakällan ovanför anges genom att ange de data-attribut som inehåller detta. Detta är </li>
+                            <li>3.6 Följade steg är att ange Uppdateringsfrekvens i antal minuter. Detta innebär att datan hämtas om på nytt vid varje angivet tidsintervall.</li>
                             <li>3.7 Ange enheten som förklarar ovanstående data. Exepmpel år / tid / antal anställda.</li>
                             <li>3.8 Sista steget när man skapar en widget är att kryssa i om man vill få sin widget <u>publicerad</u>.</li>
                         </ul>
