@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './CustomNavbar.css';
-import { Navbar, Nav, NavItem, NavDropdown, MenuItem, Glyphicon } from 'react-bootstrap';
+import { Link } from 'react-router-dom'
+import { Navbar, Nav, NavItem, NavDropdown, MenuItem, Glyphicon, Text } from 'react-bootstrap';
 
 class CustomNavbar extends Component {
 
@@ -17,16 +18,16 @@ class CustomNavbar extends Component {
             <Navbar inverse collapseOnSelect>
             <Navbar.Header>
               <Navbar.Brand>
-                <a href="#brand">Axis Dashboard</a>
+                <Link to='/'>Dashboard</Link>
               </Navbar.Brand>
               <Navbar.Toggle />
             </Navbar.Header>
             <Navbar.Collapse>
-              <Nav>
-                <NavItem eventKey={1} href="#">
+              <Navbar.Text>
+                <Link to='/howtopage'>
                   Hjälp
-                </NavItem>
-              </Nav>
+                </Link>
+              </Navbar.Text>
               <Nav pullRight>
               <NavDropdown eventKey={3} title={this.state.cog} id="basic-nav-dropdown">
                   <MenuItem eventKey={3.1} onClick={this.props.showCreateCell}>Skapa widget</MenuItem>
