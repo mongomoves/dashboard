@@ -5,21 +5,21 @@ const valueSchema = mongoose.Schema({
     number: {
         type: Number,
         required: [
-            function() {return this.dataSource == null},
+            function() {return this.dataSource == null || this.dataSource === ""},
             'number or dataSource is required'
         ]
     },
     dataSource: {
         type: String,
         required: [
-            function() {return this.number == null},
+            function() {return this.number == null || this.number === ""},
             'number or dataSource is required'
         ]
     },
     attribute: {
         type: String,
         required: [
-            function() {return this.dataSource != null},
+            function() {return this.dataSource != null || this.dataSource !== ""},
             'attribute is required if dataSource is specified'
         ]
     },
