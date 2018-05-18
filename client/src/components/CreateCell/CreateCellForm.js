@@ -45,7 +45,7 @@ class CreateCellForm extends Component {
     };
 
     handleGraphUrlChange = (e) => {
-        this.setState({graphUrl: e.target.value});
+        this.setState({graphUrl: this.checkIframeTag(e.target.value)});
     };
 
     handleDataSourceChange = (e) => {
@@ -128,6 +128,20 @@ class CreateCellForm extends Component {
 
         //TODO: If publish is true, send to database
     };
+
+    /**
+     * Tries to check if entered string is a full Iframe tag and returns URL only if so.
+     * @param {*} graphUrl String to check and extract url from
+     */
+    checkIframeTag = (graphUrl) => {
+        const iframeTag = '</iframe>';
+        const httpRegex = RegExp(/(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/igm);
+        if(graphUrl.includes(iframeTag)) {
+            return graphUrl.match(httpRegex);
+        } else {
+            return graphUrl;
+        }
+    }
 
     render() {
         let formContent;
