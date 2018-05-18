@@ -66,10 +66,10 @@ class EditCellForm extends Component {
         this.setState({publish: checked});
 
         if (checked) {
-            this.setState({buttonText: 'Edit and publish widget'});
+            this.setState({buttonText: 'Ändra och publicera widget'});
         }
         else {
-            this.setState({buttonText: 'Edit widget'});
+            this.setState({buttonText: 'Ändra widget'});
         }
     };
 
