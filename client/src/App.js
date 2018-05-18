@@ -94,6 +94,9 @@ class App extends Component {
             cells: _.reject(this.state.cells, {layout: {i: i}})
         })
     };
+
+    //adds id generated for widget in backend to the widget in the cells Array.
+    //parameter: data The widget from the post request response.
     addID = (data) => {
         for (let i = 0; i < this.state.cells.length; i++) {
             if((this.state.cells[i].content.description===data.description)&&(this.state.cells[i].content.creator===data.creator)){

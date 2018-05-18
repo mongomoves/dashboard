@@ -137,9 +137,10 @@ class CreateCellForm extends Component {
 
     };
 
-
+    //Publishes the created widget though Post request to backend. Sends response to addID in App to associate widget ID
+    //from backend to the widget in frontend.
+    //param : widget the widget to post to backend.
     handlePost = (widget) => {
-        let res;
         fetch('http://192.168.99.100:3001/api/widgets', {
             method: 'POST',
             headers: {
@@ -152,10 +153,7 @@ class CreateCellForm extends Component {
                 return res.json()
             })
             .then(function(data) {
-                // this.props.addID(data.widget);
-
                 this.props.addID(data.widget);
-
             }.bind(this))
             .catch(err => err);
     };

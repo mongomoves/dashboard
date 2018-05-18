@@ -3,6 +3,11 @@
  */
 import React, { Component } from 'react';
 import {Button, ButtonToolbar, Checkbox, ControlLabel, FormControl, FormGroup} from "react-bootstrap";
+/**
+ * Component to for handling saving the dashboard to backend. Contains model window with input form and method for publishing
+ * dashboard to backend.
+ */
+
 class SaveDashboard extends Component {
     constructor(props) {
         super(props);
@@ -28,8 +33,12 @@ class SaveDashboard extends Component {
         this.setState({user: e.target.value});
 
     };
-
-    handlePublishDashboard = (e) => {
+    /**
+     * Method for publishing dashboard to backend by post request to backend api. Opens alert box with failure message
+     * if post is unsuccesfull. Calls method in app to open alert box with success message and close modal window if
+     * post is successfull.
+     */
+    handlePublishDashboard = () => {
             const allWidgets = this.props.getAllCells();
             let allDBFormatWidgets=[];
             let widget;
