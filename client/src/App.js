@@ -34,7 +34,7 @@ class App extends Component {
                 showInfo: false
             },
             idCounter: localStorageCells.length > 0 // if we loaded cells from local storage
-                ? localStorageCells[localStorageCells.length - 1].layout.i + 1 // set start id to highest id + 1
+                ? Number(localStorageCells[localStorageCells.length - 1].layout.i) + 1 // set start id to highest id + 1
                 : 0
         };
     }
@@ -97,6 +97,7 @@ class App extends Component {
         this.setState({
             layouts: {},
             cells: [],
+            idCounter: 0
         });
     };
 
