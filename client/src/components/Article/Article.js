@@ -18,21 +18,31 @@ class Article extends Component {
                 </PageHeader>
                 <ul>
                     <li className="liBold">1. Koncept</li>
-                    <li className="liBold">2. Steg för steg</li>
-                    <img src="https://i.imgur.com/HVEnYOw.jpg" alt="Navbar"/>
+                    <p>Hej detta är en dashboard som vi hoppas ni får nytta av he hu hi </p>
+                    <li className="liBold">2. Widgets</li>
+                    <p>Widgets utgör grunden för Dashboarden. Varje widget har en XX beroende på var datan till widgeten hämtas in.
+
+Alla widgets placering och storlek kan ändras av användaren.
+
+De olika delar som utgör en widget är en rubrikkomponent som innehåller en titel som användare angivit vid skapandet samt en config knapp. Config knappen låter användaren redigera information, visa information om widgeten, t.ex. om vem som skapat den och slutligen ta bort en widget. 
+Widgeten har också en body där innehållet för varje widget visas.  
+
+Det finns just nu tre olika typer av widgets: <u>Diagram</u>, <u>värde</u> och <u>text</u>. Samtliga av dessa har en möjlighet att få individuellt anpassade <u>uppdateringsfrekvenser</u>.</p>
+                    <li className="liBold">3. Steg för steg</li>
+                    <p>Här ges ett exempel på hur man skapar en widget med typen "Värde".</p>
+                    <img src="https://i.imgur.com/tbtPqDK.png" alt="Create Widget"/>
                         <ul>
-                            <li>2.1 Home button som tar användaren tillbaka till startsidan.</li>
-                            <li>2.2 Visar inställningar där man kan editera sin Dashboard.</li>
-                            <li>2.3 Skapa cell, här skapar användare sin cell. Detta görs genom att....</li>
-                            <li>2.4 Ladda upp redan befintliga celler. Detta innebär att man kan hämta in andra celler skapta av andra personer.</li>
-                            <li>2.5 Spara Dashboard innebär att du kan återanvända din Dashboard om du tex vil alternera mellan olika.</li>
-                            <li>2.6 Editera Dashboard.</li>
-                            <li>2.7 Ladda upp redan befintliga Dashboards.</li>
-                            <li>2.8 Töm din nuvarande Dashboard så att den blir helt tom (nollställd).</li>
+                            <li>2.1 Välj Widget-typ</li>
+                            <li>2.2 Ange titel (Titeln är även parametern som anges när man vill ladda widgets)</li>
+                            <li>2.3 Värde (Antingen detta eller Datakälla)</li>
+                            <li>2.4 Datakälla (Antingen detta eller Värde)</li>
+                            <li>2.5 Data-attribut</li>
+                            <li>2.6 Följade steg är att ange <u>Uppdateringsfrekvens</u> i antal minuter. Detta  .</li>
+                            <li>2.7 Ange enheten som förklarar ovanstående data. Exepmpel år / tid / antal anställda.</li>
+                            <li>2.8 Sista steget när man skapar en widget är att kryssa i om man vill få sin widget <u>publicerad</u>.</li>
                         </ul>
-                    <li className="liBold">3. Celler</li>
-                    <li className="liBold">4. Drag and drop</li>
                     <li className="liBold">5. Datakällor</li>
+                        <p> En datakälla är ett API som returnerar värde baserat på angivna parametrar. Dessa parametrar kan vara t.ex. år, title och typ. </p>
                                                             
                 </ul>
             </div>
