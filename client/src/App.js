@@ -36,7 +36,7 @@ class App extends Component {
                 saveDashboard: false,
             },
             idCounter: localStorageCells.length > 0 // if we loaded cells from local storage
-                ? localStorageCells[localStorageCells.length - 1].layout.i + 1 // set start id to highest id + 1
+                ? Number(localStorageCells[localStorageCells.length - 1].layout.i) + 1 // set start id to highest id + 1
                 : 0
         };
     }
@@ -112,6 +112,7 @@ class App extends Component {
         this.setState({
             layouts: {},
             cells: [],
+            idCounter: 0
         });
     };
 
@@ -184,7 +185,8 @@ class App extends Component {
                         number: e.content.number,
                         unit: e.content.unit,
                         dataSource: e.content.dataSource,
-                        attribute: e.content.attribute
+                        attribute: e.content.attribute,
+                        refreshRate: e.content.refreshRate
                     }
                 } else if (e.content.kind === 'Graph') {
                     editValues = {
@@ -192,7 +194,8 @@ class App extends Component {
                         creator: e.content.creator,
                         kind: 'Graph',
                         title: e.content.title,
-                        graphUrl: e.content.graphUrl
+                        graphUrl: e.content.graphUrl,
+                        refreshRate: e.content.refreshRate
                     }
                 } else if (e.content.kind === 'Text') {
                     editValues = {
@@ -202,7 +205,8 @@ class App extends Component {
                         title: e.content.title,
                         textInput: e.content.textInput,
                         dataSource: e.content.dataSource,
-                        attribute: e.content.attribute
+                        attribute: e.content.attribute,
+                        refreshRate: e.content.refreshRate
                     }
                 }
                 return true;

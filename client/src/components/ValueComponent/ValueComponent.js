@@ -4,48 +4,91 @@ import React, { Component } from "react";
 class ValueComponent extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
             externalData: false,
             fetchSuccess: false,
-            fetchContainer: null
         }
     }
 
-    //checking if external data is specified, and if true fetches it 
-    componentWillMount() {
-        if (this.props.dataSource && this.props.attribute) {
-            this.setState({ externalData: true })
-            this.getData();
+    componentDidMount() {
+        if (this.props.values.dataSource && this.props.values.attribute) {
+            if(this.props.values.refreshRate && this.props.values.refreshRate > 0) {
+                this.getData(this.props.values.dataSource, this.props.values.attribute);
+                let intervalID = setInterval(this.updateContent, 1000 * 60 * this.props.values.refreshRate);
+                this.setState({interval: intervalID});
+            } else {
+                this.getData(this.props.values.dataSource, this.props.values.attribute);
+            }
+        } else {
+            this.setState({number: this.props.values.number});
         }
     }
 
-    //fetching external data and sets it to state 
-    getData = () => {
-        let dataURL = this.props.dataSource;
-        let attribute = this.props.attribute;
+    componentWillUnmount() {
+        if(this.state.interval) {
+            clearInterval(this.state.interval);
+        }
+    }
+
+    /**
+     * React lifecycle function. Makes it so that the component can change between
+     * source of text being displayed, and different refresh rates.
+     */
+    componentDidUpdate(prevProps, prevState) {
+        if(this.props.values.number && (prevState.number != this.props.values.number)) {
+            this.setState({externalData: false, number: this.props.values.number});
+        }
+        else if(this.props.values.dataSource !== prevProps.values.dataSource ||
+            this.props.values.attribute !== prevProps.values.attribute) {
+            this.getData(this.props.values.dataSource, this.props.values.attribute);
+        }
+        else if ((this.props.values.refreshRate !== prevProps.values.refreshRate) && this.state.externalData) {
+            if(this.state.interval) {
+                clearInterval(this.state.interval);
+            }
+            if(this.props.values.refreshRate > 0) {
+                let intervalID = setInterval(this.updateContent, 1000 * 60 * this.props.values.refreshRate);
+                this.setState({interval: intervalID});
+            }
+        }
+    }
+    
+    /**
+     * Function for interval, simply calling for a new fetch.
+     */
+    updateContent = () => {
+        this.getData(this.props.values.dataSource, this.props.values.attribute);
+    }
+
+    /**
+     * Fetch from passed url and set value found at attribute to state, if
+     * a value was succesfully retrieved. 
+     * @param {*} dataURL URL to fetch from
+     * @param {*} attribute Attribute key for desired value
+     */
+    getData = (dataURL, attribute) => {
         let result = false;
-        let maxLength = 6;
-
         fetch(dataURL)
             .then(res => res.json())
             .then((out) => {
-                result = this.getValueByKey(out, attribute);
-
-                //Makes sure it is a string and not an object 
-                if (typeof result === 'string' || result instanceof String) {
-
-                    //checks so result does not exceed length limit 
-                    if (result.length <= maxLength) {
-                        this.setState({ fetchContainer: result, fetchSuccess: true });
+                result = this.getValueByKey(out, attribute); 
+                if (typeof result === 'number' || result instanceof Number) {
+                    this.setState({externalData: true, number: result, fetchSuccess: true });
+                } else {
+                    this.setState({externalData: false, fetchSuccess: false });
+                    if(this.state.interval) {
+                        clearInterval(this.state.interval);
                     }
-
                 }
 
             })
     }
 
-    //function iterates the fetched object to find the specified attribute 
+    /**
+     * Returns value for key even if nested in object.
+     * @param {*} object Object to iterate
+     * @param {*} key Key for value to return
+     */
     getValueByKey = (object, key) => {
         var stack = [object];
         var current, index, value;
@@ -69,11 +112,11 @@ class ValueComponent extends Component {
 
     render() {
         //if external data is specified and is valid   
-        if (this.state.fetchSuccess) {
+        if (this.state.externalData && this.state.fetchSuccess) {
             return (
                 <div>
-                    <span style={{ ...spanStyleNumber, fontSize: `${this.props.width / 5}px` }}>{this.state.fetchContainer}</span>
-                    <span style={{ ...spanStyleUnit, fontSize: `${this.props.width / 9}px` }}>{this.props.unit}</span>
+                    <span style={{...spanStyleNumber, fontSize: `${this.props.width / 9}px`}}>{this.state.number}</span>
+                    <span style={{...spanStyleUnit, fontSize: `${this.props.width / 10}px`}}>{this.props.values.unit}</span>
                 </div>
             )
         }
@@ -90,8 +133,8 @@ class ValueComponent extends Component {
         //if user entered data 
         return (
             <div>
-                <span style={{ ...spanStyleNumber, fontSize: `${this.props.width / 5}px` }}>{this.props.number}</span>
-                <span style={{ ...spanStyleUnit, fontSize: `${this.props.width / 9}px` }}>{this.props.unit}</span>
+                <span style={{...spanStyleNumber, fontSize: `${this.props.width / 5}px`}}>{this.state.number}</span>
+                <span style={{...spanStyleUnit, fontSize: `${this.props.width / 9}px`}}>{this.props.values.unit}</span>
             </div>
         );
     }

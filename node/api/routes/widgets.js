@@ -53,6 +53,7 @@ router.get('/', function(req, res, next) {
                         created: widget.created,
                         description: widget.description,
                         kind: widget.kind,
+                        refreshRate: widget.refreshRate,
 
                         number: widget.content.number,
                         text: widget.content.text,
@@ -113,7 +114,7 @@ router.post('/', function(req, res, next) {
     else {
         return res.status(500).json({
             error: {
-                message: "'kind' must be one of the following: Value, Graph"
+                message: "'kind' must be one of the following: Value, Graph, Text"
             }
         });
     }
@@ -126,6 +127,7 @@ router.post('/', function(req, res, next) {
                 creator: req.body.creator,
                 description: req.body.description,
                 kind: kind,
+                refreshRate: req.body.refreshRate,
                 content: result._id
             });
 
@@ -202,6 +204,7 @@ router.get('/:widgetId', function(req, res, next) {
                     created: widget.created,
                     description: widget.description,
                     kind: widget.kind,
+                    refreshRate: widget.refreshRate,
 
                     number: widget.content.number,
                     text: widget.content.text,

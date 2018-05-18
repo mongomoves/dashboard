@@ -63,23 +63,18 @@ class Cell extends Component {
 
     render() {
         const {title, kind} = this.props.content;
-
         let content;
-
-        //TODO: Value and Graph should be separate components, styles should not be inlined
         if (kind === 'Value') {
-            const {unit, number, dataSource, attribute} = this.props.content;
-
             content = (
-                <ValueComponent number={number} unit={unit} width={this.state.width} dataSource ={dataSource} attribute ={attribute} />
+                <ValueComponent width={this.state.width} values={this.props.content} />
             );
         }
         else if (kind === 'Graph') {
-            const {displayType, graphUrl } = this.props.content;
+            const {displayType} = this.props.content;
             if(displayType === 'Iframe') {
                 content = (
                     <IframeHolder
-                        url={graphUrl}
+                        values={this.props.content}
                         width={this.state.width}
                         height={this.state.height}/>
                 )
@@ -88,7 +83,7 @@ class Cell extends Component {
                     <ImageHolder
                         width={this.state.width}
                         height={this.state.height}
-                        image={graphUrl}/>
+                        values={this.props.content}/>
                 )
             }
         }

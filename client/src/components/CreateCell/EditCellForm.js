@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import {Button, ButtonToolbar, ToggleButtonGroup, ToggleButton, Checkbox, ControlLabel, FormControl, FormGroup, Tooltip, OverlayTrigger} from "react-bootstrap";
+import {Button, Grid, Row, Col, ButtonToolbar, ToggleButtonGroup, ToggleButton, Checkbox, ControlLabel, FormControl, FormGroup, Tooltip, OverlayTrigger} from "react-bootstrap";
 
 
 class EditCellForm extends Component {
     constructor(props) {
         super(props);
-        const {creator, kind, displayType, title, textInput, number, graphUrl, dataSource, attribute, unit} = this.props.values;
+        const {creator, kind, displayType, title, textInput, number, graphUrl, dataSource, attribute, refreshRate, unit} = this.props.values;
 
         this.state = {
             buttonText: 'Ändra widget',
@@ -20,7 +20,8 @@ class EditCellForm extends Component {
             dataSource: dataSource,
             attribute: attribute,
             unit: unit,
-            displayType: displayType
+            displayType: displayType,
+            refreshRate: refreshRate
         };
     }
 
@@ -73,7 +74,11 @@ class EditCellForm extends Component {
     };
 
     handleDisplayTypeChange = (e) => {
-        this.setState({displayType: e})
+        this.setState({displayType: e});
+    }
+
+    handleRefreshChange = (e) => {
+        this.setState({refreshRate: e.target.value});
     }
 
     handleCreateWidget = () => {
@@ -86,6 +91,7 @@ class EditCellForm extends Component {
                 number: this.state.number,
                 dataSource: this.state.dataSource,
                 attribute: this.state.attribute,
+                refreshRate: this.state.refreshRate,
                 unit: this.state.unit
             }
         }
@@ -94,7 +100,8 @@ class EditCellForm extends Component {
                 kind: this.state.kind,
                 title: this.state.title,
                 displayType: this.state.displayType,
-                graphUrl: this.state.graphUrl
+                graphUrl: this.state.graphUrl,
+                refreshRate: this.state.refreshRate
             }
         }
         else if (this.state.kind === 'Text') {
@@ -103,7 +110,8 @@ class EditCellForm extends Component {
                 title: this.state.title,
                 textInput: this.state.textInput,
                 dataSource: this.state.dataSource,
-                attribute: this.state.attribute
+                attribute: this.state.attribute,
+                refreshRate: this.state.refreshRate
             }
         }
 
@@ -146,15 +154,32 @@ class EditCellForm extends Component {
                             onChange={this.handleDataSourceChange}/>
                         </OverlayTrigger>
                     </FormGroup>
-                    <FormGroup>
-                        <ControlLabel>Data-attribut</ControlLabel>
-                        <OverlayTrigger placement="top" overlay={<Tooltip id="edit-attribute">Ange de API attribut som ska användas.</Tooltip>}>
-                        <FormControl
-                            type='text'
-                            defaultValue={this.props.values.attribute}
-                            onChange={this.handleAttributeChange}/>
-                        </OverlayTrigger>
-                    </FormGroup>
+                    <Grid>
+                        <Row className='show-grid'>
+                            <Col xs={8}>
+                                <FormGroup>
+                                    <ControlLabel>Data-attribute</ControlLabel>
+                                    <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-attribute">Ange specifikt attribut från API</Tooltip>}>
+                                        <FormControl
+                                            type='text'
+                                            defaultValue={this.props.values.attribute}
+                                            onChange={this.handleAttributeChange}/>
+                                    </OverlayTrigger>
+                                </FormGroup>
+                            </Col>
+                            <Col xs={4}>
+                                <FormGroup>
+                                    <ControlLabel>Uppdateringsfrekvens</ControlLabel>
+                                    <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-refresh">I minuter hur ofta data ska uppdateras. 0 eller blankt för ingen uppdatering.</Tooltip>}>
+                                        <FormControl
+                                            type='number'
+                                            defaultValue={this.props.values.refreshRate}
+                                            onChange={this.handleRefreshChange}/>
+                                    </OverlayTrigger>
+                                </FormGroup>
+                            </Col>
+                        </Row>
+                    </Grid>
                     <FormGroup>
                         <ControlLabel>Enhet</ControlLabel>
                         <OverlayTrigger placement="top" overlay={<Tooltip id="edit-unit">Ange enhet som ska visas i widgeten.</Tooltip>}>
@@ -205,20 +230,37 @@ class EditCellForm extends Component {
         else if (this.state.kind === 'Graph') {
             formContent = (
                 <div>
-                    <FormGroup>
-                        <ControlLabel>Visningstyp</ControlLabel>
-                        <ButtonToolbar>
-                           <ToggleButtonGroup 
-                                type='radio'
-                                name='displayType'
-                                defaultValue={'Iframe'} 
-                                value={this.state.displayType}
-                                onChange={this.handleDisplayTypeChange}>
-                               <ToggleButton value={'Iframe'}>Iframe</ToggleButton> 
-                               <ToggleButton value={'Img'}>Img</ToggleButton>
-                            </ToggleButtonGroup>
-                        </ButtonToolbar>
-                    </FormGroup>
+                    <Grid>
+                        <Row>
+                            <Col xs={8}>
+                                <FormGroup>
+                                    <ControlLabel>Visningstyp</ControlLabel>
+                                    <ButtonToolbar>
+                                    <ToggleButtonGroup 
+                                            type='radio'
+                                            name='displayType'
+                                            defaultValue={this.props.values.displayType} 
+                                            value={this.state.displayType}
+                                            onChange={this.handleDisplayTypeChange}>
+                                        <ToggleButton value={'Iframe'}>Iframe</ToggleButton> 
+                                        <ToggleButton value={'Img'}>Img</ToggleButton>
+                                        </ToggleButtonGroup>
+                                    </ButtonToolbar>
+                                </FormGroup>
+                            </Col>
+                            <Col xs={4}>
+                            <FormGroup>
+                                    <ControlLabel>Uppdateringsfrekvens</ControlLabel>
+                                    <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-refresh">I minuter hur ofta data ska uppdateras. 0 eller blankt för ingen uppdatering.</Tooltip>}>
+                                        <FormControl
+                                            type='number'
+                                            defaultValue={this.props.values.refreshRate}
+                                            onChange={this.handleRefreshChange}/>
+                                    </OverlayTrigger>
+                                </FormGroup>
+                            </Col>
+                        </Row>
+                    </Grid>
                     <FormGroup>
                         <ControlLabel>Diagram-URL</ControlLabel>
                         <OverlayTrigger placement="top" overlay={<Tooltip id="edit-graph">Ange den URL till den graf som ska visas.</Tooltip>}>
@@ -265,15 +307,32 @@ class EditCellForm extends Component {
                                 onChange={this.handleDataSourceChange}/>
                         </OverlayTrigger>
                     </FormGroup>
-                    <FormGroup>
-                        <ControlLabel>Data-attribute</ControlLabel>
-                        <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-attribute">Ange specifikt attribut från API</Tooltip>}>
-                            <FormControl
-                                type='text'
-                                defaultValue={this.props.values.attribute}
-                                onChange={this.handleAttributeChange}/>
-                        </OverlayTrigger>
-                    </FormGroup>
+                    <Grid>
+                        <Row className='show-grid'>
+                            <Col xs={8}>
+                                <FormGroup>
+                                    <ControlLabel>Data-attribute</ControlLabel>
+                                    <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-attribute">Ange specifikt attribut från API</Tooltip>}>
+                                        <FormControl
+                                            type='text'
+                                            defaultValue={this.props.values.attribute}
+                                            onChange={this.handleAttributeChange}/>
+                                    </OverlayTrigger>
+                                </FormGroup>
+                            </Col>
+                            <Col xs={4}>
+                                <FormGroup>
+                                    <ControlLabel>Uppdateringsfrekvens</ControlLabel>
+                                    <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-refresh">I minuter hur ofta data ska uppdateras. 0 eller blankt för ingen uppdatering.</Tooltip>}>
+                                        <FormControl
+                                            type='number'
+                                            defaultValue={this.props.values.refreshRate}
+                                            onChange={this.handleRefreshChange}/>
+                                    </OverlayTrigger>
+                                </FormGroup>
+                            </Col>
+                        </Row>
+                    </Grid>
                 </div>
             );
             //Validation on Edit button
