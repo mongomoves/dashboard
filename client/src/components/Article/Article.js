@@ -37,11 +37,11 @@ Det finns just nu tre olika typer av widgets: <u>Diagram</u>, <u>värde</u> och 
                             <li>3.3 Värde (Antingen detta eller Datakälla)</li>
                             <li>3.4 Datakälla (Antingen detta eller Värde)</li>
                             <li>3.5 Data-attribut</li>
-                            <li>3.6 Följade steg är att ange <u>Uppdateringsfrekvens</u> i antal minuter. Detta  .</li>
+                            <li>3.6 Följade steg är att ange <u>Uppdateringsfrekvens</u> i antal minuter. Detta innebär att datan hämtas om på nytt vid varje angivet tidsintervall.</li>
                             <li>3.7 Ange enheten som förklarar ovanstående data. Exepmpel år / tid / antal anställda.</li>
                             <li>3.8 Sista steget när man skapar en widget är att kryssa i om man vill få sin widget <u>publicerad</u>.</li>
                         </ul>
-                    <li className="liBold">5. Datakällor</li>
+                    <li className="liBold">4. Datakällor</li>
                         <p> En datakälla är ett API som returnerar värde baserat på angivna parametrar. Dessa parametrar kan vara t.ex. år, title och typ. </p>
                                                             
                 </ul>
