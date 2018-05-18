@@ -78,4 +78,17 @@
     /* Changes the color of the divider in dropdown menu*/
     background-color: orange;
     }
-        
+
+    a {
+        color: orange;
+    }
+    
+    a:hover{
+        color:white;
+        text-decoration: none;
+    }
+    
+    a:visited{
+        color: orange;
+        text-decoration: none;
+    }
