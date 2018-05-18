@@ -12,6 +12,7 @@ class Footer extends Component {
                 showBootStrapModal: false
             },
           }
+
     }
 
     handleShowBootStrapModal = () => {
@@ -22,26 +23,55 @@ class Footer extends Component {
         this.setState({modals: {showBootStrapModal: false}})
     };
 
+componentWillMount() {
 
+  this.getData();
+
+ }
+
+
+
+getData = () =>{
+  fetch('http://192.168.99.100:3001/api/log')
+   .then(results => {
+     return results.json();
+   }).then(data => {
+     let logg = data.log;
+     console.log(logg);
+     // this.setState(prevState => ({
+     //   cells: [...prevState.cells, cells]
+     // }))
+ this.setState({ logg: logg });
+   })
+
+
+
+}
 
       render() {
+        console.log("Detta är returnerad data: " + this.state.logg);
+
           return (
 
-              <div className="footer">
+
+            <div className="footer">
               <BootstrapModal
                   title="Aktivitetslogg"
                   show={this.state.modals.showBootStrapModal}
                   close={this.handleCloseBootStrapModal}>
                   Datum: 180515<br />
                   Tid: 15.17<br />
+                  {this.state.logg}
                   Sven har lagt till cellen "Projekt"
+                  <div className="logg">
+
+                  </div>
               </BootstrapModal>
+
                 <div  className="footerText">
                 <p><a onClick={this.handleShowBootStrapModal}>
                  footer
-                </a>
-                </p>
-                </div>
+                </a></p></div>
               </div>
             )
           }
