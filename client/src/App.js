@@ -168,7 +168,8 @@ class App extends Component {
                         number: e.content.number,
                         unit: e.content.unit,
                         dataSource: e.content.dataSource,
-                        attribute: e.content.attribute
+                        attribute: e.content.attribute,
+                        refreshRate: e.content.refreshRate
                     }
                 } else if (e.content.kind === 'Graph') {
                     editValues = {
@@ -176,7 +177,8 @@ class App extends Component {
                         creator: e.content.creator,
                         kind: 'Graph',
                         title: e.content.title,
-                        graphUrl: e.content.graphUrl
+                        graphUrl: e.content.graphUrl,
+                        refreshRate: e.content.refreshRate
                     }
                 } else if (e.content.kind === 'Text') {
                     editValues = {
@@ -186,7 +188,8 @@ class App extends Component {
                         title: e.content.title,
                         textInput: e.content.textInput,
                         dataSource: e.content.dataSource,
-                        attribute: e.content.attribute
+                        attribute: e.content.attribute,
+                        refreshRate: e.content.refreshRate
                     }
                 }
                 return true;

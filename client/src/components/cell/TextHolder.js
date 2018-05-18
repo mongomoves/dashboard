@@ -16,9 +16,21 @@ class TextHolder extends Component {
      */
     componentDidMount() {
         if(this.props.values.dataSource && this.props.values.attribute) {
-            this.fetchText(this.props.values.dataSource, this.props.values.attribute);
+            if(this.props.values.refreshRate && this.props.values.refreshRate > 0) {
+                this.fetchText(this.props.values.dataSource, this.props.values.attribute);
+                let intervalID = setInterval(this.updateContent, 1000 * 60 * this.props.values.refreshRate);
+                this.setState({interval: intervalID});
+            } else {
+                this.fetchText(this.props.values.dataSource, this.props.values.attribute);
+            }
         } else {
             this.setState({text: this.props.values.textInput});
+        }
+    }
+
+    componentWillUnmount() {
+        if(this.state.interval) {
+            clearInterval(this.state.interval);
         }
     }
 
@@ -26,38 +38,58 @@ class TextHolder extends Component {
      * Lifecycle method. Makes sure the component updates properly when
      * the user switches between using free text and api requests.
      */
-    componentDidUpdate(prevProps, prevState, snapshot) {
+    componentDidUpdate(prevProps, prevState) {
         if(this.props.values.textInput && (prevState.text !== this.props.values.textInput)) {
-            this.setState({text: this.props.values.textInput, isArray: false});
-        } else if(prevProps.values.dataSource !== this.props.values.dataSource || 
-            prevProps.values.attribute !== this.props.values.attribute) {
-                this.fetchText(this.props.values.dataSource, this.props.values.attribute);
+            this.setState({text: this.props.values.textInput, isArray: false, externalData: false});
+        } 
+        else if(prevProps.values.dataSource !== this.props.values.dataSource || 
+                prevProps.values.attribute !== this.props.values.attribute) {
+            this.fetchText(this.props.values.dataSource, this.props.values.attribute);
+        }
+        else if ((this.props.values.refreshRate !== prevProps.values.refreshRate) && this.state.externalData) {
+            if(this.state.interval) {
+                clearInterval(this.state.interval);
             }
+            if(this.props.values.refreshRate > 0) {
+                let intervalID = setInterval(this.updateContent, 1000 * 60 * this.props.values.refreshRate);
+                this.setState({interval: intervalID});
+            }
+        }
+    }
+
+    updateContent = () => {
+        this.fetchText(this.props.values.dataSource, this.props.values.attribute);
     }
 
     /**
      * Fetches some text from the provided URL with the provided key (attribute).
      * Sets isArray to true if an array is returned, so that it can be displayed.
      * An incorrect fetch will display a fail message.
+     * @param {*} url URL to fetch from
+     * @param {*} attribute Key to get value from
      */
     fetchText = (url, attribute) => {
         fetch(url)
         .then(res => res.json())
         .then((out) => {
             const apiText = this.getValueByKey(out, attribute);
-            if(typeof apiText === 'string' || apiText instanceof String) {
-                this.setState({text: apiText, isArray: false});
+            if(typeof apiText !== 'object' || !(apiText instanceof Object)) {
+                this.setState({text: apiText, isArray: false, externalData: true});
             } else if (Array.isArray(apiText)) {
-                this.setState({isArray: true, text: apiText});
+                this.setState({isArray: true, text: apiText, externalData: true});
             } else {
-                this.setState({text: 'Felaktigt attribut, ingen data hämtad'});
+                this.setState({text: 'Felaktigt attribut, ingen data hämtad', externalData: false});
+                if(this.state.interval) {
+                    clearInterval(this.state.interval);
+                }
             }
         });
     }
 
     /**
-     * Returns the value for the specific key, even if value 
-     * is nested.
+     * Returns value for key even if nested in object.
+     * @param {*} object Object to iterate
+     * @param {*} key Key for value to return
      */
     getValueByKey = (object, key) => {
         var stack = [object];
@@ -79,18 +111,19 @@ class TextHolder extends Component {
     /**
      * Returns an array of elements with a div for each
      * entry in the array to display.
+     * @param {*} array Array to print
      */
     printArray = (array) => {
         let newArray = array.map(el => {
-            let newEl;
+            let tempElement;
             if(el instanceof Object) {
-                newEl = JSON.stringify(el);
+                tempElement = JSON.stringify(el);
             } else {
-                newEl = String(el);
+                tempElement = String(el);
             }
         return (
             <div key={el} style={{...spanStyleText, fontSize: `${this.calcFont()}%`}}>
-                {newEl}
+                {tempElement}
             </div>
             )
         });
