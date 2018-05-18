@@ -15,10 +15,10 @@ class Sidebar extends Component {
             <div>
                 <div className="vertical-list">
                     <MenuItem eventKey={4.1} className="button">Koncept</MenuItem>
-                    <MenuItem eventKey={4.1} className="button">Steg för steg</MenuItem>
-                    <MenuItem eventKey={4.1} className="button">Celler</MenuItem>
-                    <MenuItem eventKey={4.1} className="button">Drag and drop</MenuItem>
-                    <MenuItem eventKey={4.1} className="button">Datakällor</MenuItem>
+                    <MenuItem eventKey={4.2} className="button">Widget</MenuItem>
+                    <MenuItem eventKey={4.3} className="button">Steg för steg</MenuItem>
+                    <MenuItem eventKey={4.4} className="button">Ordlista</MenuItem>
+
                 </div>
             </div>
         );
