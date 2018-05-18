@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 
 /**
- * Component holding an Iframe. 
+ * Component holding an Iframe.
+ * Capable of regular refreshing.
  */
 class IframeHolder extends Component {
     constructor(props) {
@@ -11,6 +12,10 @@ class IframeHolder extends Component {
         }
     }
 
+    /**
+     * React lifecycle function. At the start of the lifecycle iframe src is set
+     * and a update interval is initialised if one is meant to be.
+     */
     componentDidMount() {
         if(this.props.values.graphUrl) {
             this.setState({frameURL: this.props.values.graphUrl});
@@ -21,12 +26,21 @@ class IframeHolder extends Component {
         } 
     }
 
+    /**
+     * React lifecycle function. Clears the interval handling the component refresh.
+     */
     componentWillUnmount() {
         if(this.state.interval) {
             clearInterval(this.state.interval);
         } 
     }
 
+    /**
+     * React lifecycle function. Makes sure the component is editable
+     * when passed new props, including different refresh rates.
+     * @param {*} prevProps
+     * @param {*} prevState
+     */
     componentDidUpdate(prevProps, prevState) {
         if(this.props.values.refreshRate !== prevProps.values.refreshRate) {
             if(this.state.interval) {
@@ -41,6 +55,10 @@ class IframeHolder extends Component {
         }
     }
 
+    /**
+     * Refreshes the Iframe by nulling the state, so that a refresh can occur without
+     * new properties being passed.
+     */
     updateContent = () => {
         this.setState({frameURL: null});
         this.setState({frameURL: this.props.values.graphUrl});

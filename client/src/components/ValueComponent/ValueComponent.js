@@ -30,6 +30,10 @@ class ValueComponent extends Component {
         }
     }
 
+    /**
+     * React lifecycle function. Makes it so that the component can change between
+     * source of text being displayed, and different refresh rates.
+     */
     componentDidUpdate(prevProps, prevState) {
         if(this.props.values.number && (prevState.number != this.props.values.number)) {
             this.setState({externalData: false, number: this.props.values.number});
@@ -49,11 +53,19 @@ class ValueComponent extends Component {
         }
     }
     
+    /**
+     * Function for interval, simply calling for a new fetch.
+     */
     updateContent = () => {
         this.getData(this.props.values.dataSource, this.props.values.attribute);
     }
 
-    //fetching external data and sets it to state 
+    /**
+     * Fetch from passed url and set value found at attribute to state, if
+     * a value was succesfully retrieved. 
+     * @param {*} dataURL URL to fetch from
+     * @param {*} attribute Attribute key for desired value
+     */
     getData = (dataURL, attribute) => {
         let result = false;
         fetch(dataURL)
@@ -71,7 +83,11 @@ class ValueComponent extends Component {
             })
     }
 
-    //function iterates the fetched object to find the specified attribute 
+    /**
+     * Returns value for key even if nested in object.
+     * @param {*} object Object to iterate
+     * @param {*} key Key for value to return
+     */
     getValueByKey = (object, key) => {
         var stack = [object];
         var current, index, value;

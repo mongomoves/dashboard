@@ -65,6 +65,8 @@ class TextHolder extends Component {
      * Fetches some text from the provided URL with the provided key (attribute).
      * Sets isArray to true if an array is returned, so that it can be displayed.
      * An incorrect fetch will display a fail message.
+     * @param {*} url URL to fetch from
+     * @param {*} attribute Key to get value from
      */
     fetchText = (url, attribute) => {
         fetch(url)
@@ -85,8 +87,9 @@ class TextHolder extends Component {
     }
 
     /**
-     * Returns the value for the specific key, even if value 
-     * is nested.
+     * Returns value for key even if nested in object.
+     * @param {*} object Object to iterate
+     * @param {*} key Key for value to return
      */
     getValueByKey = (object, key) => {
         var stack = [object];
@@ -108,6 +111,7 @@ class TextHolder extends Component {
     /**
      * Returns an array of elements with a div for each
      * entry in the array to display.
+     * @param {*} array Array to print
      */
     printArray = (array) => {
         let newArray = array.map(el => {
