@@ -29,14 +29,12 @@ componentWillMount() {
 
  }
 
-
-
 getData = () =>{
-  fetch('http://192.168.99.100:3001/api/log')
+  fetch('http://localhost:3001/api/widgets')
    .then(results => {
      return results.json();
    }).then(data => {
-     let logg = data.log;
+     let logg = data.widgets;
      console.log(logg);
      // this.setState(prevState => ({
      //   cells: [...prevState.cells, cells]
