@@ -5,21 +5,21 @@ const textSchema = mongoose.Schema({
     text: {
         type: String,
         required: [
-            function() {return this.dataSource == null || this.dataSource === ""},
+            function() {return this.dataSource == null && this.dataSource === ""},
             'text or dataSource is required'
         ]
     },
     dataSource: {
         type: String,
         required: [
-            function() {return this.text == null || this.text === ""},
+            function() {return this.text == null && this.text === ""},
             'text or dataSource is required'
         ]
     },
     attribute: {
         type: String,
         required: [
-            function() {return this.dataSource != null || this.dataSource !== ""},
+            function() {return this.dataSource != null && this.dataSource !== ""},
             'attribute is required if dataSource is specified'
         ]
     },
