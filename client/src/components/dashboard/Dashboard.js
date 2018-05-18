@@ -17,9 +17,7 @@ class Dashboard extends Component {
         rowHeight: 50
     };
 
-    constructor(props) {
-        super(props);
-    }
+    
 
     /**
      * Builds and returns elements based on whatever is found in state.cells.
