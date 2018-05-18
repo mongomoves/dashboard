@@ -132,7 +132,6 @@ class CreateCellForm extends Component {
 
 
     handlePost = (widget) => {
-        console.log(JSON.stringify(widget));
         let res;
         fetch('http://192.168.99.100:3001/api/widgets', {
             method: 'POST',
@@ -152,7 +151,6 @@ class CreateCellForm extends Component {
 
             }.bind(this))
             .catch(err => err);
-        console.log(JSON.stringify(res));
     };
 
     render() {

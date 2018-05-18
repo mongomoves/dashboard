@@ -96,15 +96,13 @@ class App extends Component {
     };
     addID = (data) => {
         for (let i = 0; i < this.state.cells.length; i++) {
-            console.log(JSON.stringify(this.state.cells[i].content.description));
-            console.log(JSON.stringify(data.description));
             if((this.state.cells[i].content.description===data.description)&&(this.state.cells[i].content.creator===data.creator)){
 
                 this.state.cells[i].id = data._id;
             }
 
         }
-        console.log(JSON.stringify(this.state.cells));
+        saveToLocalStorage("cells", this.state.cells);
     };
     getAllCells = () => {
         return this.state.cells;
@@ -219,13 +217,13 @@ class App extends Component {
 
 
     handleShowSaveDashboard = () => {
-
-        console.log(JSON.stringify(this.state.cells[1]))
-       // console.log(JSON.stringify(this.state.cells[1].layout.i))
         this.setState({modals: {saveDashboard: true}})
-        console.log(`open save dashboard`);
     };
 
+    handleCloseSaveDashboardSuccess = () => {
+        this.setState({modals: {saveDashboard: false}})
+        window.alert("success!");
+    };
     handleCloseSaveDashboard = () => {
         this.setState({modals: {saveDashboard: false}})
     };
@@ -280,7 +278,8 @@ class App extends Component {
                     show={this.state.modals.saveDashboard}
                     close={this.handleCloseSaveDashboard}>
                     <SaveDashboard
-                    getAllCells={this.getAllCells}/>
+                    getAllCells={this.getAllCells}
+                    handleCloseSaveDashboardSuccess={this.handleCloseSaveDashboardSuccess}/>
                 </BootstrapModal>
             </div>
         );

@@ -26,7 +26,7 @@ class SaveDashboard extends Component {
     };
     handleUserChange = (e) => {
         this.setState({user: e.target.value});
-        console.log(JSON.stringify(this.state.user));
+
     };
 
     handlePublishDashboard = (e) => {
@@ -34,8 +34,6 @@ class SaveDashboard extends Component {
             let allDBFormatWidgets=[];
             let widget;
                 for (let i = 0; i < allWidgets.length; i++) {
-
-                        console.log(JSON.stringify(allWidgets[i]));
                         widget = {
                                 id: allWidgets[i].id,
                                 i: allWidgets[i].layout.i,
@@ -46,9 +44,7 @@ class SaveDashboard extends Component {
                                 minW: allWidgets[i].layout.minW,
                                 minH: allWidgets[i].layout.minH
                             };
-                        console.log(JSON.stringify(widget));
                         allDBFormatWidgets.push(widget);
-                        console.log(JSON.stringify(allDBFormatWidgets));
                     }
 
 
@@ -59,17 +55,23 @@ class SaveDashboard extends Component {
                 description:this.state.description,
                 widgets: allDBFormatWidgets
             };
-         console.log(JSON.stringify(dashboard));
         fetch('http://192.168.99.100:3001/api/dashboards', {
             method: 'POST',
             headers: {
-                // 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(dashboard),
-        }).then(res => {
-            return res;
-        }).catch(err => err);
+        })
+            .then(function(res) {
+
+            if(res.ok){
+                this.props.handleCloseSaveDashboardSuccess();
+            }else{
+                window.alert("No cigar, propably one or more widgets not saved.")
+            }
+
+        }.bind(this))
+            .catch(err => err);
 
     };
 
