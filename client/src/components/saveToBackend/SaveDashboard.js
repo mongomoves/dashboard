@@ -25,8 +25,54 @@ class SaveDashboard extends Component {
         this.setState({description: e.target.value});
     };
     handleUserChange = (e) => {
-        this.setState({User: e.target.value});
+        this.setState({user: e.target.value});
+        console.log(JSON.stringify(this.state.user));
     };
+
+    handlePublishDashboard = (e) => {
+            const allWidgets = this.props.getAllCells();
+            let allDBFormatWidgets=[];
+            let widget;
+                for (let i = 0; i < allWidgets.length; i++) {
+
+                        console.log(JSON.stringify(allWidgets[i]));
+                        widget = {
+                                id: allWidgets[i].id,
+                                i: allWidgets[i].layout.i,
+                                x: allWidgets[i].layout.x,
+                                y: allWidgets[i].layout.y,
+                                w: allWidgets[i].layout.w,
+                                h: allWidgets[i].layout.h,
+                                minW: allWidgets[i].layout.minW,
+                                minH: allWidgets[i].layout.minH
+                            };
+                        console.log(JSON.stringify(widget));
+                        allDBFormatWidgets.push(widget);
+                        console.log(JSON.stringify(allDBFormatWidgets));
+                    }
+
+
+
+            const dashboard = {
+                title: this.state.title,
+                creator: this.state.user,
+                description:this.state.description,
+                widgets: allDBFormatWidgets
+            };
+         console.log(JSON.stringify(dashboard));
+        fetch('http://192.168.99.100:3001/api/dashboards', {
+            method: 'POST',
+            headers: {
+                // 'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(dashboard),
+        }).then(res => {
+            return res;
+        }).catch(err => err);
+
+    };
+
     render() {
         return (
             <div>
@@ -35,7 +81,7 @@ class SaveDashboard extends Component {
                     <FormControl
                         type='text'
                         defaultValue=''
-                         onChange={this.handleTitleChange}/>
+                        onChange={this.handleTitleChange}/>
                 </FormGroup>
                 <FormGroup>
                     <ControlLabel>Description</ControlLabel>
@@ -52,7 +98,7 @@ class SaveDashboard extends Component {
                         onChange={this.handleUserChange}/>
                 </FormGroup>
                 <ButtonToolbar>
-                    <Button bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                    <Button bsStyle='primary' onClick={this.handlePublishDashboard}>{this.state.buttonText}</Button>
                 </ButtonToolbar>
             </div>
         )

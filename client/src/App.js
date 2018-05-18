@@ -94,11 +94,20 @@ class App extends Component {
             cells: _.reject(this.state.cells, {layout: {i: i}})
         })
     };
+    addID = (data) => {
+        for (let i = 0; i < this.state.cells.length; i++) {
+            console.log(JSON.stringify(this.state.cells[i].content.description));
+            console.log(JSON.stringify(data.description));
+            if((this.state.cells[i].content.description===data.description)&&(this.state.cells[i].content.creator===data.creator)){
 
-    removeAllCells = (i) => {
-        this.setState({
-            cells: new Array()
-        })
+                this.state.cells[i].id = data._id;
+            }
+
+        }
+        console.log(JSON.stringify(this.state.cells));
+    };
+    getAllCells = () => {
+        return this.state.cells;
     };
 
     clearDashboardLayout = () => {
@@ -210,6 +219,9 @@ class App extends Component {
 
 
     handleShowSaveDashboard = () => {
+
+        console.log(JSON.stringify(this.state.cells[1]))
+       // console.log(JSON.stringify(this.state.cells[1].layout.i))
         this.setState({modals: {saveDashboard: true}})
         console.log(`open save dashboard`);
     };
@@ -225,7 +237,8 @@ class App extends Component {
                 <CustomNavbar
                     showCreateCell={this.handleShowCreateCell}
                     showExistingCell={this.handleShowExistingCell} 
-                    clearDashboard={this.clearDashboardLayout}/>
+                    clearDashboard={this.clearDashboardLayout}
+                    showSaveDashboard={this.handleShowSaveDashboard}/>
                 <Dashboard
                     removeCell={this.removeCell}
                     showInfo={this.handleShowCellInfo}
@@ -236,7 +249,10 @@ class App extends Component {
                     title="Skapa widget"
                     show={this.state.modals.createCell}
                     close={this.handleCloseCreateCell}>
-                    <CreateCellForm addCell={this.addCell} done={this.handleCloseCreateCell} />
+                    <CreateCellForm
+                        addCell={this.addCell}
+                        done={this.handleCloseCreateCell}
+                        addID = {this.addID}/>
                 </BootstrapModal>
                 <BootstrapModal
                     show={this.state.modals.existingCell}
@@ -263,7 +279,8 @@ class App extends Component {
                     title='Save Dashboard'
                     show={this.state.modals.saveDashboard}
                     close={this.handleCloseSaveDashboard}>
-                    <SaveDashboard />
+                    <SaveDashboard
+                    getAllCells={this.getAllCells}/>
                 </BootstrapModal>
             </div>
         );

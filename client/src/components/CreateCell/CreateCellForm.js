@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import fetch from 'isomorphic-fetch';
+// import { Fetch } from 'react-data-fetching'
 import {Button, ButtonToolbar, ToggleButtonGroup, ToggleButton, Checkbox, ControlLabel, FormControl, FormGroup, Tooltip, OverlayTrigger} from "react-bootstrap";
 
 
@@ -84,7 +84,6 @@ class CreateCellForm extends Component {
 
     handleCreateWidget = () => {
         let widget;
-        console.log('shit');
         if (this.state.kind === 'Value') {
             widget = {
                 kind: this.state.kind,
@@ -114,7 +113,7 @@ class CreateCellForm extends Component {
         }
 
 
-        console.log(`handleCreateWidget:widget=${JSON.stringify(widget)}`);
+        //console.log(`handleCreateWidget:widget=${JSON.stringify(widget)}`);
 
         this.props.addCell(widget);
 
@@ -126,7 +125,6 @@ class CreateCellForm extends Component {
         if (this.state.publish===true){
             widget.creator=this.state.creator;
             widget.description=this.state.description;
-            console.log(JSON.stringify(widget));
             this.handlePost(widget);
         }
 
@@ -134,6 +132,8 @@ class CreateCellForm extends Component {
 
 
     handlePost = (widget) => {
+        console.log(JSON.stringify(widget));
+        let res;
         fetch('http://192.168.99.100:3001/api/widgets', {
             method: 'POST',
             headers: {
@@ -141,10 +141,19 @@ class CreateCellForm extends Component {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(widget),
-        }).then(res => {
-            return res;
-        }).catch(err => err);
-    }
+        })
+            .then(function(res) {
+                return res.json()
+            })
+            .then(function(data) {
+                // this.props.addID(data.widget);
+
+                this.props.addID(data.widget);
+
+            }.bind(this))
+            .catch(err => err);
+        console.log(JSON.stringify(res));
+    };
 
     render() {
         let formContent;
