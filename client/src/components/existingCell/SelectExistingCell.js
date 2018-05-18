@@ -1,6 +1,5 @@
-import React, {  Component} from 'react';
+import React from 'react';
 import Categories from './Categories';
-import {Button} from 'react-bootstrap';
 import SearchBar from './SearchBar';
 import TextCellTest from './TextCellTest';
 import GraphCellTest from './GraphCellTest';

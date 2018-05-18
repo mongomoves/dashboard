@@ -1,10 +1,8 @@
-import React, {  Component} from 'react';
-import { ButtonGroup,Button, DropdownButton, MenuItem } from 'react-bootstrap';
+import React from 'react';
+import { ButtonGroup,Button } from 'react-bootstrap';
 
 class Categoeies extends React.Component {
-  constructor(props){
-    super(props);
-  }
+  
 
   render() {
     return (
