@@ -27,7 +27,7 @@ class IframeHolder extends Component {
         } 
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
+    componentDidUpdate(prevProps, prevState) {
         if(this.props.values.refreshRate !== prevProps.values.refreshRate) {
             if(this.state.interval) {
                 clearInterval(this.state.interval);
@@ -36,6 +36,8 @@ class IframeHolder extends Component {
                 let intervalID = setInterval(this.updateContent, 1000 * 60 * this.props.values.refreshRate);
                 this.setState({interval: intervalID});
             }
+        } else if (this.props.values.graphUrl !== prevProps.values.graphUrl) {
+            this.updateContent();
         }
     }
 

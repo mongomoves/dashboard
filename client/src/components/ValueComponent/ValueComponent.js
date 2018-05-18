@@ -30,7 +30,7 @@ class ValueComponent extends Component {
         }
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
+    componentDidUpdate(prevProps, prevState) {
         if(this.props.values.number && (prevState.number != this.props.values.number)) {
             this.setState({externalData: false, number: this.props.values.number});
         }

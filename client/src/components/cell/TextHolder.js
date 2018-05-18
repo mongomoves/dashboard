@@ -38,7 +38,7 @@ class TextHolder extends Component {
      * Lifecycle method. Makes sure the component updates properly when
      * the user switches between using free text and api requests.
      */
-    componentDidUpdate(prevProps, prevState, snapshot) {
+    componentDidUpdate(prevProps, prevState) {
         if(this.props.values.textInput && (prevState.text !== this.props.values.textInput)) {
             this.setState({text: this.props.values.textInput, isArray: false, externalData: false});
         } 
