@@ -6,12 +6,12 @@ import EditCellForm from "./components/CreateCell/EditCellForm";
 import SelectExistingCell from './components/existingCell/SelectExistingCell';
 import CellInfo from './components/cell/CellInfo';
 import BootstrapModal from './components/Modal/BootstrapModal';
+import SaveDashboard from "./components/saveToBackend/SaveDashboard";
 import _ from 'lodash';
 
 import './App.css';
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
-import SaveDashboard from "./components/saveToBackend/SaveDashboard";
 
 const localStorageCells = loadFromLocalStorage("cells") || [];
 
@@ -98,15 +98,17 @@ class App extends Component {
     //adds id generated for widget in backend to the widget in the cells Array.
     //parameter: data The widget from the post request response.
     addID = (data) => {
-        for (let i = 0; i < this.state.cells.length; i++) {
-            if((this.state.cells[i].content.description===data.description)&&(this.state.cells[i].content.creator===data.creator)){
-
-                this.state.cells[i].id = data._id;
+        let cells = Object.assign([], this.state.cells);
+        for (let i = 0; i < cells.length; i++) {
+            if((cells[i].content.description === data.description) 
+                && (cells[i].content.creator === data.creator)) {
+                cells[i].id = data._id;
             }
-
         }
+        this.setState({cells: cells});
         saveToLocalStorage("cells", this.state.cells);
     };
+
     getAllCells = () => {
         return this.state.cells;
     };
@@ -229,7 +231,6 @@ class App extends Component {
 
     handleCloseSaveDashboardSuccess = () => {
         this.setState({modals: {saveDashboard: false}})
-        window.alert("success!");
     };
     handleCloseSaveDashboard = () => {
         this.setState({modals: {saveDashboard: false}})

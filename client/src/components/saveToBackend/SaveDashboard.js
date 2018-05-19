@@ -1,19 +1,16 @@
-/**
- * Created by Butts on 2018-05-11.
- */
 import React, { Component } from 'react';
-import {Button, ButtonToolbar, Checkbox, ControlLabel, FormControl, FormGroup} from "react-bootstrap";
+import {Button, ButtonToolbar, ControlLabel, FormControl, FormGroup} from "react-bootstrap";
+
 /**
  * Component to for handling saving the dashboard to backend. Contains model window with input form and method for publishing
  * dashboard to backend.
  */
-
 class SaveDashboard extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            buttonText: 'Save Dashboard',
+            buttonText: 'Spara Dashboard',
             publish: false,
             buttonDisabled: false,
             title: '',
@@ -76,7 +73,7 @@ class SaveDashboard extends Component {
             if(res.ok){
                 this.props.handleCloseSaveDashboardSuccess();
             }else{
-                window.alert("No cigar, propably one or more widgets not saved.")
+                window.alert("Alla widgets måste sparas innan dashboarden kan sparas.")
             }
 
         }.bind(this))

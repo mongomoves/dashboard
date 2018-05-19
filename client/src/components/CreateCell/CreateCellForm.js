@@ -118,28 +118,25 @@ class CreateCellForm extends Component {
                 refreshRate: this.state.refreshRate
             }
         }
-
-
         //console.log(`handleCreateWidget:widget=${JSON.stringify(widget)}`);
+        if(this.state.publish) {
+            widget.creator=this.state.creator;
+            widget.description=this.state.description;
+            this.handlePost(widget);
+        }
 
         this.props.addCell(widget);
 
         if (this.props.done) {
             this.props.done();
         }
-
-        //TODO: If publish is true, send to database
-        if (this.state.publish===true){
-            widget.creator=this.state.creator;
-            widget.description=this.state.description;
-            this.handlePost(widget);
-        }
-
     };
 
-    //Publishes the created widget though Post request to backend. Sends response to addID in App to associate widget ID
-    //from backend to the widget in frontend.
-    //param : widget the widget to post to backend.
+    /**
+    * Publishes the created widget though Post request to backend. Sends response to addID in App to associate widget ID
+    * from backend to the widget in frontend.
+    * @param {*} widget the widget to post to backend.
+    **/
     handlePost = (widget) => {
         fetch('http://192.168.99.100:3001/api/widgets', {
             method: 'POST',
