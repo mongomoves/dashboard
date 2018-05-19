@@ -115,24 +115,50 @@ class EditCellForm extends Component {
             }
         }
 
-        console.log(`handleCreateWidget:widget=${JSON.stringify(widget)}`);
-        if(this.state.creator) {
+        //console.log(`handleCreateWidget:widget=${JSON.stringify(widget)}`);
+        if(this.state.published) {
             this.props.addCell(widget);
         } else {
+            if(this.state.publish) {
+                widget.creator=this.state.creator;
+                widget.description=this.state.description;
+                this.handlePost(widget);
+            }
             this.props.editCell(widget, this.props.values.index);
         }
 
         if (this.props.done) {
             this.props.done();
         }
-
-        //TODO: If publish is true, send to database
     };
 
     /**
-     * Tries to check if entered string is a full Iframe tag and returns URL only if so.
-     * @param {*} graphUrl String to check and extract url from
-     */
+    * Publishes the created widget though Post request to backend. Sends response to addID in App to associate widget ID
+    * from backend to the widget in frontend.
+    * @param {*} widget the widget to post to backend.
+    **/
+   handlePost = (widget) => {
+    fetch('http://192.168.99.100:3001/api/widgets', {
+        method: 'POST',
+        headers: {
+            // 'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(widget),
+    })
+        .then(function(res) {
+            return res.json()
+        })
+        .then(function(data) {
+            this.props.addID(data.widget);
+        }.bind(this))
+        .catch(err => err);
+   }; 
+    
+    /**
+    * Tries to check if entered string is a full Iframe tag and returns URL only if so.
+    * @param {*} graphUrl String to check and extract url from
+    **/
     checkIframeTag = (graphUrl) => {
         const iframeTag = '</iframe>';
         const httpRegex = RegExp(/(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/igm);
