@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import jsonQuery from 'json-query';
 
 /**
  * Component capable of holding textual information.
@@ -59,7 +60,7 @@ class TextHolder extends Component {
 
     updateContent = () => {
         this.fetchText(this.props.values.dataSource, this.props.values.attribute);
-    }
+    };
 
     /**
      * Fetches some text from the provided URL with the provided key (attribute).
@@ -75,7 +76,8 @@ class TextHolder extends Component {
             }
             throw new Error('Fel');
         }).then((json) => {
-            const apiText = this.getValueByKey(json, attribute);
+            const apiText = jsonQuery(attribute, {data: json}).value;
+
             if((typeof apiText !== 'object' || !(apiText instanceof Object)) && apiText) {
                 this.setState({text: apiText, isArray: false, externalData: true});
             } else if (Array.isArray(apiText)) {
@@ -92,36 +94,14 @@ class TextHolder extends Component {
                 clearInterval(this.state.interval);
             }
         });
-    }
-
-    /**
-     * Returns value for key even if nested in object.
-     * @param {*} object Object to iterate
-     * @param {*} key Key for value to return
-     */
-    getValueByKey = (object, key) => {
-        var stack = [object];
-        var current, index, value;
-        while (stack.length) {
-            current = stack.pop();
-            for (index in current) {
-                value = current[index];
-                if (key === index) {
-                    return value;
-                }
-                else if (value !== null && typeof value === 'object') {
-                    stack.unshift(value);
-                }
-            }
-        }
-    }
+    };
 
     /**
      * Returns an array of elements with a div for each
      * entry in the array to display.
      * @param {*} array Array to print
      */
-    printArray = (array) => {
+    renderArray = (array) => {
         let newArray = array.map(el => {
             let tempElement;
             if(el instanceof Object) {
@@ -136,7 +116,7 @@ class TextHolder extends Component {
             )
         });
         return newArray;
-    }
+    };
 
     /**
      * Calculates the font size for the TextHolder, so that it is
@@ -144,17 +124,17 @@ class TextHolder extends Component {
      * Returns the size in percentage.
      */
     calcFont = () => {
-        let size = this.props.width / 2;
-        if(size < 200) {
-            return 200;
+        let size = this.props.width / 4;
+        if(size < 150) {
+            return 150;
         }
         return size;
-    }
+    };
 
     render() {
         let content;
         if(this.state.isArray) {
-            content = this.printArray(this.state.text);
+            content = this.renderArray(this.state.text);
         } else {
             content = (
                 <span style={{...spanStyleText, fontSize: `${this.calcFont()}%`}}>{this.state.text}</span>
