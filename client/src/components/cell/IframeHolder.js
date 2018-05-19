@@ -78,7 +78,6 @@ class IframeHolder extends Component {
     }
 
     render() {
-        let content;
         if(this.props.height <= 0 || this.props.width <= 0) {
             return null;
         }
