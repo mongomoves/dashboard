@@ -8,6 +8,8 @@ services:
       
   backend:
     build: ./node # specify the directory of the Dockerfile
+    volumes:
+      - './node:/node'
     ports:
       - "3001:3001" #specify ports forwarding
     links:
@@ -17,6 +19,8 @@ services:
 
   frontend:
     build: ./client # specify the directory of the Dockerfile
+    volumes:
+      - './client:/client'
     ports:
       - "3000:3000" #specify ports forwarding
     depends_on:
