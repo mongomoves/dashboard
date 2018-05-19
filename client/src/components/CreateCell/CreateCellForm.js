@@ -137,7 +137,7 @@ class CreateCellForm extends Component {
         const iframeTag = '</iframe>';
         const httpRegex = RegExp(/(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/igm);
         if(graphUrl.includes(iframeTag)) {
-            return graphUrl.match(httpRegex);
+            return graphUrl.match(httpRegex)[0];
         } else {
             return graphUrl;
         }
@@ -170,7 +170,7 @@ class CreateCellForm extends Component {
                         <Row className='show-grid'>
                             <Col xs={8}>
                                 <FormGroup>
-                                    <ControlLabel>Data-attribute</ControlLabel>
+                                    <ControlLabel>Data-attribut</ControlLabel>
                                     <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-attribute">Ange specifikt attribut från API</Tooltip>}>
                                         <FormControl
                                             type='text'
@@ -275,7 +275,7 @@ class CreateCellForm extends Component {
                     </Grid>
                     <FormGroup>
                         <ControlLabel>Diagram-URL</ControlLabel>
-                        <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-graphUrl">Ange URL för att visa önskat diagram.</Tooltip>}>
+                        <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-graphUrl">Ange URL för inbäddat innehåll att visa.</Tooltip>}>
                         <FormControl
                             type='text'
                             onChange={this.handleGraphUrlChange}/>
@@ -323,7 +323,7 @@ class CreateCellForm extends Component {
                         <Row className='show-grid'>
                             <Col xs={8}>
                                 <FormGroup>
-                                    <ControlLabel>Data-attribute</ControlLabel>
+                                    <ControlLabel>Data-attribut</ControlLabel>
                                     <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-attribute">Ange specifikt attribut från API</Tooltip>}>
                                         <FormControl
                                             type='text'
