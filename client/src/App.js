@@ -5,6 +5,7 @@ import CreateCellForm from "./components/CreateCell/CreateCellForm";
 import EditCellForm from "./components/CreateCell/EditCellForm";
 import SelectExistingCell from './components/existingCell/SelectExistingCell';
 import CellInfo from './components/cell/CellInfo';
+import Footer from "./components/footer/footer";
 import BootstrapModal from './components/Modal/BootstrapModal';
 import SaveDashboard from "./components/saveToBackend/SaveDashboard";
 import _ from 'lodash';
@@ -200,6 +201,7 @@ class App extends Component {
                         kind: 'Graph',
                         title: e.content.title,
                         graphUrl: e.content.graphUrl,
+                        displayType: e.content.displayType,
                         refreshRate: e.content.refreshRate
                     }
                 } else if (e.content.kind === 'Text') {
@@ -275,20 +277,21 @@ class App extends Component {
                     title='Redigera widget'
                     show={this.state.modals.editCell}
                     close={this.handleCloseEditCell}>
-                    <EditCellForm 
-                        values={editValues} 
+                    <EditCellForm
+                        values={editValues}
                         addCell={this.addCell}
                         editCell={this.editCell}
                         done={this.handleCloseEditCell}/>
                 </BootstrapModal>
                 <BootstrapModal
-                    title='Save Dashboard'
+                    title='Spara Dashboard'
                     show={this.state.modals.saveDashboard}
                     close={this.handleCloseSaveDashboard}>
                     <SaveDashboard
-                    getAllCells={this.getAllCells}
-                    handleCloseSaveDashboardSuccess={this.handleCloseSaveDashboardSuccess}/>
+                        getAllCells={this.getAllCells}
+                        handleCloseSaveDashboardSuccess={this.handleCloseSaveDashboardSuccess}/>
                 </BootstrapModal>
+                 <Footer/>
             </div>
         );
     }

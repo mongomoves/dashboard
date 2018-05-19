@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import jsonQuery from 'json-query';
 
 //Component represent a Value cell that shows either external- or user entered data
 class ValueComponent extends Component {
@@ -35,7 +36,7 @@ class ValueComponent extends Component {
      * source of text being displayed, and different refresh rates.
      */
     componentDidUpdate(prevProps, prevState) {
-        if(this.props.values.number && (prevState.number != this.props.values.number)) {
+        if(this.props.values.number && (prevState.number !== this.props.values.number)) {
             this.setState({externalData: false, number: this.props.values.number});
         }
         else if(this.props.values.dataSource !== prevProps.values.dataSource ||
@@ -67,48 +68,47 @@ class ValueComponent extends Component {
      * @param {*} attribute Attribute key for desired value
      */
     getData = (dataURL, attribute) => {
-        let result = false;
-        fetch(dataURL)
-            .then(res => res.json())
-            .then((out) => {
-                result = this.getValueByKey(out, attribute); 
-                if (typeof result === 'number' || result instanceof Number) {
-                    this.setState({externalData: true, number: result, fetchSuccess: true });
-                } else {
-                    this.setState({externalData: false, fetchSuccess: false });
-                    if(this.state.interval) {
-                        clearInterval(this.state.interval);
-                    }
-                }
+        fetch(dataURL).then((response) => {
+            if(response.ok) {
+                return response.json();
+            }
+            throw new Error('Fel');
+        }).then((json) => {
+            let result = jsonQuery(attribute, {data: json}).value;
 
-            })
-    }
+            // If the json query results in an array, we only show the first value since the
+            // component only supports showing one value at the moment.
+            if (result instanceof Array) {
+                result = result[0];
+            }
 
-    /**
-     * Returns value for key even if nested in object.
-     * @param {*} object Object to iterate
-     * @param {*} key Key for value to return
-     */
-    getValueByKey = (object, key) => {
-        var stack = [object];
-        var current, index, value;
-        // keep iterating until the stack is empty
-        while (stack.length) {
-            current = stack.pop();
-            // iterate over the current object
-            for (index in current) {
-                value = current[index];
-                // if it is a match it is returned
-                if (key === index) {
-                    return value;
-                }
-                else if (value !== null && typeof value === 'object') {
-                    // add this value in the stack
-                    stack.unshift(value);
+            if(typeof result === 'number' || result instanceof Number) {
+                this.setState({
+                        externalData: true,
+                        number: result,
+                        fetchSuccess: true
+                    });
+            } else {
+                this.setState({
+                        externalData: true,
+                        fetchSuccess: false
+                    });
+                if(this.state.interval) {
+                    clearInterval(this.state.interval);
                 }
             }
-        }
-    }
+        }).catch((error) => {
+            this.setState({
+                externalData: true,
+                fetchSuccess: false
+            });
+            if(this.state.interval) {
+                clearInterval(this.state.interval);
+            }
+
+            console.log(error);
+        });
+    };
 
     render() {
         //if external data is specified and is valid   

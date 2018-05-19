@@ -7,9 +7,7 @@ import React, {Component} from 'react';
 class IframeHolder extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-
-        }
+        this.state = {}   
     }
 
     /**
@@ -18,12 +16,12 @@ class IframeHolder extends Component {
      */
     componentDidMount() {
         if(this.props.values.graphUrl) {
-            this.setState({frameURL: this.props.values.graphUrl});
+            this.setState({frameURL: this.checkForHTTP(this.props.values.graphUrl)});
         }
         if(this.props.values.refreshRate && this.props.values.refreshRate > 0) {
             let intervalID = setInterval(this.updateContent, 1000 * 60 * this.props.values.refreshRate);
             this.setState({interval: intervalID});
-        } 
+        }
     }
 
     /**
@@ -32,7 +30,7 @@ class IframeHolder extends Component {
     componentWillUnmount() {
         if(this.state.interval) {
             clearInterval(this.state.interval);
-        } 
+        }
     }
 
     /**
@@ -61,23 +59,53 @@ class IframeHolder extends Component {
      */
     updateContent = () => {
         this.setState({frameURL: null});
-        this.setState({frameURL: this.props.values.graphUrl});
+        this.setState({frameURL: this.checkForHTTP(this.props.values.graphUrl)});
+    }
+
+    /**
+     * Checks if URL for Iframe contains http or https. If either is missing
+     * the Iframe will display the entire Dashboard page as an embed. This avoids that
+     * but it will not stop the user from entering an invalid URL.
+     */
+    checkForHTTP = (url) => {
+        if(url.includes('http://', 0) || url.includes('https://', 0)) {
+            this.setState({proper: true});
+            return url;
+        } else {
+            this.setState({proper: false});
+            return 'about:blank';
+        }
     }
 
     render() {
         if(this.props.height <= 0 || this.props.width <= 0) {
             return null;
         }
-        return (
-            <iframe
-                title="Iframe"
-                style={{border: '0', height: '100%', width: '100%'}}
-                width={this.props.width}
-                height={this.props.height}
-                src={this.state.frameURL}>
-            </iframe>
-        );
+
+        if(this.state.proper) {
+            return (
+                <iframe
+                    title="Iframe"
+                    style={{border: '0', height: '100%', width: '100%'}}
+                    width={this.props.width}
+                    height={this.props.height}
+                    src={this.state.frameURL}>
+                </iframe>
+            )
+        } else {
+            return (
+                <span style={errorStyle}>Ett fel inträffade.<br/>
+                    Förmodligen felaktig URL.</span>
+            )
+        }
     }
 }
 
 export default IframeHolder;
+
+const errorStyle = {
+    fontWeight: "bold",
+    display: "inlineBlock",
+    paddingRight: "5%",
+    color: "orange"
+}

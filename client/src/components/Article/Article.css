@@ -1,0 +1,23 @@
+body {
+    background-color: rgba(196, 186, 186, 0.603);
+}
+
+.Article{
+    float: right;
+}
+
+li {
+    list-style: none;
+}
+
+.page-header {
+    padding-top: 10px;
+    padding-bottom: 9px;
+    margin: 40px 0 20px;
+    border-bottom: 2px solid orange;
+    text-align: center;
+}
+
+.liBold {
+    font-weight: bold;
+}
