@@ -35,7 +35,7 @@ class ValueComponent extends Component {
      * source of text being displayed, and different refresh rates.
      */
     componentDidUpdate(prevProps, prevState) {
-        if(this.props.values.number && (prevState.number != this.props.values.number)) {
+        if(this.props.values.number && (prevState.number !== this.props.values.number)) {
             this.setState({externalData: false, number: this.props.values.number});
         }
         else if(this.props.values.dataSource !== prevProps.values.dataSource ||
