@@ -180,6 +180,7 @@ class App extends Component {
                         kind: 'Graph',
                         title: e.content.title,
                         graphUrl: e.content.graphUrl,
+                        displayType: e.content.displayType,
                         refreshRate: e.content.refreshRate
                     }
                 } else if (e.content.kind === 'Text') {

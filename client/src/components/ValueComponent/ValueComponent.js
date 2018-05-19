@@ -67,21 +67,27 @@ class ValueComponent extends Component {
      * @param {*} attribute Attribute key for desired value
      */
     getData = (dataURL, attribute) => {
-        let result = false;
-        fetch(dataURL)
-            .then(res => res.json())
-            .then((out) => {
-                result = this.getValueByKey(out, attribute); 
-                if (typeof result === 'number' || result instanceof Number) {
-                    this.setState({externalData: true, number: result, fetchSuccess: true });
-                } else {
-                    this.setState({externalData: false, fetchSuccess: false });
-                    if(this.state.interval) {
-                        clearInterval(this.state.interval);
-                    }
+        fetch(dataURL).then((response) => {
+            if(response.ok) {
+                return response.json();
+            }
+            throw new Error('Fel');
+        }).then((json) => {
+            const result = this.getValueByKey(json, attribute);
+            if(typeof result === 'number' || result instanceof Number) {
+                this.setState({externalData: true, number: result, fetchSuccess: true});
+            } else {
+                this.setState({externalData: true, fetchSuccess: false});
+                if(this.state.interval) {
+                    clearInterval(this.state.interval);
                 }
-
-            })
+            }
+        }).catch((error) => {
+            this.setState({externalData: true, fetchSuccess: false});
+            if(this.state.interval) {
+                clearInterval(this.state.interval);
+            }
+        });
     }
 
     /**

@@ -69,19 +69,27 @@ class TextHolder extends Component {
      * @param {*} attribute Key to get value from
      */
     fetchText = (url, attribute) => {
-        fetch(url)
-        .then(res => res.json())
-        .then((out) => {
-            const apiText = this.getValueByKey(out, attribute);
-            if(typeof apiText !== 'object' || !(apiText instanceof Object)) {
+        fetch(url).then((response) => {
+            if(response.ok) {
+                return response.json();
+            }
+            throw new Error('Fel');
+        }).then((json) => {
+            const apiText = this.getValueByKey(json, attribute);
+            if((typeof apiText !== 'object' || !(apiText instanceof Object)) && apiText) {
                 this.setState({text: apiText, isArray: false, externalData: true});
             } else if (Array.isArray(apiText)) {
                 this.setState({isArray: true, text: apiText, externalData: true});
-            } else {
-                this.setState({text: 'Felaktigt attribut, ingen data hämtad', externalData: false});
+            } else if (!apiText) {
+                this.setState({text: 'Felaktigt attribut? Ingen data hämtad.', externalData: false});
                 if(this.state.interval) {
                     clearInterval(this.state.interval);
                 }
+            }
+        }).catch((error) => {
+            this.setState({text: 'Fel: ' + error, externalData: false});
+            if(this.state.interval) {
+                clearInterval(this.state.interval);
             }
         });
     }
