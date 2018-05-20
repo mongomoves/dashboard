@@ -17,8 +17,6 @@ class Sidebar extends Component {
                     <MenuItem eventKey={4.1} className="button">Koncept</MenuItem>
                     <MenuItem eventKey={4.2} className="button">Widget</MenuItem>
                     <MenuItem eventKey={4.3} className="button">Steg för steg</MenuItem>
-                    <MenuItem eventKey={4.4} className="button">Ordlista</MenuItem>
-
                 </div>
             </div>
         );
