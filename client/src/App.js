@@ -40,6 +40,50 @@ class App extends Component {
         };
     }
 
+    /**
+     * Checks if the specified position is blocked by a cell in cells array.
+     * Also returns true if the position would span more than max column width.
+     * @param cells an array of cells, most likely this.state.cells
+     * @param x the cells x coordinate
+     * @param y the cells y coordinate
+     * @param w the width of the cell
+     * @param h the height of the cell
+     * @returns true or false
+     */
+    isPositionBlocked(cells, x, y, w, h) {
+        return cells.some(function(cell) {
+            return (cell.layout.x < x + w && cell.layout.x + cell.layout.w > x
+                && cell.layout.y < y + h && cell.layout.y + cell.layout.h > y)
+                || x + w > 12;
+        });
+    }
+
+    /**
+     * Finds an empty position on the dashboard, used when creating new cells.
+     * Terribly expensive and in need of optimization if we have time.
+     * @param w width of cell
+     * @param h height of cell
+     * @returns array with x and y coordinates of empty position
+     */
+    findEmptyPosition = (w, h) => {
+        let xPos = 0;
+        let yPos = 0;
+
+        let posIsBlocked = true;
+
+        for (let i = 0; posIsBlocked; i++) {
+            xPos = i % 12;
+
+            if (i > 0 && i % 12 === 0) {
+                yPos++;
+            }
+
+            posIsBlocked = this.isPositionBlocked(this.state.cells, xPos, yPos, w, h);
+        }
+
+        return [xPos, yPos];
+    };
+
     // adds a cell to the layout
     // depending on widget type the initial w/h and minw/minh are different
     addCell = (cell) => {
@@ -57,10 +101,12 @@ class App extends Component {
             minH = 4;
         }
 
+        const position = this.findEmptyPosition(w, h);
+
         const layout = {
             i: this.state.idCounter,
-            x: (this.state.cells.length) % 12, // TODO: better way to calculate X
-            y: Infinity,
+            x: position[0],
+            y: position[1],
             w: w,
             h: h,
             minW: minW,
