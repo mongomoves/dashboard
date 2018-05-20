@@ -138,7 +138,7 @@ class CreateCellForm extends Component {
     * @param {*} widget the widget to post to backend.
     **/
     handlePost = (widget) => {
-        fetch('http://192.168.99.100:3001/api/widgets', {
+        fetch('http://localhost:3001/api/widgets', {
             method: 'POST',
             headers: {
                 // 'Accept': 'application/json',
