@@ -7,6 +7,7 @@ import SelectExistingCell from './components/existingCell/SelectExistingCell';
 import CellInfo from './components/cell/CellInfo';
 import Footer from "./components/footer/footer";
 import BootstrapModal from './components/Modal/BootstrapModal';
+import SaveDashboard from "./components/saveToBackend/SaveDashboard";
 import _ from 'lodash';
 
 import './App.css';
@@ -32,7 +33,8 @@ class App extends Component {
                 createCell: false,
                 editCell: false,
                 existingCell: false,
-                showInfo: false
+                showInfo: false,
+                saveDashboard: false,
             },
             idCounter: localStorageCells.length > 0 // if we loaded cells from local storage
                 ? Number(localStorageCells[localStorageCells.length - 1].layout.i) + 1 // set start id to highest id + 1
@@ -140,6 +142,24 @@ class App extends Component {
         })
     };
 
+    //adds id generated for widget in backend to the widget in the cells Array.
+    //parameter: data The widget from the post request response.
+    addID = (data) => {
+        let cells = Object.assign([], this.state.cells);
+        for (let i = 0; i < cells.length; i++) {
+            if((cells[i].content.description === data.description) 
+                && (cells[i].content.creator === data.creator)) {
+                cells[i].id = data._id;
+            }
+        }
+        this.setState({cells: cells});
+        saveToLocalStorage("cells", this.state.cells);
+    };
+
+    getAllCells = () => {
+        return this.state.cells;
+    };
+
     clearDashboardLayout = () => {
         this.setState({
             layouts: {},
@@ -147,6 +167,7 @@ class App extends Component {
             idCounter: 0
         });
     };
+
 
     /**
      * Callback function. Sets new layout state.
@@ -251,13 +272,27 @@ class App extends Component {
         this.setState({modals: {editCell: false}})
     };
 
+
+    handleShowSaveDashboard = () => {
+        this.setState({modals: {saveDashboard: true}})
+    };
+
+    handleCloseSaveDashboardSuccess = () => {
+        this.setState({modals: {saveDashboard: false}})
+    };
+    handleCloseSaveDashboard = () => {
+        this.setState({modals: {saveDashboard: false}})
+    };
+
     render() {
         return (
             <div>
+
                 <CustomNavbar
                     showCreateCell={this.handleShowCreateCell}
-                    showExistingCell={this.handleShowExistingCell}
-                    clearDashboard={this.clearDashboardLayout}/>
+                    showExistingCell={this.handleShowExistingCell} 
+                    clearDashboard={this.clearDashboardLayout}
+                    showSaveDashboard={this.handleShowSaveDashboard}/>
                 <Dashboard
                     removeCell={this.removeCell}
                     showInfo={this.handleShowCellInfo}
@@ -268,7 +303,10 @@ class App extends Component {
                     title="Skapa widget"
                     show={this.state.modals.createCell}
                     close={this.handleCloseCreateCell}>
-                    <CreateCellForm addCell={this.addCell} done={this.handleCloseCreateCell} />
+                    <CreateCellForm
+                        addCell={this.addCell}
+                        done={this.handleCloseCreateCell}
+                        addID = {this.addID}/>
                 </BootstrapModal>
                 <BootstrapModal
                     show={this.state.modals.existingCell}
@@ -290,6 +328,14 @@ class App extends Component {
                         addCell={this.addCell}
                         editCell={this.editCell}
                         done={this.handleCloseEditCell}/>
+                </BootstrapModal>
+                <BootstrapModal
+                    title='Spara Dashboard'
+                    show={this.state.modals.saveDashboard}
+                    close={this.handleCloseSaveDashboard}>
+                    <SaveDashboard
+                        getAllCells={this.getAllCells}
+                        handleCloseSaveDashboardSuccess={this.handleCloseSaveDashboardSuccess}/>
                 </BootstrapModal>
                  <Footer/>
             </div>

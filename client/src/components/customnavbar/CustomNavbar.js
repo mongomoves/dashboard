@@ -33,7 +33,7 @@ class CustomNavbar extends Component {
                   <MenuItem eventKey={3.1} onClick={this.props.showCreateCell}>Skapa widget</MenuItem>
                   <MenuItem eventKey={3.2} onClick={this.props.showExistingCell}>Ladda widgets</MenuItem>
                   <MenuItem divider />
-                  <MenuItem eventKey={3.3}>Spara din Dashboard</MenuItem>
+                  <MenuItem eventKey={3.3} onClick={this.props.showSaveDashboard}>Spara Dashboard</MenuItem>
                   <MenuItem eventKey={3.4}>Ladda Dashboards</MenuItem>
                   <MenuItem divider />
                   <MenuItem eventKey={3.5} onClick={this.props.clearDashboard}>Rensa din Dashboard</MenuItem>
