@@ -1,13 +1,30 @@
 import React, { Component } from 'react';
 import { PageHeader} from 'react-bootstrap';
 import "./Article.css";
+import StepByStep from '../HowToPage/ContentComponents/StegforStegComponent';
+import Koncept from '../HowToPage/ContentComponents/KonceptComponent';
+import Widget from '../HowToPage/ContentComponents/WidgetComponent';
 
 class Article extends Component {
     constructor(props){
         super(props);
         this.state = {
-
+            toggleKoncept: true,
+            toggleStepByStep: true,
+            toggleWidget: true
         }
+    }
+
+    toggleKonceptHandler = () => {
+        this.setState({toggleKoncept: !this.state.toggleKoncept});
+    }
+
+    toggleStepByStepHandler = () => {
+        this.setState({toggleStepByStep: !this.state.toggleStepByStep});
+    }
+
+    toggleWidgetHandler = () => {
+        this.setState({toggleWidget: !this.state.toggleWidget})
     }
 
     render() {
@@ -45,6 +62,15 @@ Det finns just nu tre olika typer av widgets: <u>Diagram</u>, <u>värde</u> och 
                         <p> En datakälla är ett API som returnerar värde baserat på angivna parametrar. Dessa parametrar kan vara t.ex. år, title och typ. </p>
                                                             
                 </ul>
+
+                <button onClick={this.toggleKonceptHandler}>Hantera event</button>
+                <button onClick={this.toggleStepByStepHandler}>Hantera event2</button>
+                <button onClick={this.toggleWidgetHandler}>Hantera event3</button>
+
+                {!this.state.toggleKoncept && <Koncept />}
+                {!this.state.toggleStepByStep && <StepByStep />}
+                {!this.state.toggleWidget && <Widget />}
+
             </div>
         );
     }
