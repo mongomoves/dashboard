@@ -103,3 +103,16 @@
     bottom: 0;
 }
 
+.btn-default {
+    color: orange;
+    background-color: black;
+    border-style: none;
+    text-shadow: none;
+}
+
+.btn-default:hover {
+    color: white;
+    background-color: black;
+    text-shadow: 0 1px darkorange;
+}
+
