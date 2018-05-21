@@ -1,8 +1,9 @@
 import React from 'react';
 import SearchCellsForm from "./SearchCellsForm";
 import SearchCellsList from "./SearchCellsList";
+import SERVER_URL from '../../constants'
 
-const DEFAULT_REQUEST_URL = "http://localhost:3001/api/widgets";
+const DEFAULT_REQUEST_URL = SERVER_URL + "/api/widgets";
 
 class SearchCells extends React.Component {
     constructor(props) {
