@@ -15,8 +15,8 @@ class Sidebar extends Component {
             <div>
                 <div className="vertical-list">
                     <MenuItem eventKey={4.1} onClick={this.props.clickedKoncept} className="button">Koncept</MenuItem>
-                    <MenuItem eventKey={4.2} onClick={this.props.clickedStepByStep} className="button">Steg för steg</MenuItem>
-                    <MenuItem eventKey={4.3} onClick={this.props.clickedWidgetEx} className="button">Widget</MenuItem>
+                    <MenuItem eventKey={4.2} onClick={this.props.clickedWidgetEx} className="button">Widget</MenuItem>
+                    <MenuItem eventKey={4.3} onClick={this.props.clickedStepByStep} className="button">Steg för steg</MenuItem>
                 </div>
             </div>
         );
