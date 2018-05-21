@@ -10,6 +10,7 @@ class FormInput extends React.Component {
                 <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-number">{this.props.tooltip}</Tooltip>}>
                     <FormControl
                         type={this.props.type}
+                        defaultValue={this.props.defaultValue}
                         onChange={this.props.onChange}/>
                 </OverlayTrigger>
             </FormGroup>
@@ -23,5 +24,9 @@ FormInput.propTypes = {
     title: PropTypes.string.isRequired,
     tooltip: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
-    onChange: PropTypes.func.isRequired
+    onChange: PropTypes.func.isRequired,
+    defaultValue: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number
+    ])
 }

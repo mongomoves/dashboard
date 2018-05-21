@@ -301,12 +301,12 @@ class CreateCellForm extends Component {
                     <Grid>
                         <Row className='show-grid'>
                             <Col xs={8}>
-                            <FormInput title='Data-attribut' type='text' onChange={this.handleAttributeChange}
-                                tooltip='Ange specifikt attribut från API'/>
+                                <FormInput title='Data-attribut' type='text' onChange={this.handleAttributeChange}
+                                    tooltip='Ange specifikt attribut från API'/>
                             </Col>
                             <Col xs={4}>
-                            <FormInput title='Uppdateringsfrekvens' type='number' onChange={this.handleDescriptionChange}
-                                tooltip='I minuter hur ofta data ska uppdateras. 0 eller blankt för ingen uppdatering'/>
+                                <FormInput title='Uppdateringsfrekvens' type='number' onChange={this.handleDescriptionChange}
+                                    tooltip='I minuter hur ofta data ska uppdateras. 0 eller blankt för ingen uppdatering'/>
                             </Col>
                         </Row>
                     </Grid>
