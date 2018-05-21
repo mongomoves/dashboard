@@ -1,7 +1,24 @@
 import React from 'react';
 import {Button, Collapse, Glyphicon, ListGroupItem, Table} from "react-bootstrap";
+import _ from "lodash";
 
-const translateKind = {Value: "Värde", Graph: "Diagram", Text: "Text"};
+const translateKind = {
+    Value: "Värde",
+    Graph: "Diagram",
+    Text: "Text"
+};
+const translateContent = {
+    creator: "Skapare",
+    created: "Skapad",
+    number: "Värde",
+    text: "Fritext",
+    graphUrl: "Diagram-Url",
+    refreshRate: "Uppd.frekvens",
+    displayType: "Visningstyp",
+    unit: "Enhet",
+    dataSource: "Datakälla",
+    attribute: "Attribut"
+};
 
 class SearchCellsListItem extends React.Component {
     constructor(props) {
@@ -12,7 +29,35 @@ class SearchCellsListItem extends React.Component {
         }
     }
 
-    //TODO: another way of rendering cell content, refreshRate causes a bug since 0 is false
+    generateTableData = () => {
+        let tableData = [];
+
+        for (let [key, value] of Object.entries(this.props.content)) {
+            if (key !== 'title' && key !== 'description' && key !== 'kind' && key !== '_id') {
+                tableData.push({key: key, value: value});
+            }
+        }
+
+        return _.map(tableData, function (property) {
+            let value = property.value;
+            let key = translateContent[property.key];
+
+            if (property.key === 'created') {
+                value = value.split('T')[0];
+            }
+            else if (property.key === 'refreshRate') {
+                value = value + " min";
+            }
+
+            return (
+                <tr key={property.key}>
+                    <td>{key}:</td>
+                    <td>{value}</td>
+                </tr>
+            );
+        });
+    };
+
     render() {
         return(
             <div>
@@ -30,45 +75,7 @@ class SearchCellsListItem extends React.Component {
                     <Collapse in={this.state.collapse}>
                         <Table responsive condensed style={{width: "auto"}}>
                             <tbody>
-                                <tr>
-                                    <td>Skapare:</td>
-                                    <td>{this.props.content.creator}</td>
-                                </tr>
-                                {this.props.content.number &&
-                                <tr>
-                                    <td>Värde:</td>
-                                    <td>{this.props.content.number}</td>
-                                </tr>}
-                                {this.props.content.text &&
-                                <tr>
-                                    <td>Fritext:</td>
-                                    <td>{this.props.content.text}</td>
-                                </tr>}
-                                {this.props.content.dataSource &&
-                                <tr>
-                                    <td>Datakälla:</td>
-                                    <td>{this.props.content.dataSource}</td>
-                                </tr>}
-                                {this.props.content.attribute &&
-                                <tr>
-                                    <td>Data-attribut:</td>
-                                    <td>{this.props.content.attribute}</td>
-                                </tr>}
-                                {this.props.content.unit &&
-                                <tr>
-                                    <td>Enhet:</td>
-                                    <td>{this.props.content.unit}</td>
-                                </tr>}
-                                {this.props.content.graphUrl &&
-                                <tr>
-                                    <td>Diagram-URL:</td>
-                                    <td>{this.props.content.graphUrl}</td>
-                                </tr>}
-                                {this.props.content.displayType &&
-                                <tr>
-                                    <td>Visningstyp:</td>
-                                    <td>{this.props.content.displayType}</td>
-                                </tr>}
+                                {this.generateTableData()}
                             </tbody>
                         </Table>
                     </Collapse>
