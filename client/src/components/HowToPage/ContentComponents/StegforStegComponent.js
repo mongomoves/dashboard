@@ -6,10 +6,19 @@ class StepByStep extends Component {
         return (
             <div>
                 <li className="liBold">3. Steg för steg</li>
-                    <p>Här ges ett exempel på hur man skapar en widget med typen "Värde".</p>
+                    <p>
+                        Här ges ett flertal exempel på hur man kommer igång med sin Dashboard samt håller den uppdaterad. 
+                        <li>Skapa en widget med typen "Värde".</li>
+                        <li>Redigera widget</li>
+                        <li>Publicera widget</li>
+                    
+                    </p>
+                    <p>
+                        För att kunna skapa en widget börjar man med att trycka på navigationsfältets kugghjul till höger.
+                    </p>
                     <img src="https://i.imgur.com/tbtPqDK.png" alt="Create Widget"/>
                         <ul>
-                            <li>3.1 Välj Widget-typ</li>
+                            <li>3.1 Välj Widget-typ. Här kan man välja mellan tre olika typer. Värde, diagram och text.</li>
                             <li>3.2 Ange titel (Titeln är även parametern som anges när man vill ladda widgets)</li>
                             <li>3.3 Värde (Antingen detta eller Datakälla)</li>
                             <li>3.4 Datakälla (Antingen detta eller Värde)</li>
