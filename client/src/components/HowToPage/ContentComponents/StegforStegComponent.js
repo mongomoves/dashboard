@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Glyphicon} from 'react-bootstrap';
 
 
 class StepByStep extends Component {
@@ -9,14 +10,17 @@ class StepByStep extends Component {
         this.state = {
             toggleValue: false,
             toggleEdit: false,
-            togglePublish: false
+            togglePublish: false,
+            cog: <Glyphicon glyph="menu-down" />
         }
+
     }
 
     togglePublishHandler = () => {
         this.setState({togglePublish: !this.state.togglePublish});
         console.log("HEJ")
     }
+    
 
     render() {
         return (
@@ -24,9 +28,9 @@ class StepByStep extends Component {
                 <li className="liBold">3. Steg för steg</li>
                     <p>
                         Här ges ett flertal exempel på hur man kommer igång med sin Dashboard samt håller den uppdaterad. 
-                        <li>Skapa en widget med typen "Värde".</li>{<Glyphicon glyph="chevron-down" />}>
+                        <li>Skapa en widget med typen "Värde". </li>
                         <li>Redigera widget</li>
-                        <li><a href="#" onClick={this.togglePublishHandler}>Publicera widget</a></li>
+                        <li><a href="#" onClick={this.togglePublishHandler}>Publicera widget <Glyphicon glyph="menu-down" /></a></li>
                     
                     </p>
                     <p>
