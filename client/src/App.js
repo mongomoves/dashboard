@@ -7,7 +7,7 @@ import SearchCells from './components/SearchCells/SearchCells';
 import CellInfo from './components/cell/CellInfo';
 import Footer from "./components/footer/footer";
 import BootstrapModal from './components/Modal/BootstrapModal';
-import SaveDashboard from "./components/saveToBackend/SaveDashboard";
+import SaveDashboard from "./components/SaveToBackend/SaveDashboard";
 import _ from 'lodash';
 
 import './App.css';
@@ -35,6 +35,7 @@ class App extends Component {
                 searchCells: false,
                 showInfo: false,
                 saveDashboard: false,
+                loadDashboard: false,
             },
             idCounter: localStorageCells.length > 0 // if we loaded cells from local storage
                 ? Number(localStorageCells[localStorageCells.length - 1].layout.i) + 1 // set start id to highest id + 1
@@ -283,6 +284,12 @@ class App extends Component {
     handleCloseSaveDashboard = () => {
         this.setState({modals: {saveDashboard: false}})
     };
+    handleShowLoadDashboard = () => {
+        this.setState({modals: {loadDashboard: true}})
+    };
+    handleCloseLoadDashboard = () => {
+        this.setState({modals: {loadDashboard: false}})
+    };
 
     render() {
         return (
@@ -292,7 +299,8 @@ class App extends Component {
                     showCreateCell={this.handleShowCreateCell}
                     showExistingCell={this.handleShowSearchCells}
                     clearDashboard={this.clearDashboardLayout}
-                    showSaveDashboard={this.handleShowSaveDashboard}/>
+                    showSaveDashboard={this.handleShowSaveDashboard}
+                    showLoadDashboard={this.handleShowLoadDashboard}/>
                 <Dashboard
                     removeCell={this.removeCell}
                     showInfo={this.handleShowCellInfo}
@@ -337,6 +345,12 @@ class App extends Component {
                     <SaveDashboard
                         getAllCells={this.getAllCells}
                         handleCloseSaveDashboardSuccess={this.handleCloseSaveDashboardSuccess}/>
+                </BootstrapModal>
+                <BootstrapModal
+                    title='Sök Dashboard'
+                    show={this.state.modals.loadDashboard}
+                    close={this.handleCloseLoadDashboard}>
+                    <LoadDashboard />
                 </BootstrapModal>
                  <Footer/>
             </div>
