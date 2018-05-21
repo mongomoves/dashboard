@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Button, Grid, Row, Col, ButtonToolbar, ToggleButtonGroup, ToggleButton, Checkbox, ControlLabel, FormControl, FormGroup, Tooltip, OverlayTrigger} from "react-bootstrap";
 import FormInput from './FormInput';
+import SERVER_URL from '../../constants'
 
 
 class EditCellForm extends Component {
@@ -138,7 +139,7 @@ class EditCellForm extends Component {
     * @param {*} widget the widget to post to backend.
     **/
    handlePost = (widget) => {
-    fetch('http://localhost:3001/api/widgets', {
+    fetch(SERVER_URL + '/api/widgets', {
         method: 'POST',
         headers: {
             // 'Accept': 'application/json',
