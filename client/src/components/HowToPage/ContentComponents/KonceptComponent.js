@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './ContentComponent.css';
+import {Glyphicon} from 'react-bootstrap';
 
 
 

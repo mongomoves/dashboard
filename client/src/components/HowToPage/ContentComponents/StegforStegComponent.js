@@ -8,7 +8,7 @@ class StepByStep extends Component {
                 <li className="liBold">3. Steg för steg</li>
                     <p>
                         Här ges ett flertal exempel på hur man kommer igång med sin Dashboard samt håller den uppdaterad. 
-                        <li>Skapa en widget med typen "Värde".</li>
+                        <li>Skapa en widget med typen "Värde".</li>{<Glyphicon glyph="chevron-down" />}>
                         <li>Redigera widget</li>
                         <li>Publicera widget</li>
                     
