@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { MenuItem } from 'react-bootstrap';
-import howToPage from '../HowToPage/howToPage';
 import './Sidebar.css';
 
 class Sidebar extends Component {
