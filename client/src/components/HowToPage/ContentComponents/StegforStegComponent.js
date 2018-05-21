@@ -12,6 +12,7 @@ class StepByStep extends Component {
             toggleEdit: true,
             togglePublish: true,
             cog: <Glyphicon glyph="menu-down" />
+            //cog1: <Glyphicon glyph="menu-up" />
         }
 
     }
@@ -37,7 +38,7 @@ class StepByStep extends Component {
                     <p>
                         Här ges ett flertal exempel på hur man kommer igång med sin Dashboard samt håller den uppdaterad.
                     </p>
-                        <li><a href="#" onClick={this.toggleValueHandler}>Skapa en widget med typen värde. <Glyphicon glyph="menu-down" /></a></li>
+                        <li><a href="#" onClick={this.toggleValueHandler}>Skapa en widget med typen värde. <Glyphicon glyph={this.state.toggleValue ? "chevron-down" : "chevron-up"}/></a></li>
                         {!this.state.toggleValue && <img src="https://i.imgur.com/tbtPqDK.png" alt="Create Widget"/>}
                         
                         {!this.state.toggleValue &&
@@ -59,7 +60,7 @@ class StepByStep extends Component {
                         }
 
 
-                        <li><a href="#" onClick={this.toggleEditHandler}>Redigera widget <Glyphicon glyph="menu-down" /></a></li>
+                        <li><a href="#" onClick={this.toggleEditHandler}>Redigera widget <Glyphicon glyph={this.state.toggleEdit ? "chevron-down" : "chevron-up"}/></a></li>
 
                         {!this.state.toggleEdit && <img src="" alt="Redigera widget"/>}   
                         {!this.state.toggleEdit &&
@@ -67,7 +68,7 @@ class StepByStep extends Component {
                             <li> Hejsan hoppsan</li>
                         </ul>
                         }
-                        <li><a href="#" onClick={this.togglePublishHandler}>Publicera widget <Glyphicon glyph="menu-down" /></a></li>
+                        <li><a href="#" onClick={this.togglePublishHandler}>Publicera widget <Glyphicon glyph={this.state.togglePublish ? "chevron-down" : "chevron-up"}/></a></li>
                         {!this.state.togglePublish && <img src="" alt="Publicera widget"/>}
                         {!this.state.togglePublish &&
                         <p>Testing</p>
