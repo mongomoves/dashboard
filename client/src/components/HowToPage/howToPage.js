@@ -12,14 +12,22 @@ class HowToPage extends Component {
     constructor(props){
         super(props);
         this.state = {
-            hideKoncept: false,
-            hideStepByStep: false,
-            hideWidgetEx: false
+            toggleKoncept: true,
+            toggleStepByStep: true,
+            toggleWidgetEx: true
         }
     }
 
-    toggleHideKonceptHandler = () => {
-        
+    toggleKonceptHandler = () => {
+        this.setState({toggleKoncept: !this.state.toggleKoncept});
+    }
+
+    toggleStepByStepHandler = () => {
+        this.setState({toggleStepByStep: !this.state.toggleStepByStep});
+    }
+
+    toggleWidgetExHandler = () => {
+        this.setState({toggleWidgetEx: !this.state.toggleWidgetEx});
     }
 
     render() {
@@ -28,11 +36,14 @@ class HowToPage extends Component {
                 <CustomNavbar />
                 <div className="howToContent">
                     <Article>
-                        <Koncept />
-                        <StepByStep />
-                        <WidgetEx />         
+                        {!this.state.toggleKoncept && <Koncept />}
+                        {!this.state.toggleStepByStep && <StepByStep />}
+                        {!this.state.toggleWidgetEx && <WidgetEx />}         
                     </Article>
-                    <Sidebar />
+                    <Sidebar 
+                        clickedKoncept={this.toggleKonceptHandler}
+                        clickedStepByStep={this.toggleStepByStepHandler}
+                        clickedWidgetEx={this.toggleWidgetExHandler} />
                 </div>
             </div>
         );
