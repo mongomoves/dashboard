@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Button, Grid, Row, Col, ButtonToolbar, ToggleButtonGroup, ToggleButton, Checkbox, ControlLabel, FormControl, FormGroup, Tooltip, OverlayTrigger} from "react-bootstrap";
+import FormInput from './FormInput';
 
 
 class EditCellForm extends Component {
@@ -115,7 +116,6 @@ class EditCellForm extends Component {
             }
         }
 
-        //console.log(`handleCreateWidget:widget=${JSON.stringify(widget)}`);
         if(this.state.published) {
             this.props.addCell(widget);
         } else {
@@ -172,63 +172,27 @@ class EditCellForm extends Component {
     render() {
         let formContent;
         let buttonKind;
-        // Form fields depends on type of widget
         if (this.state.kind === 'Value') {
             formContent = (
                 <div>
-                    <FormGroup>
-                        <ControlLabel>Värde</ControlLabel>
-                        <OverlayTrigger placement="top" overlay={<Tooltip id="edit-number">Ange det värde som ska visas i widgeten.</Tooltip>}>
-                        <FormControl
-                            type='number'
-                            defaultValue={this.props.values.number}
-                            onChange={this.handleNumberChange}/>
-                        </OverlayTrigger>
-                    </FormGroup>
-                    <FormGroup>
-                        <ControlLabel>Datakälla</ControlLabel>
-                        <OverlayTrigger placement="top" overlay={<Tooltip id="edit-dataSource">Ange den datakälla som ska användas i widgeten.</Tooltip>}>
-                        <FormControl
-                            type='text'
-                            defaultValue={this.props.values.dataSource}
-                            onChange={this.handleDataSourceChange}/>
-                        </OverlayTrigger>
-                    </FormGroup>
+                    <FormInput title='Värde' type='number' onChange={this.handleNumberChange} 
+                        defaultValue={this.props.values.number} tooltip='Ange det värde som ska visas i widgeten'/>
+                    <FormInput title='Datakälla' type='text' onChange={this.handleDataSourceChange}
+                        defaultValue={this.props.values.dataSource} tooltip='Ange den datakälla som widgeten ska presentera data ifrån'/>                        
                     <Grid>
                         <Row className='show-grid'>
                             <Col xs={8}>
-                                <FormGroup>
-                                    <ControlLabel>Data-attribut</ControlLabel>
-                                    <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-attribute">Ange specifikt attribut från API</Tooltip>}>
-                                        <FormControl
-                                            type='text'
-                                            defaultValue={this.props.values.attribute}
-                                            onChange={this.handleAttributeChange}/>
-                                    </OverlayTrigger>
-                                </FormGroup>
+                                <FormInput title='Data-attribut' type='text' onChange={this.handleAttributeChange}
+                                    defaultValue={this.props.values.attribute} tooltip='Ange specifikt attribut från API'/>
                             </Col>
                             <Col xs={4}>
-                                <FormGroup>
-                                    <ControlLabel>Uppdateringsfrekvens</ControlLabel>
-                                    <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-refresh">I minuter hur ofta data ska uppdateras. 0 eller blankt för ingen uppdatering.</Tooltip>}>
-                                        <FormControl
-                                            type='number'
-                                            defaultValue={this.props.values.refreshRate}
-                                            onChange={this.handleRefreshChange}/>
-                                    </OverlayTrigger>
-                                </FormGroup>
+                                <FormInput title='Uppdateringsfrekvens' type='number' onChange={this.handleRefreshChange}
+                                    defaultValue={this.props.values.refreshRate} tooltip='I minuter hur ofta data ska uppdateras. 0 eller blankt för ingen uppdatering'/>
                             </Col>
                         </Row>
                     </Grid>
-                    <FormGroup>
-                        <ControlLabel>Enhet</ControlLabel>
-                        <OverlayTrigger placement="top" overlay={<Tooltip id="edit-unit">Ange enhet som ska visas i widgeten.</Tooltip>}>
-                        <FormControl
-                            type='text'
-                            defaultValue={this.props.values.unit}
-                            onChange={this.handleUnitChange}/>
-                        </OverlayTrigger>
-                    </FormGroup>
+                    <FormInput title='Enhet' type='text' onChange={this.handleUnitChange}
+                        defaultValue={this.props.values.unit} tooltip='Ange enhet för värdet'/>
                 </div>
             );
 
@@ -289,27 +253,13 @@ class EditCellForm extends Component {
                                 </FormGroup>
                             </Col>
                             <Col xs={4}>
-                            <FormGroup>
-                                    <ControlLabel>Uppdateringsfrekvens</ControlLabel>
-                                    <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-refresh">I minuter hur ofta data ska uppdateras. 0 eller blankt för ingen uppdatering.</Tooltip>}>
-                                        <FormControl
-                                            type='number'
-                                            defaultValue={this.props.values.refreshRate}
-                                            onChange={this.handleRefreshChange}/>
-                                    </OverlayTrigger>
-                                </FormGroup>
+                                <FormInput title='Uppdateringsfrekvens' type='number' onChange={this.handleRefreshChange}
+                                    defaultValue={this.props.values.refreshRate} tooltip='I minuter hur ofta data ska uppdateras. 0 eller blankt för ingen uppdatering'/>
                             </Col>
                         </Row>
                     </Grid>
-                    <FormGroup>
-                        <ControlLabel>Diagram-URL</ControlLabel>
-                        <OverlayTrigger placement="top" overlay={<Tooltip id="edit-graph">Ange URL för inbäddat innehåll att visa.</Tooltip>}>
-                        <FormControl
-                            type='text'
-                            defaultValue={this.props.values.graphUrl}
-                            onChange={this.handleGraphUrlChange}/>
-                        </OverlayTrigger>
-                    </FormGroup>
+                    <FormInput title='Diagram-URL' type='text' onChange={this.handleGraphUrlChange}
+                        defaultValue={this.props.values.graphUrl} tooltip='Ange URL för inbäddat innehåll att visa'/>
                 </div>
             );
             buttonKind = (
@@ -338,38 +288,17 @@ class EditCellForm extends Component {
                                 onChange={this.handleTextInputChange}/>
                         </OverlayTrigger>
                     </FormGroup>
-                    <FormGroup>
-                        <ControlLabel>Datakälla</ControlLabel>
-                        <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-dataSource">Ange den datakälla som widgeten ska presentera data ifrån.</Tooltip>}>
-                            <FormControl
-                                type='text'
-                                defaultValue={this.props.values.dataSource}
-                                onChange={this.handleDataSourceChange}/>
-                        </OverlayTrigger>
-                    </FormGroup>
+                    <FormInput title='Datakälla' type='text' onChange={this.handleDataSourceChange}
+                        defaultValue={this.props.values.dataSource} tooltip='URL att hämta data ifrån'/>
                     <Grid>
                         <Row className='show-grid'>
                             <Col xs={8}>
-                                <FormGroup>
-                                    <ControlLabel>Data-attribut</ControlLabel>
-                                    <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-attribute">Ange specifikt attribut från API</Tooltip>}>
-                                        <FormControl
-                                            type='text'
-                                            defaultValue={this.props.values.attribute}
-                                            onChange={this.handleAttributeChange}/>
-                                    </OverlayTrigger>
-                                </FormGroup>
+                                <FormInput title='Data-attribut' type='text' onChange={this.handleAttributeChange}
+                                    defaultValue={this.props.values.attribute} tooltip='Ange specifikt attribut från API'/>
                             </Col>
                             <Col xs={4}>
-                                <FormGroup>
-                                    <ControlLabel>Uppdateringsfrekvens</ControlLabel>
-                                    <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-refresh">I minuter hur ofta data ska uppdateras. 0 eller blankt för ingen uppdatering.</Tooltip>}>
-                                        <FormControl
-                                            type='number'
-                                            defaultValue={this.props.values.refreshRate}
-                                            onChange={this.handleRefreshChange}/>
-                                    </OverlayTrigger>
-                                </FormGroup>
+                                <FormInput title='Uppdateringsfrekvens' type='number' onChange={this.handleDescriptionChange}
+                                    defaultValue={this.props.values.refreshRate} tooltip='I minuter hur ofta data ska uppdateras. 0 eller blankt för ingen uppdatering'/>
                             </Col>
                         </Row>
                     </Grid>
@@ -413,15 +342,8 @@ class EditCellForm extends Component {
 
         return (
             <form>
-                <FormGroup>
-                    <ControlLabel>Titel</ControlLabel>
-                    <OverlayTrigger placement="top" overlay={<Tooltip id="edit-title">Ange den title som widgeten ska ha.</Tooltip>}>
-                    <FormControl
-                        type='text'
-                        defaultValue={this.props.values.title}
-                        onChange={this.handleTitleChange}/>
-                    </OverlayTrigger>
-                </FormGroup>
+                <FormInput title='Titel' type='text' onChange={this.handleTitleChange}
+                    defaultValue={this.props.values.title} tooltip='Ange titel som widgeten ska ha'/>
 
                 {formContent}
                 
@@ -434,23 +356,10 @@ class EditCellForm extends Component {
 
                 {this.state.publish &&
                 <div>
-                    <FormGroup>
-                        <ControlLabel>Skapare</ControlLabel>
-                        <OverlayTrigger placement="top" overlay={<Tooltip id="edit-creator">Ange skapare av widget.</Tooltip>}>
-                        <FormControl
-                            type='text'
-                            onChange={this.handleCreatorChange}/>
-                        </OverlayTrigger>
-                    </FormGroup>
-
-                    <FormGroup>
-                    <ControlLabel>Beskrivning</ControlLabel>
-                        <OverlayTrigger placement="top" overlay={<Tooltip id="edit-desc">Ange beskrivning av widget.</Tooltip>}>
-                        <FormControl
-                            type='text'
-                            onChange={this.handleDescriptionChange}/>
-                        </OverlayTrigger>
-                    </FormGroup>
+                    <FormInput title='Skapare' type='text' onChange={this.handleCreatorChange}
+                        tooltip='Ange skapare av widget'/>
+                    <FormInput title='Beskrivning' type='text' onChange={this.handleDescriptionChange}
+                        tooltip='Ange beskrivande förklaring av widgetens innehåll'/>
                 </div>
                 }
 
