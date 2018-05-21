@@ -2,6 +2,22 @@ import React, { Component } from 'react';
 
 
 class StepByStep extends Component {
+
+    constructor(props) {
+        super(props);
+        
+        this.state = {
+            toggleValue: false,
+            toggleEdit: false,
+            togglePublish: false
+        }
+    }
+
+    togglePublishHandler = () => {
+        this.setState({togglePublish: !this.state.togglePublish});
+        console.log("HEJ")
+    }
+
     render() {
         return (
             <div>
@@ -10,7 +26,7 @@ class StepByStep extends Component {
                         Här ges ett flertal exempel på hur man kommer igång med sin Dashboard samt håller den uppdaterad. 
                         <li>Skapa en widget med typen "Värde".</li>{<Glyphicon glyph="chevron-down" />}>
                         <li>Redigera widget</li>
-                        <li>Publicera widget</li>
+                        <li><a href="#" onClick={this.togglePublishHandler}>Publicera widget</a></li>
                     
                     </p>
                     <p>
