@@ -342,9 +342,17 @@ class EditCellForm extends Component {
 
         return (
             <form>
-                <FormInput title='Titel' type='text' onChange={this.handleTitleChange}
-                    defaultValue={this.props.values.title} tooltip='Ange titel som widgeten ska ha'/>
-
+                <FormGroup>
+                    <ControlLabel>Title</ControlLabel>
+                    <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-number">Ange titel som widgeten ska ha. Max 50 tecken</Tooltip>}>
+                        <FormControl
+                            maxLength='50'
+                            type='text'
+                            defaultValue={this.props.values.title}
+                            onChange={this.handleTitleChange}/>
+                    </OverlayTrigger>
+                </FormGroup>
+                
                 {formContent}
                 
                 {!this.state.published && 

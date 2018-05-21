@@ -360,8 +360,15 @@ class CreateCellForm extends Component {
                         <option value='Text'>Text</option>
                     </FormControl>
                 </FormGroup>
-                <FormInput title='Titel' type='text' onChange={this.handleTitleChange}
-                    tooltip='Ange titel som widgeten ska ha'/>
+                <FormGroup>
+                    <ControlLabel>Title</ControlLabel>
+                    <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-number">Ange titel som widgeten ska ha. Max 50 tecken</Tooltip>}>
+                        <FormControl
+                            maxLength='50'
+                            type='text'
+                            onChange={this.handleTitleChange}/>
+                    </OverlayTrigger>
+                </FormGroup>
 
                 {formContent}
 
