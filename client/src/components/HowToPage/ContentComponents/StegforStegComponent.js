@@ -55,7 +55,6 @@ class StepByStep extends Component {
 
 
                         <li><a href="#" onClick={this.toggleEditHandler}>Redigera widget <Glyphicon glyph="menu-down" /></a></li>
-                        <li><a href="#" onClick={this.togglePublishHandler}>Redigera widget <Glyphicon glyph="menu-down" /></a></li>
                         <img src="" alt="Redigera widget"/>
                         <ul>
                             <li> Hejsan hoppsan</li>
