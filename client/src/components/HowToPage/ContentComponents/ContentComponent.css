@@ -1,3 +1,13 @@
 .liBold {
     font-weight: bold;
 }
+a:visited {
+    color: none;
+}
+
+a:hover {
+    color: white;
+}
+a:focus {
+    color: orange;
+}

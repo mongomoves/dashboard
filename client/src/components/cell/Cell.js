@@ -102,10 +102,10 @@ class Cell extends Component {
                     <Panel.Heading className='cell-heading'>
                         <Grid>
                             <Row className='show-grid'>
-                                <Col style={{textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap'}} lg={10}>
+                                <Col style={{textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap'}} xs={10}>
                                     <span>{title}</span>
                                 </Col>
-                                <Col lg={2} style={{padding: 0}}>
+                                <Col xs={2} style={{padding: 0}}>
                                     <DropdownButton
                                         id="dropdown-no-caret"
                                         noCaret
