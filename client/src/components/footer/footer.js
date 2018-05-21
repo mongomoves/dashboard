@@ -31,24 +31,24 @@ class Footer extends Component {
 
 
 
-componentWillMount() {
+componentDidMount() {
   console.log("componentWillMount");
   this.getData();
   this.getLimit();
+  let intervalID = setInterval(this.getLimit, 1000 * 60);
+  this.setState({interval: intervalID});
 
  }
 
-<<<<<<< HEAD
+ componentWillUnmount() {
+   if(this.state.interval) {
+       clearInterval(this.state.interval);
+   }
+ }
+
 getData = () =>{
-<<<<<<< HEAD
 
   fetch('http://192.168.99.100:3001/api/log')
-=======
-=======
-getData = () => {
->>>>>>> master
-  fetch(SERVER_URL + '/api/log')
->>>>>>> master
    .then(results => {
      return results.json();
    }).then(function(data){
