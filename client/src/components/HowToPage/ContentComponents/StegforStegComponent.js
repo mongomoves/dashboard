@@ -37,14 +37,7 @@ class StepByStep extends Component {
                     <p>
                         Här ges ett flertal exempel på hur man kommer igång med sin Dashboard samt håller den uppdaterad. 
                         <li><a href="#" onClick={this.togglePublishHandler}>Skapa en widget med typen värde. <Glyphicon glyph="menu-down" /></a></li>
-                        <li><a href="#" onClick={this.togglePublishHandler}>Redigera widget <Glyphicon glyph="menu-down" /></a></li>
-                        <li><a href="#" onClick={this.togglePublishHandler}>Publicera widget <Glyphicon glyph="menu-down" /></a></li>
-                    
-                    </p>
-                    <p>
-                        För att kunna skapa en widget börjar man med att trycka på navigationsfältets kugghjul till höger.
-                    </p>
-                    <img src="https://i.imgur.com/tbtPqDK.png" alt="Create Widget"/>
+                        <img src="https://i.imgur.com/tbtPqDK.png" alt="Create Widget"/>
                         <ul>
                             <li>3.1 Välj Widget-typ. Här kan man välja mellan tre olika typer. Värde, diagram och text.</li>
                             <li>3.2 Ange titel (Titeln är även parametern som anges när man vill ladda widgets)</li>
@@ -55,6 +48,13 @@ class StepByStep extends Component {
                             <li>3.7 Ange enheten som förklarar ovanstående data. Exepmpel år / tid / antal anställda.</li>
                             <li>3.8 Sista steget när man skapar en widget är att kryssa i om man vill få sin widget <u>publicerad</u>.</li>
                         </ul>
+                        <li><a href="#" onClick={this.togglePublishHandler}>Redigera widget <Glyphicon glyph="menu-down" /></a></li>
+                        <li><a href="#" onClick={this.togglePublishHandler}>Publicera widget <Glyphicon glyph="menu-down" /></a></li>
+                    
+                    </p>
+                    <p>
+                        För att kunna skapa en widget börjar man med att trycka på navigationsfältets kugghjul till höger.
+                    </p>
             </div>
         );
     }
