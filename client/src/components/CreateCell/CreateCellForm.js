@@ -183,11 +183,11 @@ class CreateCellForm extends Component {
                         tooltip='Ange den datakälla som widgeten ska presentera data ifrån'/>                        
                     <Grid>
                         <Row className='show-grid'>
-                            <Col xs={8}>
+                            <Col style={{padding: 0}} xs={8}>
                                 <FormInput title='Data-attribut' type='text' onChange={this.handleAttributeChange}
                                     tooltip='Ange specifikt attribut från API'/>
                             </Col>
-                            <Col xs={4}>
+                            <Col style={{paddingRight: 0}} xs={4}>
                                 <FormInput title='Uppdateringsfrekvens' type='number' onChange={this.handleRefreshChange}
                                     tooltip='I minuter hur ofta data ska uppdateras. 0 eller blankt för ingen uppdatering'/>
                             </Col>
@@ -258,7 +258,7 @@ class CreateCellForm extends Component {
                                     </ButtonToolbar>
                                 </FormGroup>
                             </Col>
-                            <Col xs={4}>
+                            <Col style={{paddingRight: 0}} xs={4}>
                                 <FormInput title='Uppdateringsfrekvens' type='number' onChange={this.handleRefreshChange}
                                     tooltip='I minuter hur ofta data ska uppdateras. 0 eller blankt för ingen uppdatering'/>
                             </Col>
@@ -300,11 +300,11 @@ class CreateCellForm extends Component {
                         tooltip='URL att hämta data ifrån'/>
                     <Grid>
                         <Row className='show-grid'>
-                            <Col xs={8}>
+                            <Col style={{padding: 0}} xs={8}>
                                 <FormInput title='Data-attribut' type='text' onChange={this.handleAttributeChange}
                                     tooltip='Ange specifikt attribut från API'/>
                             </Col>
-                            <Col xs={4}>
+                            <Col style={{paddingRight: 0}} xs={4}>
                                 <FormInput title='Uppdateringsfrekvens' type='number' onChange={this.handleDescriptionChange}
                                     tooltip='I minuter hur ofta data ska uppdateras. 0 eller blankt för ingen uppdatering'/>
                             </Col>
