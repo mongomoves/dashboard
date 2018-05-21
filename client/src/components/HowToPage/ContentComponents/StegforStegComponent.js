@@ -13,6 +13,14 @@ class StepByStep extends Component {
         }
     }
 
+    toggleValueHandler = () => {
+        this.setState({toggleValue: !this.state.toggleValue});
+    }
+
+    toggleEditHandler = () => {
+        this.setState({toggleEdit: !this.state.toggleEdit});
+    }
+
     togglePublishHandler = () => {
         this.setState({togglePublish: !this.state.togglePublish});
         console.log("HEJ")
