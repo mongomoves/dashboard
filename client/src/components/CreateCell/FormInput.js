@@ -2,6 +2,10 @@ import React from 'react';
 import {FormGroup, FormControl, ControlLabel, OverlayTrigger, Tooltip} from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
+/**
+ * Simple input field for controlled forms.
+ * Supply title, type, possible defaultValue and some onChange function.
+ */
 class FormInput extends React.Component {
     render() {
         return (

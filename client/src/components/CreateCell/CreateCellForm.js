@@ -178,9 +178,9 @@ class CreateCellForm extends Component {
             formContent = (
                 <div>
                     <FormInput title='Värde' type='number' onChange={this.handleNumberChange}
-                        tooltip='Ange Antal som ska visas i widget t.ex. antal anställda.'/>
+                        tooltip='Ange det värde som ska visas i widgeten'/>
                     <FormInput title='Datakälla' type='text' onChange={this.handleDataSourceChange}
-                        tooltip='Ange den datakälla som widgeten ska presentera data ifrån.'/>                        
+                        tooltip='Ange den datakälla som widgeten ska presentera data ifrån'/>                        
                     <Grid>
                         <Row className='show-grid'>
                             <Col xs={8}>
@@ -189,12 +189,12 @@ class CreateCellForm extends Component {
                             </Col>
                             <Col xs={4}>
                                 <FormInput title='Uppdateringsfrekvens' type='number' onChange={this.handleRefreshChange}
-                                    tooltip='I minuter hur ofta data ska uppdateras. 0 eller blankt för ingen uppdatering.'/>
+                                    tooltip='I minuter hur ofta data ska uppdateras. 0 eller blankt för ingen uppdatering'/>
                             </Col>
                         </Row>
                     </Grid>
                     <FormInput title='Enhet' type='text' onChange={this.handleUnitChange}
-                        tooltip='Ange enhet som ska visas i widget'/>
+                        tooltip='Ange enhet för värdet'/>
                 </div>
             );
             //Default button for widget kind value.
@@ -376,7 +376,7 @@ class CreateCellForm extends Component {
                     <FormInput title='Skapare' type='text' onChange={this.handleCreatorChange}
                         tooltip='Ange namn på den som skapat widgeten'/>
                     <FormInput title='Beskrivning' type='text' onChange={this.handleDescriptionChange}
-                        tooltip='Ange en beskrivning om vad widgeten visualiserar'/>
+                        tooltip='Ange beskrivande förklaring av widgetens innehåll'/>
                 </div>
                 }
 

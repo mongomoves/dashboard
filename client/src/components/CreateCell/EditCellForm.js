@@ -192,7 +192,7 @@ class EditCellForm extends Component {
                         </Row>
                     </Grid>
                     <FormInput title='Enhet' type='text' onChange={this.handleUnitChange}
-                        defaultValue={this.props.values.unit} tooltip='Ange enhet som ska visas i widget'/>
+                        defaultValue={this.props.values.unit} tooltip='Ange enhet för värdet'/>
                 </div>
             );
 
@@ -294,7 +294,7 @@ class EditCellForm extends Component {
                         <Row className='show-grid'>
                             <Col xs={8}>
                                 <FormInput title='Data-attribut' type='text' onChange={this.handleAttributeChange}
-                                        defaultValue={this.props.values.attribute} tooltip='Ange specifikt attribut från API'/>
+                                    defaultValue={this.props.values.attribute} tooltip='Ange specifikt attribut från API'/>
                             </Col>
                             <Col xs={4}>
                                 <FormInput title='Uppdateringsfrekvens' type='number' onChange={this.handleDescriptionChange}
@@ -357,7 +357,7 @@ class EditCellForm extends Component {
                 {this.state.publish &&
                 <div>
                     <FormInput title='Skapare' type='text' onChange={this.handleCreatorChange}
-                            tooltip='Ange skapare av widget'/>
+                        tooltip='Ange skapare av widget'/>
                     <FormInput title='Beskrivning' type='text' onChange={this.handleDescriptionChange}
                         tooltip='Ange beskrivande förklaring av widgetens innehåll'/>
                 </div>
