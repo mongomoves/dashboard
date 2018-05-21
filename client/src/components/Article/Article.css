@@ -4,6 +4,7 @@ body {
 
 .Article{
     float: right;
+    width: 60%;
 }
 
 li {

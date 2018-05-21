@@ -1,0 +1,26 @@
+import React, { Component } from 'react';
+import './ContentComponent.css';
+import {Glyphicon} from 'react-bootstrap';
+
+
+
+class Koncept extends Component {
+    render() {
+        return (
+            <div>
+                <li className="liBold">1. Koncept</li>
+                <p>
+                    Denna sida är till för att du ska kunna bekanta dig med Dashboarden.  
+                    Under fliken Steg för steg kommer ett exempel på hur man skapar en widget att visas. Här kan man även läsa mer om de tre olika widget typer som finns att välja mellan.
+                    Under fliken Widget beskrivs de olika celler man kan skapa och hur det är anpassningsbara.
+                </p>
+                <p>
+                    För att komma igång och skapa ditt Dashboard kan du trycka på Steg för steg fliken här till vänster.
+                    Du börjar alltid med en tom Dashboard.
+                </p>
+            </div>
+        );
+    }
+}
+
+export default Koncept;

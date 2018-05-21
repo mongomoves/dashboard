@@ -14,11 +14,9 @@ class Sidebar extends Component {
         return (
             <div>
                 <div className="vertical-list">
-                    <MenuItem eventKey={4.1} className="button">Koncept</MenuItem>
-                    <MenuItem eventKey={4.2} className="button">Widget</MenuItem>
-                    <MenuItem eventKey={4.3} className="button">Steg för steg</MenuItem>
-                    <MenuItem eventKey={4.4} className="button">Ordlista</MenuItem>
-
+                    <MenuItem eventKey={4.1} onClick={this.props.clickedKoncept} className="button">Koncept</MenuItem>
+                    <MenuItem eventKey={4.2} onClick={this.props.clickedWidgetEx} className="button">Widget</MenuItem>
+                    <MenuItem eventKey={4.3} onClick={this.props.clickedStepByStep} className="button">Steg för steg</MenuItem>
                 </div>
             </div>
         );
