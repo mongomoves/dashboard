@@ -38,11 +38,15 @@ componentWillMount() {
 
  }
 
+<<<<<<< HEAD
 getData = () =>{
 <<<<<<< HEAD
 
   fetch('http://192.168.99.100:3001/api/log')
 =======
+=======
+getData = () => {
+>>>>>>> master
   fetch(SERVER_URL + '/api/log')
 >>>>>>> master
    .then(results => {
