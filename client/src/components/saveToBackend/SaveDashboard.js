@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Button, ButtonToolbar, ControlLabel, FormControl, FormGroup} from "react-bootstrap";
+import SERVER_URL from '../../constants'
 
 /**
  * Component to for handling saving the dashboard to backend. Contains model window with input form and method for publishing
@@ -61,7 +62,7 @@ class SaveDashboard extends Component {
                 description:this.state.description,
                 widgets: allDBFormatWidgets
             };
-        fetch('http://192.168.99.100:3001/api/dashboards', {
+        fetch(SERVER_URL + '/api/dashboards', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
