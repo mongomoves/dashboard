@@ -31,6 +31,7 @@ class Article extends Component {
                 <PageHeader>
                     Dashboard <small> Grundläggande funktionalitet</small>
                 </PageHeader>
+                <p>Detta kommer alltid stå här...</p>
                 {this.props.children[0]}
                 {this.props.children[2]}
                 {this.props.children[1]}
