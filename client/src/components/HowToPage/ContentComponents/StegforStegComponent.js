@@ -36,8 +36,8 @@ class StepByStep extends Component {
                 <li className="liBold">3. Steg för steg</li>
                     <p>
                         Här ges ett flertal exempel på hur man kommer igång med sin Dashboard samt håller den uppdaterad. 
-                        <li><a href="#" onClick={this.togglePublishHandler}>Skapa en widget med typen värde. <Glyphicon glyph="menu-down" /></a></li>
-                        <li><a href="#" onClick={this.togglePublishHandler}>Redigera widget <Glyphicon glyph="menu-down" /></a></li>
+                        <li><a href="#" onClick={this.toggleValueHandler}>Skapa en widget med typen värde. <Glyphicon glyph="menu-down" /></a></li>
+                        <li><a href="#" onClick={this.toggleEditHandler}>Redigera widget <Glyphicon glyph="menu-down" /></a></li>
                         <li><a href="#" onClick={this.togglePublishHandler}>Publicera widget <Glyphicon glyph="menu-down" /></a></li>
                     
                     </p>
