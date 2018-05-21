@@ -30,11 +30,11 @@ class CustomNavbar extends Component {
               </Navbar.Text>
               <Nav pullRight>
               <NavDropdown eventKey={3} title={this.state.cog} id="basic-nav-dropdown">
-                  <MenuItem eventKey={3.1} onClick={this.props.showCreateCell}>Skapa widget</MenuItem>
-                  <MenuItem eventKey={3.2} onClick={this.props.showExistingCell}>Ladda widgets</MenuItem>
+                  <MenuItem eventKey={3.1} onClick={this.props.showCreateCell}>Skapa Widget</MenuItem>
+                  <MenuItem eventKey={3.2} onClick={this.props.showExistingCell}>Sök Widgets</MenuItem>
                   <MenuItem divider />
                   <MenuItem eventKey={3.3} onClick={this.props.showSaveDashboard}>Spara Dashboard</MenuItem>
-                  <MenuItem eventKey={3.4}>Ladda Dashboards</MenuItem>
+                  <MenuItem eventKey={3.4}>Sök Dashboards</MenuItem>
                   <MenuItem divider />
                   <MenuItem eventKey={3.5} onClick={this.props.clearDashboard}>Rensa din Dashboard</MenuItem>
                 </NavDropdown>
