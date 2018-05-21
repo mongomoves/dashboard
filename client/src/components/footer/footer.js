@@ -11,8 +11,10 @@ class Footer extends Component {
         //    logg: [],
             modals: {
                 showBootStrapModal: false
-            },
+            }
+
           }
+
 
     }
 
@@ -24,19 +26,26 @@ class Footer extends Component {
         this.setState({modals: {showBootStrapModal: false}})
     };
 
+
+
+
+
 componentWillMount() {
   console.log("componentWillMount");
   this.getData();
+  this.getLimit();
 
  }
 
 getData = () =>{
+
   fetch('http://192.168.99.100:3001/api/log')
    .then(results => {
      return results.json();
    }).then(function(data){
    console.log(data);
-  // let logg = data.log;
+
+  //let logg = data.logEntries;
 
   // this.setState({ logg: data.results });
    }.bind(this))
@@ -44,10 +53,29 @@ getData = () =>{
       console.log("ERROR: " + err);
     })
 
+}
 
 
+getLimit = () =>{
+
+  fetch('http://192.168.99.100:3001/api/log?limit=1')
+   .then(results => {
+     return results.json();
+   }).then(function(data){
+   console.log(data);
+
+  //let logg = data.logEntries;
+
+  // this.setState({ logg: data.results });
+   }.bind(this))
+   .catch(err => {
+      console.log("ERROR: " + err);
+    })
 
 }
+
+
+
 
       render() {
 
@@ -60,7 +88,6 @@ getData = () =>{
                   close={this.handleCloseBootStrapModal}>
                   Datum: 180515<br />
                   Tid: 15.17<br />
-                  {this.state.logg}
                   Sven har lagt till cellen "Projekt"
 
                   <div className="logg">
@@ -71,6 +98,7 @@ getData = () =>{
                 <div  className="footerText">
                 <p><a onClick={this.handleShowBootStrapModal}>
                  footer
+                 {this.state.logg}
                 </a></p></div>
               </div>
             )

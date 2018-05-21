@@ -11,7 +11,7 @@ const logRouter = require('./api/routes/log');
 const app = express();
 
 // Connect to MongoDB Atlas
-mongoose.connect("mongodb://database:27017/test");
+mongoose.connect("mongodb://database:27017");
 
 app.use(morgan('dev'));
 
