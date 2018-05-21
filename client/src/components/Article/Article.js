@@ -67,9 +67,9 @@ Det finns just nu tre olika typer av widgets: <u>Diagram</u>, <u>värde</u> och 
                 <button onClick={this.toggleStepByStepHandler}>Hantera event2</button>
                 <button onClick={this.toggleWidgetHandler}>Hantera event3</button>
 
-                {!this.state.toggleKoncept && <Koncept />}
-                {!this.state.toggleStepByStep && <StepByStep />}
-                {!this.state.toggleWidget && <Widget />}
+                {!this.state.toggleKoncept && this.props.children[0]}
+                {!this.state.toggleStepByStep && this.props.children[1]}
+                {!this.state.toggleWidget && this.props.children[2]}
 
             </div>
         );
