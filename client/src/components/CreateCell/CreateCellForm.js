@@ -3,8 +3,6 @@ import {Button, Grid, Row, Col, ButtonToolbar, ToggleButtonGroup, ToggleButton, 
 import FormInput from './FormInput';
 import SERVER_URL from '../../constants'
 
-
-
 class CreateCellForm extends Component {
     constructor(props) {
         super(props);

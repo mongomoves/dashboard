@@ -31,7 +31,7 @@ componentWillMount() {
 
  }
 
-getData = () =>{
+getData = () => {
   fetch(SERVER_URL + '/api/log')
    .then(results => {
      return results.json();
