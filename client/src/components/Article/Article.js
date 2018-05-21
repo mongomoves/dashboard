@@ -35,16 +35,22 @@ class Article extends Component {
                 </PageHeader>
                 <ul>
                     <li className="liBold">1. Koncept</li>
-                    <p>Hej detta är en dashboard som vi hoppas ni får nytta av he hu hi </p>
+                    <p>
+                        Denna sida är till för att du ska kunna komma igång och bekanta dig med Dashboarden. 
+                        Under fliken Widgets beskrivs de olika celler man kan skapa och hur det är anpassningsbara. 
+                        Under fliken Steg för steg kommer ett exempel på hur man skapar en widget att visas. Här kan man även läsa mer om de tre olika widget typer som finns att välja mellan.
+                    </p>
+                    <p> 
+
+                    </p>
                     <li className="liBold">2. Widgets</li>
-                    <p>Widgets utgör grunden för Dashboarden. Varje widget har en XX beroende på var datan till widgeten hämtas in.
-
-Alla widgets placering och storlek kan ändras av användaren.
-
-De olika delar som utgör en widget är en rubrikkomponent som innehåller en titel som användare angivit vid skapandet samt en config knapp. Config knappen låter användaren redigera information, visa information om widgeten, t.ex. om vem som skapat den och slutligen ta bort en widget. 
-Widgeten har också en body där innehållet för varje widget visas.  
-
-Det finns just nu tre olika typer av widgets: <u>Diagram</u>, <u>värde</u> och <u>text</u>. Samtliga av dessa har en möjlighet att få individuellt anpassade uppdateringsfrekvenser.</p>
+                    <p>
+                        Widgets utgör grunden för Dashboarden. Varje widget har en XX beroende på var datan till widgeten hämtas in.
+                        Alla widgets placering och storlek kan ändras av användaren.
+                        De olika delar som utgör en widget är en rubrikkomponent som innehåller en titel som användare angivit vid skapandet samt en config knapp. Config knappen låter användaren redigera information, visa information om widgeten, t.ex. om vem som skapat den och slutligen ta bort en widget. 
+                        Widgeten har också en body där innehållet för varje widget visas.  
+                        Det finns just nu tre olika typer av widgets: <u>Diagram</u>, <u>värde</u> och <u>text</u>. Samtliga av dessa har en möjlighet att få individuellt anpassade uppdateringsfrekvenser.
+                    </p>
                     <li className="liBold">3. Steg för steg</li>
                     <p>Här ges ett exempel på hur man skapar en widget med typen "Värde".</p>
                     <img src="https://i.imgur.com/tbtPqDK.png" alt="Create Widget"/>
