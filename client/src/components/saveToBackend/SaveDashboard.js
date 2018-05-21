@@ -86,21 +86,21 @@ class SaveDashboard extends Component {
         return (
             <div>
                 <FormGroup>
-                    <ControlLabel>Title</ControlLabel>
+                    <ControlLabel>Titel</ControlLabel>
                     <FormControl
                         type='text'
                         defaultValue=''
                         onChange={this.handleTitleChange}/>
                 </FormGroup>
                 <FormGroup>
-                    <ControlLabel>Description</ControlLabel>
+                    <ControlLabel>Beskrivning</ControlLabel>
                     <FormControl
                         type='text'
                         defaultValue=''
                         onChange={this.handleDescriptionChange}/>
                 </FormGroup>
                 <FormGroup>
-                    <ControlLabel>User</ControlLabel>
+                    <ControlLabel>Skapare</ControlLabel>
                     <FormControl
                         type='text'
                         defaultValue=''
