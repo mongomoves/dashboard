@@ -43,7 +43,7 @@ class Cell extends Component {
      */
     onRemove = () => {
         this.props.removeCell(this.props.id);
-    }
+    };
 
     /**
      * Callback to App.js when Show info button is clicked.
@@ -51,7 +51,7 @@ class Cell extends Component {
      */
     onShowInfo = () => {
         this.props.showInfo(this.props.id);
-    }
+    };
 
     /**
      * Callback to App.js when Edit button is clicked.
@@ -59,27 +59,22 @@ class Cell extends Component {
      */
     onEdit = () => {
         this.props.editCell(this.props.id);
-    }
+    };
 
     render() {
         const {title, kind} = this.props.content;
-
         let content;
-
-        //TODO: Value and Graph should be separate components, styles should not be inlined
         if (kind === 'Value') {
-            const {unit, number, dataSource, attribute} = this.props.content;
-
             content = (
-                <ValueComponent number={number} unit={unit} width={this.state.width} dataSource ={dataSource} attribute ={attribute} />
+                <ValueComponent width={this.state.width} values={this.props.content} />
             );
         }
         else if (kind === 'Graph') {
-            const {displayType, graphUrl } = this.props.content;
+            const {displayType} = this.props.content;
             if(displayType === 'Iframe') {
                 content = (
                     <IframeHolder
-                        url={graphUrl}
+                        values={this.props.content}
                         width={this.state.width}
                         height={this.state.height}/>
                 )
@@ -88,7 +83,7 @@ class Cell extends Component {
                     <ImageHolder
                         width={this.state.width}
                         height={this.state.height}
-                        image={graphUrl}/>
+                        values={this.props.content}/>
                 )
             }
         }
@@ -103,8 +98,8 @@ class Cell extends Component {
 
         return (
             <div ref={this.frameSize} style={{width: 'inherit', height: 'inherit'}}>
-                <Panel>
-                    <Panel.Heading>
+                <Panel className='cell'>
+                    <Panel.Heading className='cell-heading'>
                         <Grid>
                             <Row className='show-grid'>
                                 <Col lg={10}>
@@ -125,7 +120,7 @@ class Cell extends Component {
                             </Row>
                         </Grid>
                     </Panel.Heading>
-                    <Panel.Body style={{height: this.state.height - 33}}>
+                    <Panel.Body className='cell-body' style={{height: this.state.height - 33}}>
                              {content}
                     </Panel.Body>
                 </Panel>

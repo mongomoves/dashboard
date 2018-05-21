@@ -1,4 +1,4 @@
-import React, {  Component} from 'react';
+import React from 'react';
 class ChartCellTest extends React.Component {
   render() {
     return (

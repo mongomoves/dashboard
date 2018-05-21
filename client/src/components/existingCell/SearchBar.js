@@ -1,5 +1,5 @@
-import React, {  Component} from 'react';
-import {Forms, FormGroup, ControlLabel, FormControl, HelpBlock, FormExample} from 'react-bootstrap';
+import React from 'react';
+import {FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
 
 class SearchBar extends React.Component {
 

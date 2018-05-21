@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import {Button, ButtonToolbar, ToggleButtonGroup, ToggleButton, Checkbox, ControlLabel, FormControl, FormGroup, Tooltip, OverlayTrigger} from "react-bootstrap";
+import {Button, Grid, Row, Col, ButtonToolbar, ToggleButtonGroup, ToggleButton, Checkbox, ControlLabel, FormControl, FormGroup, Tooltip, OverlayTrigger} from "react-bootstrap";
+import FormInput from './FormInput';
+
+
 
 class CreateCellForm extends Component {
     constructor(props) {
@@ -18,7 +21,8 @@ class CreateCellForm extends Component {
             dataSource: '',
             attribute: '',
             unit: '',
-            displayType: 'Iframe'
+            displayType: 'Iframe',
+            refreshRate: 0
         };
     }
 
@@ -44,7 +48,7 @@ class CreateCellForm extends Component {
     };
 
     handleGraphUrlChange = (e) => {
-        this.setState({graphUrl: e.target.value});
+        this.setState({graphUrl: this.checkIframeTag(e.target.value)});
     };
 
     handleDataSourceChange = (e) => {
@@ -76,12 +80,15 @@ class CreateCellForm extends Component {
     };
 
     handleDisplayTypeChange = (e) => {
-        this.setState({displayType: e})
+        this.setState({displayType: e});
+    }
+
+    handleRefreshChange = (e) => {
+        this.setState({refreshRate: e.target.value});
     }
 
     handleCreateWidget = () => {
         let widget;
-        
         if (this.state.kind === 'Value') {
             widget = {
                 kind: this.state.kind,
@@ -89,6 +96,7 @@ class CreateCellForm extends Component {
                 number: this.state.number,
                 dataSource: this.state.dataSource,
                 attribute: this.state.attribute,
+                refreshRate: this.state.refreshRate,
                 unit: this.state.unit
             }   
         }
@@ -97,7 +105,8 @@ class CreateCellForm extends Component {
                 kind: this.state.kind,
                 title: this.state.title,
                 displayType: this.state.displayType,
-                graphUrl: this.state.graphUrl
+                graphUrl: this.state.graphUrl,
+                refreshRate: this.state.refreshRate
             }
         } 
         else if (this.state.kind === 'Text') {
@@ -106,20 +115,60 @@ class CreateCellForm extends Component {
                 title: this.state.title,
                 textInput: this.state.textInput,
                 dataSource: this.state.dataSource,
-                attribute: this.state.attribute
+                attribute: this.state.attribute,
+                refreshRate: this.state.refreshRate
             }
         }
-
-        console.log(`handleCreateWidget:widget=${JSON.stringify(widget)}`);
+        //console.log(`handleCreateWidget:widget=${JSON.stringify(widget)}`);
+        if(this.state.publish) {
+            widget.creator=this.state.creator;
+            widget.description=this.state.description;
+            this.handlePost(widget);
+        }
 
         this.props.addCell(widget);
 
         if (this.props.done) {
             this.props.done();
         }
-
-        //TODO: If publish is true, send to database
     };
+
+    /**
+    * Publishes the created widget though Post request to backend. Sends response to addID in App to associate widget ID
+    * from backend to the widget in frontend.
+    * @param {*} widget the widget to post to backend.
+    **/
+    handlePost = (widget) => {
+        fetch('http://localhost:3001/api/widgets', {
+            method: 'POST',
+            headers: {
+                // 'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(widget),
+        })
+            .then(function(res) {
+                return res.json()
+            })
+            .then(function(data) {
+                this.props.addID(data.widget);
+            }.bind(this))
+            .catch(err => err);
+    };
+
+    /**
+     * Tries to check if entered string is a full Iframe tag and returns URL only if so.
+     * @param {*} graphUrl String to check and extract url from
+     */
+    checkIframeTag = (graphUrl) => {
+        const iframeTag = '</iframe>';
+        const httpRegex = RegExp(/(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/igm);
+        if(graphUrl.includes(iframeTag)) {
+            return graphUrl.match(httpRegex)[0];
+        } else {
+            return graphUrl;
+        }
+    }
 
     render() {
         let formContent;
@@ -128,38 +177,24 @@ class CreateCellForm extends Component {
         if (this.state.kind === 'Value') {
             formContent = (
                 <div>
-                    <FormGroup>
-                    <ControlLabel>Värde</ControlLabel>
-                    <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-number">Ange Antal som ska visas i widget t.ex. antal anställda.</Tooltip>}>
-                    <FormControl
-                        type='number'
-                        onChange={this.handleNumberChange}/>
-                    </OverlayTrigger>
-                    </FormGroup>
-                    <FormGroup>
-                        <ControlLabel>Datakälla</ControlLabel>
-                        <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-dataSource">Ange den datakälla som widgeten ska presentera data ifrån.</Tooltip>}>
-                            <FormControl
-                                type='text'
-                                onChange={this.handleDataSourceChange}/>
-                        </OverlayTrigger>
-                    </FormGroup>
-                    <FormGroup>
-                        <ControlLabel>Data-attribut</ControlLabel>
-                        <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-attribute">Ange specifikt attribut från API.</Tooltip>}>
-                        <FormControl
-                            type='text'
-                            onChange={this.handleAttributeChange}/>
-                        </OverlayTrigger>
-                    </FormGroup>
-                    <FormGroup>
-                        <ControlLabel>Enhet</ControlLabel>
-                        <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-unit">Ange enhet som ska visas i widget.</Tooltip>}>
-                        <FormControl
-                            type='text'
-                            onChange={this.handleUnitChange}/>
-                        </OverlayTrigger>
-                    </FormGroup>
+                    <FormInput title='Värde' type='number' onChange={this.handleNumberChange}
+                        tooltip='Ange det värde som ska visas i widgeten'/>
+                    <FormInput title='Datakälla' type='text' onChange={this.handleDataSourceChange}
+                        tooltip='Ange den datakälla som widgeten ska presentera data ifrån'/>                        
+                    <Grid>
+                        <Row className='show-grid'>
+                            <Col xs={8}>
+                                <FormInput title='Data-attribut' type='text' onChange={this.handleAttributeChange}
+                                    tooltip='Ange specifikt attribut från API'/>
+                            </Col>
+                            <Col xs={4}>
+                                <FormInput title='Uppdateringsfrekvens' type='number' onChange={this.handleRefreshChange}
+                                    tooltip='I minuter hur ofta data ska uppdateras. 0 eller blankt för ingen uppdatering'/>
+                            </Col>
+                        </Row>
+                    </Grid>
+                    <FormInput title='Enhet' type='text' onChange={this.handleUnitChange}
+                        tooltip='Ange enhet för värdet'/>
                 </div>
             );
             //Default button for widget kind value.
@@ -199,37 +234,38 @@ class CreateCellForm extends Component {
                             disabled={!this.state.title || !this.state.dataSource || !this.state.attribute || (!this.state.creator || !this.state.description)} 
                             bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
                     );
-                }
-                 
+                }      
             }
-           
         }
-        
         else if (this.state.kind === 'Graph') {
             formContent = (
                 <div>
-                    <FormGroup>
-                        <ControlLabel>Visningstyp</ControlLabel>
-                        <ButtonToolbar>
-                           <ToggleButtonGroup 
-                                type='radio'
-                                name='displayType' 
-                                defaultValue={'Iframe'}
-                                value={this.state.displayType}
-                                onChange={this.handleDisplayTypeChange}>
-                               <ToggleButton value={'Iframe'}>Iframe</ToggleButton> 
-                               <ToggleButton value={'Img'}>Img</ToggleButton>
-                            </ToggleButtonGroup>
-                        </ButtonToolbar>
-                    </FormGroup>
-                    <FormGroup>
-                        <ControlLabel>Diagram-URL</ControlLabel>
-                        <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-graphUrl">Ange URL för att visa önskat diagram.</Tooltip>}>
-                        <FormControl
-                            type='text'
-                            onChange={this.handleGraphUrlChange}/>
-                        </OverlayTrigger>
-                    </FormGroup>
+                    <Grid>
+                        <Row>
+                            <Col xs={8}>
+                                <FormGroup>
+                                    <ControlLabel>Visningstyp</ControlLabel>
+                                    <ButtonToolbar>
+                                    <ToggleButtonGroup 
+                                            type='radio'
+                                            name='displayType' 
+                                            defaultValue={'Iframe'}
+                                            value={this.state.displayType}
+                                            onChange={this.handleDisplayTypeChange}>
+                                        <ToggleButton value={'Iframe'}>Iframe</ToggleButton> 
+                                        <ToggleButton value={'Img'}>Img</ToggleButton>
+                                        </ToggleButtonGroup>
+                                    </ButtonToolbar>
+                                </FormGroup>
+                            </Col>
+                            <Col xs={4}>
+                                <FormInput title='Uppdateringsfrekvens' type='number' onChange={this.handleRefreshChange}
+                                    tooltip='I minuter hur ofta data ska uppdateras. 0 eller blankt för ingen uppdatering'/>
+                            </Col>
+                        </Row>
+                    </Grid>
+                    <FormInput title='Diagram-URL' type='text' onChange={this.handleGraphUrlChange}
+                        tooltip='Ange URL för inbäddat innehåll att visa'/>
                 </div>
             );
             
@@ -253,29 +289,27 @@ class CreateCellForm extends Component {
                 <div>
                     <FormGroup>
                         <ControlLabel>Fritext</ControlLabel>
-                        <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-textinput">Ange den text som cellen ska visa.</Tooltip>}>
+                        <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-textinput">Ange den text som cellen ska visa</Tooltip>}>
                             <FormControl 
                                 componentClass="textarea"
                                 placeholder="Ditt innehåll"
                                 onChange={this.handleTextInputChange}/>
                         </OverlayTrigger>
                     </FormGroup>
-                    <FormGroup>
-                        <ControlLabel>Datakälla</ControlLabel>
-                        <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-dataSource">Ange den datakälla som widgeten ska presentera data ifrån.</Tooltip>}>
-                            <FormControl
-                                type='text'
-                                onChange={this.handleDataSourceChange}/>
-                        </OverlayTrigger>
-                    </FormGroup>
-                    <FormGroup>
-                        <ControlLabel>Data-attribute</ControlLabel>
-                        <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-attribute">Ange specifikt attribut från API</Tooltip>}>
-                            <FormControl
-                                type='text'
-                                onChange={this.handleAttributeChange}/>
-                        </OverlayTrigger>
-                    </FormGroup>
+                    <FormInput title='Datakälla' type='text' onChange={this.handleDataSourceChange}
+                        tooltip='URL att hämta data ifrån'/>
+                    <Grid>
+                        <Row className='show-grid'>
+                            <Col xs={8}>
+                                <FormInput title='Data-attribut' type='text' onChange={this.handleAttributeChange}
+                                    tooltip='Ange specifikt attribut från API'/>
+                            </Col>
+                            <Col xs={4}>
+                                <FormInput title='Uppdateringsfrekvens' type='number' onChange={this.handleDescriptionChange}
+                                    tooltip='I minuter hur ofta data ska uppdateras. 0 eller blankt för ingen uppdatering'/>
+                            </Col>
+                        </Row>
+                    </Grid>
                 </div>
             );
             //Default button for widget kind value.
@@ -313,7 +347,6 @@ class CreateCellForm extends Component {
                             bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
                     );
                 }
-                 
             }
         }
 
@@ -327,15 +360,8 @@ class CreateCellForm extends Component {
                         <option value='Text'>Text</option>
                     </FormControl>
                 </FormGroup>
-
-                <FormGroup>
-                    <ControlLabel>Titel</ControlLabel>
-                    <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-title">Ange titel som widgeten ska ha.</Tooltip>}>
-                    <FormControl
-                        type='text'
-                        onChange={this.handleTitleChange}/>
-                    </OverlayTrigger>
-                </FormGroup>
+                <FormInput title='Titel' type='text' onChange={this.handleTitleChange}
+                    tooltip='Ange titel som widgeten ska ha'/>
 
                 {formContent}
 
@@ -347,23 +373,10 @@ class CreateCellForm extends Component {
 
                 {this.state.publish &&
                 <div>
-                    <FormGroup>
-                        <ControlLabel>Skapare</ControlLabel>
-                        <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-creator">Ange namn på den som skapat widgeten.</Tooltip>}>
-                        <FormControl
-                            type='text'
-                            onChange={this.handleCreatorChange}/>
-                        </OverlayTrigger>
-                    </FormGroup>
-
-                    <FormGroup>
-                    <ControlLabel>Beskrivning</ControlLabel>
-                        <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-desc">Ange en beskrivning om vad widgeten visualiserar.</Tooltip>}>
-                        <FormControl
-                        type='text'
-                        onChange={this.handleDescriptionChange}/>
-                        </OverlayTrigger>
-                    </FormGroup>
+                    <FormInput title='Skapare' type='text' onChange={this.handleCreatorChange}
+                        tooltip='Ange namn på den som skapat widgeten'/>
+                    <FormInput title='Beskrivning' type='text' onChange={this.handleDescriptionChange}
+                        tooltip='Ange beskrivande förklaring av widgetens innehåll'/>
                 </div>
                 }
 

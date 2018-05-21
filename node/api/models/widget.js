@@ -26,6 +26,9 @@ const widgetSchema = mongoose.Schema({
         required: true,
         enum: ['Value', 'Graph', 'Text']
     },
+    refreshRate: {
+        type: Number
+    },
     content: {
         type: mongoose.Schema.Types.ObjectId,
         refPath: 'kind',

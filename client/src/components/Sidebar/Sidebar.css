@@ -1,0 +1,35 @@
+/* Vertical List: */
+.vertical-list {
+    list-style: none;
+    margin-top: 10%;
+    padding: 10px;
+    width: 170px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    float: left;
+
+}
+
+/* Dark Button CSS */
+.button {
+    outline: 0;
+    padding: 5px 12px;
+    margin:3px;
+    display: block;
+    color: red;
+    text-align: left;
+    font-weight: bold;
+}
+
+
+.button a{
+    color: rgb(78, 77, 77);
+}
+
+.button a:hover {
+    color: black;
+    text-decoration: none;
+    border-left: 2px solid orange;
+    padding-left: 15px;
+}
