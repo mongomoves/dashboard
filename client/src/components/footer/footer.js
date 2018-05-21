@@ -31,7 +31,7 @@ componentWillMount() {
  }
 
 getData = () =>{
-  fetch('http://192.168.99.100:3001/api/log')
+  fetch('http://localhost:3001/api/log')
    .then(results => {
      return results.json();
    }).then(function(data){
