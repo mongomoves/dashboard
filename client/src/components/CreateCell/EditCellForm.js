@@ -42,7 +42,7 @@ class EditCellForm extends Component {
     };
 
     handleGraphUrlChange = (e) => {
-        this.setState({graphUrl: e.target.value});
+        this.setState({graphUrl: this.checkIframeTag(e.target.value)});
     };
 
     handleDataSourceChange = (e) => {
@@ -66,10 +66,10 @@ class EditCellForm extends Component {
         this.setState({publish: checked});
 
         if (checked) {
-            this.setState({buttonText: 'Edit and publish widget'});
+            this.setState({buttonText: 'Ändra och publicera widget'});
         }
         else {
-            this.setState({buttonText: 'Edit widget'});
+            this.setState({buttonText: 'Ändra widget'});
         }
     };
 
@@ -115,19 +115,59 @@ class EditCellForm extends Component {
             }
         }
 
-        console.log(`handleCreateWidget:widget=${JSON.stringify(widget)}`);
-        if(this.state.creator) {
+        //console.log(`handleCreateWidget:widget=${JSON.stringify(widget)}`);
+        if(this.state.published) {
             this.props.addCell(widget);
         } else {
+            if(this.state.publish) {
+                widget.creator=this.state.creator;
+                widget.description=this.state.description;
+                this.handlePost(widget);
+            }
             this.props.editCell(widget, this.props.values.index);
         }
 
         if (this.props.done) {
             this.props.done();
         }
-
-        //TODO: If publish is true, send to database
     };
+
+    /**
+    * Publishes the created widget though Post request to backend. Sends response to addID in App to associate widget ID
+    * from backend to the widget in frontend.
+    * @param {*} widget the widget to post to backend.
+    **/
+   handlePost = (widget) => {
+    fetch('http://192.168.99.100:3001/api/widgets', {
+        method: 'POST',
+        headers: {
+            // 'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(widget),
+    })
+        .then(function(res) {
+            return res.json()
+        })
+        .then(function(data) {
+            this.props.addID(data.widget);
+        }.bind(this))
+        .catch(err => err);
+   }; 
+    
+    /**
+    * Tries to check if entered string is a full Iframe tag and returns URL only if so.
+    * @param {*} graphUrl String to check and extract url from
+    **/
+    checkIframeTag = (graphUrl) => {
+        const iframeTag = '</iframe>';
+        const httpRegex = RegExp(/(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/igm);
+        if(graphUrl.includes(iframeTag)) {
+            return graphUrl.match(httpRegex)[0];
+        } else {
+            return graphUrl;
+        }
+    }
 
     render() {
         let formContent;
@@ -158,7 +198,7 @@ class EditCellForm extends Component {
                         <Row className='show-grid'>
                             <Col xs={8}>
                                 <FormGroup>
-                                    <ControlLabel>Data-attribute</ControlLabel>
+                                    <ControlLabel>Data-attribut</ControlLabel>
                                     <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-attribute">Ange specifikt attribut från API</Tooltip>}>
                                         <FormControl
                                             type='text'
@@ -263,7 +303,7 @@ class EditCellForm extends Component {
                     </Grid>
                     <FormGroup>
                         <ControlLabel>Diagram-URL</ControlLabel>
-                        <OverlayTrigger placement="top" overlay={<Tooltip id="edit-graph">Ange den URL till den graf som ska visas.</Tooltip>}>
+                        <OverlayTrigger placement="top" overlay={<Tooltip id="edit-graph">Ange URL för inbäddat innehåll att visa.</Tooltip>}>
                         <FormControl
                             type='text'
                             defaultValue={this.props.values.graphUrl}
@@ -311,7 +351,7 @@ class EditCellForm extends Component {
                         <Row className='show-grid'>
                             <Col xs={8}>
                                 <FormGroup>
-                                    <ControlLabel>Data-attribute</ControlLabel>
+                                    <ControlLabel>Data-attribut</ControlLabel>
                                     <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-attribute">Ange specifikt attribut från API</Tooltip>}>
                                         <FormControl
                                             type='text'

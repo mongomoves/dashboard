@@ -5,7 +5,9 @@ import CreateCellForm from "./components/CreateCell/CreateCellForm";
 import EditCellForm from "./components/CreateCell/EditCellForm";
 import SelectExistingCell from './components/existingCell/SelectExistingCell';
 import CellInfo from './components/cell/CellInfo';
+import Footer from "./components/footer/footer";
 import BootstrapModal from './components/Modal/BootstrapModal';
+import SaveDashboard from "./components/saveToBackend/SaveDashboard";
 import _ from 'lodash';
 
 import './App.css';
@@ -31,13 +33,58 @@ class App extends Component {
                 createCell: false,
                 editCell: false,
                 existingCell: false,
-                showInfo: false
+                showInfo: false,
+                saveDashboard: false,
             },
             idCounter: localStorageCells.length > 0 // if we loaded cells from local storage
-                ? localStorageCells[localStorageCells.length - 1].layout.i + 1 // set start id to highest id + 1
+                ? Number(localStorageCells[localStorageCells.length - 1].layout.i) + 1 // set start id to highest id + 1
                 : 0
         };
     }
+
+    /**
+     * Checks if the specified position is blocked by a cell in cells array.
+     * Also returns true if the position would span more than max column width.
+     * @param cells an array of cells, most likely this.state.cells
+     * @param x the cells x coordinate
+     * @param y the cells y coordinate
+     * @param w the width of the cell
+     * @param h the height of the cell
+     * @returns true or false
+     */
+    isPositionBlocked(cells, x, y, w, h) {
+        return cells.some(function(cell) {
+            return (cell.layout.x < x + w && cell.layout.x + cell.layout.w > x
+                && cell.layout.y < y + h && cell.layout.y + cell.layout.h > y)
+                || x + w > 12;
+        });
+    }
+
+    /**
+     * Finds an empty position on the dashboard, used when creating new cells.
+     * Terribly expensive and in need of optimization if we have time.
+     * @param w width of cell
+     * @param h height of cell
+     * @returns array with x and y coordinates of empty position
+     */
+    findEmptyPosition = (w, h) => {
+        let xPos = 0;
+        let yPos = 0;
+
+        let posIsBlocked = true;
+
+        for (let i = 0; posIsBlocked; i++) {
+            xPos = i % 12;
+
+            if (i > 0 && i % 12 === 0) {
+                yPos++;
+            }
+
+            posIsBlocked = this.isPositionBlocked(this.state.cells, xPos, yPos, w, h);
+        }
+
+        return [xPos, yPos];
+    };
 
     // adds a cell to the layout
     // depending on widget type the initial w/h and minw/minh are different
@@ -56,10 +103,12 @@ class App extends Component {
             minH = 4;
         }
 
+        const position = this.findEmptyPosition(w, h);
+
         const layout = {
             i: this.state.idCounter,
-            x: (this.state.cells.length) % 12, // TODO: better way to calculate X
-            y: Infinity,
+            x: position[0],
+            y: position[1],
             w: w,
             h: h,
             minW: minW,
@@ -93,12 +142,32 @@ class App extends Component {
         })
     };
 
+    //adds id generated for widget in backend to the widget in the cells Array.
+    //parameter: data The widget from the post request response.
+    addID = (data) => {
+        let cells = Object.assign([], this.state.cells);
+        for (let i = 0; i < cells.length; i++) {
+            if((cells[i].content.description === data.description) 
+                && (cells[i].content.creator === data.creator)) {
+                cells[i].id = data._id;
+            }
+        }
+        this.setState({cells: cells});
+        saveToLocalStorage("cells", this.state.cells);
+    };
+
+    getAllCells = () => {
+        return this.state.cells;
+    };
+
     clearDashboardLayout = () => {
         this.setState({
             layouts: {},
             cells: [],
+            idCounter: 0
         });
     };
+
 
     /**
      * Callback function. Sets new layout state.
@@ -178,6 +247,7 @@ class App extends Component {
                         kind: 'Graph',
                         title: e.content.title,
                         graphUrl: e.content.graphUrl,
+                        displayType: e.content.displayType,
                         refreshRate: e.content.refreshRate
                     }
                 } else if (e.content.kind === 'Text') {
@@ -202,13 +272,27 @@ class App extends Component {
         this.setState({modals: {editCell: false}})
     };
 
+
+    handleShowSaveDashboard = () => {
+        this.setState({modals: {saveDashboard: true}})
+    };
+
+    handleCloseSaveDashboardSuccess = () => {
+        this.setState({modals: {saveDashboard: false}})
+    };
+    handleCloseSaveDashboard = () => {
+        this.setState({modals: {saveDashboard: false}})
+    };
+
     render() {
         return (
             <div>
+
                 <CustomNavbar
                     showCreateCell={this.handleShowCreateCell}
                     showExistingCell={this.handleShowExistingCell} 
-                    clearDashboard={this.clearDashboardLayout}/>
+                    clearDashboard={this.clearDashboardLayout}
+                    showSaveDashboard={this.handleShowSaveDashboard}/>
                 <Dashboard
                     removeCell={this.removeCell}
                     showInfo={this.handleShowCellInfo}
@@ -219,7 +303,10 @@ class App extends Component {
                     title="Skapa widget"
                     show={this.state.modals.createCell}
                     close={this.handleCloseCreateCell}>
-                    <CreateCellForm addCell={this.addCell} done={this.handleCloseCreateCell} />
+                    <CreateCellForm
+                        addCell={this.addCell}
+                        done={this.handleCloseCreateCell}
+                        addID = {this.addID}/>
                 </BootstrapModal>
                 <BootstrapModal
                     show={this.state.modals.existingCell}
@@ -236,12 +323,21 @@ class App extends Component {
                     title='Redigera widget'
                     show={this.state.modals.editCell}
                     close={this.handleCloseEditCell}>
-                    <EditCellForm 
-                        values={editValues} 
+                    <EditCellForm
+                        values={editValues}
                         addCell={this.addCell}
                         editCell={this.editCell}
                         done={this.handleCloseEditCell}/>
                 </BootstrapModal>
+                <BootstrapModal
+                    title='Spara Dashboard'
+                    show={this.state.modals.saveDashboard}
+                    close={this.handleCloseSaveDashboard}>
+                    <SaveDashboard
+                        getAllCells={this.getAllCells}
+                        handleCloseSaveDashboardSuccess={this.handleCloseSaveDashboardSuccess}/>
+                </BootstrapModal>
+                 <Footer/>
             </div>
         );
     }

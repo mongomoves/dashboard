@@ -26,7 +26,7 @@ const dashboardSchema = mongoose.Schema({
             },
             layout: {
                 i: {
-                    type: Number,
+                    type: String,
                     required: true
                 },
                 x: {
