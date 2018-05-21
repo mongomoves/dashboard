@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Glyphicon} from 'react-bootstrap';
+import './ContentComponent.css';
 
 
 class StepByStep extends Component {
@@ -37,7 +38,7 @@ class StepByStep extends Component {
                     <p>
                         Här ges ett flertal exempel på hur man kommer igång med sin Dashboard samt håller den uppdaterad.
                     </p>
-                        <li><a href="#" onClick={this.toggleValueHandler}>Skapa en widget med typen värde. <Glyphicon glyph={this.state.toggleValue ? "chevron-down" : "chevron-up"}/></a></li>
+                        <li><a href="#" onClick={this.toggleValueHandler}>Skapa en widget med typen värde <Glyphicon glyph={this.state.toggleValue ? "chevron-down" : "chevron-up"}/></a></li>
                         {!this.state.toggleValue && <img src="https://i.imgur.com/tbtPqDK.png" alt="Create Widget"/>}
                         
                         {!this.state.toggleValue &&
