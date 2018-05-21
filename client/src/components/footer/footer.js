@@ -1,6 +1,7 @@
 import './footer.css';
 import BootstrapModal from '../Modal/BootstrapModal';
 import React, { Component } from 'react';
+import SERVER_URL from '../../constants'
 
 
 class Footer extends Component {
@@ -38,8 +39,12 @@ componentWillMount() {
  }
 
 getData = () =>{
+<<<<<<< HEAD
 
   fetch('http://192.168.99.100:3001/api/log')
+=======
+  fetch(SERVER_URL + '/api/log')
+>>>>>>> master
    .then(results => {
      return results.json();
    }).then(function(data){
