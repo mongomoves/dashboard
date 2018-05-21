@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { PageHeader} from 'react-bootstrap';
 import "./Article.css";
-import StepByStep from '../HowToPage/ContentComponents/StegforStegComponent';
-import Koncept from '../HowToPage/ContentComponents/KonceptComponent';
-import Widget from '../HowToPage/ContentComponents/WidgetComponent';
+
 
 class Article extends Component {
     constructor(props){
