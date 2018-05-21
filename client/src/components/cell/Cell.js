@@ -16,7 +16,8 @@ class Cell extends Component {
 
         this.state = {
             width: 0,
-            height: 0
+            height: 0,
+            frameURL: null
         };
 
         this.frameSize = React.createRef();
@@ -31,6 +32,9 @@ class Cell extends Component {
             width: this.frameSize.current.offsetWidth,
             height: this.frameSize.current.offsetHeight
         });
+        if(this.props.content.graphUrl && this.props.content.displayType === 'Iframe') {
+            this.setState({frameURL: this.props.content.graphUrl});
+        }
     }
 
     onResize = (width, height) => {
@@ -61,9 +65,35 @@ class Cell extends Component {
         this.props.editCell(this.props.id);
     };
 
+    /**
+     * Refreshes the Iframe by nulling the state, so that a refresh can occur without
+     * new properties being passed.
+     */
+    updateContent = () => {
+        console.log("updateContent");
+        this.setState({frameURL: null});
+        // this.setState({frameURL: this.checkForHTTP(this.props.content.graphUrl)});
+    }
+
+    /**
+     * Checks if URL for Iframe contains http or https. If either is missing
+     * the Iframe will display the entire Dashboard page as an embed. This avoids that
+     * but it will not stop the user from entering an invalid URL.
+     */
+    checkForHTTP = (url) => {
+        if(url.includes('http://', 0) || url.includes('https://', 0)) {
+            // this.setState({proper: true});
+            return url;
+        } else {
+            // this.setState({proper: false});
+            return 'about:blank';
+        }
+    }
+
     render() {
         const {title, kind} = this.props.content;
         let content;
+        let iframeRefreshButton = null;
         if (kind === 'Value') {
             content = (
                 <ValueComponent width={this.state.width} values={this.props.content} />
@@ -74,10 +104,13 @@ class Cell extends Component {
             if(displayType === 'Iframe') {
                 content = (
                     <IframeHolder
+                        refreshFunc={this.updateContent}
+                        frameURL={this.state.frameURL}
                         values={this.props.content}
                         width={this.state.width}
                         height={this.state.height}/>
                 )
+                iframeRefreshButton = (<MenuItem eventKey={4} onClick={this.updateContent}>Uppdatera</MenuItem>);
             } else if (displayType === 'Img') {
                 content = (
                     <ImageHolder
@@ -85,6 +118,7 @@ class Cell extends Component {
                         height={this.state.height}
                         values={this.props.content}/>
                 )
+                iframeRefreshButton = null;
             }
         }
         else if (kind === 'Text') {
@@ -115,6 +149,7 @@ class Cell extends Component {
                                             <MenuItem eventKey={1} onClick={this.onShowInfo}>Info</MenuItem>
                                             <MenuItem eventKey={2} onClick={this.onEdit}>Redigera</MenuItem>
                                             <MenuItem eventKey={3} onClick={this.onRemove}>Ta bort</MenuItem>
+                                            {iframeRefreshButton}
                                     </DropdownButton>
                                 </Col>
                             </Row>
