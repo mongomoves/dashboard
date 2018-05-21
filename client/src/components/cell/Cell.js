@@ -102,7 +102,7 @@ class Cell extends Component {
                     <Panel.Heading className='cell-heading'>
                         <Grid>
                             <Row className='show-grid'>
-                                <Col lg={10}>
+                                <Col style={{textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap'}} lg={10}>
                                     <span>{title}</span>
                                 </Col>
                                 <Col lg={2} style={{padding: 0}}>
