@@ -11,7 +11,9 @@ class Koncept extends Component {
                 <li className="liBold">Koncept</li>
                 <p>
                     Denna sida är till för att du ska kunna bekanta dig med Dashboarden.  
-                    Under fliken Steg för steg till vänster kommer ett antal exempel  visas. Dessa är hur man skapar, editerar och publicerar en widget. Här kan man även läsa mer om de tre olika widget typer som finns att välja mellan.
+                    Under fliken Steg för steg till vänster kommer ett antal exempel  visas. Dessa är hur man skapar, editerar och publicerar en widget.
+                </p> 
+                <p> Här kan man även läsa mer om de tre olika widget typer som finns att välja mellan.
                     Under fliken Widget beskrivs de olika celler man kan skapa och hur det är anpassningsbara.
                 </p>
                 <p>
