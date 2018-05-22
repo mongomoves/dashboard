@@ -40,7 +40,7 @@ class HowToPage extends Component {
                 <CustomNavbar />
                 <div className="howToContent">
                     <Article>
-                        {!this.state.toggleKoncept && <Koncept />}
+                        {this.state.toggleKoncept && <Koncept />}
                         {!this.state.toggleStepByStep && <StepByStep />}
                         {!this.state.toggleWidgetEx && <WidgetEx />}         
                     </Article>
