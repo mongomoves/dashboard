@@ -7,12 +7,14 @@ import SearchCells from './components/SearchCells/SearchCells';
 import CellInfo from './components/cell/CellInfo';
 import Footer from "./components/footer/footer";
 import BootstrapModal from './components/Modal/BootstrapModal';
-import SaveDashboard from "./components/SaveToBackend/SaveDashboard";
+import SaveDashboard from "./components/SaveDashboard/SaveDashboard";
+import SearchDashboard from "./components/SearchDashboard/SearchDashboard";
 import _ from 'lodash';
 
 import './App.css';
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
+import LoadDashboard from "./components/SearchDashboard/SearchDashboard";
 
 const localStorageCells = loadFromLocalStorage("cells") || [];
 
@@ -150,7 +152,7 @@ class App extends Component {
         for (let i = 0; i < cells.length; i++) {
             if((cells[i].content.description === data.description) 
                 && (cells[i].content.creator === data.creator)) {
-                cells[i].id = data._id;
+                cells[i].content._id = data._id;
             }
         }
         this.setState({cells: cells});
@@ -160,7 +162,12 @@ class App extends Component {
     getAllCells = () => {
         return this.state.cells;
     };
+    addDashboard = (dashboards) => {
+        this.setState({
+            cells: dashboards
+        });
 
+    };
     clearDashboardLayout = () => {
         this.setState({
             layouts: {},
@@ -350,7 +357,8 @@ class App extends Component {
                     title='Sök Dashboard'
                     show={this.state.modals.loadDashboard}
                     close={this.handleCloseLoadDashboard}>
-                    <LoadDashboard />
+                    <SearchDashboard
+                        addDashboard={this.addDashboard}/>
                 </BootstrapModal>
                  <Footer/>
             </div>
