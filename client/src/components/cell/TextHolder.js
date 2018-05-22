@@ -161,6 +161,7 @@ const spanStyleText = {
 //Style for the div displaying the text.
 const divStyle={
     overflowX: 'hidden',
+    overflowWrap: 'break-word',
     textOverflow: 'ellipsis',
     whiteSpace: 'pre-line',
     display: 'block',
