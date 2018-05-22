@@ -8,15 +8,14 @@ class CreateCellForm extends Component {
         super(props);
 
         this.state = {
-            buttonText: 'Skapa widget',
             kind: 'Value',
             publish: false,
-            buttonDisabled: false,
             title: '',
             creator: '',
             description: '',
             number: 0,
             graphUrl: '',
+            textInput: '',
             dataSource: '',
             attribute: '',
             unit: '',
@@ -25,66 +24,23 @@ class CreateCellForm extends Component {
         };
     }
 
-    handleKindChange = (e) => {
-        this.setState({kind: e.target.value});
-        
-    };
+    handleInputChange = (e) => {
+        const target = e.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
 
-    handleTitleChange = (e) => {
-        this.setState({title: e.target.value, titleError: true});
-    };
-
-    handleCreatorChange = (e) => {
-        this.setState({creator: e.target.value});
-    };
-
-    handleDescriptionChange = (e) => {
-        this.setState({description: e.target.value});
-    };
-
-    handleNumberChange = (e) => {
-        this.setState({number: e.target.value});
+        this.setState({
+            [name]: value
+        });
     };
 
     handleGraphUrlChange = (e) => {
         this.setState({graphUrl: this.checkIframeTag(e.target.value)});
     };
 
-    handleDataSourceChange = (e) => {
-        this.setState({dataSource: e.target.value});
-    };
-
-    handleAttributeChange = (e) => {
-        this.setState({attribute: e.target.value});
-    };
-
-    handleUnitChange = (e) => {
-        this.setState({unit: e.target.value});
-    };
-
-    handleTextInputChange = (e) => {
-        this.setState({textInput: e.target.value});
-    };
-
-    handlePublishChange = (e) => {
-        const checked = e.target.checked;
-        this.setState({publish: checked});
-
-        if (checked) {
-            this.setState({buttonText: 'Skapa och publicera widget'});
-        }
-        else {
-            this.setState({buttonText: 'Skapa widget'});
-        }
-    };
-
     handleDisplayTypeChange = (e) => {
         this.setState({displayType: e});
-    }
-
-    handleRefreshChange = (e) => {
-        this.setState({refreshRate: e.target.value});
-    }
+    };
 
     handleCreateWidget = () => {
         let widget;
@@ -118,10 +74,10 @@ class CreateCellForm extends Component {
                 refreshRate: this.state.refreshRate
             }
         }
-        //console.log(`handleCreateWidget:widget=${JSON.stringify(widget)}`);
-        if(this.state.publish) {
-            widget.creator=this.state.creator;
-            widget.description=this.state.description;
+
+        if (this.state.publish) {
+            widget.creator = this.state.creator;
+            widget.description = this.state.description;
             this.handlePost(widget);
         }
 
@@ -141,18 +97,17 @@ class CreateCellForm extends Component {
         fetch(SERVER_URL + '/api/widgets', {
             method: 'POST',
             headers: {
-                // 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(widget),
-        })
+            body: JSON.stringify(widget)
+            })
             .then(function(res) {
                 return res.json()
             })
             .then(function(data) {
                 this.props.addID(data.widget);
             }.bind(this))
-            .catch(err => err);
+            .catch(err => console.log(err));
     };
 
     /**
@@ -167,32 +122,58 @@ class CreateCellForm extends Component {
         } else {
             return graphUrl;
         }
-    }
+    };
 
     render() {
+        const buttonText = this.state.publish ? 'Skapa och publicera widget' : 'Skapa widget';
         let formContent;
         let buttonKind;
         // Form fields depends on type of widget
         if (this.state.kind === 'Value') {
             formContent = (
                 <div>
-                    <FormInput title='Värde' type='number' onChange={this.handleNumberChange}
+                    <FormInput
+                        title='Värde'
+                        type='number'
+                        value={this.state.number}
+                        name='number'
+                        onChange={this.handleInputChange}
                         tooltip='Ange det värde som ska visas i widgeten'/>
-                    <FormInput title='Datakälla' type='text' onChange={this.handleDataSourceChange}
+                    <FormInput
+                        title='Datakälla'
+                        type='text'
+                        value={this.state.dataSource}
+                        name='dataSource'
+                        onChange={this.handleInputChange}
                         tooltip='Ange den datakälla som widgeten ska presentera data ifrån'/>                        
                     <Grid>
                         <Row className='show-grid'>
                             <Col style={{padding: 0}} xs={8}>
-                                <FormInput title='Data-attribut' type='text' onChange={this.handleAttributeChange}
+                                <FormInput
+                                    title='Data-attribut'
+                                    type='text'
+                                    value={this.state.attribute}
+                                    name='attribute'
+                                    onChange={this.handleInputChange}
                                     tooltip='Ange specifikt attribut från API'/>
                             </Col>
                             <Col style={{paddingRight: 0}} xs={4}>
-                                <FormInput title='Uppdateringsfrekvens' type='number' onChange={this.handleRefreshChange}
+                                <FormInput
+                                    title='Uppdateringsfrekvens'
+                                    type='number'
+                                    value={this.state.refreshRate}
+                                    name='refreshRate'
+                                    onChange={this.handleInputChange}
                                     tooltip='I minuter hur ofta data ska uppdateras. 0 eller blankt för ingen uppdatering'/>
                             </Col>
                         </Row>
                     </Grid>
-                    <FormInput title='Enhet' type='text' onChange={this.handleUnitChange}
+                    <FormInput
+                        title='Enhet'
+                        type='text'
+                        value={this.state.unit}
+                        name='unit'
+                        onChange={this.handleInputChange}
                         tooltip='Ange enhet för värdet'/>
                 </div>
             );
@@ -200,21 +181,21 @@ class CreateCellForm extends Component {
             buttonKind = (
                 <Button
                         disabled={!this.state.title || !this.state.number || !this.state.dataSource || !this.state.attribute || !this.state.unit} 
-                        bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                        bsStyle='primary' onClick={this.handleCreateWidget}>{buttonText}</Button>
             );
             //Button of the kind number.
             if (this.state.number) {
                 buttonKind = (
                     <Button
                             disabled={!this.state.title || !this.state.number} 
-                            bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                            bsStyle='primary' onClick={this.handleCreateWidget}>{buttonText}</Button>
                 );
                 //Button for publishing number widget.
                 if (this.state.publish) {
                     buttonKind = (
                         <Button
                             disabled={!this.state.title || !this.state.number || (!this.state.creator || !this.state.description)} 
-                            bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                            bsStyle='primary' onClick={this.handleCreateWidget}>{buttonText}</Button>
                     );
                 }
             
@@ -224,14 +205,14 @@ class CreateCellForm extends Component {
                 buttonKind = (
                     <Button
                             disabled={!this.state.title || !this.state.dataSource || !this.state.attribute} 
-                            bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                            bsStyle='primary' onClick={this.handleCreateWidget}>{buttonText}</Button>
                 );
                 //Button for data source widget when published, disabled if creator and description is empty.
                 if (this.state.publish) {
                     buttonKind = (
                         <Button
                             disabled={!this.state.title || !this.state.dataSource || !this.state.attribute || (!this.state.creator || !this.state.description)} 
-                            bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                            bsStyle='primary' onClick={this.handleCreateWidget}>{buttonText}</Button>
                     );
                 }      
             }
@@ -247,23 +228,32 @@ class CreateCellForm extends Component {
                                     <ButtonToolbar>
                                     <ToggleButtonGroup 
                                             type='radio'
-                                            name='displayType' 
-                                            defaultValue={'Iframe'}
                                             value={this.state.displayType}
+                                            name='displayType'
                                             onChange={this.handleDisplayTypeChange}>
-                                        <ToggleButton value={'Iframe'}>Iframe</ToggleButton> 
-                                        <ToggleButton value={'Img'}>Img</ToggleButton>
+                                        <ToggleButton value='Iframe'>Iframe</ToggleButton>
+                                        <ToggleButton value='Img'>Img</ToggleButton>
                                         </ToggleButtonGroup>
                                     </ButtonToolbar>
                                 </FormGroup>
                             </Col>
                             <Col style={{paddingRight: 0}} xs={4}>
-                                <FormInput title='Uppdateringsfrekvens' type='number' onChange={this.handleRefreshChange}
+                                <FormInput
+                                    title='Uppdateringsfrekvens'
+                                    type='number'
+                                    value={this.state.refreshRate}
+                                    name='refreshRate'
+                                    onChange={this.handleInputChange}
                                     tooltip='I minuter hur ofta data ska uppdateras. 0 eller blankt för ingen uppdatering'/>
                             </Col>
                         </Row>
                     </Grid>
-                    <FormInput title='Diagram-URL' type='text' onChange={this.handleGraphUrlChange}
+                    <FormInput
+                        title='Diagram-URL'
+                        type='text'
+                        value={this.state.graphUrl}
+                        name='graphUrl'
+                        onChange={this.handleGraphUrlChange}
                         tooltip='Ange URL för inbäddat innehåll att visa'/>
                 </div>
             );
@@ -272,14 +262,14 @@ class CreateCellForm extends Component {
             buttonKind = (
                 <Button
                         disabled={!this.state.graphUrl || !this.state.title} 
-                        bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                        bsStyle='primary' onClick={this.handleCreateWidget}>{buttonText}</Button>
             );
             //Button for publishing graph widget, disabled when creator and description is empty.
             if (this.state.publish) {
                 buttonKind = (
                     <Button
                             disabled={!this.state.graphUrl || !this.state.title || (!this.state.creator || !this.state.description)} 
-                            bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                            bsStyle='primary' onClick={this.handleCreateWidget}>{buttonText}</Button>
                 );
             }
         }
@@ -291,20 +281,36 @@ class CreateCellForm extends Component {
                         <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-textinput">Ange den text som cellen ska visa</Tooltip>}>
                             <FormControl 
                                 componentClass="textarea"
-                                placeholder="Ditt innehåll"
-                                onChange={this.handleTextInputChange}/>
+                                value={this.state.textInput}
+                                name='textInput'
+                                onChange={this.handleInputChange}/>
                         </OverlayTrigger>
                     </FormGroup>
-                    <FormInput title='Datakälla' type='text' onChange={this.handleDataSourceChange}
-                        tooltip='URL att hämta data ifrån'/>
+                    <FormInput
+                        title='Datakälla'
+                        type='text'
+                        value={this.state.dataSource}
+                        name='dataSource'
+                        onChange={this.handleInputChange}
+                        tooltip='Ange den datakälla som widgeten ska presentera data ifrån'/>
                     <Grid>
                         <Row className='show-grid'>
                             <Col style={{padding: 0}} xs={8}>
-                                <FormInput title='Data-attribut' type='text' onChange={this.handleAttributeChange}
+                                <FormInput
+                                    title='Data-attribut'
+                                    type='text'
+                                    value={this.state.attribute}
+                                    name='attribute'
+                                    onChange={this.handleInputChange}
                                     tooltip='Ange specifikt attribut från API'/>
                             </Col>
                             <Col style={{paddingRight: 0}} xs={4}>
-                                <FormInput title='Uppdateringsfrekvens' type='number' onChange={this.handleDescriptionChange}
+                                <FormInput
+                                    title='Uppdateringsfrekvens'
+                                    type='number'
+                                    value={this.state.refreshRate}
+                                    name='refreshRate'
+                                    onChange={this.handleInputChange}
                                     tooltip='I minuter hur ofta data ska uppdateras. 0 eller blankt för ingen uppdatering'/>
                             </Col>
                         </Row>
@@ -315,19 +321,19 @@ class CreateCellForm extends Component {
             buttonKind = (
                 <Button
                         disabled={!this.state.title || !this.state.textInput || !this.state.dataSource || !this.state.attribute} 
-                        bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                        bsStyle='primary' onClick={this.handleCreateWidget}>{buttonText}</Button>
             );
             if(this.state.textInput) {
                 buttonKind = (
                     <Button
                         disabled={!this.state.title || (this.state.dataSource || this.state.attribute)}
-                        bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                        bsStyle='primary' onClick={this.handleCreateWidget}>{buttonText}</Button>
                 );
                 if (this.state.publish) {
                     buttonKind = (
                         <Button
                             disabled={!this.state.title || !this.state.textInput || (!this.state.creator || !this.state.description)} 
-                            bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                            bsStyle='primary' onClick={this.handleCreateWidget}>{buttonText}</Button>
                     );
                 }
             }
@@ -336,14 +342,14 @@ class CreateCellForm extends Component {
                 buttonKind = (
                     <Button
                             disabled={!this.state.title || !this.state.dataSource || !this.state.attribute || this.state.textInput} 
-                            bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                            bsStyle='primary' onClick={this.handleCreateWidget}>{buttonText}</Button>
                 );
                 //Button for data source widget when published, disabled if creator and description is empty.
                 if (this.state.publish) {
                     buttonKind = (
                         <Button
                             disabled={!this.state.title || !this.state.dataSource || !this.state.attribute || (!this.state.creator || !this.state.description)} 
-                            bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                            bsStyle='primary' onClick={this.handleCreateWidget}>{buttonText}</Button>
                     );
                 }
             }
@@ -352,36 +358,56 @@ class CreateCellForm extends Component {
         return (
             <form>
                 <FormGroup controlId='kind'>
-                    <ControlLabel>Widget-typ</ControlLabel>
-                    <FormControl componentClass='select' value={this.state.kind} onChange={this.handleKindChange}>
+                    <ControlLabel>Widget typ</ControlLabel>
+                    <FormControl
+                        componentClass='select'
+                        name='kind'
+                        value={this.state.kind}
+                        onChange={this.handleInputChange}>
+
                         <option value='Value'>Värde</option>
                         <option value='Graph'>Diagram</option>
                         <option value='Text'>Text</option>
                     </FormControl>
                 </FormGroup>
                 <FormGroup>
-                    <ControlLabel>Title</ControlLabel>
+                    <ControlLabel>Titel</ControlLabel>
                     <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-number">Ange titel som widgeten ska ha. Max 50 tecken</Tooltip>}>
                         <FormControl
                             maxLength='50'
                             type='text'
-                            onChange={this.handleTitleChange}/>
+                            value={this.state.title}
+                            name='title'
+                            onChange={this.handleInputChange}/>
                     </OverlayTrigger>
                 </FormGroup>
 
                 {formContent}
 
                 <FormGroup>
-                    <Checkbox onChange={this.handlePublishChange}>
-                        Publisera widget
+                    <Checkbox
+                        name="publish"
+                        value={this.state.publish}
+                        onChange={this.handleInputChange}>
+                        Publicera widget
                     </Checkbox>
                 </FormGroup>
 
                 {this.state.publish &&
                 <div>
-                    <FormInput title='Skapare' type='text' onChange={this.handleCreatorChange}
+                    <FormInput
+                        title='Skapare'
+                        type='text'
+                        value={this.state.creator}
+                        name='creator'
+                        onChange={this.handleInputChange}
                         tooltip='Ange namn på den som skapat widgeten'/>
-                    <FormInput title='Beskrivning' type='text' onChange={this.handleDescriptionChange}
+                    <FormInput
+                        title='Beskrivning'
+                        type='text'
+                        value={this.state.description}
+                        name='description'
+                        onChange={this.handleInputChange}
                         tooltip='Ange beskrivande förklaring av widgetens innehåll'/>
                 </div>
                 }

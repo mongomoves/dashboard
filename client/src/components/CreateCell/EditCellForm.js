@@ -10,15 +10,15 @@ class EditCellForm extends Component {
         const {creator, kind, displayType, title, textInput, number, graphUrl, dataSource, attribute, refreshRate, unit} = this.props.values;
 
         this.state = {
-            buttonText: 'Ändra widget',
-            creator: creator,
             kind: kind,
             publish: false,
             published: creator ? true : false,
             title: title,
+            creator: creator || '',
+            description: '',
             number: number,
-            textInput: textInput,
             graphUrl: graphUrl,
+            textInput: textInput,
             dataSource: dataSource,
             attribute: attribute,
             unit: unit,
@@ -27,61 +27,23 @@ class EditCellForm extends Component {
         };
     }
 
-    handleTitleChange = (e) => {
-        this.setState({title: e.target.value});
-    };
+    handleInputChange = (e) => {
+        const target = e.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
 
-    handleCreatorChange = (e) => {
-        this.setState({creator: e.target.value});
-    };
-
-    handleDescriptionChange = (e) => {
-        this.setState({description: e.target.value});
-    };
-
-    handleNumberChange = (e) => {
-        this.setState({number: e.target.value});
+        this.setState({
+            [name]: value
+        });
     };
 
     handleGraphUrlChange = (e) => {
         this.setState({graphUrl: this.checkIframeTag(e.target.value)});
     };
 
-    handleDataSourceChange = (e) => {
-        this.setState({dataSource: e.target.value});
-    };
-
-    handleAttributeChange = (e) => {
-        this.setState({attribute: e.target.value});
-    };
-
-    handleUnitChange = (e) => {
-        this.setState({unit: e.target.value});
-    };
-
-    handleTextInputChange = (e) => {
-        this.setState({textInput: e.target.value});
-    };
-
-    handlePublishChange = (e) => {
-        const checked = e.target.checked;
-        this.setState({publish: checked});
-
-        if (checked) {
-            this.setState({buttonText: 'Ändra och publicera widget'});
-        }
-        else {
-            this.setState({buttonText: 'Ändra widget'});
-        }
-    };
-
     handleDisplayTypeChange = (e) => {
         this.setState({displayType: e});
-    }
-
-    handleRefreshChange = (e) => {
-        this.setState({refreshRate: e.target.value});
-    }
+    };
 
     handleCreateWidget = () => {
         let widget;
@@ -121,8 +83,8 @@ class EditCellForm extends Component {
             this.props.addCell(widget);
         } else {
             if(this.state.publish) {
-                widget.creator=this.state.creator;
-                widget.description=this.state.description;
+                widget.creator = this.state.creator;
+                widget.description = this.state.description;
                 this.handlePost(widget);
             }
             this.props.editCell(widget, this.props.values.index);
@@ -134,32 +96,32 @@ class EditCellForm extends Component {
     };
 
     /**
-    * Publishes the created widget though Post request to backend. Sends response to addID in App to associate widget ID
-    * from backend to the widget in frontend.
-    * @param {*} widget the widget to post to backend.
-    **/
-   handlePost = (widget) => {
-    fetch(SERVER_URL + '/api/widgets', {
-        method: 'POST',
-        headers: {
-            // 'Accept': 'application/json',
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(widget),
-    })
-        .then(function(res) {
-            return res.json()
-        })
-        .then(function(data) {
-            this.props.addID(data.widget);
-        }.bind(this))
-        .catch(err => err);
-   }; 
-    
+     * Publishes the created widget though Post request to backend. Sends response to addID in App to associate widget ID
+     * from backend to the widget in frontend.
+     * @param {*} widget the widget to post to backend.
+     **/
+    handlePost = (widget) => {
+        fetch(SERVER_URL + '/api/widgets', {
+            method: 'POST',
+            headers: {
+                // 'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(widget)
+            })
+            .then(function(res) {
+                return res.json()
+            })
+            .then(function(data) {
+                this.props.addID(data.widget);
+            }.bind(this))
+            .catch(err => err);
+    };
+
     /**
-    * Tries to check if entered string is a full Iframe tag and returns URL only if so.
-    * @param {*} graphUrl String to check and extract url from
-    **/
+     * Tries to check if entered string is a full Iframe tag and returns URL only if so.
+     * @param {*} graphUrl String to check and extract url from
+     **/
     checkIframeTag = (graphUrl) => {
         const iframeTag = '</iframe>';
         const httpRegex = RegExp(/(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/igm);
@@ -168,66 +130,92 @@ class EditCellForm extends Component {
         } else {
             return graphUrl;
         }
-    }
+    };
 
     render() {
+        let buttonText = this.state.publish ? 'Ändra och publicera widget' : 'Ändra widget';
         let formContent;
         let buttonKind;
         if (this.state.kind === 'Value') {
             formContent = (
                 <div>
-                    <FormInput title='Värde' type='number' onChange={this.handleNumberChange} 
-                        defaultValue={this.props.values.number} tooltip='Ange det värde som ska visas i widgeten'/>
-                    <FormInput title='Datakälla' type='text' onChange={this.handleDataSourceChange}
-                        defaultValue={this.props.values.dataSource} tooltip='Ange den datakälla som widgeten ska presentera data ifrån'/>                        
+                    <FormInput
+                        title='Värde'
+                        type='number'
+                        value={this.state.number}
+                        name='number'
+                        onChange={this.handleInputChange}
+                        tooltip='Ange det värde som ska visas i widgeten'/>
+                    <FormInput
+                        title='Datakälla'
+                        type='text'
+                        value={this.state.dataSource}
+                        name='dataSource'
+                        onChange={this.handleInputChange}
+                        tooltip='Ange den datakälla som widgeten ska presentera data ifrån'/>
                     <Grid>
                         <Row className='show-grid'>
                             <Col style={{padding: 0}} xs={8}>
-                                <FormInput title='Data-attribut' type='text' onChange={this.handleAttributeChange}
-                                    defaultValue={this.props.values.attribute} tooltip='Ange specifikt attribut från API'/>
+                                <FormInput
+                                    title='Data-attribut'
+                                    type='text'
+                                    value={this.state.attribute}
+                                    name='attribute'
+                                    onChange={this.handleInputChange}
+                                    tooltip='Ange specifikt attribut från API'/>
                             </Col>
                             <Col style={{paddingRight: 0}} xs={4}>
-                                <FormInput title='Uppdateringsfrekvens' type='number' onChange={this.handleRefreshChange}
-                                    defaultValue={this.props.values.refreshRate} tooltip='I minuter hur ofta data ska uppdateras. 0 eller blankt för ingen uppdatering'/>
+                                <FormInput
+                                    title='Uppdateringsfrekvens'
+                                    type='number'
+                                    value={this.state.refreshRate}
+                                    name='refreshRate'
+                                    onChange={this.handleInputChange}
+                                    tooltip='I minuter hur ofta data ska uppdateras. 0 eller blankt för ingen uppdatering'/>
                             </Col>
                         </Row>
                     </Grid>
-                    <FormInput title='Enhet' type='text' onChange={this.handleUnitChange}
-                        defaultValue={this.props.values.unit} tooltip='Ange enhet för värdet'/>
+                    <FormInput
+                        title='Enhet'
+                        type='text'
+                        value={this.state.unit}
+                        name='unit'
+                        onChange={this.handleInputChange}
+                        tooltip='Ange enhet för värdet'/>
                 </div>
             );
 
             buttonKind = (
-                <Button 
-                    disabled={!this.state.title || !this.state.numer || !this.state.dataSource || !this.state.attribute || !this.state.unit}
-                    bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                <Button
+                    disabled={!this.state.title || !this.state.number || !this.state.dataSource || !this.state.attribute || !this.state.unit}
+                    bsStyle='primary' onClick={this.handleCreateWidget}>{buttonText}</Button>
             );
-            
+
             if (this.state.number) {
                 buttonKind = (
-                    <Button 
-                    disabled={!this.state.title || !this.state.number}
-                    bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                    <Button
+                        disabled={!this.state.title || !this.state.number}
+                        bsStyle='primary' onClick={this.handleCreateWidget}>{buttonText}</Button>
                 );
                 if (this.state.publish) {
                     buttonKind = (
-                        <Button 
-                        disabled={!this.state.title || !this.state.number || (!this.state.creator || !this.state.description)}
-                        bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                        <Button
+                            disabled={!this.state.title || !this.state.number || (!this.state.creator || !this.state.description)}
+                            bsStyle='primary' onClick={this.handleCreateWidget}>{buttonText}</Button>
                     );
                 }
             }
             if (this.state.dataSource || this.state.attribute) {
                 buttonKind = (
-                    <Button 
-                    disabled={!this.state.title || !this.state.dataSource || !this.state.attribute}
-                    bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                    <Button
+                        disabled={!this.state.title || !this.state.dataSource || !this.state.attribute}
+                        bsStyle='primary' onClick={this.handleCreateWidget}>{buttonText}</Button>
                 );
                 if (this.state.publish) {
                     buttonKind = (
-                        <Button 
-                        disabled={!this.state.title || !this.state.dataSource || !this.state.attribute || (!this.state.creator || !this.state.description)}
-                        bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                        <Button
+                            disabled={!this.state.title || !this.state.dataSource || !this.state.attribute || (!this.state.creator || !this.state.description)}
+                            bsStyle='primary' onClick={this.handleCreateWidget}>{buttonText}</Button>
                     );
                 }
             }
@@ -241,38 +229,47 @@ class EditCellForm extends Component {
                                 <FormGroup>
                                     <ControlLabel>Visningstyp</ControlLabel>
                                     <ButtonToolbar>
-                                    <ToggleButtonGroup 
+                                        <ToggleButtonGroup
                                             type='radio'
-                                            name='displayType'
-                                            defaultValue={this.props.values.displayType} 
                                             value={this.state.displayType}
+                                            name='displayType'
                                             onChange={this.handleDisplayTypeChange}>
-                                        <ToggleButton value={'Iframe'}>Iframe</ToggleButton> 
-                                        <ToggleButton value={'Img'}>Img</ToggleButton>
+                                            <ToggleButton value='Iframe'>Iframe</ToggleButton>
+                                            <ToggleButton value='Img'>Img</ToggleButton>
                                         </ToggleButtonGroup>
                                     </ButtonToolbar>
                                 </FormGroup>
                             </Col>
                             <Col style={{paddingRight: 0}} xs={4}>
-                                <FormInput title='Uppdateringsfrekvens' type='number' onChange={this.handleRefreshChange}
-                                    defaultValue={this.props.values.refreshRate} tooltip='I minuter hur ofta data ska uppdateras. 0 eller blankt för ingen uppdatering'/>
+                                <FormInput
+                                    title='Uppdateringsfrekvens'
+                                    type='number'
+                                    value={this.state.refreshRate}
+                                    name='refreshRate'
+                                    onChange={this.handleInputChange}
+                                    tooltip='I minuter hur ofta data ska uppdateras. 0 eller blankt för ingen uppdatering'/>
                             </Col>
                         </Row>
                     </Grid>
-                    <FormInput title='Diagram-URL' type='text' onChange={this.handleGraphUrlChange}
-                        defaultValue={this.props.values.graphUrl} tooltip='Ange URL för inbäddat innehåll att visa'/>
+                    <FormInput
+                        title='Diagram-URL'
+                        type='text'
+                        value={this.state.graphUrl}
+                        name='graphUrl'
+                        onChange={this.handleGraphUrlChange}
+                        tooltip='Ange URL för inbäddat innehåll att visa'/>
                 </div>
             );
             buttonKind = (
-                <Button 
+                <Button
                     disabled={!this.state.title || !this.state.graphUrl}
-                    bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                    bsStyle='primary' onClick={this.handleCreateWidget}>{buttonText}</Button>
             );
             if (this.state.publish) {
                 buttonKind = (
-                    <Button 
-                    disabled={!this.state.title || !this.state.graphUrl || (!this.state.creator || !this.state.description)}
-                    bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                    <Button
+                        disabled={!this.state.title || !this.state.graphUrl || (!this.state.creator || !this.state.description)}
+                        bsStyle='primary' onClick={this.handleCreateWidget}>{buttonText}</Button>
                 );
             }
         }
@@ -281,25 +278,40 @@ class EditCellForm extends Component {
                 <div>
                     <FormGroup>
                         <ControlLabel>Fritext</ControlLabel>
-                        <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-textinput">Ange den text som cellen ska visa.</Tooltip>}>
-                            <FormControl 
+                        <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-textinput">Ange den text som cellen ska visa</Tooltip>}>
+                            <FormControl
                                 componentClass="textarea"
-                                placeholder="Ditt innehåll"
-                                defaultValue={this.props.values.textInput}
-                                onChange={this.handleTextInputChange}/>
+                                value={this.state.textInput}
+                                name='textInput'
+                                onChange={this.handleInputChange}/>
                         </OverlayTrigger>
                     </FormGroup>
-                    <FormInput title='Datakälla' type='text' onChange={this.handleDataSourceChange}
-                        defaultValue={this.props.values.dataSource} tooltip='URL att hämta data ifrån'/>
+                    <FormInput
+                        title='Datakälla'
+                        type='text'
+                        value={this.state.dataSource}
+                        name='dataSource'
+                        onChange={this.handleInputChange}
+                        tooltip='Ange den datakälla som widgeten ska presentera data ifrån'/>
                     <Grid>
                         <Row className='show-grid'>
                             <Col style={{padding: 0}} xs={8}>
-                                <FormInput title='Data-attribut' type='text' onChange={this.handleAttributeChange}
-                                    defaultValue={this.props.values.attribute} tooltip='Ange specifikt attribut från API'/>
+                                <FormInput
+                                    title='Data-attribut'
+                                    type='text'
+                                    value={this.state.attribute}
+                                    name='attribute'
+                                    onChange={this.handleInputChange}
+                                    tooltip='Ange specifikt attribut från API'/>
                             </Col>
                             <Col style={{paddingRight: 0}} xs={4}>
-                                <FormInput title='Uppdateringsfrekvens' type='number' onChange={this.handleDescriptionChange}
-                                    defaultValue={this.props.values.refreshRate} tooltip='I minuter hur ofta data ska uppdateras. 0 eller blankt för ingen uppdatering'/>
+                                <FormInput
+                                    title='Uppdateringsfrekvens'
+                                    type='number'
+                                    value={this.state.refreshRate}
+                                    name='refreshRate'
+                                    onChange={this.handleInputChange}
+                                    tooltip='I minuter hur ofta data ska uppdateras. 0 eller blankt för ingen uppdatering'/>
                             </Col>
                         </Row>
                     </Grid>
@@ -308,36 +320,36 @@ class EditCellForm extends Component {
             //Validation on Edit button
             buttonKind = (
                 <Button
-                        disabled={!this.state.title || !this.state.textInput || !this.state.dataSource || !this.state.attribute} 
-                        bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                    disabled={!this.state.title || !this.state.textInput || !this.state.dataSource || !this.state.attribute}
+                    bsStyle='primary' onClick={this.handleCreateWidget}>{buttonText}</Button>
             );
             if(this.state.textInput) {
                 buttonKind = (
                     <Button
                         disabled={!this.state.title || (this.state.dataSource || this.state.attribute)}
-                        bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                        bsStyle='primary' onClick={this.handleCreateWidget}>{buttonText}</Button>
                 );
                 if (this.state.publish) {
                     buttonKind = (
                         <Button
-                            disabled={!this.state.title || !this.state.textInput || (!this.state.creator || !this.state.description)} 
-                            bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                            disabled={!this.state.title || !this.state.textInput || (!this.state.creator || !this.state.description)}
+                            bsStyle='primary' onClick={this.handleCreateWidget}>{buttonText}</Button>
                     );
                 }
             }
             if (this.state.dataSource || this.state.attribute) {
                 buttonKind = (
                     <Button
-                            disabled={!this.state.title || !this.state.dataSource || !this.state.attribute || this.state.textInput} 
-                            bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                        disabled={!this.state.title || !this.state.dataSource || !this.state.attribute || this.state.textInput}
+                        bsStyle='primary' onClick={this.handleCreateWidget}>{buttonText}</Button>
                 );
                 if (this.state.publish) {
                     buttonKind = (
                         <Button
-                            disabled={!this.state.title || !this.state.dataSource || !this.state.attribute || (!this.state.creator || !this.state.description)} 
-                            bsStyle='primary' onClick={this.handleCreateWidget}>{this.state.buttonText}</Button>
+                            disabled={!this.state.title || !this.state.dataSource || !this.state.attribute || (!this.state.creator || !this.state.description)}
+                            bsStyle='primary' onClick={this.handleCreateWidget}>{buttonText}</Button>
                     );
-                }         
+                }
             }
         }
 
@@ -349,31 +361,46 @@ class EditCellForm extends Component {
                         <FormControl
                             maxLength='50'
                             type='text'
-                            defaultValue={this.props.values.title}
-                            onChange={this.handleTitleChange}/>
+                            value={this.state.title}
+                            name='title'
+                            onChange={this.handleInputChange}/>
                     </OverlayTrigger>
                 </FormGroup>
-                
+
                 {formContent}
-                
-                {!this.state.published && 
+
+                {!this.state.published &&
                 <FormGroup>
-                    <Checkbox onChange={this.handlePublishChange}>
+                    <Checkbox
+                        name="publish"
+                        value={this.state.publish}
+                        onChange={this.handleInputChange}>
                         Publicera widget
                     </Checkbox>
-                </FormGroup>}
+                </FormGroup>
+                }
 
                 {this.state.publish &&
                 <div>
-                    <FormInput title='Skapare' type='text' onChange={this.handleCreatorChange}
-                        tooltip='Ange skapare av widget'/>
-                    <FormInput title='Beskrivning' type='text' onChange={this.handleDescriptionChange}
+                    <FormInput
+                        title='Skapare'
+                        type='text'
+                        value={this.state.creator}
+                        name='creator'
+                        onChange={this.handleInputChange}
+                        tooltip='Ange namn på den som skapat widgeten'/>
+                    <FormInput
+                        title='Beskrivning'
+                        type='text'
+                        value={this.state.description}
+                        name='description'
+                        onChange={this.handleInputChange}
                         tooltip='Ange beskrivande förklaring av widgetens innehåll'/>
                 </div>
                 }
 
                 <ButtonToolbar>
-                   {buttonKind}
+                    {buttonKind}
                 </ButtonToolbar>
             </form>
         )
