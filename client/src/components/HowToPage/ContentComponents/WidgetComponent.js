@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+//Component that renders content on the how to page.
 
 class Widget extends Component {
     render() {

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import {Glyphicon} from 'react-bootstrap';
 import './ContentComponent.css';
 
+// Component that renders the Steg för steg part of the application
+
 
 class StepByStep extends Component {
 
@@ -16,14 +18,18 @@ class StepByStep extends Component {
         }
 
     }
+<<<<<<< HEAD
+=======
+    //Toggels the state onClick of toggleValue between display and hide.
+>>>>>>> cfd447aace967f55a62579a41f2c540faf4a8d25
     toggleValueHandler = () => {
         this.setState({toggleValue: !this.state.toggleValue});
     }
-
+    //Toggels the state onClick of toggleEdit between display and hide.
     toggleEditHandler = () => {
         this.setState({toggleEdit: !this.state.toggleEdit});
     }
-
+    //Toggels the state onClick of togglePublish between display and hide.
     togglePublishHandler = () => {
         this.setState({togglePublish: !this.state.togglePublish});
         
@@ -37,7 +43,7 @@ class StepByStep extends Component {
                     <p>
                         Här ges ett flertal exempel på hur man kommer igång med sin Dashboard samt håller den uppdaterad.
                     </p>
-                        <li><a href="#" onClick={this.toggleValueHandler}>Skapa en widget med typen värde <Glyphicon glyph={this.state.toggleValue ? "chevron-down" : "chevron-up"}/></a></li>
+                        <li><a onClick={this.toggleValueHandler}>Skapa en widget med typen värde <Glyphicon glyph={this.state.toggleValue ? "chevron-down" : "chevron-up"}/></a></li>
                         {!this.state.toggleValue && <img src="https://i.imgur.com/tbtPqDK.png" alt="Create Widget"/>}
                         
                         {!this.state.toggleValue &&
@@ -59,7 +65,7 @@ class StepByStep extends Component {
                         }
 
 
-                        <li><a href="#" onClick={this.toggleEditHandler}>Redigera widget <Glyphicon glyph={this.state.toggleEdit ? "chevron-down" : "chevron-up"}/></a></li>
+                        <li><a  onClick={this.toggleEditHandler}>Redigera widget <Glyphicon glyph={this.state.toggleEdit ? "chevron-down" : "chevron-up"}/></a></li>
 
                         {!this.state.toggleEdit && <img src="https://i.imgur.com/nP5qFYH.png" alt="Redigera widget"/>}   
                         {!this.state.toggleEdit &&

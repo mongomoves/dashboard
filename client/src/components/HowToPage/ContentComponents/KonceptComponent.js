@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './ContentComponent.css';
 import {Glyphicon} from 'react-bootstrap';
 
-
+//Component that renders the content on the how to page.
 
 class Koncept extends Component {
     render() {

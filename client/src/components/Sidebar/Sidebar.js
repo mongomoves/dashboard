@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { MenuItem } from 'react-bootstrap';
 import './Sidebar.css';
 
+//Component that displays the sidebar on the how to page. Handels onClick events by calling methods from Article component.
+
 class Sidebar extends Component {
     constructor(props){
         super(props);
