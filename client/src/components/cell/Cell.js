@@ -111,6 +111,7 @@ class Cell extends Component {
                                         noCaret
                                         pullRight 
                                         bsSize="xsmall"
+                                        className="config-btn"
                                         title={<Glyphicon glyph="cog" />}>
                                             <MenuItem eventKey={1} onClick={this.onShowInfo}>Info</MenuItem>
                                             <MenuItem eventKey={2} onClick={this.onEdit}>Redigera</MenuItem>
