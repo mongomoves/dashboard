@@ -73,7 +73,7 @@ class StepByStep extends Component {
                         {!this.state.toggleEdit && <img style={imgStyle} src="https://i.imgur.com/nP5qFYH.png" alt="Redigera widget"/>}   
                         {!this.state.toggleEdit &&
                         <div>
-                            <p>Redigera widget gör man genom att trycka på konfigknappen i widgetens högra hörn.  </p>
+                            <p>Redigera widget gör man genom att trycka på konfigknappen i widgetens högra hörn.</p>
                             <p>Man får nu möjlighet att redigera information som:</p>
                             <ul className="ListStyle">
                                 <li>Titel</li>
