@@ -27,7 +27,7 @@ class StepByStep extends Component {
 
     togglePublishHandler = () => {
         this.setState({togglePublish: !this.state.togglePublish});
-        console.log("HEJ")
+        
     }
     
 
