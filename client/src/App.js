@@ -5,7 +5,7 @@ import CreateCellForm from "./components/CreateCell/CreateCellForm";
 import EditCellForm from "./components/CreateCell/EditCellForm";
 import SearchCells from './components/SearchCells/SearchCells';
 import CellInfo from './components/cell/CellInfo';
-import Footer from "./components/footer/footer";
+import Footer from "./components/footer/Footer";
 import BootstrapModal from './components/Modal/BootstrapModal';
 import SaveDashboard from "./components/saveToBackend/SaveDashboard";
 import _ from 'lodash';
