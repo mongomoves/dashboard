@@ -36,12 +36,12 @@ class StepByStep extends Component {
 
     render() {
         return (
-            <div>
+            <div className="Divider">
                 <li className="liBold">Steg för steg</li>
                     <p>
                         Här ges ett flertal exempel på hur man kommer igång med sin Dashboard samt håller den uppdaterad.
                     </p>
-                        <li><a onClick={this.toggleValueHandler}>Skapa en widget med typen värde <Glyphicon glyph={this.state.toggleValue ? "chevron-down" : "chevron-up"}/></a></li>                      
+                        <li className="CompSpace"><a onClick={this.toggleValueHandler}>Skapa en widget med typen värde <Glyphicon glyph={this.state.toggleValue ? "chevron-down" : "chevron-up"}/></a></li>                      
                         {!this.state.toggleValue &&
                         <div>
                             <p>
@@ -62,7 +62,7 @@ class StepByStep extends Component {
                         }
 
 
-                        <li><a  onClick={this.toggleEditHandler}>Redigera widget <Glyphicon glyph={this.state.toggleEdit ? "chevron-down" : "chevron-up"}/></a></li>
+                        <li className="CompSpace"><a  onClick={this.toggleEditHandler}>Redigera widget <Glyphicon glyph={this.state.toggleEdit ? "chevron-down" : "chevron-up"}/></a></li>
 
                         {!this.state.toggleEdit && <img src="https://i.imgur.com/nP5qFYH.png" alt="Redigera widget"/>}   
                         {!this.state.toggleEdit &&
@@ -78,7 +78,7 @@ class StepByStep extends Component {
                             <p> Te.x man måste alltid ange en titel, om du anger en datakälla så måste man också ange ett data-attribut annars går det inte att skapa eller redigera.</p>
                         </div>
                         }
-                        <li><a href="#" onClick={this.togglePublishHandler}>Publicera widget <Glyphicon glyph={this.state.togglePublish ? "chevron-down" : "chevron-up"}/></a></li>
+                        <li className="CompSpace"><a onClick={this.togglePublishHandler}>Publicera widget <Glyphicon glyph={this.state.togglePublish ? "chevron-down" : "chevron-up"}/></a></li>
                         {!this.state.togglePublish &&
                         <div>
                             <p>Man kan publicera en widget på två sätt, antigen genom att klicka i rutan "publicera widget" när man skapar en widget.

@@ -7,7 +7,7 @@ import {Glyphicon} from 'react-bootstrap';
 class Koncept extends Component {
     render() {
         return (
-            <div>
+            <div className="Divider">
                 <li className="liBold">1. Koncept</li>
                 <p>
                     Denna sida är till för att du ska kunna bekanta dig med Dashboarden.  

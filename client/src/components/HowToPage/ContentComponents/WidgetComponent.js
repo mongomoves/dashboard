@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 class Widget extends Component {
     render() {
         return (
-            <div>
+            <div className="Divider">
                 <li className="liBold">2. Widgets</li>
                 <p>
                     Widgets utgör grunden för Dashboarden. Varje widget har en XX beroende på var datan till widgeten hämtas in.
