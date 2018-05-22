@@ -8,7 +8,7 @@ class Koncept extends Component {
     render() {
         return (
             <div className="Divider">
-                <li className="liBold">1. Koncept</li>
+                <li className="liBold">Koncept</li>
                 <p>
                     Denna sida är till för att du ska kunna bekanta dig med Dashboarden.  
                     Under fliken Steg för steg kommer ett exempel på hur man skapar en widget att visas. Här kan man även läsa mer om de tre olika widget typer som finns att välja mellan.
