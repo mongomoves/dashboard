@@ -3,7 +3,7 @@ import CustomNavbar from "./components/customnavbar/CustomNavbar";
 import Dashboard from "./components/dashboard/Dashboard";
 import CreateCellForm from "./components/CreateCell/CreateCellForm";
 import EditCellForm from "./components/CreateCell/EditCellForm";
-import SelectExistingCell from './components/existingCell/SelectExistingCell';
+import SearchCells from './components/SearchCells/SearchCells';
 import CellInfo from './components/cell/CellInfo';
 import Footer from "./components/footer/footer";
 import BootstrapModal from './components/Modal/BootstrapModal';
@@ -32,7 +32,7 @@ class App extends Component {
             modals: {
                 createCell: false,
                 editCell: false,
-                existingCell: false,
+                searchCells: false,
                 showInfo: false,
                 saveDashboard: false,
             },
@@ -46,8 +46,8 @@ class App extends Component {
      * Checks if the specified position is blocked by a cell in cells array.
      * Also returns true if the position would span more than max column width.
      * @param cells an array of cells, most likely this.state.cells
-     * @param x the cells x coordinate
-     * @param y the cells y coordinate
+     * @param x the cell's x coordinate
+     * @param y the cell's y coordinate
      * @param w the width of the cell
      * @param h the height of the cell
      * @returns true or false
@@ -196,12 +196,12 @@ class App extends Component {
         this.setState({modals: {createCell: false}})
     };
 
-    handleShowExistingCell = () => {
-        this.setState({modals: {existingCell: true}})
+    handleShowSearchCells = () => {
+        this.setState({modals: {searchCells: true}})
     };
 
-    handleCloseExistingCell = () => {
-        this.setState({modals: {existingCell: false}})
+    handleCloseSearchCells = () => {
+        this.setState({modals: {searchCells: false}})
     };
 
     handleShowCellInfo = (i) => {
@@ -290,7 +290,7 @@ class App extends Component {
 
                 <CustomNavbar
                     showCreateCell={this.handleShowCreateCell}
-                    showExistingCell={this.handleShowExistingCell} 
+                    showExistingCell={this.handleShowSearchCells}
                     clearDashboard={this.clearDashboardLayout}
                     showSaveDashboard={this.handleShowSaveDashboard}/>
                 <Dashboard
@@ -309,9 +309,10 @@ class App extends Component {
                         addID = {this.addID}/>
                 </BootstrapModal>
                 <BootstrapModal
-                    show={this.state.modals.existingCell}
-                    close={this.handleCloseExistingCell}>
-                    <SelectExistingCell done={this.handleCloseExistingCell} />
+                    title="Sök Widgets"
+                    show={this.state.modals.searchCells}
+                    close={this.handleCloseSearchCells}>
+                    <SearchCells addCell={this.addCell} done={this.handleCloseSearchCells} />
                 </BootstrapModal>
                 <BootstrapModal
                     title={cellInfoData.title}
@@ -345,8 +346,6 @@ class App extends Component {
 
 function saveToLocalStorage(key, value) {
     if (global.localStorage) {
-        //console.log(`toLS:key=${JSON.stringify(key)}:val=${JSON.stringify(value)}`);
-
         global.localStorage.setItem(key, JSON.stringify(value));
     }
 }
@@ -360,8 +359,6 @@ function loadFromLocalStorage(key) {
             console.log(e);
         }
     }
-
-    //console.log(`fromLS:key=${JSON.stringify(key)}:val=${JSON.stringify(localStorageItem)}`);
     return localStorageItem;
 }
 

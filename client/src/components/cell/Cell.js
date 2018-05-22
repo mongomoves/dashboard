@@ -43,7 +43,7 @@ class Cell extends Component {
      */
     onRemove = () => {
         this.props.removeCell(this.props.id);
-    }
+    };
 
     /**
      * Callback to App.js when Show info button is clicked.
@@ -51,7 +51,7 @@ class Cell extends Component {
      */
     onShowInfo = () => {
         this.props.showInfo(this.props.id);
-    }
+    };
 
     /**
      * Callback to App.js when Edit button is clicked.
@@ -59,7 +59,7 @@ class Cell extends Component {
      */
     onEdit = () => {
         this.props.editCell(this.props.id);
-    }
+    };
 
     render() {
         const {title, kind} = this.props.content;
@@ -98,19 +98,20 @@ class Cell extends Component {
 
         return (
             <div ref={this.frameSize} style={{width: 'inherit', height: 'inherit'}}>
-                <Panel>
-                    <Panel.Heading>
+                <Panel className='cell'>
+                    <Panel.Heading className='cell-heading'>
                         <Grid>
                             <Row className='show-grid'>
-                                <Col lg={10}>
+                                <Col style={{textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap'}} xs={10}>
                                     <span>{title}</span>
                                 </Col>
-                                <Col lg={2} style={{padding: 0}}>
+                                <Col xs={2} style={{padding: 0}}>
                                     <DropdownButton
                                         id="dropdown-no-caret"
                                         noCaret
                                         pullRight 
                                         bsSize="xsmall"
+                                        className="config-btn"
                                         title={<Glyphicon glyph="cog" />}>
                                             <MenuItem eventKey={1} onClick={this.onShowInfo}>Info</MenuItem>
                                             <MenuItem eventKey={2} onClick={this.onEdit}>Redigera</MenuItem>
@@ -120,7 +121,7 @@ class Cell extends Component {
                             </Row>
                         </Grid>
                     </Panel.Heading>
-                    <Panel.Body style={{height: this.state.height - 33}}>
+                    <Panel.Body className='cell-body' style={{height: this.state.height - 33}}>
                              {content}
                     </Panel.Body>
                 </Panel>

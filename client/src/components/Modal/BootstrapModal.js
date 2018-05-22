@@ -34,11 +34,11 @@ const modalHeader = {
     backgroundColor: "#353535",
     color: "orange" 
     //Must add rounded corners in header!
-}
+};
 
 const modalFooter = {
     // Changes the background of Modal footer
     backgroundColor: "#353535"
-}
+};
 
 export default BootstrapModal;
