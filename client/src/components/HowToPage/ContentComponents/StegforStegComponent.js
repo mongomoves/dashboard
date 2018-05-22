@@ -18,10 +18,8 @@ class StepByStep extends Component {
         }
 
     }
-<<<<<<< HEAD
-=======
+
     //Toggels the state onClick of toggleValue between display and hide.
->>>>>>> cfd447aace967f55a62579a41f2c540faf4a8d25
     toggleValueHandler = () => {
         this.setState({toggleValue: !this.state.toggleValue});
     }
@@ -43,24 +41,23 @@ class StepByStep extends Component {
                     <p>
                         Här ges ett flertal exempel på hur man kommer igång med sin Dashboard samt håller den uppdaterad.
                     </p>
-                        <li><a onClick={this.toggleValueHandler}>Skapa en widget med typen värde <Glyphicon glyph={this.state.toggleValue ? "chevron-down" : "chevron-up"}/></a></li>
-                        {!this.state.toggleValue && <img src="https://i.imgur.com/tbtPqDK.png" alt="Create Widget"/>}
-                        
+                        <li><a onClick={this.toggleValueHandler}>Skapa en widget med typen värde <Glyphicon glyph={this.state.toggleValue ? "chevron-down" : "chevron-up"}/></a></li>                      
                         {!this.state.toggleValue &&
                         <div>
                             <p>
                             För att kunna skapa en widget börjar man med att trycka på navigationsfältets kugghjul till höger.
                         </p>
                         <ul>
-                            <li>1 Välj Widget-typ. Här kan man välja mellan tre olika typer. Värde, diagram och text.</li>
-                            <li>2 Ange titel (Titeln är även parametern som anges när man vill ladda widgets)</li>
-                            <li>3 Värde (Antingen detta eller Datakälla)</li>
-                            <li>4 Datakälla (Antingen detta eller Värde)</li>
-                            <li>5 Den data man vill hämta ut från datakällan ovanför anges genom att ange de data-attribut som innehåller detta.  </li>
-                            <li>6 Följade steg är att ange Uppdateringsfrekvens i antal minuter. Detta innebär att datan hämtas om på nytt vid varje angivet tidsintervall.</li>
-                            <li>7 Ange enheten som förklarar ovanstående data. Exepmpel år / tid / antal anställda.</li>
-                            <li>8 Sista steget när man skapar en widget är att kryssa i om man vill få sin widget <u>publicerad</u>.</li>
+                            <li>1. Välj Widget-typ. Här kan man välja mellan tre olika typer. Värde, diagram och text.</li>
+                            <li>2. Ange titel (Titeln är även parametern som anges när man vill ladda widgets)</li>
+                            <li>3. Värde (Antingen detta eller Datakälla)</li>
+                            <li>4. Datakälla (Antingen detta eller Värde)</li>
+                            <li>5. Den data man vill hämta ut från datakällan ovanför anges genom att ange de data-attribut som innehåller detta.  </li>
+                            <li>6. Följade steg är att ange Uppdateringsfrekvens i antal minuter. Detta innebär att datan hämtas om på nytt vid varje angivet tidsintervall.</li>
+                            <li>7. Ange enheten som förklarar ovanstående data. Exepmpel år / tid / antal anställda.</li>
+                            <li>8. Sista steget när man skapar en widget är att kryssa i om man vill få sin widget <u>publicerad</u>.</li>
                         </ul>
+                        {!this.state.toggleValue && <img src="https://i.imgur.com/tbtPqDK.png" alt="Create Widget"/>}
                         </div>
                         }
 
