@@ -95,7 +95,7 @@ class ValueComponent extends Component {
             }
 
             //if its a string, we check if it represents a number and if true create a number variable with identical content   
-            else if (typeof result === 'string' && !isNaN(result) || result instanceof String && !isNaN(result)) {
+            else if ((typeof result === 'string' && !isNaN(result)) || (result instanceof String && !isNaN(result))) {
                 let verifiedNumber = Number(result);
                 this.setState({
                         externalData: true,
