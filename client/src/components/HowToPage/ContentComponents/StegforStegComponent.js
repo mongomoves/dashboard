@@ -18,6 +18,7 @@ class StepByStep extends Component {
         }
 
     }
+    
 
     //Toggels the state onClick of toggleValue between display and hide.
     toggleValueHandler = () => {
@@ -32,9 +33,14 @@ class StepByStep extends Component {
         this.setState({togglePublish: !this.state.togglePublish});
         
     }
+
+
     
 
     render() {
+        let imgStyle = {
+            paddingBottom: '20px'
+        }
         return (
             <div className="Divider">
                 <h4 className="h4Bold">Steg för steg</h4>
@@ -57,14 +63,14 @@ class StepByStep extends Component {
                             <li>7. Ange enheten som förklarar ovanstående data. Exepmpel år / tid / antal anställda.</li>
                             <li>8. Sista steget när man skapar en widget är att kryssa i om man vill få sin widget <u>publicerad</u>.</li>
                         </ul>
-                        {!this.state.toggleValue && <img src="https://i.imgur.com/tbtPqDK.png" alt="Create Widget"/>}
+                        {!this.state.toggleValue && <img style={imgStyle} src="https://i.imgur.com/tbtPqDK.png" alt="Create Widget"/>}
                         </div>
                         }
 
 
                         <li className="CompSpace"><a  onClick={this.toggleEditHandler}>Redigera widget <Glyphicon glyph={this.state.toggleEdit ? "chevron-down" : "chevron-up"}/></a></li>
 
-                        {!this.state.toggleEdit && <img src="https://i.imgur.com/nP5qFYH.png" alt="Redigera widget"/>}   
+                        {!this.state.toggleEdit && <img style={imgStyle} src="https://i.imgur.com/nP5qFYH.png" alt="Redigera widget"/>}   
                         {!this.state.toggleEdit &&
                         <div>
                             <p>Redigera widget gör man genom att trycka på konfigknappen i widgetens högra hörn.</p>
@@ -86,7 +92,7 @@ class StepByStep extends Component {
                             Genom att publicera en widget gör man den tillgänglig för andra användre att söka upp och återanvända.</p>
                             <p>Om man väljer att publicera en widget så sparas widgeten i databasen.</p>
                             <p>Om man sedan väljer att redigera en publicerad widget så kommer den inte att skrivas över utan blir en ny widget. </p>
-                            {!this.state.togglePublish && <img src="https://i.imgur.com/L70poNa.png" alt="Publicera widget"/>}
+                            {!this.state.togglePublish && <img style={imgStyle} src="https://i.imgur.com/L70poNa.png" alt="Publicera widget"/>}
                         </div>    
                     }
 
