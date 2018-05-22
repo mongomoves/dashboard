@@ -2,16 +2,18 @@ import React, { Component } from 'react';
 import './ContentComponent.css';
 import {Glyphicon} from 'react-bootstrap';
 
-
+//Component that renders the content on the how to page.
 
 class Koncept extends Component {
     render() {
         return (
-            <div>
-                <li className="liBold">1. Koncept</li>
+            <div className="Divider">
+                <h4 className="h4Bold">Koncept</h4>
                 <p>
                     Denna sida är till för att du ska kunna bekanta dig med Dashboarden.  
-                    Under fliken Steg för steg kommer ett exempel på hur man skapar en widget att visas. Här kan man även läsa mer om de tre olika widget typer som finns att välja mellan.
+                    Under fliken Steg för steg till vänster kommer ett antal exempel  visas. Dessa är hur man skapar, editerar och publicerar en widget.
+                </p> 
+                <p> Här kan man även läsa mer om de tre olika widget typer som finns att välja mellan.
                     Under fliken Widget beskrivs de olika celler man kan skapa och hur det är anpassningsbara.
                 </p>
                 <p>
