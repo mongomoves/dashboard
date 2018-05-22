@@ -1,6 +1,11 @@
-.liBold {
+.h4Bold {
     font-weight: bold;
 }
+
+.h5Bold {
+    font-weight: bold;
+}
+
 a:visited {
     color: none;
 }
@@ -8,6 +13,22 @@ a:visited {
 a:hover {
     color: white;
 }
+
 a:focus {
     color: orange;
+}
+
+.ListStyle li {
+    list-style: circle;
+}
+
+.Divider {
+    border-bottom: 2px solid orange;
+    margin-bottom: 5%;
+    margin-top: 3%;
+}
+
+.CompSpace {
+    margin-bottom: 1%;
+    margin-top: 1%;
 }
