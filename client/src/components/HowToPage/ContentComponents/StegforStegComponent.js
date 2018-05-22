@@ -14,11 +14,9 @@ class StepByStep extends Component {
             toggleValue: true,
             toggleEdit: true,
             togglePublish: true,
-            //cog: <Glyphicon glyph="menu-down" />
         }
 
     }
-    
 
     //Toggels the state onClick of toggleValue between display and hide.
     toggleValueHandler = () => {
