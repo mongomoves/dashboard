@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { PageHeader} from 'react-bootstrap';
 import "./Article.css";
 
-
+//Component that holds the content of the how to page. 
 class Article extends Component {
     constructor(props){
         super(props);
@@ -12,6 +12,8 @@ class Article extends Component {
             toggleWidget: true
         }
     }
+
+    //Methods that toggle the content inside the Article component. Is called onClick from Sidebar.
 
     toggleKonceptHandler = () => {
         this.setState({toggleKoncept: !this.state.toggleKoncept});

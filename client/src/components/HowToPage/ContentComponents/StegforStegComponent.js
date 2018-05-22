@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import {Glyphicon} from 'react-bootstrap';
 import './ContentComponent.css';
 
+// Component that renders the Steg för steg part of the application
+
 
 class StepByStep extends Component {
 
@@ -16,15 +18,15 @@ class StepByStep extends Component {
         }
 
     }
-
+    //Toggels the state onClick of toggleValue between display and hide.
     toggleValueHandler = () => {
         this.setState({toggleValue: !this.state.toggleValue});
     }
-
+    //Toggels the state onClick of toggleEdit between display and hide.
     toggleEditHandler = () => {
         this.setState({toggleEdit: !this.state.toggleEdit});
     }
-
+    //Toggels the state onClick of togglePublish between display and hide.
     togglePublishHandler = () => {
         this.setState({togglePublish: !this.state.togglePublish});
         
