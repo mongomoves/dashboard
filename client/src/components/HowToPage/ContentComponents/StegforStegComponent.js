@@ -78,7 +78,7 @@ class StepByStep extends Component {
                             <p> Te.x man måste alltid ange en titel, om du anger en datakälla så måste man också ange ett data-attribut annars går det inte att skapa eller redigera.</p>
                         </div>
                         }
-                        <li><a href="#" onClick={this.togglePublishHandler}>Publicera widget <Glyphicon glyph={this.state.togglePublish ? "chevron-down" : "chevron-up"}/></a></li>
+                        <li><a onClick={this.togglePublishHandler}>Publicera widget <Glyphicon glyph={this.state.togglePublish ? "chevron-down" : "chevron-up"}/></a></li>
                         {!this.state.togglePublish &&
                         <div>
                             <p>Man kan publicera en widget på två sätt, antigen genom att klicka i rutan "publicera widget" när man skapar en widget.
