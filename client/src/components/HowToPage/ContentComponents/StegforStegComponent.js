@@ -14,7 +14,7 @@ class StepByStep extends Component {
             toggleValue: true,
             toggleEdit: true,
             togglePublish: true,
-            cog: <Glyphicon glyph="menu-down" />
+            //cog: <Glyphicon glyph="menu-down" />
         }
 
     }
@@ -37,7 +37,7 @@ class StepByStep extends Component {
     render() {
         return (
             <div className="Divider">
-                <li className="liBold">Steg för steg</li>
+                <h4 className="h4Bold">Steg för steg</h4>
                     <p>
                         Här ges ett flertal exempel på hur man kommer igång med sin Dashboard samt håller den uppdaterad.
                     </p>

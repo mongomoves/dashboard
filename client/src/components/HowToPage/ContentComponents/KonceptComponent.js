@@ -8,7 +8,7 @@ class Koncept extends Component {
     render() {
         return (
             <div className="Divider">
-                <li className="liBold">Koncept</li>
+                <h4 className="h4Bold">Koncept</h4>
                 <p>
                     Denna sida är till för att du ska kunna bekanta dig med Dashboarden.  
                     Under fliken Steg för steg till vänster kommer ett antal exempel  visas. Dessa är hur man skapar, editerar och publicerar en widget.
