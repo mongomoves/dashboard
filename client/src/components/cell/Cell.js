@@ -102,20 +102,23 @@ class Cell extends Component {
                     <Panel.Heading className='cell-heading'>
                         <Grid>
                             <Row className='show-grid'>
-                                <Col lg={10}>
+                                <Col className='cell-title' xs={10}>
                                     <span>{title}</span>
                                 </Col>
-                                <Col lg={2} style={{padding: 0}}>
-                                    <DropdownButton
-                                        id="dropdown-no-caret"
-                                        noCaret
-                                        pullRight 
-                                        bsSize="xsmall"
-                                        title={<Glyphicon glyph="cog" />}>
-                                            <MenuItem eventKey={1} onClick={this.onShowInfo}>Info</MenuItem>
-                                            <MenuItem eventKey={2} onClick={this.onEdit}>Redigera</MenuItem>
-                                            <MenuItem eventKey={3} onClick={this.onRemove}>Ta bort</MenuItem>
-                                    </DropdownButton>
+                                <Col xs={2} style={{padding: 0}}>
+                                    <div style={{float: 'right'}}>
+                                        <DropdownButton
+                                            id="dropdown-no-caret"
+                                            noCaret
+                                            pullRight
+                                            bsSize="xsmall"
+                                            className="config-btn"
+                                            title={<Glyphicon glyph="cog" />}>
+                                                <MenuItem eventKey={1} onClick={this.onShowInfo}>Info</MenuItem>
+                                                <MenuItem eventKey={2} onClick={this.onEdit}>Redigera</MenuItem>
+                                                <MenuItem eventKey={3} onClick={this.onRemove}>Ta bort</MenuItem>
+                                        </DropdownButton>
+                                    </div>
                                 </Col>
                             </Row>
                         </Grid>
