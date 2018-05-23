@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import SERVER_URL from '../../constants'
 import FooterItem from './FooterItem'
 import ActivityItem from './ActivityItem'
+import {Glyphicon} from 'react-bootstrap';
 
 class Footer extends Component {
 
@@ -12,16 +13,10 @@ class Footer extends Component {
     this.state = {
       logg: [],
       footerData: [],
-
-      test: 'hej',
       modals: {
         showBootStrapModal: false
       }
-
     }
-    console.log(this.state.logg, ' detta är states i construk')
-
-
   }
 
   handleShowBootStrapModal = () => {
@@ -32,22 +27,20 @@ class Footer extends Component {
     this.setState({ modals: { showBootStrapModal: false } })
   };
 
-
-
-
-
   componentDidMount() {
     console.log("componentWillMount");
     this.getActivityData();
     this.getFooterData();
-    let intervalID = setInterval(this.getFooterData, 1000 * 60);
-    this.setState({ interval: intervalID });
-
+    let intervalIdFooter = setInterval(this.getFooterData, 1000 * 60);
+    this.setState({ intervalFooter: intervalIdFooter });
+    let intervalIdActivityLogg = setInterval(this.getActivityData, 1000 * 60);
+    this.setState({ intervalActivityLogg: intervalIdActivityLogg });
   }
 
   componentWillUnmount() {
-    if (this.state.interval) {
-      clearInterval(this.state.interval);
+    if (this.state.intervalFooter || this.state.intervalActivityLogg) {
+      clearInterval(this.state.intervalFooter);
+      clearInterval( this.state.intervalActivityLogg);
     }
   }
 
@@ -58,13 +51,11 @@ class Footer extends Component {
       }).then(data => {
         console.log(data, ' detta är data från fetch');
         let logg = data.logEntries
-
         this.setState({ logg: logg });
         console.log(this.state.logg, ' loggs');
-      }
-      )
+       }
+     )
   }
-
 
   getFooterData = () => {
     fetch('http://192.168.99.100:3001/api/log?limit=1')
@@ -77,11 +68,8 @@ class Footer extends Component {
     )
 }
 
-
 render() {
-
   return (
-
     <div className="footer">
       <BootstrapModal
         title="Aktivitetslogg"
@@ -89,17 +77,19 @@ render() {
         close={this.handleCloseBootStrapModal}>
         <ActivityItem logg={this.state.logg} />
         <div className="logg">
-
         </div>
       </BootstrapModal>
-
       <div className="footerText">
         <p><a onClick={this.handleShowBootStrapModal}>
           <FooterItem test={this.state.footerData} />
         </a></p></div>
+        <div className="iconFooter">
+         <p><a onClick={this.handleShowBootStrapModal}>
+        <Glyphicon glyph="glyphicon glyphicon-list-alt" />
+        </a></p></div>
     </div>
-  )
+    )
+  }
 }
 
-}
 export default Footer;

@@ -20,7 +20,7 @@
 .footerText a{
 color: orange;
 position: absolute;
-animation-duration: 15s;
+animation-duration: 30s;
 animation-timing-function: ease-in-out;
 animation-iteration-count: infinite;
 animation-name: anim-1;
@@ -30,6 +30,17 @@ animation-name: anim-1;
 color: white;
 }
 
+.iconFooter {
+  color: orange;
+  text-align: right;
+  margin-right: 2%;
+}
+
+.iconFooter a:hover{
+  color: white;
+  
+}
+
 
 
 @keyframes anim-1 {
@@ -37,3 +48,5 @@ color: white;
   8.3%,25% { left: 50%; opacity: 1; }
   33.33%, 100% { left: 110%; opacity: 0; }
 }
+
+
