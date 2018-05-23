@@ -34,7 +34,7 @@ class CustomNavbar extends Component {
                   <MenuItem eventKey={3.2} onClick={this.props.showExistingCell}>Sök Widgets</MenuItem>
                   <MenuItem divider />
                   <MenuItem eventKey={3.3} onClick={this.props.showSaveDashboard}>Spara Dashboard</MenuItem>
-                  <MenuItem eventKey={3.4}>Sök Dashboards</MenuItem>
+                  <MenuItem eventKey={3.4}onClick={this.props.showLoadDashboard}>Sök Dashboards</MenuItem>
                   <MenuItem divider />
                   <MenuItem eventKey={3.5} onClick={this.props.clearDashboard}>Rensa din Dashboard</MenuItem>
                 </NavDropdown>
