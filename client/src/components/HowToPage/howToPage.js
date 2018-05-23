@@ -5,7 +5,7 @@ import Sidebar from '../Sidebar/Sidebar';
 import Koncept from '../HowToPage/ContentComponents/KonceptComponent';
 import StepByStep from '../HowToPage/ContentComponents/StegforStegComponent';
 import WidgetEx from '../HowToPage/ContentComponents/WidgetComponent';
-import Footer from '../footer/Footer';
+import Footer from '../footer/footer';
 import './howToPage.css';
 
 //Component for displaying the how to page and its content. 
