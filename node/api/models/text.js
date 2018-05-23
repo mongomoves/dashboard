@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const textSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    text: {
+    textInput: {
         type: String,
         required: [
             function() {return this.dataSource == null && this.dataSource === ""},
@@ -12,7 +12,7 @@ const textSchema = mongoose.Schema({
     dataSource: {
         type: String,
         required: [
-            function() {return this.text == null && this.text === ""},
+            function() {return this.textInput == null && this.textInput === ""},
             'text or dataSource is required'
         ]
     },

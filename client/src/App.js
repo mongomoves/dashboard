@@ -7,12 +7,14 @@ import SearchCells from './components/SearchCells/SearchCells';
 import CellInfo from './components/cell/CellInfo';
 import Footer from "./components/footer/Footer";
 import BootstrapModal from './components/Modal/BootstrapModal';
-import SaveDashboard from "./components/saveToBackend/SaveDashboard";
+import SaveDashboard from "./components/SaveDashboard/SaveDashboard";
+import SearchDashboard from "./components/SearchDashboard/SearchDashboard";
 import _ from 'lodash';
 
 import './App.css';
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
+import LoadDashboard from "./components/SearchDashboard/SearchDashboard";
 
 const localStorageCells = loadFromLocalStorage("cells") || [];
 
@@ -35,6 +37,7 @@ class App extends Component {
                 searchCells: false,
                 showInfo: false,
                 saveDashboard: false,
+                loadDashboard: false,
             },
             idCounter: localStorageCells.length > 0 // if we loaded cells from local storage
                 ? Number(localStorageCells[localStorageCells.length - 1].layout.i) + 1 // set start id to highest id + 1
@@ -149,7 +152,7 @@ class App extends Component {
         for (let i = 0; i < cells.length; i++) {
             if((cells[i].content.description === data.description) 
                 && (cells[i].content.creator === data.creator)) {
-                cells[i].id = data._id;
+                cells[i].content._id = data._id;
             }
         }
         this.setState({cells: cells});
@@ -159,7 +162,12 @@ class App extends Component {
     getAllCells = () => {
         return this.state.cells;
     };
+    addDashboard = (dashboards) => {
+        this.setState({
+            cells: dashboards
+        });
 
+    };
     clearDashboardLayout = () => {
         this.setState({
             layouts: {},
@@ -283,6 +291,12 @@ class App extends Component {
     handleCloseSaveDashboard = () => {
         this.setState({modals: {saveDashboard: false}})
     };
+    handleShowLoadDashboard = () => {
+        this.setState({modals: {loadDashboard: true}})
+    };
+    handleCloseLoadDashboard = () => {
+        this.setState({modals: {loadDashboard: false}})
+    };
 
     render() {
         return (
@@ -292,7 +306,8 @@ class App extends Component {
                     showCreateCell={this.handleShowCreateCell}
                     showExistingCell={this.handleShowSearchCells}
                     clearDashboard={this.clearDashboardLayout}
-                    showSaveDashboard={this.handleShowSaveDashboard}/>
+                    showSaveDashboard={this.handleShowSaveDashboard}
+                    showLoadDashboard={this.handleShowLoadDashboard}/>
                 <Dashboard
                     removeCell={this.removeCell}
                     showInfo={this.handleShowCellInfo}
@@ -337,6 +352,13 @@ class App extends Component {
                     <SaveDashboard
                         getAllCells={this.getAllCells}
                         handleCloseSaveDashboardSuccess={this.handleCloseSaveDashboardSuccess}/>
+                </BootstrapModal>
+                <BootstrapModal
+                    title='Sök Dashboard'
+                    show={this.state.modals.loadDashboard}
+                    close={this.handleCloseLoadDashboard}>
+                    <SearchDashboard
+                        addDashboard={this.addDashboard}/>
                 </BootstrapModal>
                  <Footer/>
             </div>

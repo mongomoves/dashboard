@@ -14,7 +14,8 @@ class FormInput extends React.Component {
                 <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-number">{this.props.tooltip}</Tooltip>}>
                     <FormControl
                         type={this.props.type}
-                        defaultValue={this.props.defaultValue}
+                        name={this.props.name}
+                        value={this.props.value}
                         onChange={this.props.onChange}/>
                 </OverlayTrigger>
             </FormGroup>

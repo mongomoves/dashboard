@@ -61,9 +61,19 @@ class Cell extends Component {
         this.props.editCell(this.props.id);
     };
 
+    /**
+     * Click method for the Iframe update button in the widget menu.
+     * This updates the key in the iframe tag, in a child IframeHolder component.
+     * Likely an antipattern, but provides important functionality.
+     */
+    onUpdate = () => {
+        this.iframeHolder.keyUpdate();
+    }
+
     render() {
         const {title, kind} = this.props.content;
         let content;
+        let iframeRefreshBtn = (<MenuItem eventKey={4} onClick={this.onUpdate}>Uppdatera</MenuItem>);
         if (kind === 'Value') {
             content = (
                 <ValueComponent width={this.state.width} values={this.props.content} />
@@ -74,6 +84,7 @@ class Cell extends Component {
             if(displayType === 'Iframe') {
                 content = (
                     <IframeHolder
+                        onRef={ref => (this.iframeHolder = ref)}
                         values={this.props.content}
                         width={this.state.width}
                         height={this.state.height}/>
@@ -85,6 +96,7 @@ class Cell extends Component {
                         height={this.state.height}
                         values={this.props.content}/>
                 )
+                iframeRefreshBtn = null;
             }
         }
         else if (kind === 'Text') {
@@ -102,20 +114,24 @@ class Cell extends Component {
                     <Panel.Heading className='cell-heading'>
                         <Grid>
                             <Row className='show-grid'>
-                                <Col lg={10}>
+                                <Col className='cell-title' xs={10}>
                                     <span>{title}</span>
                                 </Col>
-                                <Col lg={2} style={{padding: 0}}>
-                                    <DropdownButton
-                                        id="dropdown-no-caret"
-                                        noCaret
-                                        pullRight 
-                                        bsSize="xsmall"
-                                        title={<Glyphicon glyph="cog" />}>
-                                            <MenuItem eventKey={1} onClick={this.onShowInfo}>Info</MenuItem>
-                                            <MenuItem eventKey={2} onClick={this.onEdit}>Redigera</MenuItem>
-                                            <MenuItem eventKey={3} onClick={this.onRemove}>Ta bort</MenuItem>
-                                    </DropdownButton>
+                                <Col xs={2} style={{padding: 0}}>
+                                    <div style={{float: 'right'}}>
+                                        <DropdownButton
+                                            id="dropdown-no-caret"
+                                            noCaret
+                                            pullRight
+                                            bsSize="xsmall"
+                                            className="config-btn"
+                                            title={<Glyphicon glyph="cog" />}>
+                                                <MenuItem eventKey={1} onClick={this.onShowInfo}>Info</MenuItem>
+                                                <MenuItem eventKey={2} onClick={this.onEdit}>Redigera</MenuItem>
+                                                <MenuItem eventKey={3} onClick={this.onRemove}>Ta bort</MenuItem>
+                                                {iframeRefreshBtn}
+                                        </DropdownButton>
+                                    </div>
                                 </Col>
                             </Row>
                         </Grid>

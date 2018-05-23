@@ -1,3 +1,6 @@
+/**
+ * Created by Butts on 2018-05-21.
+ */
 import React from 'react';
 import {Button, Collapse, Glyphicon, ListGroupItem, Table} from "react-bootstrap";
 import _ from "lodash";
@@ -11,7 +14,7 @@ const translateContent = {
     creator: "Skapare",
     created: "Skapad",
     number: "Värde",
-    textInput: "Fritext",
+    text: "Fritext",
     graphUrl: "Diagram-Url",
     refreshRate: "Uppd.frekvens",
     displayType: "Visningstyp",
@@ -20,7 +23,7 @@ const translateContent = {
     attribute: "Attribut"
 };
 
-class SearchCellsListItem extends React.Component {
+class SearchDashboardListItem extends React.Component {
     constructor(props) {
         super(props);
 
@@ -33,11 +36,10 @@ class SearchCellsListItem extends React.Component {
         let tableData = [];
 
         for (let [key, value] of Object.entries(this.props.content)) {
-            if (key !== 'title' && key !== 'description' && key !== 'kind' && key !== '_id' && value !== '') {
+            if (key !== 'title' && key !== 'description' && key !== '_id' && key !== 'widgets') {
                 tableData.push({key: key, value: value});
             }
         }
-
         return _.map(tableData, function (property) {
             let value = property.value;
             let key = translateContent[property.key];
@@ -64,9 +66,6 @@ class SearchCellsListItem extends React.Component {
                 <ListGroupItem>
                     <div>
                         <span><strong>{this.props.content.title}</strong></span>
-                        <span className="pull-right text-muted" >
-                            {translateKind[this.props.content.kind]}
-                        </span>
                     </div>
 
                     <div style={{marginBottom: "1em"}}>
@@ -75,14 +74,14 @@ class SearchCellsListItem extends React.Component {
                     <Collapse in={this.state.collapse}>
                         <Table responsive condensed style={{width: "auto"}}>
                             <tbody>
-                                {this.generateTableData()}
+                            {this.generateTableData()}
                             </tbody>
                         </Table>
                     </Collapse>
                     <div>
                         <Button
                             bsSize="small"
-                            onClick={() => this.props.addCell(this.props.content)}>
+                            onClick={() => this.props.addDashboard(this.props.content.widgets)}>
                             Lägg till på din Dashboard
                         </Button>
                         <Button
@@ -99,4 +98,4 @@ class SearchCellsListItem extends React.Component {
     }
 }
 
-export default SearchCellsListItem;
+export default SearchDashboardListItem;

@@ -6,7 +6,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    
+
     height: 100%;
     padding: 10px;
     /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#7d7e7d+0,0e0e0e+100;Black+3D */
@@ -26,9 +26,41 @@
     padding: 5px 5px;
     color: white;
     font-weight: bold;
-    text-align: center;
+
     background-color: black;
     background-image: none;
     border-color: orange;
 }
 
+.cell-title {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.config-btn {
+    color: orange;
+    background-color: black;
+    border-style: none;
+    text-shadow: none;
+}
+
+.config-btn:hover {
+    color: white;
+    background-color: black;
+}
+
+.config-btn:focus {
+    color: orange;
+    background-color: black;
+    border-style: none;
+    text-shadow: none;
+}
+
+.config-btn:active {
+    color: orange;
+    background-color: black;
+    border-style: none;
+    text-shadow: none;
+}
