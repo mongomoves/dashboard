@@ -8,6 +8,7 @@ import CellInfo from './components/cell/CellInfo';
 import Footer from "./components/footer/footer";
 import BootstrapModal from './components/Modal/BootstrapModal';
 import SaveDashboard from "./components/saveToBackend/SaveDashboard";
+import ClearPromptForm from './components/ClearPromptForm/ClearPromptForm';
 import _ from 'lodash';
 
 import './App.css';
@@ -35,6 +36,7 @@ class App extends Component {
                 searchCells: false,
                 showInfo: false,
                 saveDashboard: false,
+                clearPrompt: false
             },
             idCounter: localStorageCells.length > 0 // if we loaded cells from local storage
                 ? Number(localStorageCells[localStorageCells.length - 1].layout.i) + 1 // set start id to highest id + 1
@@ -164,7 +166,8 @@ class App extends Component {
         this.setState({
             layouts: {},
             cells: [],
-            idCounter: 0
+            idCounter: 0,
+            modals: {clearPrompt: false}
         });
     };
 
@@ -284,6 +287,14 @@ class App extends Component {
         this.setState({modals: {saveDashboard: false}})
     };
 
+    handleCloseClearPrompt = () => {
+        this.setState({modals: {clearPrompt: false}});
+    }
+
+    handleShowClearPrompt = () => {
+        this.setState({modals: {clearPrompt: true}});
+    }
+
     render() {
         return (
             <div>
@@ -291,7 +302,7 @@ class App extends Component {
                 <CustomNavbar
                     showCreateCell={this.handleShowCreateCell}
                     showExistingCell={this.handleShowSearchCells}
-                    clearDashboard={this.clearDashboardLayout}
+                    clearDashboard={this.handleShowClearPrompt}
                     showSaveDashboard={this.handleShowSaveDashboard}/>
                 <Dashboard
                     removeCell={this.removeCell}
@@ -299,6 +310,12 @@ class App extends Component {
                     editCell={this.handleShowEditCell}
                     cells={this.state.cells}
                     onLayoutChange={this.onLayoutChange}/>
+                <BootstrapModal
+                    title="Ta bort Dashboard"
+                    show={this.state.modals.clearPrompt}
+                    close={this.handleCloseClearPrompt}>
+                        <ClearPromptForm clear={this.clearDashboardLayout}/>
+                </BootstrapModal>
                 <BootstrapModal
                     title="Skapa widget"
                     show={this.state.modals.createCell}
