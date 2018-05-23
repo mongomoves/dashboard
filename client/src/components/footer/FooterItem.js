@@ -10,7 +10,7 @@ class FooterItem extends Component {
     return _.map(this.props.footerData, function (loggs) {
       return (
         <div key={loggs.contentId}>
-         Ny widget  "{loggs.title}"  skapad av  {loggs.creator}
+            {loggs.text}
         </div>
       );
     });

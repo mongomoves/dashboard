@@ -77,22 +77,16 @@ render() {
             onLogWidgetClick={this.props.onLogWidgetClick}
             onLogDashboardClick={this.props.onLogDashboardClick}
             done={this.handleCloseActivityLog}/>
-        <div className="logg">
-        </div>
       </BootstrapModal>
       <div className="footerText">
-
-                <a onClick={this.handleShowActivityLog}>
-                    <FooterItem footerData={this.state.footerData} />
-                </a>
-
+            <a onClick={this.handleShowActivityLog}>
+                <FooterItem footerData={this.state.footerData} />
+            </a>
       </div>
         <div className="iconFooter">
-
-                <a onClick={this.handleShowActivityLog}>
-                    <Glyphicon glyph="glyphicon glyphicon-list-alt" />
-                </a>
-
+            <a onClick={this.handleShowActivityLog}>
+                <Glyphicon glyph="glyphicon glyphicon-list-alt" />
+            </a>
         </div>
     </div>
     )
