@@ -14,14 +14,14 @@ class CellInfo extends Component {
             );
         } else {
             return (
-                <div>
-                    <p>{description}</p>
+                <div className="cellInfo">
+                    <h4><b>Beskrivning:</b></h4><p>{description}</p>
                     <Row>
                         <Col lg={6}>
-                            <h3>Skapad av {creator}</h3>
+                            <h4><b>Skapad av:</b> {creator}</h4>
                         </Col>
                         <Col lg={6}>
-                            <h3>{created}</h3>
+                            <h4><b>Skapad:</b> {created}</h4>
                         </Col>
                     </Row>
                 </div>
