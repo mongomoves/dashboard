@@ -22,6 +22,7 @@ class Widget extends Component {
                 <p>
                     Även värde kan inhämtas från API:er där man även då måste ange ett data-attribut. Annars kommer inte URL:en fungera.
                     Man kan även skriva in eget värde utan att ange en URL.
+                    Detta stöds av <a target="_blank" href="https://www.npmjs.com/package/json-query">JSON query</a> 
                 </p>
                 <p> 
                     <text style={{fontWeight: 'bold', textDecoration: 'underline', color:'red'}}>Observera</text> att man inte kan göra båda och, utan bara det ena eller det andra.
@@ -29,6 +30,7 @@ class Widget extends Component {
                 <h5 className="h5Bold">Text:</h5>
                 <p>
                     Här kan man skriva in fritext. Kanske viktig information för veckan, deadlines osv..
+                    Detta stöds av <a target="_blank" href="https://www.npmjs.com/package/json-query">JSON query</a>
                 </p>
                 <p>  
                     Detta stöds inte av HTML och Markup.
