@@ -58,6 +58,7 @@ router.get('/', function(req, res, next) {
                                     created: widget.content.created,
                                     description: widget.content.description,
                                     kind: widget.content.kind,
+                                    refreshRate: widget.content.refreshRate,
 
                                     number: widget.content.content.number,
                                     textInput: widget.content.content.textInput,
@@ -215,6 +216,7 @@ router.get('/:dashboardId', function(req, res, next) {
                                 created: widget.content.created,
                                 description: widget.content.description,
                                 kind: widget.content.kind,
+                                refreshRate: widget.content.refreshRate,
 
                                 number: widget.content.content.number,
                                 textInput: widget.content.content.textInput,

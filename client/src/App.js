@@ -176,12 +176,22 @@ class App extends Component {
     };
 
     addDashboard = (dashboards) => {
+        let dashboardsCopy = Object.assign([], dashboards);
+
+        dashboardsCopy.sort(function (a, b) {
+            return a.layout.i - b.layout.i;
+        });
+
+        const newIdCounter = dashboardsCopy.length > 0
+            ? Number(dashboardsCopy[dashboardsCopy.length - 1].layout.i) + 1
+            : 0;
+
         this.setState({
-            cells: dashboards
+            cells: dashboardsCopy,
+            idCounter: newIdCounter
         });
 
         saveToLocalStorage("cells", this.state.cells);
-
     };
     clearDashboardLayout = () => {
         this.setState({
