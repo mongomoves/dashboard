@@ -78,7 +78,7 @@ render() {
       </BootstrapModal>
       <div className="footerText">
         <p><a onClick={this.handleShowBootStrapModal}>
-          <FooterItem test={this.state.footerData} />
+          <FooterItem footerData={this.state.footerData} />
         </a></p></div>
         <div className="iconFooter">
          <p><a onClick={this.handleShowBootStrapModal}>
