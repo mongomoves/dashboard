@@ -72,18 +72,27 @@ render() {
         title="Aktivitetslogg"
         show={this.state.modals.showBootStrapModal}
         close={this.handleCloseBootStrapModal}>
-        <ActivityItem logg={this.state.logg} />
+        <ActivityItem
+            logg={this.state.logg}
+            onLogWidgetClick={this.props.onLogWidgetClick}
+            onLogDashboardClick={this.props.onLogDashboardClick}/>
         <div className="logg">
         </div>
       </BootstrapModal>
       <div className="footerText">
-        <p><a onClick={this.handleShowBootStrapModal}>
-          <FooterItem footerData={this.state.footerData} />
-        </a></p></div>
+            <p>
+                <a onClick={this.handleShowBootStrapModal}>
+                    <FooterItem footerData={this.state.footerData} />
+                </a>
+            </p>
+      </div>
         <div className="iconFooter">
-         <p><a onClick={this.handleShowBootStrapModal}>
-        <Glyphicon glyph="glyphicon glyphicon-list-alt" />
-        </a></p></div>
+            <p>
+                <a onClick={this.handleShowBootStrapModal}>
+                    <Glyphicon glyph="glyphicon glyphicon-list-alt" />
+                </a>
+            </p>
+        </div>
     </div>
     )
   }

@@ -41,7 +41,10 @@ class SearchDashboard extends Component {
     render() {
         let content = (
             <div style={listStyle}>
-                <SearchDashboardList addDashboard={this.props.addDashboard} dashboards={this.state.dashboards} query={this.state.query}/>
+                <SearchDashboardList
+                    addDashboard={this.props.addDashboard}
+                    dashboards={this.state.dashboards}
+                    query={this.state.query}/>
             </div>
         );
 
@@ -55,7 +58,9 @@ class SearchDashboard extends Component {
         return(
             <div>
                 <div style={formStyle}>
-                    <SearchDashboardForm onSearchClicked={this.onSearchClicked}/>
+                    <SearchDashboardForm
+                        onSearchClicked={this.onSearchClicked}
+                        defaultSearch={this.props.defaultSearch}/>
                 </div>
                 {content}
             </div>

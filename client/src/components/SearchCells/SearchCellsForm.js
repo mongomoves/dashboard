@@ -14,6 +14,12 @@ class SearchCellsForm extends React.Component {
         }
     }
 
+    componentDidMount() {
+        if (this.props.defaultSearch) {
+            this.setState({search: this.props.defaultSearch});
+        }
+    }
+
     handleInputChange = (e) => {
         const target = e.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;

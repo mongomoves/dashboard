@@ -212,6 +212,16 @@ class App extends Component {
         saveToLocalStorage('cells', this.state.cells);
     };
 
+    setDefaultCellSearch = (search) => {
+        this.handleShowSearchCells();
+        this.setState({defaultSearchCell: search});
+    };
+
+    setDefaultDashboardSearch = (search) => {
+        this.handleShowLoadDashboard();
+        this.setState({defaultSearchDashboard: search})
+    };
+
     handleShowCreateCell = () => {
         this.setState({modals: {createCell: true}})
     };
@@ -225,7 +235,10 @@ class App extends Component {
     };
 
     handleCloseSearchCells = () => {
-        this.setState({modals: {searchCells: false}})
+        this.setState({
+            modals: {searchCells: false},
+            defaultSearchCell: null
+        });
     };
 
     handleShowSaveDashboard = () => {
@@ -241,7 +254,10 @@ class App extends Component {
     };
 
     handleCloseLoadDashboard = () => {
-        this.setState({modals: {loadDashboard: false}})
+        this.setState({
+            modals: {loadDashboard: false},
+            defaultSearchDashboard: null
+        });
     };
   
     handleCloseClearPrompt = () => {
@@ -355,7 +371,9 @@ class App extends Component {
                     title="Sök Widgets"
                     show={this.state.modals.searchCells}
                     close={this.handleCloseSearchCells}>
-                    <SearchCells addCell={this.addCell} />
+                    <SearchCells
+                        addCell={this.addCell}
+                        defaultSearch={this.state.defaultSearchCell}/>
                 </BootstrapModal>
                 <BootstrapModal
                     title={cellInfoData.title}
@@ -387,9 +405,12 @@ class App extends Component {
                     show={this.state.modals.loadDashboard}
                     close={this.handleCloseLoadDashboard}>
                     <SearchDashboard
-                        addDashboard={this.addDashboard}/>
+                        addDashboard={this.addDashboard}
+                        defaultSearch={this.state.defaultSearchDashboard}/>
                 </BootstrapModal>
-                 <Footer/>
+                 <Footer
+                     onLogWidgetClick={this.setDefaultCellSearch}
+                     onLogDashboardClick={this.setDefaultDashboardSearch}/>
             </div>
         );
     }

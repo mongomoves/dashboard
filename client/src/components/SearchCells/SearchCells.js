@@ -122,7 +122,7 @@ class SearchCells extends React.Component {
         return(
             <div>
                 <div style={formStyle}>
-                    <SearchCellsForm onSearchClicked={this.onSearchClicked}/>
+                    <SearchCellsForm onSearchClicked={this.onSearchClicked} defaultSearch={this.props.defaultSearch}/>
                 </div>
                 {content}
             </div>
@@ -141,6 +141,7 @@ const formStyle = {
 
 SearchCells.propTypes = {
     addCell: PropTypes.func.isRequired,
+    defaultSearch: PropTypes.string
 };
 
 export default SearchCells;
