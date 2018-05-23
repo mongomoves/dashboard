@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-
+import { Link } from 'react-router-dom'
+import './catchUrl.css';
 
 class CatchUrl extends Component {
     render() {
         return (
-            <div>
-                <h2>Sorry, no page with this url exists...</h2>
+            <div className="catchUrlDiv">
+                <h2>Sorry, no page with this url exists... Try one of these links below!</h2>
+                <Link className="catchUrl" to='/'>Dashboard Page</Link>
+                <Link className="catchUrl" to='/howtopage'>How to page</Link>
             </div>
         );
     }
