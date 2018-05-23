@@ -35,7 +35,7 @@ class SearchCells extends React.Component {
                 requestUrl += '/' + id;
 
                 this.setState({
-                    searchById: true,
+                    searchById: true
                 });
 
                 return requestUrl;
