@@ -11,7 +11,7 @@ const translateContent = {
     creator: "Skapare",
     created: "Skapad",
     number: "Värde",
-    text: "Fritext",
+    textInput: "Fritext",
     graphUrl: "Diagram-Url",
     refreshRate: "Uppd.frekvens",
     displayType: "Visningstyp",

@@ -56,7 +56,7 @@ router.get('/', function(req, res, next) {
                         refreshRate: widget.refreshRate,
 
                         number: widget.content.number,
-                        text: widget.content.text,
+                        textInput: widget.content.textInput,
                         dataSource: widget.content.dataSource,
                         attribute: widget.content.attribute,
                         query: widget.content.query,
@@ -105,7 +105,7 @@ router.post('/', function(req, res, next) {
     else if (kind === 'Text') {
         content = new Text({
             _id: new mongoose.Types.ObjectId(),
-            text: req.body.text,
+            textInput: req.body.textInput,
             dataSource: req.body.dataSource,
             attribute: req.body.attribute,
             query: req.body.query
@@ -207,7 +207,7 @@ router.get('/:widgetId', function(req, res, next) {
                     refreshRate: widget.refreshRate,
 
                     number: widget.content.number,
-                    text: widget.content.text,
+                    textInput: widget.content.textInput,
                     dataSource: widget.content.dataSource,
                     attribute: widget.content.attribute,
                     query: widget.content.query,
