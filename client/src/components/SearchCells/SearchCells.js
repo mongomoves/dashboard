@@ -79,10 +79,6 @@ class SearchCells extends React.Component {
                 requestUrl += "&search=" + search;
             }
         }
-
-        //this.fetchWidgetsFromDatabase(requestUrl);
-
-
         return requestUrl;
 
     };
