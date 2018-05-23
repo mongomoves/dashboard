@@ -7,7 +7,9 @@ import React, {Component} from 'react';
 class IframeHolder extends Component {
     constructor(props) {
         super(props);
-        this.state = {}   
+        this.state = {
+            frameKey: 1
+        }   
     }
 
     /**
@@ -15,6 +17,7 @@ class IframeHolder extends Component {
      * and a update interval is initialised if one is meant to be.
      */
     componentDidMount() {
+        this.props.onRef(this);
         if(this.props.values.graphUrl) {
             this.setState({frameURL: this.checkForHTTP(this.props.values.graphUrl)});
         }
@@ -28,6 +31,7 @@ class IframeHolder extends Component {
      * React lifecycle function. Clears the interval handling the component refresh.
      */
     componentWillUnmount() {
+        this.props.onRef(undefined);
         if(this.state.interval) {
             clearInterval(this.state.interval);
         }
@@ -51,6 +55,16 @@ class IframeHolder extends Component {
         } else if (this.props.values.graphUrl !== prevProps.values.graphUrl) {
             this.updateContent();
         }
+    }
+
+    /**
+     * Increments the key set to the iframe tag to force a rerender.
+     * This is an improper implementation, but it provides important functionality.
+     */
+    keyUpdate = () => {
+        this.setState((oldState) => ({
+            frameKey: oldState.frameKey + 1
+        }));
     }
 
     /**
@@ -84,7 +98,7 @@ class IframeHolder extends Component {
 
         if(this.state.proper) {
             return (
-                <iframe
+                <iframe key={this.state.frameKey}
                     title="Iframe"
                     style={{border: '0', height: '100%', width: '100%'}}
                     width={this.props.width}
