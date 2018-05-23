@@ -28,7 +28,6 @@ class Footer extends Component {
   };
 
   componentDidMount() {
-    console.log("componentWillMount");
     this.getActivityData();
     this.getFooterData();
     let intervalIdFooter = setInterval(this.getFooterData, 1000 * 60);
@@ -49,10 +48,8 @@ class Footer extends Component {
       .then(results => {
         return results.json();
       }).then(data => {
-        console.log(data, ' detta är data från fetch');
         let logg = data.logEntries
         this.setState({ logg: logg });
-        console.log(this.state.logg, ' loggs');
        }
      )
   }

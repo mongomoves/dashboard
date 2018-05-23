@@ -11,7 +11,6 @@ class ActivityItem extends Component {
       return (
         <div>
           <strong>Titel:</strong> {loggs.title}<br></br>
-          <strong>Beskrivning:</strong> {loggs.text}<br></br>
           <strong>Skapad av:</strong> {loggs.creator}<br></br>
           <strong>Skapad:</strong> {loggs.created}<br></br>
           <br></br>
