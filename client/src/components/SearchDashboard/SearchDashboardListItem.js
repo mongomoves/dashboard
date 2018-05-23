@@ -1,26 +1,11 @@
-/**
- * Created by Butts on 2018-05-21.
- */
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Button, Collapse, Glyphicon, ListGroupItem, Table} from "react-bootstrap";
 import _ from "lodash";
 
-const translateKind = {
-    Value: "Värde",
-    Graph: "Diagram",
-    Text: "Text"
-};
 const translateContent = {
     creator: "Skapare",
     created: "Skapad",
-    number: "Värde",
-    text: "Fritext",
-    graphUrl: "Diagram-Url",
-    refreshRate: "Uppd.frekvens",
-    displayType: "Visningstyp",
-    unit: "Enhet",
-    dataSource: "Datakälla",
-    attribute: "Attribut"
 };
 
 class SearchDashboardListItem extends React.Component {
@@ -97,5 +82,10 @@ class SearchDashboardListItem extends React.Component {
         );
     }
 }
+
+SearchDashboardListItem.propTypes = {
+    addDashboard: PropTypes.func.isRequired,
+    content: PropTypes.object.isRequired
+};
 
 export default SearchDashboardListItem;

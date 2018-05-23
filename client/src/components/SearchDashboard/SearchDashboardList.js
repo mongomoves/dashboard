@@ -1,7 +1,5 @@
-/**
- * Created by Butts on 2018-05-21.
- */
 import React from 'react';
+import PropTypes from 'prop-types';
 import {ListGroup} from "react-bootstrap";
 import SearchDashboardListItem from "./SearchDashboardListItem";
 import _ from 'lodash';
@@ -25,5 +23,11 @@ class SearchDashboardList extends React.Component {
         );
     }
 }
+
+SearchDashboardList.propTypes = {
+    addDashboard: PropTypes.func.isRequired,
+    dashboards: PropTypes.array.isRequired,
+    query: PropTypes.string.isRequired
+};
 
 export default SearchDashboardList;

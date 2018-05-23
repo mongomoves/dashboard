@@ -1,11 +1,9 @@
-/**
- * Created by Butts on 2018-05-21.
- */
-import React, { Component } from 'react';
-import {Button, ButtonToolbar, ControlLabel, FormControl, FormGroup} from "react-bootstrap";
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import SearchDashboardForm from './SearchDashboardForm';
 import SearchDashboardList from './SearchDashboardList';
 import SERVER_URL from '../../constants'
+
 const DEFAULT_REQUEST_URL = SERVER_URL + "/api/dashboards";
 
 class SearchDashboard extends Component {
@@ -14,25 +12,25 @@ class SearchDashboard extends Component {
 
         this.state = {
             dashboards: [],
-            query:''
+            query:'',
+            result: true
         }
     }
     onSearchClicked = (query) => {
         this.handleLoadDashboard(query);
     };
-    /**
-     * Method for publishing dashboard to backend by post request to backend api. Opens alert box with failure message
-     * if post is unsuccesfull. Calls method in app to open alert box with success message and close modal window if
-     * post is successfull.
-     */
+
     handleLoadDashboard = (query) => {
-        fetch(SERVER_URL + '/api/dashboards?search='+query)
+        fetch(DEFAULT_REQUEST_URL + '?search='+query)
             .then(result => {
                 return result.json();
             })
             .then(data => {
                 const dashboards = data.dashboards;
-                this.setState({dashboards: dashboards});
+                this.setState({
+                    dashboards: dashboards,
+                    result: data.count
+                });
             })
             .catch(err => {
                 console.log(err);
@@ -41,14 +39,25 @@ class SearchDashboard extends Component {
     };
 
     render() {
+        let content = (
+            <div style={listStyle}>
+                <SearchDashboardList addDashboard={this.props.addDashboard} dashboards={this.state.dashboards} query={this.state.query}/>
+            </div>
+        );
+
+        if (!this.state.result) {
+            content = (
+                <div style={{textAlign: 'center'}}>
+                    <span style={{fontStyle: 'italic'}}>Inga dashboards funna</span>
+                </div>
+            );
+        }
         return(
             <div>
                 <div style={formStyle}>
                     <SearchDashboardForm onSearchClicked={this.onSearchClicked}/>
                 </div>
-                <div style={listStyle}>
-                    <SearchDashboardList addDashboard={this.props.addDashboard} dashboards={this.state.dashboards} query={this.state.query}/>
-                </div>
+                {content}
             </div>
         );
     }
@@ -61,6 +70,10 @@ const listStyle = {
 
 const formStyle = {
     paddingBottom: '1em'
+};
+
+SearchDashboard.propTypes = {
+    addDashboard: PropTypes.func.isRequired
 };
 
 export default SearchDashboard;

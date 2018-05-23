@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { PageHeader} from 'react-bootstrap';
 import "./Article.css";
 
@@ -41,5 +42,9 @@ class Article extends Component {
         );
     }
 }
+
+Article.propTypes = {
+    children: PropTypes.any.isRequired
+};
 
 export default Article;

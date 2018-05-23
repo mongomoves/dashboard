@@ -1,6 +1,6 @@
 import React from 'react';
-import {FormGroup, FormControl, ControlLabel, OverlayTrigger, Tooltip} from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import {FormGroup, FormControl, ControlLabel, OverlayTrigger, Tooltip} from 'react-bootstrap';
 
 /**
  * Simple input field for controlled forms.
@@ -23,15 +23,16 @@ class FormInput extends React.Component {
     }
 }
 
-export default FormInput;
-
 FormInput.propTypes = {
-    title: PropTypes.string.isRequired,
-    tooltip: PropTypes.string.isRequired,
+    title: PropTypes.string,
+    tooltip: PropTypes.string,
     type: PropTypes.string.isRequired,
-    onChange: PropTypes.func.isRequired,
-    defaultValue: PropTypes.oneOfType([
+    name: PropTypes.string.isRequired,
+    value: PropTypes.oneOfType([
         PropTypes.string,
-        PropTypes.number
-    ])
-}
+        PropTypes.number,
+    ]).isRequired,
+    onChange: PropTypes.func.isRequired
+};
+
+export default FormInput;

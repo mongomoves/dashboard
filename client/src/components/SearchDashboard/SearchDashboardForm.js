@@ -1,8 +1,6 @@
-/**
- * Created by Butts on 2018-05-21.
- */
 import React from 'react';
-import {Button, Checkbox, FormControl, FormGroup, OverlayTrigger, Tooltip} from "react-bootstrap";
+import PropTypes from 'prop-types';
+import {Button, FormControl, FormGroup, OverlayTrigger, Tooltip} from "react-bootstrap";
 
 class SearchDashboardForm extends React.Component {
     constructor(props) {
@@ -46,5 +44,9 @@ class SearchDashboardForm extends React.Component {
         );
     }
 }
+
+SearchDashboardForm.propTypes = {
+    onSearchClicked: PropTypes.func.isRequired
+};
 
 export default SearchDashboardForm;

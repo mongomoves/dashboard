@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import jsonQuery from 'json-query';
 
 /**
@@ -122,7 +123,7 @@ class TextHolder extends Component {
                 tempElement = String(el);
             }
         return (
-            <div key={el} style={{...spanStyleText, fontSize: `${this.calcFont()}%`}}>
+            <div key={el} style={{...spanStyleText, fontSize: `${this.calculateFont()}%`}}>
                 {tempElement}
             </div>
             )
@@ -160,8 +161,13 @@ class TextHolder extends Component {
     }
 }
 
-export default TextHolder;
+TextHolder.propTypes = {
+    values: PropTypes.object.isRequired,
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired
+};
 
+export default TextHolder;
 
 const spanStyleText = {
     fontWeight: "bold",

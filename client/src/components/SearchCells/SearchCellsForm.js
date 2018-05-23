@@ -1,7 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Button, Checkbox, FormControl, FormGroup, OverlayTrigger, Tooltip} from "react-bootstrap";
-
-
 
 class SearchCellsForm extends React.Component {
     constructor(props) {
@@ -75,5 +74,9 @@ class SearchCellsForm extends React.Component {
         );
     }
 }
+
+SearchCellsForm.propTypes = {
+    onSearchClicked: PropTypes.func.isRequired
+};
 
 export default SearchCellsForm;

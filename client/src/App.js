@@ -14,7 +14,6 @@ import _ from 'lodash';
 import './App.css';
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
-import LoadDashboard from "./components/SearchDashboard/SearchDashboard";
 
 const localStorageCells = loadFromLocalStorage("cells") || [];
 
@@ -212,6 +211,20 @@ class App extends Component {
         this.setState({modals: {searchCells: false}})
     };
 
+    handleShowSaveDashboard = () => {
+        this.setState({modals: {saveDashboard: true}})
+    };
+
+    handleCloseSaveDashboard = () => {
+        this.setState({modals: {saveDashboard: false}})
+    };
+    handleShowLoadDashboard = () => {
+        this.setState({modals: {loadDashboard: true}})
+    };
+    handleCloseLoadDashboard = () => {
+        this.setState({modals: {loadDashboard: false}})
+    };
+
     handleShowCellInfo = (i) => {
         this.setState({modals: {showInfo: true}});
         this.state.cells.some(function(e) {
@@ -233,7 +246,7 @@ class App extends Component {
     };
 
     handleShowEditCell = (i) => {
-        this.setState({modals: {editCell: true}})
+        this.setState({modals: {editCell: true}});
         this.state.cells.some(function(e, index) {
             if(e.layout.i === i) {
                 if(e.content.kind === 'Value') {
@@ -280,24 +293,6 @@ class App extends Component {
         this.setState({modals: {editCell: false}})
     };
 
-
-    handleShowSaveDashboard = () => {
-        this.setState({modals: {saveDashboard: true}})
-    };
-
-    handleCloseSaveDashboardSuccess = () => {
-        this.setState({modals: {saveDashboard: false}})
-    };
-    handleCloseSaveDashboard = () => {
-        this.setState({modals: {saveDashboard: false}})
-    };
-    handleShowLoadDashboard = () => {
-        this.setState({modals: {loadDashboard: true}})
-    };
-    handleCloseLoadDashboard = () => {
-        this.setState({modals: {loadDashboard: false}})
-    };
-
     render() {
         return (
             <div>
@@ -321,13 +316,13 @@ class App extends Component {
                     <CreateCellForm
                         addCell={this.addCell}
                         done={this.handleCloseCreateCell}
-                        addID = {this.addID}/>
+                        addID={this.addID}/>
                 </BootstrapModal>
                 <BootstrapModal
                     title="Sök Widgets"
                     show={this.state.modals.searchCells}
                     close={this.handleCloseSearchCells}>
-                    <SearchCells addCell={this.addCell} done={this.handleCloseSearchCells} />
+                    <SearchCells addCell={this.addCell} />
                 </BootstrapModal>
                 <BootstrapModal
                     title={cellInfoData.title}
@@ -343,6 +338,7 @@ class App extends Component {
                         values={editValues}
                         addCell={this.addCell}
                         editCell={this.editCell}
+                        addID={this.addID}
                         done={this.handleCloseEditCell}/>
                 </BootstrapModal>
                 <BootstrapModal
@@ -351,7 +347,7 @@ class App extends Component {
                     close={this.handleCloseSaveDashboard}>
                     <SaveDashboard
                         getAllCells={this.getAllCells}
-                        handleCloseSaveDashboardSuccess={this.handleCloseSaveDashboardSuccess}/>
+                        handleCloseSaveDashboardSuccess={this.handleCloseSaveDashboard}/>
                 </BootstrapModal>
                 <BootstrapModal
                     title='Sök Dashboard'

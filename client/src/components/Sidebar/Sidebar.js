@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { MenuItem, Glyphicon } from 'react-bootstrap';
 import './Sidebar.css';
 
 //Component that displays the sidebar on the how to page. Handels onClick events by calling methods from Article component.
-
 class Sidebar extends Component {
     constructor(props){
         super(props);
@@ -43,5 +43,11 @@ class Sidebar extends Component {
         );
     }
 }
+
+Sidebar.propTypes = {
+    clickedKoncept: PropTypes.func,
+    clickedWidgetEx: PropTypes.func,
+    clickedStepByStep: PropTypes.func
+};
 
 export default Sidebar;

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import jsonQuery from 'json-query';
 
 /**
@@ -176,23 +177,28 @@ class ValueComponent extends Component {
 const valueDiv = {
     overflowX: 'hidden',
     textOverflow: 'ellipsis',
-}
+};
 
 const spanStyleNumber = {
     fontWeight: "bold",
     color: "orange"
-}
+};
 
 const spanStyleUnit = {
     fontWeight: "bold",
     color: "white"
-}
+};
 
 const spanStyleError = {
     fontSize: "100%",
     color: "white",
     overflowX: 'hidden',
     textOverflow: 'ellipsis'
-}
+};
+
+ValueComponent.propTypes = {
+    width: PropTypes.number,
+    values: PropTypes.object.isRequired
+};
 
 export default ValueComponent;

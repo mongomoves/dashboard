@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Panel, Grid, Row, Col, MenuItem, DropdownButton, Glyphicon } from 'react-bootstrap';
-import ImageHolder from "./ImageHolder";
 import ReactResizeDetector from 'react-resize-detector';
-import './Cell.css';
+import ImageHolder from "./ImageHolder";
 import ValueComponent from '../ValueComponent/ValueComponent';
 import IframeHolder from './IframeHolder';
 import TextHolder from './TextHolder';
+import './Cell.css';
 
 /**
  * This component represents a cell
@@ -145,5 +146,16 @@ class Cell extends Component {
         )
     }
 }
+
+Cell.propTypes = {
+    removeCell: PropTypes.func.isRequired,
+    showInfo: PropTypes.func.isRequired,
+    editCell: PropTypes.func.isRequired,
+    content: PropTypes.object.isRequired,
+    id: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number
+    ]).isRequired
+};
 
 export default Cell;

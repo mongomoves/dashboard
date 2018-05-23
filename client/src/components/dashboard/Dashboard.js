@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import RGL, { WidthProvider } from "react-grid-layout";
 import Cell from '../cell/Cell'
 import './dashboard.css';
@@ -16,8 +17,6 @@ class Dashboard extends Component {
         cols: 12,
         rowHeight: 50
     };
-
-    
 
     /**
      * Builds and returns elements based on whatever is found in state.cells.
@@ -55,6 +54,14 @@ class Dashboard extends Component {
         );
     }
 }
+
+Dashboard.propTypes = {
+    removeCell: PropTypes.func.isRequired,
+    showInfo: PropTypes.func.isRequired,
+    editCell: PropTypes.func.isRequired,
+    cells: PropTypes.array.isRequired,
+    onLayoutChange: PropTypes.func.isRequired
+};
 
 export default Dashboard;
 
