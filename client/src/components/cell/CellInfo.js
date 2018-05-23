@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {Row, Col} from 'react-bootstrap';
 
 /**
  * Shows information about a specific cell. Author, date and description.
  * TODO: Make it look good.
  */
+
 class CellInfo extends Component {
     generateElements() {
         const {creator, created, description} = this.props.cell;
@@ -37,5 +39,9 @@ class CellInfo extends Component {
         )
     }
 }
+
+CellInfo.propTypes = {
+    cell: PropTypes.object.isRequired
+};
 
 export default CellInfo;

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {
     Button,
     ButtonToolbar,
@@ -65,7 +66,7 @@ class CreateCellForm extends Component {
                 attribute: this.state.attribute,
                 refreshRate: this.state.refreshRate,
                 unit: this.state.unit
-            }   
+            }
         }
         else if (this.state.kind === 'Graph') {
             widget = {
@@ -75,7 +76,7 @@ class CreateCellForm extends Component {
                 graphUrl: this.state.graphUrl,
                 refreshRate: this.state.refreshRate
             }
-        } 
+        }
         else if (this.state.kind === 'Text') {
             widget = {
                 kind: this.state.kind,
@@ -289,5 +290,11 @@ class CreateCellForm extends Component {
         )
     }
 }
+
+CreateCellForm.propTypes = {
+    addCell: PropTypes.func.isRequired,
+    addID: PropTypes.func.isRequired,
+    done: PropTypes.func.isRequired
+};
 
 export default CreateCellForm;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Button, Collapse, Glyphicon, ListGroupItem, Table} from "react-bootstrap";
 import _ from "lodash";
 
@@ -98,5 +99,10 @@ class SearchCellsListItem extends React.Component {
         );
     }
 }
+
+SearchCellsListItem.propTypes = {
+    addCell: PropTypes.func.isRequired,
+    content: PropTypes.object.isRequired
+};
 
 export default SearchCellsListItem;

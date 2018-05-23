@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import FormInput from './FormInput';
 import {Col, ControlLabel, FormControl, FormGroup, Grid, OverlayTrigger, Row, Tooltip} from "react-bootstrap";
 
@@ -52,5 +53,16 @@ class TextForm extends React.Component {
         );
     }
 }
+
+TextForm.propTypes = {
+    textInput: PropTypes.string.isRequired,
+    dataSource: PropTypes.string.isRequired,
+    attribute: PropTypes.string.isRequired,
+    refreshRate: PropTypes.oneOfType([
+        PropTypes.number.isRequired,
+        PropTypes.string.isRequired,
+    ]),
+    handleInputChange: PropTypes.func.isRequired
+};
 
 export default TextForm;

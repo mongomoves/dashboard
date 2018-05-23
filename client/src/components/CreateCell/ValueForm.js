@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import FormInput from './FormInput';
 import {Col, Grid, Row} from "react-bootstrap";
 
@@ -56,5 +57,20 @@ class ValueForm extends React.Component {
         );
     }
 }
+
+ValueForm.propTypes = {
+    number: PropTypes.oneOfType([
+        PropTypes.number.isRequired,
+        PropTypes.string.isRequired,
+    ]),
+    dataSource: PropTypes.string.isRequired,
+    attribute: PropTypes.string.isRequired,
+    refreshRate: PropTypes.oneOfType([
+        PropTypes.number.isRequired,
+        PropTypes.string.isRequired,
+    ]),
+    unit: PropTypes.string.isRequired,
+    handleInputChange: PropTypes.func.isRequired
+};
 
 export default ValueForm;

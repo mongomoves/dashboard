@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 const regexWidth = /(&width=)(\d+)/g;
 const regexHeight = /(&height=)(\d+)/g;
@@ -7,6 +8,7 @@ const regexHeight = /(&height=)(\d+)/g;
  * Component simply holding an <img> tag, but with the ability
  * to scale based on the parent container's size.
  */
+
 class ImageHolder extends Component {
     constructor(props) {
         super(props);
@@ -94,5 +96,11 @@ class ImageHolder extends Component {
         );
     }
 }
+
+ImageHolder.propTypes = {
+    values: PropTypes.object.isRequired,
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired
+};
 
 export default ImageHolder;

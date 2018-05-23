@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {Button, ButtonToolbar, ControlLabel, FormControl, FormGroup} from "react-bootstrap";
 import SERVER_URL from '../../constants'
 
@@ -113,5 +114,10 @@ class SaveDashboard extends Component {
         )
     }
 }
+
+SaveDashboard.propTypes = {
+    getAllCells: PropTypes.func.isRequired,
+    handleCloseSaveDashboardSuccess: PropTypes.func.isRequired
+};
 
 export default SaveDashboard;

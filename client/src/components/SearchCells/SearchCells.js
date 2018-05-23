@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import SearchCellsForm from "./SearchCellsForm";
 import SearchCellsList from "./SearchCellsList";
 import SERVER_URL from '../../constants'
@@ -109,13 +110,14 @@ class SearchCells extends React.Component {
             <div style={listStyle}>
                 <SearchCellsList addCell={this.props.addCell} cells={this.state.cells}/>
             </div>
-            )
+        );
+
         if(!this.state.result) {
             content = (
                 <div style={{textAlign: 'center'}}>
                     <span style={{fontStyle: 'italic'}}>Inga widgets funna</span>
                 </div>
-                )
+            );
         }
         return(
             <div>
@@ -123,9 +125,6 @@ class SearchCells extends React.Component {
                     <SearchCellsForm onSearchClicked={this.onSearchClicked}/>
                 </div>
                 {content}
-                {/* <div style={listStyle}>
-                    <SearchCellsList addCell={this.props.addCell} cells={this.state.cells}/>
-                </div> */}
             </div>
         );
     }
@@ -138,6 +137,10 @@ const listStyle = {
 
 const formStyle = {
     paddingBottom: '1em'
+};
+
+SearchCells.propTypes = {
+    addCell: PropTypes.func.isRequired,
 };
 
 export default SearchCells;

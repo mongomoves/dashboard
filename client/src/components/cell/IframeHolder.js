@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * Component holding an Iframe.
@@ -115,6 +116,13 @@ class IframeHolder extends Component {
     }
 }
 
+IframeHolder.propTypes = {
+    onRef: PropTypes.func.isRequired,
+    values: PropTypes.object.isRequired,
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired
+};
+
 export default IframeHolder;
 
 const errorStyle = {
@@ -122,4 +130,4 @@ const errorStyle = {
     display: "inlineBlock",
     paddingRight: "5%",
     color: "orange"
-}
+};

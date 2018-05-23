@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {ListGroup} from "react-bootstrap";
 import SearchCellsListItem from "./SearchCellsListItem";
 import _ from 'lodash';
@@ -23,5 +24,10 @@ class SearchCellsList extends React.Component {
         );
     }
 }
+
+SearchCellsList.propTypes = {
+    addCell: PropTypes.func.isRequired,
+    cells: PropTypes.array.isRequired
+};
 
 export default SearchCellsList;

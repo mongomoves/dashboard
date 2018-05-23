@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {
     Button,
     ButtonToolbar,
@@ -14,7 +15,6 @@ import ValueForm from "./ValueForm";
 import GraphForm from "./GraphForm";
 import TextForm from "./TextForm";
 import SERVER_URL from '../../constants'
-
 
 class EditCellForm extends Component {
     constructor(props) {
@@ -288,5 +288,13 @@ class EditCellForm extends Component {
         )
     }
 }
+
+EditCellForm.propTypes = {
+    values: PropTypes.object.isRequired,
+    editCell: PropTypes.func.isRequired,
+    addCell: PropTypes.func.isRequired,
+    addID: PropTypes.func.isRequired,
+    done: PropTypes.func.isRequired
+};
 
 export default EditCellForm;

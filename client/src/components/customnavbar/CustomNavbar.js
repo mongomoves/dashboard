@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './CustomNavbar.css';
 import { Link } from 'react-router-dom'
 import { Navbar, Nav, NavDropdown, MenuItem, Glyphicon } from 'react-bootstrap';
@@ -44,5 +45,13 @@ class CustomNavbar extends Component {
         );
     }
 }
+
+CustomNavbar.propTypes = {
+    showCreateCell: PropTypes.func.isRequired,
+    showExistingCell: PropTypes.func.isRequired,
+    clearDashboard: PropTypes.func.isRequired,
+    showSaveDashboard: PropTypes.func.isRequired,
+    showLoadDashboard: PropTypes.func.isRequired
+};
 
 export default CustomNavbar;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import FormInput from './FormInput';
 import {ButtonToolbar, Col, ControlLabel, FormGroup, Grid, Row, ToggleButton, ToggleButtonGroup} from "react-bootstrap";
 
@@ -48,5 +49,17 @@ class GraphForm extends React.Component {
         );
     }
 }
+
+GraphForm.propTypes = {
+    graphUrl: PropTypes.string.isRequired,
+    displayType: PropTypes.string.isRequired,
+    refreshRate: PropTypes.oneOfType([
+        PropTypes.number.isRequired,
+        PropTypes.string.isRequired,
+    ]),
+    handleInputChange: PropTypes.func.isRequired,
+    handleDisplayTypeChange: PropTypes.func.isRequired,
+    handleGraphUrlChange: PropTypes.func.isRequired
+};
 
 export default GraphForm;
