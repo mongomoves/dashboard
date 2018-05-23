@@ -10,19 +10,12 @@ class SearchDashboardForm extends React.Component {
 
         this.state = {
             search: '',
-            value: true,
-            graph: true,
-            text: true
         }
     }
 
     handleInputChange = (e) => {
-        const target = e.target;
-        const value = target.value;
-        const name = target.name;
-
         this.setState({
-            [name]: value
+            search: e.target.value
         });
     };
 

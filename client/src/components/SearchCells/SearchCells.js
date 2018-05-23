@@ -10,19 +10,38 @@ class SearchCells extends React.Component {
         super(props);
 
         this.state = {
-            cells: []
+            cells: [],
+            searchById: false
         }
     }
 
     onSearchClicked = (options) => {
-        this.generateRequestUrl(options);
+        const requestUrl = this.generateRequestUrl(options);
+        this.fetchWidgetsFromDatabase(requestUrl);
     };
 
     generateRequestUrl = (options) => {
+        const {value, graph, text, search} = options;
+        const command = search.substring(0, search.indexOf(':'));
+
         let requestUrl = DEFAULT_REQUEST_URL;
         let isFirstParam = true;
 
-        if (options.value) {
+        if (command === 'id') {
+            const id = search.substring(search.indexOf(':') + 1);
+
+            if (id.trim() !== '') {
+                requestUrl += '/' + id;
+
+                this.setState({
+                    searchById: true
+                });
+
+                return requestUrl;
+            }
+        }
+
+        if (value) {
             if (isFirstParam) {
                 requestUrl += "?kind=Value";
                 isFirstParam = false;
@@ -32,7 +51,7 @@ class SearchCells extends React.Component {
             }
         }
 
-        if (options.graph) {
+        if (graph) {
             if (isFirstParam) {
                 requestUrl += "?kind=Graph";
                 isFirstParam = false;
@@ -42,7 +61,7 @@ class SearchCells extends React.Component {
             }
         }
 
-        if (options.text) {
+        if (text) {
             if (isFirstParam) {
                 requestUrl += "?kind=Text";
                 isFirstParam = false;
@@ -52,26 +71,35 @@ class SearchCells extends React.Component {
             }
         }
 
-        if (options.search && options.search !== '') {
+        if (search && search !== '') {
             if (isFirstParam) {
-                requestUrl += "?search=" + options.search;
-                isFirstParam = false;
+                requestUrl += "?search=" + search;
             }
             else {
-                requestUrl += "&search=" + options.search;
+                requestUrl += "&search=" + search;
             }
         }
-        this.fetchWidgetsFromDatabase(requestUrl);
+
+        //this.fetchWidgetsFromDatabase(requestUrl);
+
+
+        return requestUrl;
+
     };
 
     fetchWidgetsFromDatabase = (requestUrl) => {
         fetch(requestUrl)
-            .then(result => {
-                return result.json();
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
             })
             .then(data => {
-                const cells = data.widgets;
-                this.setState({cells: cells});
+                const cells = this.state.searchById ? data : data.widgets;
+                this.setState({
+                    cells: cells,
+                    searchById: false
+                });
             })
             .catch(err => {
                 console.log(err);

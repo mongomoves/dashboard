@@ -18,16 +18,15 @@ class SearchDashboard extends Component {
         }
     }
     onSearchClicked = (query) => {
-        this.setState({query: query});
-        this.handleLoadDashboard();
+        this.handleLoadDashboard(query);
     };
     /**
      * Method for publishing dashboard to backend by post request to backend api. Opens alert box with failure message
      * if post is unsuccesfull. Calls method in app to open alert box with success message and close modal window if
      * post is successfull.
      */
-    handleLoadDashboard = () => {
-        fetch(SERVER_URL + '/api/dashboards')
+    handleLoadDashboard = (query) => {
+        fetch(SERVER_URL + '/api/dashboards?search='+query)
             .then(result => {
                 return result.json();
             })
