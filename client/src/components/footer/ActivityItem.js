@@ -14,18 +14,26 @@ class ActivityItem extends Component {
       this.props.done();
   };
 
+  formatTimeStamp = (timestamp) => {
+        let newTime = timestamp.replace(/([A-Z])/g, " ");
+        return newTime.slice(0, (newTime.indexOf(".") - 3));
+  };
+
   createLogItems() {
       const onLogItemClick = this.onLogItemClick;
+      const formatTimeStamp = this.formatTimeStamp;
 
       return _.map(this.props.logg, function (loggs) {
-        return (
-        <div key={loggs.contentId} onClick={() => onLogItemClick(loggs.contentId, loggs.kind)}>
-              <strong>Titel:</strong> {loggs.title}<br/>
-              <strong>Skapad av:</strong> {loggs.creator}<br/>
-              <strong>Skapad:</strong> {loggs.created}<br/>
-              <br/>
-        </div>
-        );
+          const formatCreated = formatTimeStamp(loggs.created);
+
+          return (
+            <div key={loggs.contentId} onClick={() => onLogItemClick(loggs.contentId, loggs.kind)}>
+                  <strong>Titel:</strong> {loggs.title}<br/>
+                  <strong>Skapad av:</strong> {loggs.creator}<br/>
+                  <strong>Skapad:</strong> {formatCreated}<br/>
+                  <br/>
+            </div>
+          );
     });
   }
 

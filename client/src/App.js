@@ -169,7 +169,7 @@ class App extends Component {
     formatTimeStamp = (timestamp) => {
         let newTime = timestamp.replace(/([A-Z])/g, " ");
         return newTime.slice(0, (newTime.indexOf(".") - 3));
-    }
+    };
 
     getAllCells = () => {
         return this.state.cells;
