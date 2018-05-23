@@ -42,7 +42,7 @@ class SaveDashboard extends Component {
             let widget;
                 for (let i = 0; i < allWidgets.length; i++) {
                         widget = {
-                                id: allWidgets[i].id,
+                                id: allWidgets[i].content._id,
                                 i: allWidgets[i].layout.i,
                                 x: allWidgets[i].layout.x,
                                 y: allWidgets[i].layout.y,

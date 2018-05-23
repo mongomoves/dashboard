@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import jsonQuery from 'json-query';
 
-//Component represent a Value cell that shows either external- or user entered data
+/**
+ * Represent a value in a cell. Can display static inputed value or value from some
+ * external data source.
+ * Can refresh data at regular intervals.
+ */
 class ValueComponent extends Component {
     constructor(props) {
         super(props);
@@ -88,7 +92,19 @@ class ValueComponent extends Component {
                         number: result,
                         fetchSuccess: true
                     });
-            } else {
+            }
+
+            //if its a string, we check if it represents a number and if true create a number variable with identical content   
+            else if ((typeof result === 'string' && !isNaN(result)) || (result instanceof String && !isNaN(result))) {
+                let verifiedNumber = Number(result);
+                this.setState({
+                        externalData: true,
+                        number: verifiedNumber,
+                        fetchSuccess: true
+                    });
+            }
+                        
+            else {
                 this.setState({
                         externalData: true,
                         fetchSuccess: false
@@ -105,22 +121,39 @@ class ValueComponent extends Component {
             if(this.state.interval) {
                 clearInterval(this.state.interval);
             }
-
-            console.log(error);
         });
     };
 
-    render() {
-        //if external data is specified and is valid   
-        if (this.state.externalData && this.state.fetchSuccess) {
-            return (
-                <div>
-                    <span style={{...spanStyleNumber, fontSize: `${this.props.width / 9}px`}}>{this.state.number}</span>
-                    <span style={{...spanStyleUnit, fontSize: `${this.props.width / 10}px`}}>{this.props.values.unit}</span>
-                </div>
-            )
+    /**
+     * Returns a font size in percentage, trying to make it neither
+     * too big to fit or too small.
+     * Font size based in part on cell width.
+     * @param {*} type Number or unit
+     */
+    calculateFont = (type) => {
+        const maxWhenWide = 664;
+        const minSize = 470;
+        let size;
+        switch (type) {
+            case 'number': size = this.props.width / 1.1;
+            break;
+            case 'unit': size = this.props.width / 1.5;
+            break;
+            default: size = minSize;
         }
+        if(size > maxWhenWide) {
+            size = maxWhenWide;
+            if(type === 'unit') {
+                size -= 150;
+            }
+        }
+        if(type === 'number' && size < minSize) {
+            size = minSize;
+        }
+        return size; 
+    }
 
+    render() {
         //if invalid URL or attribute 
         if (this.state.externalData && !this.state.fetchSuccess) {
             return (
@@ -132,18 +165,21 @@ class ValueComponent extends Component {
 
         //if user entered data 
         return (
-            <div>
-                <span style={{...spanStyleNumber, fontSize: `${this.props.width / 5}px`}}>{this.state.number}</span>
-                <span style={{...spanStyleUnit, fontSize: `${this.props.width / 9}px`}}>{this.props.values.unit}</span>
+            <div style={valueDiv}>
+                <span style={{...spanStyleNumber, fontSize: `${this.calculateFont('number')}%`}}>{this.state.number}</span>
+                <span style={{...spanStyleUnit, fontSize: `${this.calculateFont('unit')}%`}}>{this.props.values.unit}</span>
             </div>
         );
     }
 }
 
+const valueDiv = {
+    overflowX: 'hidden',
+    textOverflow: 'ellipsis',
+}
+
 const spanStyleNumber = {
     fontWeight: "bold",
-    display: "inlineBlock",
-    paddingRight: "5%",
     color: "orange"
 }
 
@@ -154,7 +190,9 @@ const spanStyleUnit = {
 
 const spanStyleError = {
     fontSize: "100%",
-    color: "white"
+    color: "white",
+    overflowX: 'hidden',
+    textOverflow: 'ellipsis'
 }
 
 export default ValueComponent;

@@ -41,7 +41,10 @@ class TextHolder extends Component {
      */
     componentDidUpdate(prevProps, prevState) {
         if(this.props.values.textInput && (prevState.text !== this.props.values.textInput)) {
-            this.setState({text: this.props.values.textInput, isArray: false, externalData: false});
+            this.setState({
+                text: this.props.values.textInput, 
+                isArray: false, 
+                externalData: false});
         } 
         else if(prevProps.values.dataSource !== this.props.values.dataSource || 
                 prevProps.values.attribute !== this.props.values.attribute) {
@@ -77,19 +80,28 @@ class TextHolder extends Component {
             throw new Error('Fel');
         }).then((json) => {
             const apiText = jsonQuery(attribute, {data: json}).value;
-
             if((typeof apiText !== 'object' || !(apiText instanceof Object)) && apiText) {
-                this.setState({text: apiText, isArray: false, externalData: true});
+                this.setState({
+                    text: apiText, 
+                    isArray: false, 
+                    externalData: true});
             } else if (Array.isArray(apiText)) {
-                this.setState({isArray: true, text: apiText, externalData: true});
+                this.setState({
+                    isArray: true, 
+                    text: apiText, 
+                    externalData: true});
             } else if (!apiText) {
-                this.setState({text: 'Felaktigt attribut? Ingen data hämtad.', externalData: false});
+                this.setState({
+                    text: 'Felaktigt attribut? Ingen data hämtad.', 
+                    externalData: false});
                 if(this.state.interval) {
                     clearInterval(this.state.interval);
                 }
             }
         }).catch((error) => {
-            this.setState({text: 'Fel: ' + error, externalData: false});
+            this.setState({
+                text: 'Fel: ' + error, 
+                externalData: false});
             if(this.state.interval) {
                 clearInterval(this.state.interval);
             }
@@ -123,7 +135,7 @@ class TextHolder extends Component {
      * neither too big nor too small.
      * Returns the size in percentage.
      */
-    calcFont = () => {
+    calculateFont = () => {
         let size = this.props.width / 4;
         if(size < 150) {
             return 150;
@@ -137,7 +149,7 @@ class TextHolder extends Component {
             content = this.renderArray(this.state.text);
         } else {
             content = (
-                <span style={{...spanStyleText, fontSize: `${this.calcFont()}%`}}>{this.state.text}</span>
+                <span style={{...spanStyleText, fontSize: `${this.calculateFont()}%`}}>{this.state.text}</span>
             )
         }
         return (
