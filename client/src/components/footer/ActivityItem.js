@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 
 class ActivityItem extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   onLogItemClick = (contentId, kind) => {
       if (kind === "Widget") {
