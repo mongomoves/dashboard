@@ -60,7 +60,7 @@ router.get('/', function(req, res, next) {
                                     kind: widget.content.kind,
 
                                     number: widget.content.content.number,
-                                    text: widget.content.content.text,
+                                    textInput: widget.content.content.textInput,
                                     dataSource: widget.content.content.dataSource,
                                     attribute: widget.content.content.attribute,
                                     query: widget.content.content.query,
@@ -217,7 +217,7 @@ router.get('/:dashboardId', function(req, res, next) {
                                 kind: widget.content.kind,
 
                                 number: widget.content.content.number,
-                                text: widget.content.content.text,
+                                textInput: widget.content.content.textInput,
                                 dataSource: widget.content.content.dataSource,
                                 attribute: widget.content.content.attribute,
                                 query: widget.content.content.query,
