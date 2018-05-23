@@ -11,23 +11,24 @@ class ActivityItem extends Component {
           this.props.onLogWidgetClick('id:' + contentId);
       }
       else {
-          this.props.onLogDashboardClick('id:' + contentId)
+          this.props.onLogDashboardClick('id:' + contentId);
       }
+
+      this.props.done();
   };
 
   createLogItems() {
       const onLogItemClick = this.onLogItemClick;
 
       return _.map(this.props.logg, function (loggs) {
-      return (
-        <div key={loggs.title} onClick={() => onLogItemClick(loggs.contentId, loggs.kind)}>
-          <strong>Titel:</strong> {loggs.title}<br/>
-          <strong>Skapad av:</strong> {loggs.creator}<br/>
-          <strong>Skapad:</strong> {loggs.created}<br/>
-          <br/>
-          <br/>
+        return (
+        <div key={loggs.contentId} onClick={() => onLogItemClick(loggs.contentId, loggs.kind)}>
+              <strong>Titel:</strong> {loggs.title}<br/>
+              <strong>Skapad av:</strong> {loggs.creator}<br/>
+              <strong>Skapad:</strong> {loggs.created}<br/>
+              <br/>
         </div>
-      );
+        );
     });
   }
 

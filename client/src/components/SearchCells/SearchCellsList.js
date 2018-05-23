@@ -27,7 +27,10 @@ class SearchCellsList extends React.Component {
 
 SearchCellsList.propTypes = {
     addCell: PropTypes.func.isRequired,
-    cells: PropTypes.array.isRequired
+    cells: PropTypes.oneOfType([
+        PropTypes.array,
+        PropTypes.object
+    ]),
 };
 
 export default SearchCellsList;

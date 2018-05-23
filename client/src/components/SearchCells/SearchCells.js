@@ -13,7 +13,7 @@ class SearchCells extends React.Component {
         this.state = {
             cells: [],
             searchById: false,
-            result: true
+            noResult: false
         }
     }
 
@@ -73,7 +73,7 @@ class SearchCells extends React.Component {
             }
         }
 
-        if (search && search !== '') {
+        if (search && search.trim() !== '' && search.trim() !=='id:') {
             if (isFirstParam) {
                 requestUrl += "?search=" + search;
             }
@@ -81,8 +81,8 @@ class SearchCells extends React.Component {
                 requestUrl += "&search=" + search;
             }
         }
-        return requestUrl;
 
+        return requestUrl;
     };
 
     fetchWidgetsFromDatabase = (requestUrl) => {
@@ -93,11 +93,26 @@ class SearchCells extends React.Component {
                 }
             })
             .then(data => {
-                const cells = this.state.searchById ? data : data.widgets;
+                let cells = [];
+                let noResult = true;
+
+                if (this.state.searchById) {
+                    if (data) {
+                        cells.push(data.widget);
+                        noResult = false;
+                    }
+                }
+                else {
+                    if (data && data.count > 0) {
+                        cells = data.widgets;
+                        noResult = false;
+                    }
+                }
+
                 this.setState({
                     cells: cells,
                     searchById: false,
-                    result: data.count
+                    noResult: noResult
                 });
             })
             .catch(err => {
@@ -108,11 +123,13 @@ class SearchCells extends React.Component {
     render() {
         let content = (
             <div style={listStyle}>
-                <SearchCellsList addCell={this.props.addCell} cells={this.state.cells}/>
+                <SearchCellsList
+                    addCell={this.props.addCell}
+                    cells={this.state.cells}/>
             </div>
         );
 
-        if(!this.state.result) {
+        if(this.state.noResult) {
             content = (
                 <div style={{textAlign: 'center'}}>
                     <span style={{fontStyle: 'italic'}}>Inga widgets funna</span>
@@ -122,7 +139,9 @@ class SearchCells extends React.Component {
         return(
             <div>
                 <div style={formStyle}>
-                    <SearchCellsForm onSearchClicked={this.onSearchClicked} defaultSearch={this.props.defaultSearch}/>
+                    <SearchCellsForm
+                        onSearchClicked={this.onSearchClicked}
+                        defaultSearch={this.props.defaultSearch}/>
                 </div>
                 {content}
             </div>

@@ -408,9 +408,9 @@ class App extends Component {
                         addDashboard={this.addDashboard}
                         defaultSearch={this.state.defaultSearchDashboard}/>
                 </BootstrapModal>
-                 <Footer
-                     onLogWidgetClick={this.setDefaultCellSearch}
-                     onLogDashboardClick={this.setDefaultDashboardSearch}/>
+                <Footer
+                    onLogWidgetClick={this.setDefaultCellSearch}
+                    onLogDashboardClick={this.setDefaultDashboardSearch}/>
             </div>
         );
     }
