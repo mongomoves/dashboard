@@ -1,4 +1,4 @@
-import './Footer.css';
+import './footer.css';
 import BootstrapModal from '../Modal/BootstrapModal';
 import React, { Component } from 'react';
 import SERVER_URL from '../../constants'
