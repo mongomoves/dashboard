@@ -11,6 +11,12 @@ class SearchDashboardForm extends React.Component {
         }
     }
 
+    componentDidMount() {
+        if (this.props.defaultSearch) {
+            this.setState({search: this.props.defaultSearch});
+        }
+    }
+
     handleInputChange = (e) => {
         this.setState({
             search: e.target.value

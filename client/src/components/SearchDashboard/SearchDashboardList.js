@@ -26,8 +26,10 @@ class SearchDashboardList extends React.Component {
 
 SearchDashboardList.propTypes = {
     addDashboard: PropTypes.func.isRequired,
-    dashboards: PropTypes.array.isRequired,
-    query: PropTypes.string.isRequired
+    dashboards: PropTypes.oneOfType([
+        PropTypes.array,
+        PropTypes.object
+    ]),
 };
 
 export default SearchDashboardList;

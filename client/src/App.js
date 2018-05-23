@@ -154,32 +154,34 @@ class App extends Component {
             if((cells[i].content.description === data.description) 
                 && (cells[i].content.creator === data.creator)) {
                 cells[i].content._id = data._id;
-                cells[i].content.created = this.formatTimeStamp(data.created);
+                cells[i].content.created = data.created;
             }
         }
         this.setState({cells: cells});
         saveToLocalStorage("cells", this.state.cells);
     };
 
-    /**
-     * Removes some unwanted characters and seconds indicators for
-     * a more clean presentation.
-     * @param {String} timestamp Timestamp to format
-     */
-    formatTimeStamp = (timestamp) => {
-        let newTime = timestamp.replace(/([A-Z])/g, " ");
-        return newTime.slice(0, (newTime.indexOf(".") - 3));
-    }
-
     getAllCells = () => {
         return this.state.cells;
     };
 
     addDashboard = (dashboards) => {
-        this.setState({
-            cells: dashboards
+        let dashboardsCopy = Object.assign([], dashboards);
+
+        dashboardsCopy.sort(function (a, b) {
+            return a.layout.i - b.layout.i;
         });
 
+        const newIdCounter = dashboardsCopy.length > 0
+            ? Number(dashboardsCopy[dashboardsCopy.length - 1].layout.i) + 1
+            : 0;
+
+        this.setState({
+            cells: dashboardsCopy,
+            idCounter: newIdCounter
+        });
+
+        saveToLocalStorage("cells", this.state.cells);
     };
     clearDashboardLayout = () => {
         this.setState({
@@ -210,6 +212,16 @@ class App extends Component {
         saveToLocalStorage('cells', this.state.cells);
     };
 
+    setDefaultCellSearch = (search) => {
+        this.handleShowSearchCells();
+        this.setState({defaultSearchCell: search});
+    };
+
+    setDefaultDashboardSearch = (search) => {
+        this.handleShowLoadDashboard();
+        this.setState({defaultSearchDashboard: search})
+    };
+
     handleShowCreateCell = () => {
         this.setState({modals: {createCell: true}})
     };
@@ -223,7 +235,10 @@ class App extends Component {
     };
 
     handleCloseSearchCells = () => {
-        this.setState({modals: {searchCells: false}})
+        this.setState({
+            modals: {searchCells: false},
+            defaultSearchCell: null
+        });
     };
 
     handleShowSaveDashboard = () => {
@@ -239,7 +254,10 @@ class App extends Component {
     };
 
     handleCloseLoadDashboard = () => {
-        this.setState({modals: {loadDashboard: false}})
+        this.setState({
+            modals: {loadDashboard: false},
+            defaultSearchDashboard: null
+        });
     };
   
     handleCloseClearPrompt = () => {
@@ -353,7 +371,9 @@ class App extends Component {
                     title="Sök Widgets"
                     show={this.state.modals.searchCells}
                     close={this.handleCloseSearchCells}>
-                    <SearchCells addCell={this.addCell} />
+                    <SearchCells
+                        addCell={this.addCell}
+                        defaultSearch={this.state.defaultSearchCell}/>
                 </BootstrapModal>
                 <BootstrapModal
                     title={cellInfoData.title}
@@ -385,9 +405,12 @@ class App extends Component {
                     show={this.state.modals.loadDashboard}
                     close={this.handleCloseLoadDashboard}>
                     <SearchDashboard
-                        addDashboard={this.addDashboard}/>
+                        addDashboard={this.addDashboard}
+                        defaultSearch={this.state.defaultSearchDashboard}/>
                 </BootstrapModal>
-                 <Footer/>
+                <Footer
+                    onLogWidgetClick={this.setDefaultCellSearch}
+                    onLogDashboardClick={this.setDefaultDashboardSearch}/>
             </div>
         );
     }

@@ -12,24 +12,70 @@ class SearchDashboard extends Component {
 
         this.state = {
             dashboards: [],
-            query:'',
-            result: true
+            searchById: false,
+            noResult: false
         }
     }
-    onSearchClicked = (query) => {
-        this.handleLoadDashboard(query);
+
+    onSearchClicked = (search) => {
+        const requestUrl = this.generateRequestUrl(search);
+        this.handleLoadDashboard(requestUrl);
     };
 
-    handleLoadDashboard = (query) => {
-        fetch(DEFAULT_REQUEST_URL + '?search='+query)
-            .then(result => {
-                return result.json();
+    generateRequestUrl(search) {
+        const command = search.substring(0, search.indexOf(':'));
+
+        let requestUrl = DEFAULT_REQUEST_URL;
+
+        if (command === 'id') {
+            const id = search.substring(search.indexOf(':') + 1);
+
+            if (id.trim() !== '') {
+                requestUrl += '/' + id;
+
+                this.setState({
+                    searchById: true
+                });
+
+                return requestUrl;
+            }
+        }
+
+        if (search && search.trim() !== '' && search.trim() !== 'id:') {
+            requestUrl += "?search=" + search;
+        }
+
+        return requestUrl;
+    }
+
+    handleLoadDashboard = (requestUrl) => {
+        fetch(requestUrl)
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
             })
             .then(data => {
-                const dashboards = data.dashboards;
+                let dashboards = [];
+                let noResult = true;
+
+                if (this.state.searchById) {
+                    if (data) {
+                        dashboards.push(data.dashboard);
+                        noResult = false;
+                    }
+                }
+                else {
+                    if (data && data.count > 0) {
+                        dashboards = data.dashboards;
+                        noResult = false;
+                    }
+                }
+
                 this.setState({
                     dashboards: dashboards,
-                    result: data.count
+                    searchById: false,
+                    noResult: noResult
                 });
             })
             .catch(err => {
@@ -41,11 +87,13 @@ class SearchDashboard extends Component {
     render() {
         let content = (
             <div style={listStyle}>
-                <SearchDashboardList addDashboard={this.props.addDashboard} dashboards={this.state.dashboards} query={this.state.query}/>
+                <SearchDashboardList
+                    addDashboard={this.props.addDashboard}
+                    dashboards={this.state.dashboards}/>
             </div>
         );
 
-        if (!this.state.result) {
+        if (this.state.noResult) {
             content = (
                 <div style={{textAlign: 'center'}}>
                     <span style={{fontStyle: 'italic'}}>Inga dashboards funna</span>
@@ -55,7 +103,9 @@ class SearchDashboard extends Component {
         return(
             <div>
                 <div style={formStyle}>
-                    <SearchDashboardForm onSearchClicked={this.onSearchClicked}/>
+                    <SearchDashboardForm
+                        onSearchClicked={this.onSearchClicked}
+                        defaultSearch={this.props.defaultSearch}/>
                 </div>
                 {content}
             </div>

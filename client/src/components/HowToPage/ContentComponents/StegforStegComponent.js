@@ -58,7 +58,7 @@ class StepByStep extends Component {
                             <li>3. Värde (Antingen detta eller Datakälla)</li>
                             <li>4. Datakälla (Antingen detta eller Värde)</li>
                             <li>5. Den data man vill hämta ut från datakällan ovanför anges genom att ange de data-attribut som innehåller detta.  </li>
-                            <li>6. Följade steg är att ange Uppdateringsfrekvens i antal minuter. Detta innebär att datan hämtas om på nytt vid varje angivet tidsintervall.</li>
+                            <li>6. Följande steg är att ange Uppdateringsfrekvens i antal minuter. Detta innebär att datan hämtas om på nytt vid varje angivet tidsintervall.</li>
                             <li>7. Ange enheten som förklarar ovanstående data. Exepmpel år / tid / antal anställda.</li>
                             <li>8. Sista steget när man skapar en widget är att kryssa i om man vill få sin widget <u>publicerad</u>.</li>
                         </ul>
@@ -87,7 +87,7 @@ class StepByStep extends Component {
                         {!this.state.togglePublish &&
                         <div>
                             <p>Man kan publicera en widget på två sätt, antigen genom att klicka i rutan "publicera widget" när man skapar en widget.
-                            Eller om man vill göra det vid senare tillfälle, så kan man göra det via redigeraknappen som visas på bilden nedan. i widgetens högra hörn.
+                            Eller om man vill göra det vid senare tillfälle, så kan man göra det via redigeraknappen som visas på bilden nedan. I widgetens högra hörn.
                             Genom att publicera en widget gör man den tillgänglig för andra användre att söka upp och återanvända.</p>
                             <p>Om man väljer att publicera en widget så sparas widgeten i databasen.</p>
                             <p>Om man sedan väljer att redigera en publicerad widget så kommer den inte att skrivas över utan blir en ny widget. </p>

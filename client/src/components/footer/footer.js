@@ -14,17 +14,17 @@ class Footer extends Component {
       logg: [],
       footerData: [],
       modals: {
-        showBootStrapModal: false
+        showActivityLog: false
       }
     }
   }
 
-  handleShowBootStrapModal = () => {
-    this.setState({ modals: { showBootStrapModal: true } })
+  handleShowActivityLog = () => {
+    this.setState({ modals: { showActivityLog: true } })
   };
 
-  handleCloseBootStrapModal = () => {
-    this.setState({ modals: { showBootStrapModal: false } })
+  handleCloseActivityLog = () => {
+    this.setState({ modals: { showActivityLog: false } })
   };
 
   componentDidMount() {
@@ -44,7 +44,7 @@ class Footer extends Component {
   }
 
   getActivityData = () => {
-    fetch('http://192.168.99.100:3001/api/log')
+    fetch(SERVER_URL + '/api/log')
       .then(results => {
         return results.json();
       }).then(data => {
@@ -52,38 +52,42 @@ class Footer extends Component {
         this.setState({ logg: logg });
        }
      )
-  }
+  };
 
   getFooterData = () => {
-    fetch('http://192.168.99.100:3001/api/log?limit=1')
+    fetch(SERVER_URL + '/api/log?limit=1')
       .then(results => {
         return results.json();
       }).then(data => {
-        let footerData = data.logEntries
+        let footerData = data.logEntries;
         this.setState({ footerData: footerData });
       }
     )
-}
+};
 
 render() {
   return (
     <div className="footer">
       <BootstrapModal
         title="Aktivitetslogg"
-        show={this.state.modals.showBootStrapModal}
-        close={this.handleCloseBootStrapModal}>
-        <ActivityItem logg={this.state.logg} />
-        <div className="logg">
-        </div>
+        show={this.state.modals.showActivityLog}
+        close={this.handleCloseActivityLog}>
+        <ActivityItem
+            logg={this.state.logg}
+            onLogWidgetClick={this.props.onLogWidgetClick}
+            onLogDashboardClick={this.props.onLogDashboardClick}
+            done={this.handleCloseActivityLog}/>
       </BootstrapModal>
       <div className="footerText">
-        <p><a onClick={this.handleShowBootStrapModal}>
-          <FooterItem footerData={this.state.footerData} />
-        </a></p></div>
+            <a onClick={this.handleShowActivityLog}>
+                <FooterItem footerData={this.state.footerData} />
+            </a>
+      </div>
         <div className="iconFooter">
-         <p><a onClick={this.handleShowBootStrapModal}>
-        <Glyphicon glyph="glyphicon glyphicon-list-alt" />
-        </a></p></div>
+            <a onClick={this.handleShowActivityLog}>
+                <Glyphicon glyph="glyphicon glyphicon-list-alt" />
+            </a>
+        </div>
     </div>
     )
   }
