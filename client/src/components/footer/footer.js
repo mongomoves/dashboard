@@ -44,7 +44,7 @@ class Footer extends Component {
   }
 
   getActivityData = () => {
-    fetch('http://192.168.99.100:3001/api/log')
+    fetch(SERVER_URL + '/api/log')
       .then(results => {
         return results.json();
       }).then(data => {
@@ -55,7 +55,7 @@ class Footer extends Component {
   }
 
   getFooterData = () => {
-    fetch('http://192.168.99.100:3001/api/log?limit=1')
+    fetch(SERVER_URL + '/api/log?limit=1')
       .then(results => {
         return results.json();
       }).then(data => {

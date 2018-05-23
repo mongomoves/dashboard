@@ -180,6 +180,8 @@ class App extends Component {
             cells: dashboards
         });
 
+        saveToLocalStorage("cells", this.state.cells);
+
     };
     clearDashboardLayout = () => {
         this.setState({
