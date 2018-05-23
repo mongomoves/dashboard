@@ -153,15 +153,27 @@ class App extends Component {
             if((cells[i].content.description === data.description) 
                 && (cells[i].content.creator === data.creator)) {
                 cells[i].content._id = data._id;
+                cells[i].content.created = this.formatTimeStamp(data.created);
             }
         }
         this.setState({cells: cells});
         saveToLocalStorage("cells", this.state.cells);
     };
 
+    /**
+     * Removes some unwanted characters and seconds indicators for
+     * a more clean presentation.
+     * @param {String} timestamp Timestamp to format
+     */
+    formatTimeStamp = (timestamp) => {
+        let newTime = timestamp.replace(/([A-Z])/g, " ");
+        return newTime.slice(0, (newTime.indexOf(".") - 3));
+    }
+
     getAllCells = () => {
         return this.state.cells;
     };
+
     addDashboard = (dashboards) => {
         this.setState({
             cells: dashboards
