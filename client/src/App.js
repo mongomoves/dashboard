@@ -7,6 +7,7 @@ import SearchCells from './components/SearchCells/SearchCells';
 import CellInfo from './components/cell/CellInfo';
 import Footer from "./components/footer/Footer";
 import BootstrapModal from './components/Modal/BootstrapModal';
+import ClearPromptForm from './components/ClearPromptForm/ClearPromptForm';
 import SaveDashboard from "./components/SaveDashboard/SaveDashboard";
 import SearchDashboard from "./components/SearchDashboard/SearchDashboard";
 import _ from 'lodash';
@@ -37,6 +38,7 @@ class App extends Component {
                 searchCells: false,
                 showInfo: false,
                 saveDashboard: false,
+                clearPrompt: false,
                 loadDashboard: false,
             },
             idCounter: localStorageCells.length > 0 // if we loaded cells from local storage
@@ -153,15 +155,27 @@ class App extends Component {
             if((cells[i].content.description === data.description) 
                 && (cells[i].content.creator === data.creator)) {
                 cells[i].content._id = data._id;
+                cells[i].content.created = this.formatTimeStamp(data.created);
             }
         }
         this.setState({cells: cells});
         saveToLocalStorage("cells", this.state.cells);
     };
 
+    /**
+     * Removes some unwanted characters and seconds indicators for
+     * a more clean presentation.
+     * @param {String} timestamp Timestamp to format
+     */
+    formatTimeStamp = (timestamp) => {
+        let newTime = timestamp.replace(/([A-Z])/g, " ");
+        return newTime.slice(0, (newTime.indexOf(".") - 3));
+    }
+
     getAllCells = () => {
         return this.state.cells;
     };
+
     addDashboard = (dashboards) => {
         this.setState({
             cells: dashboards
@@ -172,7 +186,8 @@ class App extends Component {
         this.setState({
             layouts: {},
             cells: [],
-            idCounter: 0
+            idCounter: 0,
+            modals: {clearPrompt: false}
         });
     };
 
@@ -298,6 +313,14 @@ class App extends Component {
         this.setState({modals: {loadDashboard: false}})
     };
 
+    handleCloseClearPrompt = () => {
+        this.setState({modals: {clearPrompt: false}});
+    }
+
+    handleShowClearPrompt = () => {
+        this.setState({modals: {clearPrompt: true}});
+    }
+
     render() {
         return (
             <div>
@@ -305,7 +328,7 @@ class App extends Component {
                 <CustomNavbar
                     showCreateCell={this.handleShowCreateCell}
                     showExistingCell={this.handleShowSearchCells}
-                    clearDashboard={this.clearDashboardLayout}
+                    clearDashboard={this.handleShowClearPrompt}
                     showSaveDashboard={this.handleShowSaveDashboard}
                     showLoadDashboard={this.handleShowLoadDashboard}/>
                 <Dashboard
@@ -314,6 +337,12 @@ class App extends Component {
                     editCell={this.handleShowEditCell}
                     cells={this.state.cells}
                     onLayoutChange={this.onLayoutChange}/>
+                <BootstrapModal
+                    title="Ta bort Dashboard"
+                    show={this.state.modals.clearPrompt}
+                    close={this.handleCloseClearPrompt}>
+                        <ClearPromptForm clear={this.clearDashboardLayout}/>
+                </BootstrapModal>
                 <BootstrapModal
                     title="Skapa widget"
                     show={this.state.modals.createCell}

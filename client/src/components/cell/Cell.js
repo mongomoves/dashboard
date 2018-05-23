@@ -73,7 +73,7 @@ class Cell extends Component {
     render() {
         const {title, kind} = this.props.content;
         let content;
-        let iframeRefreshBtn = (<MenuItem eventKey={4} onClick={this.onUpdate}>Uppdatera</MenuItem>);
+        let iframeRefreshBtn = null;
         if (kind === 'Value') {
             content = (
                 <ValueComponent width={this.state.width} values={this.props.content} />
@@ -82,6 +82,7 @@ class Cell extends Component {
         else if (kind === 'Graph') {
             const {displayType} = this.props.content;
             if(displayType === 'Iframe') {
+                iframeRefreshBtn = (<MenuItem eventKey={4} onClick={this.onUpdate}>Uppdatera</MenuItem>);
                 content = (
                     <IframeHolder
                         onRef={ref => (this.iframeHolder = ref)}

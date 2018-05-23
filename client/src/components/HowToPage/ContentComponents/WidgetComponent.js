@@ -8,7 +8,7 @@ class Widget extends Component {
             <div className="Divider">
                 <h4 className="h4Bold">Widgets</h4>
                 <p>
-                    Widgets utgör grunden för Dashboarden. Varje widget har en XX beroende på var datan till widgeten hämtas in.
+                    Widgets utgör grunden för Dashboarden. 
                     Alla widgets placering och storlek kan ändras av användaren.
                     De olika delar som utgör en widget är en rubrikkomponent som innehåller en titel som användare angivit vid skapandet samt en config knapp. Config knappen låter användaren redigera information, visa information om widgeten, t.ex. om vem som skapat den och slutligen ta bort en widget. 
                     Widgeten har också en body där innehållet för varje widget visas.  
