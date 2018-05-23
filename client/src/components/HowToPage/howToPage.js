@@ -5,6 +5,7 @@ import Sidebar from '../Sidebar/Sidebar';
 import Koncept from '../HowToPage/ContentComponents/KonceptComponent';
 import StepByStep from '../HowToPage/ContentComponents/StegforStegComponent';
 import WidgetEx from '../HowToPage/ContentComponents/WidgetComponent';
+import Footer from '../footer/footer';
 import './howToPage.css';
 
 //Component for displaying the how to page and its content. 
@@ -49,6 +50,7 @@ class HowToPage extends Component {
                         clickedStepByStep={this.toggleStepByStepHandler}
                         clickedWidgetEx={this.toggleWidgetExHandler} />
                 </div>
+                <Footer />
             </div>
         );
     }
