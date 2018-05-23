@@ -11,7 +11,8 @@ class SearchCells extends React.Component {
 
         this.state = {
             cells: [],
-            searchById: false
+            searchById: false,
+            result: true
         }
     }
 
@@ -34,7 +35,7 @@ class SearchCells extends React.Component {
                 requestUrl += '/' + id;
 
                 this.setState({
-                    searchById: true
+                    searchById: true,
                 });
 
                 return requestUrl;
@@ -94,7 +95,8 @@ class SearchCells extends React.Component {
                 const cells = this.state.searchById ? data : data.widgets;
                 this.setState({
                     cells: cells,
-                    searchById: false
+                    searchById: false,
+                    result: data.count
                 });
             })
             .catch(err => {
@@ -103,14 +105,27 @@ class SearchCells extends React.Component {
     };
 
     render() {
+        let content = (
+            <div style={listStyle}>
+                <SearchCellsList addCell={this.props.addCell} cells={this.state.cells}/>
+            </div>
+            )
+        if(!this.state.result) {
+            content = (
+                <div style={{textAlign: 'center'}}>
+                    <span style={{fontStyle: 'italic'}}>Inga widgets funna</span>
+                </div>
+                )
+        }
         return(
             <div>
                 <div style={formStyle}>
                     <SearchCellsForm onSearchClicked={this.onSearchClicked}/>
                 </div>
-                <div style={listStyle}>
+                {content}
+                {/* <div style={listStyle}>
                     <SearchCellsList addCell={this.props.addCell} cells={this.state.cells}/>
-                </div>
+                </div> */}
             </div>
         );
     }
