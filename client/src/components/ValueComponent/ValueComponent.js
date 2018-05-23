@@ -92,7 +92,19 @@ class ValueComponent extends Component {
                         number: result,
                         fetchSuccess: true
                     });
-            } else {
+            }
+
+            //if its a string, we check if it represents a number and if true create a number variable with identical content   
+            else if ((typeof result === 'string' && !isNaN(result)) || (result instanceof String && !isNaN(result))) {
+                let verifiedNumber = Number(result);
+                this.setState({
+                        externalData: true,
+                        number: verifiedNumber,
+                        fetchSuccess: true
+                    });
+            }
+                        
+            else {
                 this.setState({
                         externalData: true,
                         fetchSuccess: false
@@ -177,7 +189,9 @@ const spanStyleUnit = {
 
 const spanStyleError = {
     fontSize: "100%",
-    color: "white"
+    color: "white",
+    overflowX: 'hidden',
+    textOverflow: 'ellipsis'
 }
 
 export default ValueComponent;
