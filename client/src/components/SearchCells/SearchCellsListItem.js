@@ -33,7 +33,7 @@ class SearchCellsListItem extends React.Component {
         let tableData = [];
 
         for (let [key, value] of Object.entries(this.props.content)) {
-            if (key !== 'title' && key !== 'description' && key !== 'kind' && key !== '_id') {
+            if (key !== 'title' && key !== 'description' && key !== 'kind' && key !== '_id' && value !== '') {
                 tableData.push({key: key, value: value});
             }
         }
