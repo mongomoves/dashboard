@@ -7,6 +7,8 @@ import StepByStep from '../HowToPage/ContentComponents/StegforStegComponent';
 import WidgetEx from '../HowToPage/ContentComponents/WidgetComponent';
 import './howToPage.css';
 
+//Component for displaying the how to page and its content. 
+
 class HowToPage extends Component {
 
     constructor(props){
@@ -17,6 +19,8 @@ class HowToPage extends Component {
             toggleWidgetEx: true
         }
     }
+
+    //Methods that toggles the visabillity of the content.
 
     toggleKonceptHandler = () => {
         this.setState({toggleKoncept: !this.state.toggleKoncept});
@@ -36,7 +40,7 @@ class HowToPage extends Component {
                 <CustomNavbar />
                 <div className="howToContent">
                     <Article>
-                        {!this.state.toggleKoncept && <Koncept />}
+                        {this.state.toggleKoncept && <Koncept />}
                         {!this.state.toggleStepByStep && <StepByStep />}
                         {!this.state.toggleWidgetEx && <WidgetEx />}         
                     </Article>
