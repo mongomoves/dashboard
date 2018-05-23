@@ -154,6 +154,7 @@ class App extends Component {
             if((cells[i].content.description === data.description) 
                 && (cells[i].content.creator === data.creator)) {
                 cells[i].content._id = data._id;
+                cells[i].content.created = data.created;
             }
         }
         this.setState({cells: cells});
