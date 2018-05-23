@@ -139,6 +139,7 @@ class ValueComponent extends Component {
             break;
             case 'unit': size = this.props.width / 1.5;
             break;
+            default: size = minSize;
         }
         if(size > maxWhenWide) {
             size = maxWhenWide;

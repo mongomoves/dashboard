@@ -5,7 +5,7 @@ import {Col, ControlLabel, FormControl, FormGroup, Grid, OverlayTrigger, Row, To
 class TextForm extends React.Component {
 
     render() {
-        const {textInput, dataSource, attribute, unit, refreshRate, handleInputChange} = this.props;
+        const {textInput, dataSource, attribute, refreshRate, handleInputChange} = this.props;
 
         return (
             <div>
