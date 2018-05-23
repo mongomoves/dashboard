@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import {Glyphicon} from 'react-bootstrap';
 import './ContentComponent.css';
-import Img from '../../../assets/Img/redigera.PNG';
-import Img2 from '../../../assets/Img/skapawidget.png';
+import Redigera from '../../../assets/Img/redigera.jpg';
+import RedigeraKnapp from '../../../assets/Img/redigeraknapp.jpg';
+import Skapa from '../../../assets/Img/skapa.jpg';
 
 
 // Component that renders the Steg för steg part of the application
@@ -61,14 +62,14 @@ class StepByStep extends Component {
                             <li>7. Ange enheten som förklarar ovanstående data. Exepmpel år / tid / antal anställda.</li>
                             <li>8. Sista steget när man skapar en widget är att kryssa i om man vill få sin widget <u>publicerad</u>.</li>
                         </ul>
-                        {!this.state.toggleValue && <img style={imgStyle} src={Img2} alt="Create Widget"/>}
+                        {!this.state.toggleValue && <img style={imgStyle} src={Skapa} alt="Create Widget"/>}
                         </div>
                         }
 
 
                         <li className="CompSpace"><a  onClick={this.toggleEditHandler}>Redigera widget <Glyphicon glyph={this.state.toggleEdit ? "chevron-down" : "chevron-up"}/></a></li>
                         {/* https://i.imgur.com/nP5qFYH.png*/}
-                        {!this.state.toggleEdit && <img style={imgStyle} src={Img} alt="Redigera widget"/>}   
+                        {!this.state.toggleEdit && <img style={imgStyle} src={RedigeraKnapp} alt="Redigera widget"/>}   
                         {!this.state.toggleEdit &&
                         <div>
                             <p>Redigera widget gör man genom att trycka på konfigknappen i widgetens högra hörn.</p>
@@ -90,7 +91,7 @@ class StepByStep extends Component {
                             Genom att publicera en widget gör man den tillgänglig för andra användre att söka upp och återanvända.</p>
                             <p>Om man väljer att publicera en widget så sparas widgeten i databasen.</p>
                             <p>Om man sedan väljer att redigera en publicerad widget så kommer den inte att skrivas över utan blir en ny widget. </p>
-                            {!this.state.togglePublish && <img style={imgStyle} src="https://i.imgur.com/L70poNa.png" alt="Publicera widget"/>}
+                            {!this.state.togglePublish && <img style={imgStyle} src={Redigera} alt="Publicera widget"/>}
                         </div>    
                     }
 
