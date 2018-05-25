@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Panel, Grid, Row, Col, MenuItem, DropdownButton, Glyphicon } from 'react-bootstrap';
 import ReactResizeDetector from 'react-resize-detector';
-import ImageHolder from "./ImageHolder";
-import ValueComponent from '../ValueComponent/ValueComponent';
-import IframeHolder from './IframeHolder';
-import TextHolder from './TextHolder';
-import './Cell.css';
+import ImageHolder from "./Holders/ImageHolder";
+import ValueHolder from './Holders/ValueHolder';
+import IframeHolder from './Holders/IframeHolder';
+import TextHolder from './Holders/TextHolder';
+import './cell.css';
 
 /**
  * This component represents a cell
@@ -77,7 +77,9 @@ class Cell extends Component {
         let iframeRefreshBtn = null;
         if (kind === 'Value') {
             content = (
-                <ValueComponent width={this.state.width} values={this.props.content} />
+                <ValueHolder
+                    width={this.state.width}
+                    values={this.props.content}/>
             );
         }
         else if (kind === 'Graph') {

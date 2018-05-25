@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import RGL, { WidthProvider } from "react-grid-layout";
-import Cell from '../cell/Cell'
+import Cell from '../Cell/Cell'
 import './dashboard.css';
 import _ from 'lodash';
 

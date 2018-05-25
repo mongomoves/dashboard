@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { MenuItem, Glyphicon } from 'react-bootstrap';
-import './Sidebar.css';
+import './sidebar.css';
 
 //Component that displays the sidebar on the how to page. Handels onClick events by calling methods from Article component.
 class Sidebar extends Component {
@@ -9,7 +9,7 @@ class Sidebar extends Component {
         super(props);
         this.state = {
             Sidebar: false,
-            CollapseKoncept: false,
+            CollapseConcept: false,
             CollapseWidget: false,
             CollapseStep: false,
             cog: <Glyphicon glyph="menu-down" />
@@ -22,9 +22,9 @@ class Sidebar extends Component {
             <div>
                 <div className="vertical-list">
                     <MenuItem eventKey={4.1} onClick={() => {
-                            this.setState({CollapseKoncept: !this.state.CollapseKoncept}); 
-                            this.props.clickedKoncept()}} className="button">Koncept
-                        <Glyphicon glyph={this.state.CollapseKoncept ? "chevron-left" : "chevron-right"}/>
+                            this.setState({CollapseConcept: !this.state.CollapseConcept}); 
+                            this.props.clickedConcept()}} className="button">Koncept
+                        <Glyphicon glyph={this.state.CollapseConcept ? "chevron-left" : "chevron-right"}/>
                     </MenuItem>
 
                     <MenuItem eventKey={4.2} onClick={() => {

@@ -4,9 +4,7 @@ import {Row, Col} from 'react-bootstrap';
 
 /**
  * Shows information about a specific cell. Author, date and description.
- * TODO: Make it look good.
  */
-
 class CellInfo extends Component {
     /**
      * Removes some unwanted characters and seconds indicators for

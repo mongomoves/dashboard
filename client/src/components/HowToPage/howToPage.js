@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import CustomNavbar from '../customnavbar/CustomNavbar';
 import Article from '../Article/Article';
 import Sidebar from '../Sidebar/Sidebar';
-import Koncept from '../HowToPage/ContentComponents/KonceptComponent';
-import StepByStep from '../HowToPage/ContentComponents/StegforStegComponent';
-import WidgetEx from '../HowToPage/ContentComponents/WidgetComponent';
+import Koncept from '../HowToPage/Content/Concept';
+import StepByStep from '../HowToPage/Content/StepByStep';
+import WidgetEx from '../HowToPage/Content/Widget';
 import Footer from '../footer/footer';
 import './howToPage.css';
 
@@ -15,7 +15,7 @@ class HowToPage extends Component {
     constructor(props){
         super(props);
         this.state = {
-            toggleKoncept: true,
+            toggleConcept: true,
             toggleStepByStep: true,
             toggleWidgetEx: true
         }
@@ -23,7 +23,7 @@ class HowToPage extends Component {
 
     //Methods that toggles the visabillity of the content.
 
-    toggleKonceptHandler = () => {
+    toggleConceptHandler = () => {
         this.setState({toggleKoncept: !this.state.toggleKoncept});
     }
 
@@ -46,7 +46,7 @@ class HowToPage extends Component {
                         {!this.state.toggleWidgetEx && <WidgetEx />}         
                     </Article>
                     <Sidebar 
-                        clickedKoncept={this.toggleKonceptHandler}
+                        clickedConcept={this.toggleConceptHandler}
                         clickedStepByStep={this.toggleStepByStepHandler}
                         clickedWidgetEx={this.toggleWidgetExHandler} />
                 </div>

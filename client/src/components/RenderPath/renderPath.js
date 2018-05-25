@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import App from '../../App';
-import HowToPage from '../HowToPage/howToPage';
+import HowToPage from '../HowToPage/HowToPage';
 import CatchUrl from './catchUrl';
 
 //Renders the correct component depending on what url path is given. 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Glyphicon} from 'react-bootstrap';
-import './ContentComponent.css';
+import './content.css';
 import Redigera from '../../../assets/Img/redigera.jpg';
 import RedigeraKnapp from '../../../assets/Img/redigeraknapp.jpg';
 import Skapa from '../../../assets/Img/skapa.jpg';

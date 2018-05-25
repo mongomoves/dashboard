@@ -7,7 +7,7 @@ import jsonQuery from 'json-query';
  * external data source.
  * Can refresh data at regular intervals.
  */
-class ValueComponent extends Component {
+class ValueHolder extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -196,9 +196,9 @@ const spanStyleError = {
     textOverflow: 'ellipsis'
 };
 
-ValueComponent.propTypes = {
+ValueHolder.propTypes = {
     width: PropTypes.number,
     values: PropTypes.object.isRequired
 };
 
-export default ValueComponent;
+export default ValueHolder;
