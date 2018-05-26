@@ -1,40 +1,42 @@
 import React, { Component } from 'react';
 
-//Component that renders content on the how to page.
-
+/**
+ * Shows some basic information about the different kinds of
+ * widget and what they are capable of.
+ */
 class Widget extends Component {
     render() {
         return (
             <div className="Divider">
                 <h4 className="h4Bold">Widgets</h4>
                 <p>
-                    Widgets utgör grunden för Dashboarden. 
-                    Alla widgets placering och storlek kan ändras av användaren.
-                    De olika delar som utgör en widget är en rubrikkomponent som innehåller en titel som användare angivit vid skapandet samt en konfigknapp. Konfigknappen låter användaren redigera information, visa information om widgeten, t.ex. om vem som skapat den och slutligen ta bort en widget.
-                    Widgeten har också en body där innehållet för varje widget visas.  
-                    Det finns just nu tre olika typer av widgets: <u>Diagram</u>, <u>värde</u> och <u>text</u>. Samtliga av dessa har en möjlighet att få individuellt anpassade uppdateringsfrekvenser.
+                    Widgets utgör grunden för Dashboarden. Alla skapas av användare. 
+                    Det finns just nu tre olika typer av widgets: <u>Diagram</u>, <u>Värde</u> och <u>Text</u>.
+                    Vid användande av datakälla eller inbäddad data kan en uppdateringsfrekvens i minuter specificeras.
+                    När datakälla används för Text- eller Värde-widget och ett attribut anges, ska detta attribut skrivas i format som stöds 
+                    av <a target="_blank" rel="noopener noreferrer" href="https://www.npmjs.com/package/json-query">JSON query</a>. (T.ex. vanlig punktnotation.)
                 </p>
                 <h5 className="h5Bold">Diagram:</h5>
                 <p>
-                    Diagram hämtas från olika API:er genom att ange en URL. Exempel på var detta kan vara ifrån är Grafana.
+                    Någon form av inbäddat material som hämtas via URL. Visas antingen i form av iframe- eller img-tagg.
+                    Om iframe används kommer det finnas en Uppdatera-knapp i widgetens meny som kan hämta om innehållet
+                    om storleken på widgeten ändras, om det behövs.
                 </p>
-                <h5 className="h5Bold">Värde:</h5>
+                <h5 className="h5Bold">Värde & Text:</h5>
                 <p>
-                    Även värde kan inhämtas från API:er där man då även måste ange ett data-attribut. Annars kommer inte URL:en fungera.
-                    Man kan även skriva in eget värde utan att ange en URL.
-                    Detta stöds av <a target="_blank" rel="noopener noreferrer" href="https://www.npmjs.com/package/json-query">JSON query</a>
+                    Data för dessa två typer visas genom att antingen mata in den statiskt eller hämta den från valfritt API 
+                    som returnerar JSON.
+                    Text-widget har stöd att visa arrayer som hämtas via API. Värde-widget visar bara ett värde, och stödjer
+                    bara siffror utöver enheten.
                 </p>
-                <p> 
-                    <text style={{fontWeight: 'bold', textDecoration: 'underline', color:'red'}}>Observera</text> att man inte kan göra båda och, utan bara det ena eller det andra.
-                </p>
-                <h5 className="h5Bold">Text:</h5>
+                <br/>
+                <h4 className="h4Bold">Publicering</h4>
                 <p>
-                    Här kan man skriva in fritext. Kanske viktig information för veckan, deadlines osv..
-                    Detta stöds av <a target="_blank" rel="noopener noreferrer" href="https://www.npmjs.com/package/json-query">JSON query</a>
+                    Alla widgets går att publicera till databasen så att andra kan hämta dem till sin egen dashboard.
+                    Detta sker antingen vid skapandet eller redigeringen av en widget. Redigeras en publicerad widget skapas 
+                    det en ny på dashboarden, för att visa att den publicerade widgeten inte har redigerats.
                 </p>
-                <p>  
-                    Detta stöds inte av HTML och Markup.
-                </p>
+                <br/>
             </div>
         );
     }

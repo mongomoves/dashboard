@@ -8,7 +8,7 @@ class Article extends Component {
     constructor(props){
         super(props);
         this.state = {
-            toggleKoncept: true,
+            toggleConcept: true,
             toggleStepByStep: true,
             toggleWidget: true
         }
@@ -16,17 +16,17 @@ class Article extends Component {
 
     //Methods that toggle the content inside the Article component. Is called onClick from Sidebar.
 
-    toggleKonceptHandler = () => {
-        this.setState({toggleKoncept: !this.state.toggleKoncept});
-    }
+    // toggleKonceptHandler = () => {
+    //     this.setState({toggleConcept: !this.state.toggleConcept});
+    // }
 
-    toggleStepByStepHandler = () => {
-        this.setState({toggleStepByStep: !this.state.toggleStepByStep});
-    }
+    // toggleStepByStepHandler = () => {
+    //     this.setState({toggleStepByStep: !this.state.toggleStepByStep});
+    // }
 
-    toggleWidgetHandler = () => {
-        this.setState({toggleWidget: !this.state.toggleWidget})
-    }
+    // toggleWidgetHandler = () => {
+    //     this.setState({toggleWidget: !this.state.toggleWidget})
+    // }
 
     render() {
         return (

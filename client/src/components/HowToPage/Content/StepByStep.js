@@ -59,7 +59,7 @@ class StepByStep extends Component {
                             <li>4. Datakälla (Antingen detta eller Värde)</li>
                             <li>5. Den data man vill hämta ut från datakällan ovanför anges genom att ange de data-attribut som innehåller detta.  </li>
                             <li>6. Följande steg är att ange Uppdateringsfrekvens i antal minuter. Detta innebär att datan hämtas om på nytt vid varje angivet tidsintervall.</li>
-                            <li>7. Ange enheten som förklarar ovanstående data. Exepmpel år / tid / antal anställda.</li>
+                            <li>7. Ange enheten som förklarar ovanstående data. Exempelvis år / tid / antal anställda.</li>
                             <li>8. Sista steget när man skapar en widget är att kryssa i om man vill få sin widget <u>publicerad</u>.</li>
                         </ul>
                         {!this.state.toggleValue && <img style={imgStyle} src={Skapa} alt="Create Widget"/>}
