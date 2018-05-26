@@ -73,6 +73,7 @@ class ImageHolder extends Component {
     /**
      * Returns an img src url with query parameters for width and height based
      * on the current props.
+     * @param {string} url Url to add new height and width to
      */
     setSize = (url) => {
         let replaceStr = `&width=${this.props.width}`;
@@ -80,10 +81,7 @@ class ImageHolder extends Component {
         replaceStr = `&height=${this.props.height}`;
         return adaptedImageSrc = adaptedImageSrc.replace(regexHeight, replaceStr);
     }
-
-    /**
-     * React render function.
-     */
+    
     render() {
         if(this.props.height <= 0 || this.props.width <= 0) {
             return null;

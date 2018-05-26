@@ -4,7 +4,7 @@ import React, { Component } from 'react';
  * Shows some basic information about the different kinds of
  * widget and what they are capable of.
  */
-class Widget extends Component {
+class WidgetInfo extends Component {
     render() {
         return (
             <div className="Divider">
@@ -42,4 +42,4 @@ class Widget extends Component {
     }
 }
 
-export default Widget;
+export default WidgetInfo;

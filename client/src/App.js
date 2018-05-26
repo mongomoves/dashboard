@@ -132,6 +132,12 @@ class App extends Component {
         return newCell;
     };
 
+    /**
+     * Replaces the cell at the index in state.cell with the
+     * cell passed as a parameter.
+     * @param {object} cell New cell to put in state
+     * @param {number} index Index of cell to replace
+     */
     editCell = (cell, index) => {
         let edited = Object.assign([], this.state.cells);
         edited[index].content = cell;
@@ -140,6 +146,11 @@ class App extends Component {
         saveToLocalStorage("cells", edited);
     };
 
+    /**
+     * Removes the passed index from state.cells, effectively removing
+     * the widget from the dashboard as well.
+     * @param {number} i Index of cell in state.cell to remove
+     */
     removeCell = (i) => {
         this.setState({
             cells: _.reject(this.state.cells, {layout: {i: i}})
@@ -183,6 +194,7 @@ class App extends Component {
 
         saveToLocalStorage("cells", this.state.cells);
     };
+
     clearDashboardLayout = () => {
         this.setState({
             layouts: {},
@@ -288,6 +300,12 @@ class App extends Component {
         this.setState({modals: {showInfo: false}})
     };
 
+    /**
+     * Called when the user wants to edit the contents of a widget.
+     * Index of the cell in state.cell determines which cell to edit.
+     * Opens a modal and gathers the data for the prop already passed.
+     * @param {number} i Index of cell to edit
+     */
     handleShowEditCell = (i) => {
         this.setState({modals: {editCell: true}});
         this.state.cells.some(function(e, index) {
@@ -339,7 +357,6 @@ class App extends Component {
     render() {
         return (
             <div>
-
                 <CustomNavbar
                     showCreateCell={this.handleShowCreateCell}
                     showExistingCell={this.handleShowSearchCells}

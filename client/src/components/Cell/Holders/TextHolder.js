@@ -30,6 +30,9 @@ class TextHolder extends Component {
         }
     }
 
+    /**
+     * React lifecycle function.
+     */
     componentWillUnmount() {
         if(this.state.interval) {
             clearInterval(this.state.interval);
@@ -62,6 +65,10 @@ class TextHolder extends Component {
         }
     }
 
+    /**
+     * Function for setInterval. Simply fetches the data for the same dataSource 
+     * and attribute yet again.
+     */
     updateContent = () => {
         this.fetchText(this.props.values.dataSource, this.props.values.attribute);
     };
@@ -70,8 +77,8 @@ class TextHolder extends Component {
      * Fetches some text from the provided URL with the provided key (attribute).
      * Sets isArray to true if an array is returned, so that it can be displayed.
      * An incorrect fetch will display a fail message.
-     * @param {*} url URL to fetch from
-     * @param {*} attribute Key to get value from
+     * @param {string} url URL to fetch from
+     * @param {string} attribute JSON.Query formatted attribute
      */
     fetchText = (url, attribute) => {
         fetch(url).then((response) => {

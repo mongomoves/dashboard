@@ -4,7 +4,7 @@ import Article from '../Article/Article';
 import Sidebar from '../Sidebar/Sidebar';
 import Concept from '../HowToPage/Content/Concept';
 import StepByStep from '../HowToPage/Content/StepByStep';
-import WidgetEx from '../HowToPage/Content/Widget';
+import WidgetInfo from '../HowToPage/Content/WidgetInfo';
 import Footer from '../footer/footer';
 import './howToPage.css';
 
@@ -17,7 +17,7 @@ class HowToPage extends Component {
         this.state = {
             toggleConcept: true,
             toggleStepByStep: false,
-            toggleWidgetEx: false
+            toggleWidgetInfo: false
         }
     }
 
@@ -29,8 +29,8 @@ class HowToPage extends Component {
         this.setState({toggleStepByStep: !this.state.toggleStepByStep});
     }
 
-    toggleWidgetExHandler = () => {
-        this.setState({toggleWidgetEx: !this.state.toggleWidgetEx});
+    toggleWidgetInfoHandler = () => {
+        this.setState({toggleWidgetInfo: !this.state.toggleWidgetInfo});
     }
 
     render() {
@@ -41,12 +41,12 @@ class HowToPage extends Component {
                     <Article>
                         {this.state.toggleConcept && <Concept />}
                         {this.state.toggleStepByStep && <StepByStep />}
-                        {this.state.toggleWidgetEx && <WidgetEx />}         
+                        {this.state.toggleWidgetInfo && <WidgetInfo />}         
                     </Article>
                     <Sidebar 
                         clickedConcept={this.toggleConceptHandler}
                         clickedStepByStep={this.toggleStepByStepHandler}
-                        clickedWidgetEx={this.toggleWidgetExHandler} />
+                        clickedWidgetEx={this.toggleWidgetInfoHandler} />
                 </div>
                 <Footer />
             </div>

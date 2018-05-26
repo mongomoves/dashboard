@@ -34,6 +34,11 @@ class Cell extends Component {
         });
     }
 
+    /**
+     * Called when widget is resized via ReactResizeDetector.
+     * @param {number} width New width
+     * @param {number} height New height
+     */
     onResize = (width, height) => {
         this.setState({width: width, height: height});
     };
