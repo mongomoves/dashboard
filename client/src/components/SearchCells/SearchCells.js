@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import SearchCellsForm from "./SearchCellsForm";
 import SearchCellsList from "./SearchCellsList";
-import SERVER_URL from '../../constants'
+import {SERVER_URL} from '../../Constants'
 
 const DEFAULT_REQUEST_URL = SERVER_URL + "/api/widgets";
 

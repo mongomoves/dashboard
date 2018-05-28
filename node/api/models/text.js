@@ -23,7 +23,6 @@ const textSchema = mongoose.Schema({
             'attribute is required if dataSource is specified'
         ]
     },
-    query: String,
 });
 
 module.exports = mongoose.model('Text', textSchema);

@@ -7,6 +7,7 @@ import ValueHolder from './Holders/ValueHolder';
 import IframeHolder from './Holders/IframeHolder';
 import TextHolder from './Holders/TextHolder';
 import './cell.css';
+import {WIDGET_KIND, DISPLAY_TYPE} from "../../Constants";
 
 /**
  * This component represents a cell
@@ -80,16 +81,16 @@ class Cell extends Component {
         const {title, kind} = this.props.content;
         let content;
         let iframeRefreshBtn = null;
-        if (kind === 'Value') {
+        if (kind === WIDGET_KIND.VALUE) {
             content = (
                 <ValueHolder
                     width={this.state.width}
                     values={this.props.content}/>
             );
         }
-        else if (kind === 'Graph') {
+        else if (kind === WIDGET_KIND.GRAPH) {
             const {displayType} = this.props.content;
-            if(displayType === 'Iframe') {
+            if(displayType === DISPLAY_TYPE.IFRAME) {
                 iframeRefreshBtn = (<MenuItem eventKey={4} onClick={this.onUpdate}>Uppdatera</MenuItem>);
                 content = (
                     <IframeHolder
@@ -98,7 +99,7 @@ class Cell extends Component {
                         width={this.state.width}
                         height={this.state.height}/>
                 )
-            } else if (displayType === 'Img') {
+            } else if (displayType === DISPLAY_TYPE.IMG) {
                 content = (
                     <ImageHolder
                         width={this.state.width}
@@ -108,7 +109,7 @@ class Cell extends Component {
                 iframeRefreshBtn = null;
             }
         }
-        else if (kind === 'Text') {
+        else if (kind === WIDGET_KIND.TEXT) {
             content = (
                 <TextHolder 
                     values={this.props.content}

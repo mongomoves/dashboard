@@ -4,7 +4,7 @@ import {Button, Collapse, Glyphicon, ListGroupItem, Table} from "react-bootstrap
 import _ from "lodash";
 
 const translateContent = {
-    creator: "Skapare",
+    creator: "Skapad av",
     created: "Skapad",
 };
 
@@ -17,28 +17,37 @@ class SearchDashboardListItem extends React.Component {
         }
     }
 
-    generateTableData = () => {
-        let tableData = [];
+    /**
+     * Uses props.content to populate a table with data.
+     * Left column is the content key (translated)
+     * Right column is the content value.
+     * @returns {Array} array of <tr>-elements
+     */
+    generateTableContent = () => {
+        let tableContent = [];
 
-        for (let [key, value] of Object.entries(this.props.content)) {
-            if (key !== 'title' && key !== 'description' && key !== '_id' && key !== 'widgets') {
-                tableData.push({key: key, value: value});
-            }
+        // Not all the properties in props.content should be shown in the table, we pick the ones we need.
+        let tableProperties = _.pick(this.props.content, Object.keys(translateContent));
+
+        for (let [key, value] of Object.entries(tableProperties)) {
+            tableContent.push({
+                key: key,
+                value: value
+            });
         }
-        return _.map(tableData, function (property) {
+
+        return _.map(tableContent, function (property) {
             let value = property.value;
-            let key = translateContent[property.key];
+            let key = property.key;
 
             if (property.key === 'created') {
+                // Only show date
                 value = value.split('T')[0];
-            }
-            else if (property.key === 'refreshRate') {
-                value = value + " min";
             }
 
             return (
                 <tr key={property.key}>
-                    <td>{key}:</td>
+                    <td>{translateContent[key]}:</td>
                     <td>{value}</td>
                 </tr>
             );
@@ -59,7 +68,7 @@ class SearchDashboardListItem extends React.Component {
                     <Collapse in={this.state.collapse}>
                         <Table responsive condensed style={{width: "auto"}}>
                             <tbody>
-                            {this.generateTableData()}
+                            {this.generateTableContent()}
                             </tbody>
                         </Table>
                     </Collapse>

@@ -10,13 +10,25 @@ import BootstrapModal from './components/Modal/BootstrapModal';
 import ClearPromptForm from './components/ClearPromptForm/ClearPromptForm';
 import SaveDashboard from "./components/SaveDashboard/SaveDashboard";
 import SearchDashboard from "./components/SearchDashboard/SearchDashboard";
+import {saveToLocalStorage, loadFromLocalStorage} from "./utils/LocalStorage";
 import _ from 'lodash';
 
 import './App.css';
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
 
-const localStorageCells = loadFromLocalStorage("cells") || [];
+import {WIDGET_KIND} from './Constants';
+
+const WIDGET_SIZE = {
+    GRAPH_W: 3,
+    GRAPH_H: 4,
+    VALUE_AND_TEXT_W: 2,
+    VALUE_AND_TEXT_H: 2
+};
+
+const KEY_LS_CELLS = 'cells';
+
+const localStorageCells = loadFromLocalStorage(KEY_LS_CELLS) || [];
 
 //Used to show info about Cell
 let cellInfoData = {};
@@ -35,10 +47,10 @@ class App extends Component {
                 createCell: false,
                 editCell: false,
                 searchCells: false,
-                showInfo: false,
+                cellInfo: false,
                 saveDashboard: false,
-                clearPrompt: false,
-                loadDashboard: false,
+                clearDashboard: false,
+                searchDashboards: false,
             },
             idCounter: localStorageCells.length > 0 // if we loaded cells from local storage
                 ? Number(localStorageCells[localStorageCells.length - 1].layout.i) + 1 // set start id to highest id + 1
@@ -94,25 +106,26 @@ class App extends Component {
     // depending on widget type the initial w/h and minw/minh are different
     addCell = (cell) => {
         let w, h, minW, minH;
-        if (cell.kind === 'Value' || cell.kind === 'Text') {
-            w = 2;
-            h = 2;
-            minW = 2;
-            minH = 2;
+
+        if (cell.kind === WIDGET_KIND.VALUE || cell.kind === WIDGET_KIND.TEXT) {
+            w = WIDGET_SIZE.VALUE_AND_TEXT_W;
+            h = WIDGET_SIZE.VALUE_AND_TEXT_H;
+            minW = w;
+            minH = h;
         }
-        else if (cell.kind === 'Graph' ) {
-            w = 3;
-            h = 4;
-            minW = 3;
-            minH = 4;
+        else if (cell.kind === WIDGET_KIND.GRAPH) {
+            w = WIDGET_SIZE.GRAPH_W;
+            h = WIDGET_SIZE.GRAPH_H;
+            minW = w;
+            minH = h;
         }
 
-        const position = this.findEmptyPosition(w, h);
+        const [x, y] = this.findEmptyPosition(w, h);
 
         const layout = {
             i: this.state.idCounter,
-            x: position[0],
-            y: position[1],
+            x: x,
+            y: y,
             w: w,
             h: h,
             minW: minW,
@@ -143,7 +156,7 @@ class App extends Component {
         edited[index].content = cell;
         this.setState({cells: edited});
 
-        saveToLocalStorage("cells", edited);
+        saveToLocalStorage(KEY_LS_CELLS, edited);
     };
 
     /**
@@ -169,7 +182,7 @@ class App extends Component {
             }
         }
         this.setState({cells: cells});
-        saveToLocalStorage("cells", this.state.cells);
+        saveToLocalStorage(KEY_LS_CELLS, this.state.cells);
     };
 
     getAllCells = () => {
@@ -192,7 +205,7 @@ class App extends Component {
             idCounter: newIdCounter
         });
 
-        saveToLocalStorage("cells", this.state.cells);
+        saveToLocalStorage(KEY_LS_CELLS, this.state.cells);
     };
 
     clearDashboardLayout = () => {
@@ -200,10 +213,11 @@ class App extends Component {
             layouts: {},
             cells: [],
             idCounter: 0,
-            modals: {clearPrompt: false}
+            modals: {clearDashboard: false}
         });
-    };
 
+        saveToLocalStorage(KEY_LS_CELLS, this.state.cells);
+    };
 
     /**
      * Callback function. Sets new layout state.
@@ -221,67 +235,43 @@ class App extends Component {
             this.setState({cells: cells});
         }
 
-        saveToLocalStorage('cells', this.state.cells);
+        saveToLocalStorage(KEY_LS_CELLS, this.state.cells);
     };
 
-    setDefaultCellSearch = (search) => {
-        this.handleShowSearchCells();
-        this.setState({defaultSearchCell: search});
+    setDefaultSearchCells = (search) => {
+        this.handleShowModal('searchCells');
+        this.setState({defaultSearchCells: search});
     };
 
-    setDefaultDashboardSearch = (search) => {
-        this.handleShowLoadDashboard();
-        this.setState({defaultSearchDashboard: search})
+    setDefaultSearchDashboards = (search) => {
+        this.handleShowModal('searchDashboards');
+        this.setState({defaultSearchDashboards: search})
     };
 
-    handleShowCreateCell = () => {
-        this.setState({modals: {createCell: true}})
+    handleShowModal = (modal) => {
+        this.setState({modals: {[modal]: true}})
     };
 
-    handleCloseCreateCell = () => {
-        this.setState({modals: {createCell: false}})
-    };
-
-    handleShowSearchCells = () => {
-        this.setState({modals: {searchCells: true}})
+    handleCloseModal = (modal) => {
+        this.setState({modals: {[modal]: false}})
     };
 
     handleCloseSearchCells = () => {
         this.setState({
             modals: {searchCells: false},
-            defaultSearchCell: null
+            defaultSearchCells: null
         });
     };
 
-    handleShowSaveDashboard = () => {
-        this.setState({modals: {saveDashboard: true}})
-    };
-
-    handleCloseSaveDashboard = () => {
-        this.setState({modals: {saveDashboard: false}})
-    };
-
-    handleShowLoadDashboard = () => {
-        this.setState({modals: {loadDashboard: true}})
-    };
-
-    handleCloseLoadDashboard = () => {
+    handleCloseSearchDashboards = () => {
         this.setState({
-            modals: {loadDashboard: false},
-            defaultSearchDashboard: null
+            modals: {searchDashboards: false},
+            defaultSearchDashboards: null
         });
-    };
-  
-    handleCloseClearPrompt = () => {
-        this.setState({modals: {clearPrompt: false}});
-    };
-
-    handleShowClearPrompt = () => {
-        this.setState({modals: {clearPrompt: true}});
     };
 
     handleShowCellInfo = (i) => {
-        this.setState({modals: {showInfo: true}});
+        this.setState({modals: {cellInfo: true}});
         this.state.cells.some(function(e) {
             if(e.layout.i === i) {
                 cellInfoData = {
@@ -296,10 +286,6 @@ class App extends Component {
         });
     };
 
-    handleCloseCellInfo = () => {
-        this.setState({modals: {showInfo: false}})
-    };
-
     /**
      * Called when the user wants to edit the contents of a widget.
      * Index of the cell in state.cell determines which cell to edit.
@@ -310,11 +296,11 @@ class App extends Component {
         this.setState({modals: {editCell: true}});
         this.state.cells.some(function(e, index) {
             if(e.layout.i === i) {
-                if(e.content.kind === 'Value') {
+                if(e.content.kind === WIDGET_KIND.VALUE) {
                     editValues = {
                         index: index,
                         creator: e.content.creator,
-                        kind: 'Value',
+                        kind: WIDGET_KIND.VALUE,
                         title: e.content.title,
                         number: e.content.number,
                         unit: e.content.unit,
@@ -322,21 +308,21 @@ class App extends Component {
                         attribute: e.content.attribute,
                         refreshRate: e.content.refreshRate
                     }
-                } else if (e.content.kind === 'Graph') {
+                } else if (e.content.kind === WIDGET_KIND.GRAPH) {
                     editValues = {
                         index: index,
                         creator: e.content.creator,
-                        kind: 'Graph',
+                        kind: WIDGET_KIND.GRAPH,
                         title: e.content.title,
                         graphUrl: e.content.graphUrl,
                         displayType: e.content.displayType,
                         refreshRate: e.content.refreshRate
                     }
-                } else if (e.content.kind === 'Text') {
+                } else if (e.content.kind === WIDGET_KIND.TEXT) {
                     editValues = {
                         index: index,
                         creator: e.content.creator,
-                        kind: 'Text',
+                        kind: WIDGET_KIND.TEXT,
                         title: e.content.title,
                         textInput: e.content.textInput,
                         dataSource: e.content.dataSource,
@@ -350,19 +336,15 @@ class App extends Component {
         })
     };
 
-    handleCloseEditCell = () => {
-        this.setState({modals: {editCell: false}})
-    };
-
     render() {
         return (
             <div>
                 <CustomNavbar
-                    showCreateCell={this.handleShowCreateCell}
-                    showExistingCell={this.handleShowSearchCells}
-                    clearDashboard={this.handleShowClearPrompt}
-                    showSaveDashboard={this.handleShowSaveDashboard}
-                    showLoadDashboard={this.handleShowLoadDashboard}/>
+                    showCreateCell={() => this.handleShowModal('createCell')}
+                    showExistingCell={() => this.handleShowModal('searchCells')}
+                    clearDashboard={() => this.handleShowModal('clearDashboard')}
+                    showSaveDashboard={() => this.handleShowModal('saveDashboard')}
+                    showLoadDashboard={() => this.handleShowModal('searchDashboards')}/>
                 <Dashboard
                     removeCell={this.removeCell}
                     showInfo={this.handleShowCellInfo}
@@ -371,17 +353,17 @@ class App extends Component {
                     onLayoutChange={this.onLayoutChange}/>
                 <BootstrapModal
                     title="Ta bort Dashboard"
-                    show={this.state.modals.clearPrompt}
-                    close={this.handleCloseClearPrompt}>
+                    show={this.state.modals.clearDashboard}
+                    close={() => this.handleCloseModal('clearDashboard')}>
                         <ClearPromptForm clear={this.clearDashboardLayout}/>
                 </BootstrapModal>
                 <BootstrapModal
                     title="Skapa widget"
                     show={this.state.modals.createCell}
-                    close={this.handleCloseCreateCell}>
+                    close={() => this.handleCloseModal('createCell')}>
                     <CreateCellForm
                         addCell={this.addCell}
-                        done={this.handleCloseCreateCell}
+                        done={() => this.handleCloseModal('createCell')}
                         addID={this.addID}/>
                 </BootstrapModal>
                 <BootstrapModal
@@ -390,65 +372,47 @@ class App extends Component {
                     close={this.handleCloseSearchCells}>
                     <SearchCells
                         addCell={this.addCell}
-                        defaultSearch={this.state.defaultSearchCell}/>
+                        defaultSearch={this.state.defaultSearchCells}/>
                 </BootstrapModal>
                 <BootstrapModal
                     title={cellInfoData.title}
-                    show={this.state.modals.showInfo}
-                    close={this.handleCloseCellInfo}>
+                    show={this.state.modals.cellInfo}
+                    close={() => this.handleCloseModal('cellInfo')}>
                     <CellInfo cell={cellInfoData}/>
                 </BootstrapModal>
                 <BootstrapModal
                     title='Redigera widget'
                     show={this.state.modals.editCell}
-                    close={this.handleCloseEditCell}>
+                    close={() => this.handleCloseModal('editCell')}>
                     <EditCellForm
                         values={editValues}
                         addCell={this.addCell}
                         editCell={this.editCell}
                         addID={this.addID}
-                        done={this.handleCloseEditCell}/>
+                        done={() => this.handleCloseModal('editCell')}/>
                 </BootstrapModal>
                 <BootstrapModal
                     title='Spara Dashboard'
                     show={this.state.modals.saveDashboard}
-                    close={this.handleCloseSaveDashboard}>
+                    close={() => this.handleCloseModal('saveDashboard')}>
                     <SaveDashboard
                         getAllCells={this.getAllCells}
-                        handleCloseSaveDashboardSuccess={this.handleCloseSaveDashboard}/>
+                        handleCloseSaveDashboardSuccess={() => this.handleCloseModal('saveDashboard')}/>
                 </BootstrapModal>
                 <BootstrapModal
                     title='Sök Dashboard'
-                    show={this.state.modals.loadDashboard}
-                    close={this.handleCloseLoadDashboard}>
+                    show={this.state.modals.searchDashboards}
+                    close={this.handleCloseSearchDashboards}>
                     <SearchDashboard
                         addDashboard={this.addDashboard}
-                        defaultSearch={this.state.defaultSearchDashboard}/>
+                        defaultSearch={this.state.defaultSearchDashboards}/>
                 </BootstrapModal>
                 <Footer
-                    onLogWidgetClick={this.setDefaultCellSearch}
-                    onLogDashboardClick={this.setDefaultDashboardSearch}/>
+                    onLogWidgetClick={this.setDefaultSearchCells}
+                    onLogDashboardClick={this.setDefaultSearchDashboards}/>
             </div>
         );
     }
-}
-
-function saveToLocalStorage(key, value) {
-    if (global.localStorage) {
-        global.localStorage.setItem(key, JSON.stringify(value));
-    }
-}
-
-function loadFromLocalStorage(key) {
-    let localStorageItem = {};
-    if (global.localStorage) {
-        try {
-            localStorageItem = JSON.parse(global.localStorage.getItem(key));
-        } catch (e) {
-            console.log(e);
-        }
-    }
-    return localStorageItem;
 }
 
 export default App;

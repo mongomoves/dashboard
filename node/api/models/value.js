@@ -23,7 +23,6 @@ const valueSchema = mongoose.Schema({
             'attribute is required if dataSource is specified'
         ]
     },
-    query: String,
     unit: String
 });
 

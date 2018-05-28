@@ -1,10 +1,10 @@
 import './footer.css';
 import BootstrapModal from '../Modal/BootstrapModal';
 import React, { Component } from 'react';
-import SERVER_URL from '../../constants'
 import FooterItem from './FooterItem'
 import ActivityItem from './ActivityItem'
 import {Glyphicon} from 'react-bootstrap';
+import {SERVER_URL} from '../../Constants'
 
 class Footer extends Component {
 

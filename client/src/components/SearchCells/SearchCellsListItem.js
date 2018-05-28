@@ -10,7 +10,7 @@ const translateKind = {
 };
 
 const translateContent = {
-    creator: "Skapare",
+    creator: "Skapad av",
     created: "Skapad",
     number: "Värde",
     textInput: "Fritext",
@@ -52,7 +52,10 @@ class SearchCellsListItem extends React.Component {
 
         for (let [key, value] of Object.entries(tableProperties)) {
             if (value !== '') {
-                tableContent.push({key: key, value: value});
+                tableContent.push({
+                    key: key,
+                    value: value
+                });
             }
         }
 
@@ -61,6 +64,7 @@ class SearchCellsListItem extends React.Component {
             let key = property.key;
 
             if (key === 'created') {
+                // Only show date
                 value = value.split('T')[0];
             }
             else if (key === 'refreshRate') {
