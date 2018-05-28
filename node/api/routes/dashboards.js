@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 // Models
 const Dashboard = require("../models/dashboard");
-const LogEntry = require("../models/logentry");
+const LogEntry = require("../models/logEntry");
 const Widget = require("../models/widget");
 
 /*

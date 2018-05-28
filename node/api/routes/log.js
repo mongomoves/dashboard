@@ -3,7 +3,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 
 // Models
-const LogEntry = require("../models/logentry");
+const LogEntry = require("../models/logEntry");
 
 /*
  * Handles GET requests to /api/log
