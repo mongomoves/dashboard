@@ -6,7 +6,7 @@ const Widget = require("../models/widget");
 /**
  * Returns all or queried dashboards
  */
-exports.dashboards_get_all = (req, res, next) => {
+exports.getAll = (req, res, next) => {
     Dashboard.find(handleQuery(req.query))
         .populate({
             path: 'widgets.content',
@@ -32,7 +32,7 @@ exports.dashboards_get_all = (req, res, next) => {
  * Creates a new dashboard
  * Returns a message and the created dashboard
  */
-exports.dashboards_create_dashboard = (req, res, next) => {
+exports.createDashboard = (req, res, next) => {
     const body = req.body;
 
     // Validate passed in widget ids to make sure they exist
@@ -107,7 +107,7 @@ exports.dashboards_create_dashboard = (req, res, next) => {
 /**
  * Returns the dashboard with the given id
  */
-exports.dashboards_get_dashboard = (req, res, next) => {
+exports.getDashboard = (req, res, next) => {
     const id = req.params.dashboardId;
 
     Dashboard.findById(id)
@@ -138,7 +138,7 @@ exports.dashboards_get_dashboard = (req, res, next) => {
 /*
  * Returns a message and the id of the deleted dashboard
  */
-exports.dashboards_delete_dashboard = (req, res, next) => {
+exports.deleteDashboard = (req, res, next) => {
     const id = req.params.dashboardId;
 
     Dashboard.findOneAndRemove({_id: id})

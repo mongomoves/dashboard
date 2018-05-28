@@ -4,7 +4,7 @@ const LogEntry = require("../models/logEntry");
 /**
  * Returns all or queried log entries
  */
-exports.log_get_all = (req, res, next) => {
+exports.getAll = (req, res, next) => {
     LogEntry.find(handleQuery(req.query))
         .sort({'created': -1}) // sort by date descending (newest first)
         .limit(req.query.limit ? Number(req.query.limit) : 0) // limit the number of returned entries
@@ -25,7 +25,7 @@ exports.log_get_all = (req, res, next) => {
 /**
  * Returns the log entry with the given id
  */
-exports.log_get_entry = (req, res, next) => {
+exports.getEntry = (req, res, next) => {
     const id = req.params.entryId;
 
     LogEntry.findById(id)

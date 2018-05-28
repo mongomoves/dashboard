@@ -3,8 +3,8 @@ const router = express.Router();
 
 const logController = require('../controllers/logController');
 
-router.get('/', logController.log_get_all);
+router.get('/', logController.getAll);
 
-router.get('/:entryId', logController.log_get_entry);
+router.get('/:entryId', logController.getEntry);
 
 module.exports = router;

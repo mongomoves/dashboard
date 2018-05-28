@@ -8,7 +8,7 @@ const LogEntry = require("../models/logEntry");
 /**
  * Returns all or queried widgets
  */
-exports.widgets_get_all = (req, res, next) => {
+exports.getAll = (req, res, next) => {
     Widget.find(handleQuery(req.query))
         .populate('content')
         .sort({'created': -1}) // sort by date descending (newest first)
@@ -31,7 +31,7 @@ exports.widgets_get_all = (req, res, next) => {
  * Creates a new widget
  * Returns a message and the created widget
  */
-exports.widgets_create_widget = (req, res, next) => {
+exports.createWidget = (req, res, next) => {
     const body = req.body;
 
     const content = createWidgetContent(body);
@@ -87,7 +87,7 @@ exports.widgets_create_widget = (req, res, next) => {
 /**
  * Returns the widget with the given id
  */
-exports.widgets_get_widget = (req, res, next) => {
+exports.getWidget = (req, res, next) => {
     const id = req.params.widgetId;
 
     Widget.findById(id)
@@ -116,7 +116,7 @@ exports.widgets_get_widget = (req, res, next) => {
  * Deletes a widget and its content
  * Returns a message and id of deleted widget
  */
-exports.widgets_delete_widget = (req, res, next) => {
+exports.deleteWidget = (req, res, next) => {
     const widgetId = req.params.widgetId;
 
     Widget.findOneAndRemove({_id: req.params.widgetId})

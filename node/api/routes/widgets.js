@@ -3,12 +3,12 @@ const router = express.Router();
 
 const widgetsController = require('../controllers/widgetsController');
 
-router.get('/', widgetsController.widgets_get_all);
+router.get('/', widgetsController.getAll);
 
-router.post('/', widgetsController.widgets_create_widget);
+router.post('/', widgetsController.createWidget);
 
-router.get('/:widgetId', widgetsController.widgets_get_widget);
+router.get('/:widgetId', widgetsController.getWidget);
 
-router.delete('/:widgetId', widgetsController.widgets_delete_widget);
+router.delete('/:widgetId', widgetsController.deleteWidget);
 
 module.exports = router;
