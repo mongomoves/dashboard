@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {Button, ButtonToolbar, ControlLabel, FormControl, FormGroup} from "react-bootstrap";
-import SERVER_URL from '../../constants'
+import {SERVER_URL} from '../../Constants'
 
 /**
  * Component to for handling saving the dashboard to backend. Contains model window with input form and method for publishing
