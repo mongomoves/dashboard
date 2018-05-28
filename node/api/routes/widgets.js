@@ -14,10 +14,7 @@ const LogEntry = require("../models/logentry");
  * Returns amount of widgets and queried widgets (or all if no query is used)
  */
 router.get('/', function(req, res, next) {
-    const kind = req.query.kind;
-    const creator = req.query.creator;
-    const limit = req.query.limit;
-    const search = req.query.search;
+    const {kind, creator, limit, search} = req.query;
 
     let query = {};
 
@@ -43,29 +40,7 @@ router.get('/', function(req, res, next) {
         .then(widgets => {
              res.status(200).json({
                  count: widgets.length,
-                 // Instead of sending back the document we flatten the response
-                 // Makes the api easier to use, but adds a bit more work
-                 widgets: widgets.map(widget => {
-                    return {
-                        _id: widget._id,
-                        title: widget.title,
-                        creator: widget.creator,
-                        created: widget.created,
-                        description: widget.description,
-                        kind: widget.kind,
-                        refreshRate: widget.refreshRate,
-
-                        number: widget.content.number,
-                        textInput: widget.content.textInput,
-                        dataSource: widget.content.dataSource,
-                        attribute: widget.content.attribute,
-                        query: widget.content.query,
-                        unit: widget.content.unit,
-
-                        displayType: widget.content.displayType,
-                        graphUrl: widget.content.graphUrl
-                    }
-                })
+                 widgets: widgets.map(widget => widget.toJSON())
             });
         })
         .catch(err => {
@@ -81,34 +56,38 @@ router.get('/', function(req, res, next) {
  * Returns a message and the created widget
  */
 router.post('/', function(req, res, next) {
-    const kind = req.body.kind;
+    const {body} = req;
 
     let content;
 
-    if (kind === 'Value') {
+    if (body.kind === 'Value') {
+        const {number, dataSource, attribute, unit} = body;
+
         content = new Value({
             _id: new mongoose.Types.ObjectId(),
-            number: req.body.number,
-            dataSource: req.body.dataSource,
-            attribute: req.body.attribute,
-            query: req.body.query,
-            unit: req.body.unit
+            number,
+            dataSource,
+            attribute,
+            unit
         });
     }
-    else if (kind === 'Graph') {
+    else if (body.kind === 'Graph') {
+        const {displayType, graphUrl} = body;
+
         content = new Graph({
             _id: new mongoose.Types.ObjectId(),
-            displayType: req.body.displayType,
-            graphUrl: req.body.graphUrl
+            displayType,
+            graphUrl
         });
     }
-    else if (kind === 'Text') {
+    else if (body.kind === 'Text') {
+        const {textInput, dataSource, attribute} = body;
+
         content = new Text({
             _id: new mongoose.Types.ObjectId(),
-            textInput: req.body.textInput,
-            dataSource: req.body.dataSource,
-            attribute: req.body.attribute,
-            query: req.body.query
+            textInput,
+            dataSource,
+            attribute
         });
     }
     else {
@@ -121,32 +100,34 @@ router.post('/', function(req, res, next) {
 
     content.save()
         .then(result => {
+            const {title, creator, description, kind, refreshRate} = body;
+
             const widget = new Widget({
                 _id: new mongoose.Types.ObjectId(),
-                title: req.body.title,
-                creator: req.body.creator,
-                description: req.body.description,
-                kind: kind,
-                refreshRate: req.body.refreshRate,
+                title,
+                creator,
+                description,
+                kind,
+                refreshRate,
                 content: result._id
             });
 
             widget.save()
                 .then(result => {
-                    const {title, creator, _id, created} = result;
-                    const logKind = 'Widget';
+                    const {title, creator, created, _id} = result;
+                    const kind = 'Widget';
 
                     const logEntry = new LogEntry({
                         _id: new mongoose.Types.ObjectId(),
-                        title: title,
-                        creator: creator,
-                        created: created,
-                        kind: logKind,
-                        text: creator + " skapade en " + logKind + " med titel '" + title + "'.",
+                        title,
+                        creator,
+                        created,
+                        kind,
+                        text: creator + " skapade en " + kind + " med titel '" + title + "'.",
                         contentId: _id,
                         request: {
                             type: "GET",
-                            url: process.env.SERVER_URL + "/api/widgets/" + _id
+                            url: "/api/widgets/" + _id
                         }
                     });
 
@@ -157,7 +138,7 @@ router.post('/', function(req, res, next) {
 
                     res.status(201).json({
                         message: 'Widget stored',
-                        widget: widget,
+                        widget: widget.toJSON()
                     });
 
                 })
@@ -172,8 +153,6 @@ router.post('/', function(req, res, next) {
                 error: err
             });
         });
-
-
 });
 
 /*
@@ -194,28 +173,8 @@ router.get('/:widgetId', function(req, res, next) {
                 });
             }
 
-            // Instead of sending back the document we flatten the response
-            // Makes the api easier to use, but adds a bit more work
             res.status(200).json({
-                widget: {
-                    _id: widget._id,
-                    title: widget.title,
-                    creator: widget.creator,
-                    created: widget.created,
-                    description: widget.description,
-                    kind: widget.kind,
-                    refreshRate: widget.refreshRate,
-
-                    number: widget.content.number,
-                    textInput: widget.content.textInput,
-                    dataSource: widget.content.dataSource,
-                    attribute: widget.content.attribute,
-                    query: widget.content.query,
-                    unit: widget.content.unit,
-
-                    displayType: widget.content.displayType,
-                    graphUrl: widget.content.graphUrl
-                }
+                widget: widget.toJSON()
             });
         })
         .catch(err => {

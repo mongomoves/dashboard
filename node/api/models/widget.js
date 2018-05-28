@@ -37,4 +37,26 @@ const widgetSchema = mongoose.Schema({
 });
 widgetSchema.index({title: 'text', description: 'text', creator: 'text'});
 
+widgetSchema.methods.toJSON = function() {
+    return {
+        _id: this._id,
+        title: this.title,
+        creator: this.creator,
+        created: this.created,
+        description: this.description,
+        kind: this.kind,
+        refreshRate: this.refreshRate,
+
+        number: this.content.number,
+        textInput: this.content.textInput,
+        dataSource: this.content.dataSource,
+        attribute: this.content.attribute,
+        query: this.content.query,
+        unit: this.content.unit,
+
+        displayType: this.content.displayType,
+        graphUrl: this.content.graphUrl
+    }
+};
+
 module.exports = mongoose.model('Widget', widgetSchema);
