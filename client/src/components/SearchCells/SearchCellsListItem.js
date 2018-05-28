@@ -8,6 +8,7 @@ const translateKind = {
     Graph: "Diagram",
     Text: "Text"
 };
+
 const translateContent = {
     creator: "Skapare",
     created: "Skapad",
@@ -21,6 +22,9 @@ const translateContent = {
     attribute: "Attribut"
 };
 
+/**
+ * Represents a single list item in SearchCellsList.
+ */
 class SearchCellsListItem extends React.Component {
     constructor(props) {
         super(props);
@@ -30,29 +34,42 @@ class SearchCellsListItem extends React.Component {
         }
     }
 
-    generateTableData = () => {
-        let tableData = [];
+    /**
+     * Uses props.content to populate a table with data.
+     * Left column is the content key (translated)
+     * Right column is the content value.
+     * @returns {Array} array of <tr>-elements
+     */
+    generateTableContent = () => {
+        let tableContent = [];
 
-        for (let [key, value] of Object.entries(this.props.content)) {
-            if (key !== 'title' && key !== 'description' && key !== 'kind' && key !== '_id' && value !== '') {
-                tableData.push({key: key, value: value});
+        // Not all the properties in props.content should be shown in the table, we pick the ones we need.
+        let tableProperties = _.pick(this.props.content, Object.keys(translateContent));
+
+        if (tableProperties['refreshRate'] === 0) {
+            delete tableProperties['refreshRate'];
+        }
+
+        for (let [key, value] of Object.entries(tableProperties)) {
+            if (value !== '') {
+                tableContent.push({key: key, value: value});
             }
         }
 
-        return _.map(tableData, function (property) {
+        return _.map(tableContent, function (property) {
             let value = property.value;
-            let key = translateContent[property.key];
+            let key = property.key;
 
-            if (property.key === 'created') {
+            if (key === 'created') {
                 value = value.split('T')[0];
             }
-            else if (property.key === 'refreshRate') {
+            else if (key === 'refreshRate') {
                 value = value + " min";
             }
 
             return (
-                <tr key={property.key}>
-                    <td>{key}:</td>
+                <tr key={key}>
+                    <td>{translateContent[key]}:</td>
                     <td>{value}</td>
                 </tr>
             );
@@ -76,7 +93,7 @@ class SearchCellsListItem extends React.Component {
                     <Collapse in={this.state.collapse}>
                         <Table responsive condensed style={{width: "auto"}}>
                             <tbody>
-                                {this.generateTableData()}
+                                {this.generateTableContent()}
                             </tbody>
                         </Table>
                     </Collapse>

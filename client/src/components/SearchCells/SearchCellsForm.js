@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Button, Checkbox, FormControl, FormGroup, OverlayTrigger, Tooltip} from "react-bootstrap";
 
+/**
+ * A form with a search field and checkboxes for filtering by widget type.
+ */
 class SearchCellsForm extends React.Component {
     constructor(props) {
         super(props);
@@ -14,12 +17,19 @@ class SearchCellsForm extends React.Component {
         }
     }
 
+    /**
+     * React lifecycle method
+     */
     componentDidMount() {
         if (this.props.defaultSearch) {
             this.setState({search: this.props.defaultSearch});
         }
     }
 
+    /**
+     * Handles form input change and stores change in state.
+     * @param e the input event
+     */
     handleInputChange = (e) => {
         const target = e.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -82,7 +92,8 @@ class SearchCellsForm extends React.Component {
 }
 
 SearchCellsForm.propTypes = {
-    onSearchClicked: PropTypes.func.isRequired
+    onSearchClicked: PropTypes.func.isRequired,
+    defaultSearch: PropTypes.string
 };
 
 export default SearchCellsForm;

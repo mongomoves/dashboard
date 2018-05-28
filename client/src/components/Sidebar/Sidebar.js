@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { MenuItem, Glyphicon } from 'react-bootstrap';
-import './sidebar.css';
+import './Sidebar.css';
 
 //Component that displays the sidebar on the how to page. Handels onClick events by calling methods from Article component.
 class Sidebar extends Component {
