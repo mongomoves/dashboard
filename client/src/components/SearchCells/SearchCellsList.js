@@ -4,6 +4,10 @@ import {ListGroup} from "react-bootstrap";
 import SearchCellsListItem from "./SearchCellsListItem";
 import _ from 'lodash';
 
+/**
+ * Renders the search result in SearchCells as a list.
+ * Each cell is a separate list item.
+ */
 class SearchCellsList extends React.Component {
 
     createListItems = () => {
