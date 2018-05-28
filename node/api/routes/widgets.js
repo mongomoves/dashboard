@@ -60,6 +60,7 @@ router.post('/', function(req, res, next) {
 
     let content;
 
+    // Create the content depening on type of widget
     if (body.kind === 'Value') {
         const {number, dataSource, attribute, unit} = body;
 
@@ -98,11 +99,12 @@ router.post('/', function(req, res, next) {
         });
     }
 
+    // Save content first since we need the id when we create the widget
     content.save()
         .then(result => {
             const {title, creator, description, kind, refreshRate} = body;
 
-            const widget = new Widget({
+            return new Widget({
                 _id: new mongoose.Types.ObjectId(),
                 title,
                 creator,
@@ -111,13 +113,21 @@ router.post('/', function(req, res, next) {
                 refreshRate,
                 content: result._id
             });
-
+        })
+        .then(widget => {
             widget.save()
                 .then(result => {
+
+                    res.status(201).json({
+                        message: 'Widget stored',
+                        widget: result.toJSON()
+                    });
+
+                    // Create a log entry for the widget
                     const {title, creator, created, _id} = result;
                     const kind = 'Widget';
 
-                    const logEntry = new LogEntry({
+                    new LogEntry({
                         _id: new mongoose.Types.ObjectId(),
                         title,
                         creator,
@@ -129,30 +139,14 @@ router.post('/', function(req, res, next) {
                             type: "GET",
                             url: "/api/widgets/" + _id
                         }
-                    });
-
-                    logEntry.save()
-                        .catch(err => {
-                            console.log(err);
-                        });
-
-                    res.status(201).json({
-                        message: 'Widget stored',
-                        widget: widget.toJSON()
-                    });
-
+                    }).save();
                 })
-                .catch(err =>  {
-                    res.status(500).json({
-                        error: err
-                    });
-                });
         })
         .catch(err => {
             res.status(500).json({
                 error: err
             });
-        });
+        })
 });
 
 /*
