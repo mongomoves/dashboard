@@ -76,11 +76,13 @@ render() {
             logg={this.state.logg}
             onLogWidgetClick={this.props.onLogWidgetClick}
             onLogDashboardClick={this.props.onLogDashboardClick}
-            done={this.handleCloseActivityLog}/>
+            done={this.handleCloseActivityLog}/>  
       </BootstrapModal>
+      
       <div className="footerText">
             <a onClick={this.handleShowActivityLog}>
                 <FooterItem footerData={this.state.footerData} />
+                En ny widget anställda skapad av 
             </a>
       </div>
         <div className="iconFooter">
