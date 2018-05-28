@@ -59,4 +59,20 @@ const dashboardSchema = mongoose.Schema({
 });
 dashboardSchema.index({title: 'text', description: 'text', creator: 'text'});
 
+dashboardSchema.methods.toJSON = function() {
+    return {
+        _id: this._id,
+        title: this.title,
+        creator: this.creator,
+        created: this.created,
+        description: this.description,
+        widgets: this.widgets.map(widget => {
+            return {
+                layout: widget.layout,
+                content: widget.content.toJSON()
+            }
+        })
+    }
+};
+
 module.exports = mongoose.model('Dashboard', dashboardSchema);
