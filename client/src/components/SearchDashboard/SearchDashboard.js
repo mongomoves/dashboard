@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import SearchDashboardForm from './SearchDashboardForm';
 import SearchDashboardList from './SearchDashboardList';
-import SERVER_URL from '../../constants'
+import {SERVER_URL} from '../../Constants'
 
 const DEFAULT_REQUEST_URL = SERVER_URL + "/api/dashboards";
 

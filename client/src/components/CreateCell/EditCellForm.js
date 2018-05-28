@@ -14,7 +14,7 @@ import FormInput from './FormInput';
 import ValueForm from "./ValueForm";
 import GraphForm from "./GraphForm";
 import TextForm from "./TextForm";
-import SERVER_URL from '../../constants'
+import {SERVER_URL} from '../../Constants'
 
 class EditCellForm extends Component {
     constructor(props) {
