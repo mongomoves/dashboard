@@ -11,7 +11,7 @@ const logRouter = require('./api/routes/log');
 const app = express();
 
 // Connect to database
-mongoose.connect("mongodb://database:27017/test").catch(err => {
+mongoose.connect("mongodb://database:27017/demo").catch(err => {
     console.log(`Error connecting to database:${err}`)
 });
 

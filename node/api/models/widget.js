@@ -51,7 +51,6 @@ widgetSchema.methods.toJSON = function() {
         textInput: this.content.textInput,
         dataSource: this.content.dataSource,
         attribute: this.content.attribute,
-        query: this.content.query,
         unit: this.content.unit,
 
         displayType: this.content.displayType,

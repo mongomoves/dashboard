@@ -39,41 +39,7 @@ router.get('/', function(req, res, next) {
         .then(dashboards => {
             res.status(200).json({
                 count: dashboards.length,
-                // Instead of sending back the document we flatten the response
-                // Makes the api easier to use, but adds a bit more work
-                dashboards: dashboards.map(dashboard => {
-                    return {
-                        _id: dashboard._id,
-                        title: dashboard.title,
-                        creator: dashboard.creator,
-                        created: dashboard.created,
-                        description: dashboard.description,
-                        widgets: dashboard.widgets.map(widget => {
-                            return {
-                                layout: widget.layout,
-                                content: {
-                                    _id: widget.content._id,
-                                    title: widget.content.title,
-                                    creator: widget.content.creator,
-                                    created: widget.content.created,
-                                    description: widget.content.description,
-                                    kind: widget.content.kind,
-                                    refreshRate: widget.content.refreshRate,
-
-                                    number: widget.content.content.number,
-                                    textInput: widget.content.content.textInput,
-                                    dataSource: widget.content.content.dataSource,
-                                    attribute: widget.content.content.attribute,
-                                    query: widget.content.content.query,
-                                    unit: widget.content.content.unit,
-
-                                    graphUrl: widget.content.content.graphUrl,
-                                    displayType: widget.content.content.displayType
-                                }
-                            }
-                        })
-                    }
-                })
+                dashboards: dashboards.map(dashboard => dashboard.toJSON())
             });
         })
         .catch(err => {
@@ -89,14 +55,14 @@ router.get('/', function(req, res, next) {
  * Returns a message and the created dashboard
  */
 router.post('/', function(req, res, next) {
+    const {body} = req;
+
     // Validate passed in widget ids to make sure they exist
     // We use a set so we don't have to check for duplicates
-    // The way this is implemented allows us to save the same widget
-    // in a dashboard at different positions. Easier when developing.
     let widgetIds = new Set([]);
 
-    for (let i = 0; i < req.body.widgets.length; i++) {
-        const id = req.body.widgets[i].id;
+    for (let i = 0; i < body.widgets.length; i++) {
+        const id = body.widgets[i].id;
         widgetIds.add(id);
     }
 
@@ -113,12 +79,13 @@ router.post('/', function(req, res, next) {
             }
 
             // Create dashboard model from request body
+            const {title, creator, description, widgets} = body;
             const dashboard = new Dashboard({
                 _id: new mongoose.Types.ObjectId(),
-                title: req.body.title,
-                creator: req.body.creator,
-                description: req.body.description,
-                widgets: req.body.widgets.map(widget => {
+                title,
+                creator,
+                description,
+                widgets: widgets.map(widget => {
                     return {
                         content: widget.id,
                         layout: {
@@ -136,32 +103,29 @@ router.post('/', function(req, res, next) {
 
             dashboard.save()
                 .then(result => {
-                    const {title, creator, _id, created} = result;
-                    const logKind = 'Dashboard';
-
-                    const logEntry = new LogEntry({
-                        _id: new mongoose.Types.ObjectId(),
-                        title: title,
-                        creator: creator,
-                        created: created,
-                        kind: logKind,
-                        text: creator + " skapade en " + logKind + " med titel '" + title + "'.",
-                        contentId: _id,
-                        request: {
-                            type: "GET",
-                            url: process.env.SERVER_URL + "/api/dashboards/" + _id
-                        }
-                    });
-
-                    logEntry.save()
-                        .catch(err => {
-                            console.log(err);
-                        });
 
                     res.status(201).json({
                         message: 'Dashboard stored',
-                        dashboard: dashboard,
+                        dashboard: result.toJSON(),
                     });
+
+                    // Create a log entry for the created dashboard
+                    const {title, creator, created, _id} = result;
+                    const kind = 'Dashboard';
+
+                    const logEntry = new LogEntry({
+                        _id: new mongoose.Types.ObjectId(),
+                        title,
+                        creator,
+                        created,
+                        kind,
+                        text: creator + " skapade en " + kind + " med titel '" + title + "'.",
+                        contentId: _id,
+                        request: {
+                            type: "GET",
+                            url: "/api/dashboards/" + _id
+                        }
+                    }).save();
                 })
                 .catch(err => {
                     res.status(500).json({
@@ -169,11 +133,12 @@ router.post('/', function(req, res, next) {
                     })
                 });
 
-        }).catch(err => {
+        })
+        .catch(err => {
             res.status(500).json({
                 error: err
             })
-    });
+        });
 });
 
 /*
@@ -198,39 +163,7 @@ router.get('/:dashboardId', function(req, res, next) {
             }
 
             res.status(200).json({
-                // Instead of sending back the document we flatten the response
-                // Makes the api easier to use, but adds a bit more work
-                dashboard: {
-                    _id: dashboard._id,
-                    title: dashboard.title,
-                    creator: dashboard.creator,
-                    created: dashboard.created,
-                    description: dashboard.description,
-                    widgets: dashboard.widgets.map(widget => {
-                        return {
-                            layout: widget.layout,
-                            content: {
-                                _id: widget.content._id,
-                                title: widget.content.title,
-                                creator: widget.content.creator,
-                                created: widget.content.created,
-                                description: widget.content.description,
-                                kind: widget.content.kind,
-                                refreshRate: widget.content.refreshRate,
-
-                                number: widget.content.content.number,
-                                textInput: widget.content.content.textInput,
-                                dataSource: widget.content.content.dataSource,
-                                attribute: widget.content.content.attribute,
-                                query: widget.content.content.query,
-                                unit: widget.content.content.unit,
-
-                                graphUrl: widget.content.content.graphUrl,
-                                displayType: widget.content.content.displayType
-                            }
-                        }
-                    })
-                }
+                dashboard: dashboard.toJSON()
             });
         })
         .catch(err => {

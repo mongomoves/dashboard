@@ -141,6 +141,11 @@ router.post('/', function(req, res, next) {
                         }
                     }).save();
                 })
+                .catch(err => {
+                    res.status(500).json({
+                        error: err
+                    });
+                })
         })
         .catch(err => {
             res.status(500).json({
