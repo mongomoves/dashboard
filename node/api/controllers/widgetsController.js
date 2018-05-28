@@ -6,7 +6,7 @@ const Text = require("../models/text");
 const LogEntry = require("../models/logEntry");
 
 /**
- * Returns amount of widgets and queried widgets (or all if no query is used)
+ * Returns all or queried widgets
  */
 exports.widgets_get_all = (req, res, next) => {
     Widget.find(handleQuery(req.query))
@@ -197,29 +197,6 @@ function createWidgetContent(body) {
 }
 
 /**
- * Creates a log entry for the created widget
- * @param widget the created widget
- */
-function createLogEntry(widget) {
-    const {title, creator, created, _id} = widget;
-    const kind = 'Widget';
-
-    new LogEntry({
-        _id: new mongoose.Types.ObjectId(),
-        title,
-        creator,
-        created,
-        kind,
-        text: creator + " skapade en " + kind + " med titel '" + title + "'.",
-        contentId: _id,
-        request: {
-            type: "GET",
-            url: "/api/widgets/" + _id
-        }
-    }).save();
-}
-
-/**
  * Handles query parameters
  * @param query the request query
  * @returns {Object} object with query parameters
@@ -245,4 +222,27 @@ function handleQuery(query) {
     }
 
     return queryAsObject;
+}
+
+/**
+ * Creates a log entry for the created widget
+ * @param widget the created widget
+ */
+function createLogEntry(widget) {
+    const {title, creator, created, _id} = widget;
+    const kind = 'Widget';
+
+    new LogEntry({
+        _id: new mongoose.Types.ObjectId(),
+        title,
+        creator,
+        created,
+        kind,
+        text: creator + " skapade en " + kind + " med titel '" + title + "'.",
+        contentId: _id,
+        request: {
+            type: "GET",
+            url: "/api/widgets/" + _id
+        }
+    }).save().catch(err => {console.log(err)});
 }
