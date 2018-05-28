@@ -14,14 +14,14 @@ import FormInput from './FormInput';
 import ValueForm from "./ValueForm";
 import GraphForm from "./GraphForm";
 import TextForm from "./TextForm";
-import {SERVER_URL} from '../../Constants'
+import {SERVER_URL, WIDGET_KIND, DISPLAY_TYPE} from '../../Constants'
 
 class CreateCellForm extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            kind: 'Value',
+            kind: WIDGET_KIND.VALUE,
             publish: false,
             title: '',
             creator: '',
@@ -32,7 +32,7 @@ class CreateCellForm extends Component {
             dataSource: '',
             attribute: '',
             unit: '',
-            displayType: 'Iframe',
+            displayType: DISPLAY_TYPE.IFRAME,
             refreshRate: 0
         };
     }
@@ -57,7 +57,7 @@ class CreateCellForm extends Component {
 
     handleCreateWidget = () => {
         let widget;
-        if (this.state.kind === 'Value') {
+        if (this.state.kind === WIDGET_KIND.VALUE) {
             widget = {
                 kind: this.state.kind,
                 title: this.state.title,
@@ -68,7 +68,7 @@ class CreateCellForm extends Component {
                 unit: this.state.unit
             }
         }
-        else if (this.state.kind === 'Graph') {
+        else if (this.state.kind === WIDGET_KIND.GRAPH) {
             widget = {
                 kind: this.state.kind,
                 title: this.state.title,
@@ -77,7 +77,7 @@ class CreateCellForm extends Component {
                 refreshRate: this.state.refreshRate
             }
         }
-        else if (this.state.kind === 'Text') {
+        else if (this.state.kind === WIDGET_KIND.TEXT) {
             widget = {
                 kind: this.state.kind,
                 title: this.state.title,
@@ -174,7 +174,7 @@ class CreateCellForm extends Component {
                 }
             }
         }
-        else if (this.state.kind === 'Graph') {
+        else if (this.state.kind === WIDGET_KIND.GRAPH) {
             formContent = (
                 <GraphForm
                     graphUrl={this.state.graphUrl}
@@ -193,7 +193,7 @@ class CreateCellForm extends Component {
                                 (!this.state.creator || !this.state.description);
             }
         }
-        else if(this.state.kind === 'Text') {
+        else if(this.state.kind === WIDGET_KIND.TEXT) {
             formContent = (
                 <TextForm
                     textInput={this.state.textInput}
@@ -234,9 +234,9 @@ class CreateCellForm extends Component {
                         value={this.state.kind}
                         onChange={this.handleInputChange}>
 
-                        <option value='Value'>Värde</option>
-                        <option value='Graph'>Diagram</option>
-                        <option value='Text'>Text</option>
+                        <option value={WIDGET_KIND.VALUE}>Värde</option>
+                        <option value={WIDGET_KIND.GRAPH}>Diagram</option>
+                        <option value={WIDGET_KIND.TEXT}>Text</option>
                     </FormControl>
                 </FormGroup>
                 <FormGroup>

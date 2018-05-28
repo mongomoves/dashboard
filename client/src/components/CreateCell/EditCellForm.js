@@ -14,7 +14,7 @@ import FormInput from './FormInput';
 import ValueForm from "./ValueForm";
 import GraphForm from "./GraphForm";
 import TextForm from "./TextForm";
-import {SERVER_URL} from '../../Constants'
+import {WIDGET_KIND, SERVER_URL} from '../../Constants'
 
 class EditCellForm extends Component {
     constructor(props) {
@@ -60,7 +60,7 @@ class EditCellForm extends Component {
     handleCreateWidget = () => {
         let widget;
 
-        if (this.state.kind === 'Value') {
+        if (this.state.kind === WIDGET_KIND.VALUE) {
             widget = {
                 kind: this.state.kind,
                 title: this.state.title,
@@ -71,7 +71,7 @@ class EditCellForm extends Component {
                 unit: this.state.unit
             }
         }
-        else if (this.state.kind === 'Graph') {
+        else if (this.state.kind === WIDGET_KIND.GRAPH) {
             widget = {
                 kind: this.state.kind,
                 title: this.state.title,
@@ -80,7 +80,7 @@ class EditCellForm extends Component {
                 refreshRate: this.state.refreshRate
             }
         }
-        else if (this.state.kind === 'Text') {
+        else if (this.state.kind === WIDGET_KIND.TEXT) {
             widget = {
                 kind: this.state.kind,
                 title: this.state.title,
@@ -153,7 +153,7 @@ class EditCellForm extends Component {
         let formContent;
 
         // Form fields depends on type of widget
-        if (this.state.kind === 'Value') {
+        if (this.state.kind === WIDGET_KIND.VALUE) {
             formContent = (
                 <ValueForm
                     number={this.state.number}
@@ -183,7 +183,7 @@ class EditCellForm extends Component {
                 }
             }
         }
-        else if (this.state.kind === 'Graph') {
+        else if (this.state.kind === WIDGET_KIND.GRAPH) {
             formContent = (
                 <GraphForm
                     graphUrl={this.state.graphUrl}
@@ -202,7 +202,7 @@ class EditCellForm extends Component {
                                 (!this.state.creator || !this.state.description);
             }
         }
-        else if(this.state.kind === 'Text') {
+        else if(this.state.kind === WIDGET_KIND.TEXT) {
             formContent = (
                 <TextForm
                     textInput={this.state.textInput}

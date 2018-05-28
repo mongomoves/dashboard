@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import FormInput from './FormInput';
 import {ButtonToolbar, Col, ControlLabel, FormGroup, Grid, Row, ToggleButton, ToggleButtonGroup} from "react-bootstrap";
+import {DISPLAY_TYPE} from "../../Constants";
 
 class GraphForm extends React.Component {
 
@@ -21,8 +22,8 @@ class GraphForm extends React.Component {
                                         value={displayType}
                                         name='displayType'
                                         onChange={handleDisplayTypeChange}>
-                                        <ToggleButton value='Iframe'>Iframe</ToggleButton>
-                                        <ToggleButton value='Img'>Img</ToggleButton>
+                                        <ToggleButton value={DISPLAY_TYPE.IFRAME}>Iframe</ToggleButton>
+                                        <ToggleButton value={DISPLAY_TYPE.IMG}>Img</ToggleButton>
                                     </ToggleButtonGroup>
                                 </ButtonToolbar>
                             </FormGroup>

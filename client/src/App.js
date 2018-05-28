@@ -215,8 +215,9 @@ class App extends Component {
             idCounter: 0,
             modals: {clearDashboard: false}
         });
-    };
 
+        saveToLocalStorage(KEY_LS_CELLS, this.state.cells);
+    };
 
     /**
      * Callback function. Sets new layout state.
@@ -317,7 +318,7 @@ class App extends Component {
                         displayType: e.content.displayType,
                         refreshRate: e.content.refreshRate
                     }
-                } else if (e.content.kind === WIDGET_KIND.TEXTH) {
+                } else if (e.content.kind === WIDGET_KIND.TEXT) {
                     editValues = {
                         index: index,
                         creator: e.content.creator,
