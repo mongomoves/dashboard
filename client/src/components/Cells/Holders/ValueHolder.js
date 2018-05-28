@@ -7,7 +7,7 @@ import jsonQuery from 'json-query';
  * external data source.
  * Can refresh data at regular intervals.
  */
-class ValueComponent extends Component {
+class ValueHolder extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -16,6 +16,9 @@ class ValueComponent extends Component {
         }
     }
 
+    /**
+     * React lifecycle function.
+     */
     componentDidMount() {
         if (this.props.values.dataSource && this.props.values.attribute) {
             if(this.props.values.refreshRate && this.props.values.refreshRate > 0) {
@@ -30,6 +33,9 @@ class ValueComponent extends Component {
         }
     }
 
+    /**
+     * React lifecycle function.
+     */
     componentWillUnmount() {
         if(this.state.interval) {
             clearInterval(this.state.interval);
@@ -60,7 +66,7 @@ class ValueComponent extends Component {
     }
     
     /**
-     * Function for interval, simply calling for a new fetch.
+     * Function for setInterval, simply calling for a new fetch.
      */
     updateContent = () => {
         this.getData(this.props.values.dataSource, this.props.values.attribute);
@@ -69,8 +75,8 @@ class ValueComponent extends Component {
     /**
      * Fetch from passed url and set value found at attribute to state, if
      * a value was succesfully retrieved. 
-     * @param {*} dataURL URL to fetch from
-     * @param {*} attribute Attribute key for desired value
+     * @param {string} dataURL URL to fetch from
+     * @param {string} attribute JSON.Query formatted query
      */
     getData = (dataURL, attribute) => {
         fetch(dataURL).then((response) => {
@@ -103,8 +109,7 @@ class ValueComponent extends Component {
                         number: verifiedNumber,
                         fetchSuccess: true
                     });
-            }
-                        
+            }         
             else {
                 this.setState({
                         externalData: true,
@@ -129,7 +134,7 @@ class ValueComponent extends Component {
      * Returns a font size in percentage, trying to make it neither
      * too big to fit or too small.
      * Font size based in part on cell width.
-     * @param {*} type Number or unit
+     * @param {string} type Number or unit
      */
     calculateFont = (type) => {
         const maxWhenWide = 664;
@@ -155,7 +160,6 @@ class ValueComponent extends Component {
     }
 
     render() {
-        //if invalid URL or attribute 
         if (this.state.externalData && !this.state.fetchSuccess) {
             return (
                 <div>
@@ -163,8 +167,6 @@ class ValueComponent extends Component {
                 </div>
             )
         }
-
-        //if user entered data 
         return (
             <div style={valueDiv}>
                 <span style={{...spanStyleNumber, fontSize: `${this.calculateFont('number')}%`}}>{this.state.number}</span>
@@ -196,9 +198,9 @@ const spanStyleError = {
     textOverflow: 'ellipsis'
 };
 
-ValueComponent.propTypes = {
+ValueHolder.propTypes = {
     width: PropTypes.number,
     values: PropTypes.object.isRequired
 };
 
-export default ValueComponent;
+export default ValueHolder;

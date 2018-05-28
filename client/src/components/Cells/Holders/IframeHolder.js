@@ -81,6 +81,7 @@ class IframeHolder extends Component {
      * Checks if URL for Iframe contains http or https. If either is missing
      * the Iframe will display the entire Dashboard page as an embed. This avoids that
      * but it will not stop the user from entering an invalid URL.
+     * @param {string} url Url to check
      */
     checkForHTTP = (url) => {
         if(url.includes('http://', 0) || url.includes('https://', 0)) {

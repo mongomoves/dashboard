@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import './ContentComponent.css';
+import './content.css';
 
 //Component that renders the content on the how to page.
 
-class Koncept extends Component {
+class Concept extends Component {
     render() {
         return (
             <div className="Divider">
@@ -17,11 +17,10 @@ class Koncept extends Component {
                 </p>
                 <p>
                     För att komma igång och skapa ditt Dashboard kan du trycka på Steg för steg-fliken här till vänster.
-                    Du börjar alltid med en tom Dashboard.
                 </p>
             </div>
         );
     }
 }
 
-export default Koncept;
+export default Concept;

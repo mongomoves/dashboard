@@ -4,10 +4,9 @@ import {Row, Col} from 'react-bootstrap';
 
 /**
  * Shows information about a specific cell. Author, date and description.
- * TODO: Make it look good.
  */
-
 class CellInfo extends Component {
+
     /**
      * Removes some unwanted characters and seconds indicators for
      * a more clean presentation.
@@ -18,7 +17,7 @@ class CellInfo extends Component {
         return newTime.slice(0, (newTime.indexOf(".") - 3));
     };
 
-    generateElements() {
+    render() {
         const {creator, created, description} = this.props.cell;
         if(!creator && !created && !description) {
             return (
@@ -39,14 +38,6 @@ class CellInfo extends Component {
                 </div>
             );
         }
-    }
-
-    render() {
-        return (
-            <div>
-                {this.generateElements()}
-            </div>
-        )
     }
 }
 

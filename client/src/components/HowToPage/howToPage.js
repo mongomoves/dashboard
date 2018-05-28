@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import CustomNavbar from '../customnavbar/CustomNavbar';
 import Article from '../Article/Article';
 import Sidebar from '../Sidebar/Sidebar';
-import Koncept from '../HowToPage/ContentComponents/KonceptComponent';
-import StepByStep from '../HowToPage/ContentComponents/StegforStegComponent';
-import WidgetEx from '../HowToPage/ContentComponents/WidgetComponent';
+import Concept from '../HowToPage/Content/Concept';
+import StepByStep from '../HowToPage/Content/StepByStep';
+import WidgetInfo from '../HowToPage/Content/WidgetInfo';
 import Footer from '../footer/footer';
 import './howToPage.css';
 
@@ -15,24 +15,22 @@ class HowToPage extends Component {
     constructor(props){
         super(props);
         this.state = {
-            toggleKoncept: true,
-            toggleStepByStep: true,
-            toggleWidgetEx: true
+            toggleConcept: true,
+            toggleStepByStep: false,
+            toggleWidgetInfo: false
         }
     }
 
-    //Methods that toggles the visabillity of the content.
-
-    toggleKonceptHandler = () => {
-        this.setState({toggleKoncept: !this.state.toggleKoncept});
+    toggleConceptHandler = () => {
+        this.setState({toggleConcept: !this.state.toggleConcept});
     }
 
     toggleStepByStepHandler = () => {
         this.setState({toggleStepByStep: !this.state.toggleStepByStep});
     }
 
-    toggleWidgetExHandler = () => {
-        this.setState({toggleWidgetEx: !this.state.toggleWidgetEx});
+    toggleWidgetInfoHandler = () => {
+        this.setState({toggleWidgetInfo: !this.state.toggleWidgetInfo});
     }
 
     render() {
@@ -41,14 +39,14 @@ class HowToPage extends Component {
                 <CustomNavbar />
                 <div className="howToContent">
                     <Article>
-                        {this.state.toggleKoncept && <Koncept />}
-                        {!this.state.toggleStepByStep && <StepByStep />}
-                        {!this.state.toggleWidgetEx && <WidgetEx />}         
+                        {this.state.toggleConcept && <Concept />}
+                        {this.state.toggleStepByStep && <StepByStep />}
+                        {this.state.toggleWidgetInfo && <WidgetInfo />}         
                     </Article>
                     <Sidebar 
-                        clickedKoncept={this.toggleKonceptHandler}
+                        clickedConcept={this.toggleConceptHandler}
                         clickedStepByStep={this.toggleStepByStepHandler}
-                        clickedWidgetEx={this.toggleWidgetExHandler} />
+                        clickedWidgetEx={this.toggleWidgetInfoHandler} />
                 </div>
                 <Footer />
             </div>
