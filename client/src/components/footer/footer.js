@@ -30,7 +30,7 @@ class Footer extends Component {
   componentDidMount() {
     this.getActivityData();
     this.getFooterData();
-    let intervalIdFooter = setInterval(this.getFooterData, 1000 * 60);
+    let intervalIdFooter = setInterval(this.getFooterData, 1000 * 5);
     this.setState({ intervalFooter: intervalIdFooter });
     let intervalIdActivityLogg = setInterval(this.getActivityData, 1000 * 60);
     this.setState({ intervalActivityLogg: intervalIdActivityLogg });
@@ -82,7 +82,6 @@ render() {
       <div className="footerText">
             <a onClick={this.handleShowActivityLog}>
                 <FooterItem footerData={this.state.footerData} />
-                En ny widget anställda skapad av 
             </a>
       </div>
         <div className="iconFooter">
