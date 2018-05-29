@@ -1,6 +1,0 @@
-{
-    "env": {
-        "MONGODB_ATLAS_PASSWORD": "E3QVuSolvPcTIkL7",
-        "SERVER_URL": "localhost:3001"
-    }
-}
