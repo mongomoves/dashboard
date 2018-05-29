@@ -60,6 +60,7 @@ Dashboard.propTypes = {
     showInfo: PropTypes.func.isRequired,
     editCell: PropTypes.func.isRequired,
     cells: PropTypes.array.isRequired,
+    layout: PropTypes.array.isRequired,
     onLayoutChange: PropTypes.func.isRequired
 };
 

@@ -39,6 +39,7 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            layout: [],
             cells: JSON.parse(JSON.stringify(localStorageCells))
                 .sort(function (a, b) {
                 return a.layout.i - b.layout.i;
@@ -190,18 +191,17 @@ class App extends Component {
     };
 
     addDashboard = (dashboards) => {
-        let dashboardsCopy = Object.assign([], dashboards);
-
-        dashboardsCopy.sort(function (a, b) {
+        let sortedDashboards = dashboards.sort(function (a, b) {
             return a.layout.i - b.layout.i;
         });
 
-        const newIdCounter = dashboardsCopy.length > 0
-            ? Number(dashboardsCopy[dashboardsCopy.length - 1].layout.i) + 1
+        const newIdCounter = sortedDashboards.length > 0
+            ? Number(sortedDashboards[sortedDashboards.length - 1].layout.i) + 1
             : 0;
 
         this.setState({
-            cells: dashboardsCopy,
+            layout: [],
+            cells: sortedDashboards,
             idCounter: newIdCounter
         });
 
@@ -210,10 +210,9 @@ class App extends Component {
 
     clearDashboardLayout = () => {
         this.setState({
-            layouts: {},
+            layout: [],
             cells: [],
-            idCounter: 0,
-            modals: {clearDashboard: false}
+            idCounter: 0
         });
 
         saveToLocalStorage(KEY_LS_CELLS, this.state.cells);
@@ -229,11 +228,16 @@ class App extends Component {
         });
 
         // Update layout data in cells
+        let cells = Object.assign([], this.state.cells);
+
         for (let i = 0; i < this.state.cells.length && i < sortedLayout.length; i++) {
-            let cells = Object.assign([], this.state.cells);
             cells[i].layout = sortedLayout[i];
-            this.setState({cells: cells});
         }
+
+        this.setState({
+            layout: layout,
+            cells: cells
+        });
 
         saveToLocalStorage(KEY_LS_CELLS, this.state.cells);
     };
@@ -349,13 +353,16 @@ class App extends Component {
                     removeCell={this.removeCell}
                     showInfo={this.handleShowCellInfo}
                     editCell={this.handleShowEditCell}
+                    layout={this.state.layout}
                     cells={this.state.cells}
                     onLayoutChange={this.onLayoutChange}/>
                 <BootstrapModal
                     title="Ta bort Dashboard"
                     show={this.state.modals.clearDashboard}
                     close={() => this.handleCloseModal('clearDashboard')}>
-                        <ClearPromptForm clear={this.clearDashboardLayout}/>
+                        <ClearPromptForm
+                            clear={this.clearDashboardLayout}
+                            done={() => this.handleCloseModal('clearDashboard')}/>
                 </BootstrapModal>
                 <BootstrapModal
                     title="Skapa widget"
