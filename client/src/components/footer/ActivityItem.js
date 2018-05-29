@@ -24,7 +24,10 @@ class ActivityItem extends Component {
                   <strong>Titel:</strong> {loggs.title}<br/>
                   <strong>Skapad av:</strong> {loggs.creator}<br/>
                   <strong>Skapad:</strong> {formatTimeStamp(loggs.created)}<br/>
+                  <div className = "border">
+                  </div>
                   <br/>
+                  
             </div>
           );
     });
