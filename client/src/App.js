@@ -5,11 +5,11 @@ import CreateCellForm from "./components/CreateCell/CreateCellForm";
 import EditCellForm from "./components/CreateCell/EditCellForm";
 import SearchCells from './components/SearchCells/SearchCells';
 import CellInfo from './components/Cells/CellInfo';
-import Footer from "./components/footer/footer";
 import BootstrapModal from './components/Modal/BootstrapModal';
 import ClearPromptForm from './components/ClearPromptForm/ClearPromptForm';
 import SaveDashboard from "./components/SaveDashboard/SaveDashboard";
 import SearchDashboard from "./components/SearchDashboard/SearchDashboard";
+import ActivityItems from "./components/activityLog/ActivityItems";
 import {saveToLocalStorage, loadFromLocalStorage} from "./utils/LocalStorage";
 import _ from 'lodash';
 
@@ -52,6 +52,7 @@ class App extends Component {
                 saveDashboard: false,
                 clearDashboard: false,
                 searchDashboards: false,
+                activityLog: false
             },
             idCounter: localStorageCells.length > 0 // if we loaded cells from local storage
                 ? Number(localStorageCells[localStorageCells.length - 1].layout.i) + 1 // set start id to highest id + 1
@@ -243,11 +244,13 @@ class App extends Component {
     };
 
     setDefaultSearchCells = (search) => {
+        console.log("setdeafultSearchCell")
         this.handleShowModal('searchCells');
         this.setState({defaultSearchCells: search});
     };
 
     setDefaultSearchDashboards = (search) => {
+        console.log("setdeafultSearchDashboard")
         this.handleShowModal('searchDashboards');
         this.setState({defaultSearchDashboards: search})
     };
@@ -348,7 +351,8 @@ class App extends Component {
                     showExistingCell={() => this.handleShowModal('searchCells')}
                     clearDashboard={() => this.handleShowModal('clearDashboard')}
                     showSaveDashboard={() => this.handleShowModal('saveDashboard')}
-                    showLoadDashboard={() => this.handleShowModal('searchDashboards')}/>
+                    showLoadDashboard={() => this.handleShowModal('searchDashboards')}
+                    showActivityLog={() => this.handleShowModal('activityLog')}/>
                 <Dashboard
                     removeCell={this.removeCell}
                     showInfo={this.handleShowCellInfo}
@@ -414,9 +418,15 @@ class App extends Component {
                         addDashboard={this.addDashboard}
                         defaultSearch={this.state.defaultSearchDashboards}/>
                 </BootstrapModal>
-                <Footer
-                    onLogWidgetClick={this.setDefaultSearchCells}
-                    onLogDashboardClick={this.setDefaultSearchDashboards}/>
+                <BootstrapModal
+                    title="Aktivitetslogg"
+                    show={this.state.modals.activityLog}
+                    close={() => this.handleCloseModal('activityLog')}>
+                    <ActivityItems
+                        onLogWidgetClick={this.setDefaultSearchCells}
+                        onLogDashboardClick={this.setDefaultSearchDashboards}
+                        done={() => this.handleCloseModal('activityLog')}/>  
+                </BootstrapModal>
             </div>
         );
     }
