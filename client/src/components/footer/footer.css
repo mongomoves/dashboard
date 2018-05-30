@@ -11,8 +11,7 @@
     left: 0;
     bottom: 0;
     width: 100%;
-    height: 5%;
-    
+    height: 5%;   
 }
 
 
@@ -25,8 +24,6 @@ animation-iteration-count: infinite;
 animation-name: animation;
 width: 20%;
 margin-top: 5px;
-
-
 }
 
 .footerText a:hover{
@@ -41,8 +38,7 @@ color: white;
 }
 
 .iconFooter a:hover{
-  color: white;
-  
+  color: white; 
 }
 
 .border {
@@ -52,7 +48,6 @@ color: white;
 
 
 @keyframes animation {
- 
 	0%, 8.3% { left: -100%; opacity: 0; }
   8.3%, 25% { left: 45%; opacity: 1; }
   33.33%, 100% { left: 100%; opacity: 0; }
