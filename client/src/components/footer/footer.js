@@ -6,6 +6,10 @@ import ActivityItem from './ActivityItem'
 import {Glyphicon} from 'react-bootstrap';
 import {SERVER_URL} from '../../Constants'
 
+
+/*
+* Handles the footer and activitylog
+*/
 class Footer extends Component {
 
   constructor(props) {
@@ -19,14 +23,23 @@ class Footer extends Component {
     }
   }
 
+  /*
+  * Method to show BootstrapModal
+  */
   handleShowActivityLog = () => {
     this.setState({ modals: { showActivityLog: true } })
   };
 
+  /*
+  * Method to close BootstrapModal
+  */
   handleCloseActivityLog = () => {
     this.setState({ modals: { showActivityLog: false } })
   };
 
+  /*
+  * Calls the two different methods and sets a interval for them each
+  */
   componentDidMount() {
     this.getActivityData();
     this.getFooterData();
@@ -36,6 +49,9 @@ class Footer extends Component {
     this.setState({ intervalActivityLogg: intervalIdActivityLogg });
   }
 
+  /*
+  * stops the timer for the two different methods
+  */
   componentWillUnmount() {
     if (this.state.intervalFooter || this.state.intervalActivityLogg) {
       clearInterval(this.state.intervalFooter);
@@ -43,6 +59,9 @@ class Footer extends Component {
     }
   }
 
+  /*
+  * fetches the data to get all log entries
+  */
   getActivityData = () => {
     fetch(SERVER_URL + '/api/log')
       .then(results => {
@@ -54,6 +73,9 @@ class Footer extends Component {
      )
   };
 
+ /*
+  * fetches the data to get the latest log entrie
+  */
   getFooterData = () => {
     fetch(SERVER_URL + '/api/log?limit=1')
       .then(results => {
