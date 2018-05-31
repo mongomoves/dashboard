@@ -14,20 +14,6 @@ class Article extends Component {
         }
     }
 
-    //Methods that toggle the content inside the Article component. Is called onClick from Sidebar.
-
-    // toggleKonceptHandler = () => {
-    //     this.setState({toggleConcept: !this.state.toggleConcept});
-    // }
-
-    // toggleStepByStepHandler = () => {
-    //     this.setState({toggleStepByStep: !this.state.toggleStepByStep});
-    // }
-
-    // toggleWidgetHandler = () => {
-    //     this.setState({toggleWidget: !this.state.toggleWidget})
-    // }
-
     render() {
         return (
             <div className="Article">
