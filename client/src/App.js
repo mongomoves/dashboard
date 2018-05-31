@@ -243,13 +243,11 @@ class App extends Component {
     };
 
     setDefaultSearchCells = (search) => {
-        console.log("setdeafultSearchCell")
         this.handleShowModal('searchCells');
         this.setState({defaultSearchCells: search});
     };
 
     setDefaultSearchDashboards = (search) => {
-        console.log("setdeafultSearchDashboard")
         this.handleShowModal('searchDashboards');
         this.setState({defaultSearchDashboards: search})
     };

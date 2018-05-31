@@ -3,6 +3,10 @@ import { formatTimeStamp } from "../../utils/DateFormat";
 import _ from 'lodash';
 import { SERVER_URL } from '../../Constants'
 
+/**
+ * Component holding the list of 50 recent activities (things saved to the database).
+ * Each entry is clickable so the user can search and add that specific entry.
+ */
 class ActivityItems extends Component {
     constructor(props) {
         super(props);
@@ -13,11 +17,9 @@ class ActivityItems extends Component {
 
     onLogItemClick = (contentId, kind) => {
         if (kind === "Widget") {
-            console.log("widget clicked: " + contentId);
             this.props.onLogWidgetClick('id:' + contentId);
         }
         else {
-            console.log("dashboard clicked: " + contentId);
             this.props.onLogDashboardClick('id:' + contentId);
         }
     };
