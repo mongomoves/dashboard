@@ -13,7 +13,6 @@ import ActivityItems from "./components/activityLog/ActivityItems";
 import {saveToLocalStorage, loadFromLocalStorage} from "./utils/LocalStorage";
 import _ from 'lodash';
 
-import './App.css';
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
 
