@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Panel, Grid, Row, Col, MenuItem, DropdownButton, Glyphicon } from 'react-bootstrap';
 import ReactResizeDetector from 'react-resize-detector';
-import ImageHolder from "./Holders/ImageHolder";
-import ValueHolder from './Holders/ValueHolder';
-import IframeHolder from './Holders/IframeHolder';
-import TextHolder from './Holders/TextHolder';
+import ImageHolder from "./holders/ImageHolder";
+import ValueHolder from './holders/ValueHolder';
+import IframeHolder from './holders/IframeHolder';
+import TextHolder from './holders/TextHolder';
 import './cell.css';
 import {WIDGET_KIND, DISPLAY_TYPE} from "../../Constants";
 

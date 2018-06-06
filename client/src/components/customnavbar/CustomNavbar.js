@@ -20,16 +20,11 @@ class CustomNavbar extends Component {
             <Navbar inverse collapseOnSelect>
                 <Navbar.Header>
                     <Navbar.Brand>
-                        <Link to='/'>Dashboard</Link>
+                        Dashboard
                     </Navbar.Brand>
                     <Navbar.Toggle />
                 </Navbar.Header>
                 <Navbar.Collapse>
-                    <Navbar.Text>
-                        <Link to='/howtopage'>
-                            Hjälp
-                        </Link>
-                    </Navbar.Text>
                     <Nav pullRight>
                         <NavItem onClick={this.props.showActivityLog} id='basic-nav-dropdown'>
                             <div>{this.state.log}</div>

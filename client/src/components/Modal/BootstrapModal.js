@@ -28,18 +28,18 @@ class BootstrapModal extends Component {
 
 const modalBody = {
     // Changes the background of Modal header
-    backgroundColor: "gainsboro"
+    // backgroundColor: "gainsboro"
 };
 
 const modalHeader = {
-    backgroundColor: "#353535",
-    color: "orange" 
+    // backgroundColor: "#353535",
+    // color: "orange" 
     //Must add rounded corners in header!
 };
 
 const modalFooter = {
     // Changes the background of Modal footer
-    backgroundColor: "#353535"
+    // backgroundColor: "#353535"
 };
 
 BootstrapModal.propTypes = {
